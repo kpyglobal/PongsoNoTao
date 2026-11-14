@@ -1,0 +1,466 @@
+{
+  "photoSpots": [
+    {
+      "id": "ps_p01",
+      "quest": "P01",
+      "name": {
+        "zh": "紅頭岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p02",
+      "quest": "P02",
+      "name": {
+        "zh": "鯉魚岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p03",
+      "quest": "P03",
+      "name": {
+        "zh": "坦克岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p04",
+      "quest": "P04",
+      "name": {
+        "zh": "從蘭嶼燈塔遠眺"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p05",
+      "quest": "P05",
+      "name": {
+        "zh": "五孔洞（只在外遠拍）"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p06",
+      "quest": "P06",
+      "name": {
+        "zh": "玉女岩"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p07",
+      "quest": "P07",
+      "name": {
+        "zh": "小天池（只遠拍）"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p08",
+      "quest": "P08",
+      "name": {
+        "zh": "母雞岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p09",
+      "quest": "P09",
+      "name": {
+        "zh": "雙獅岩的星空"
+      },
+      "landmark": "twinlions",
+      "r": 16,
+      "time": "night",
+      "seasons": [],
+      "periods": [
+        "night"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p10",
+      "quest": "P10",
+      "name": {
+        "zh": "從岸上遠拍軍艦岩"
+      },
+      "landmark": "battleship",
+      "r": 18,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p11",
+      "quest": "P11",
+      "name": {
+        "zh": "情人洞"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p12",
+      "quest": "P12",
+      "name": {
+        "zh": "一線天"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p13",
+      "quest": "P13",
+      "name": {
+        "zh": "東清灣日出"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p14",
+      "quest": "P14",
+      "name": {
+        "zh": "鋼盔岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p15",
+      "quest": "P15",
+      "name": {
+        "zh": "象鼻岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p16",
+      "quest": "P16",
+      "name": {
+        "zh": "蘭嶼瀑布"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p17",
+      "quest": "P17",
+      "name": {
+        "zh": "龍頭岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p18",
+      "quest": "P18",
+      "name": {
+        "zh": "大天池（只遠拍）"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p19",
+      "quest": "P19",
+      "name": {
+        "zh": "老人岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p20",
+      "quest": "P20",
+      "name": {
+        "zh": "青青草原的黃昏"
+      },
+      "landmark": "qingqing",
+      "r": 10,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dusk"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p21",
+      "quest": "P21",
+      "name": {
+        "zh": "八代灣（飛魚季只能在部落外遠拍）"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p22",
+      "quest": "P22",
+      "name": {
+        "zh": "饅頭岩"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p23",
+      "quest": "P23",
+      "name": {
+        "zh": "開元港"
+      },
+      "place": "harbor",
+      "r": 9,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p24",
+      "quest": "P24",
+      "name": {
+        "zh": "蘭嶼航空站（只拍景）"
+      },
+      "place": "airport",
+      "r": 9,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p25",
+      "quest": "P25",
+      "name": {
+        "zh": "從蘭嶼氣象觀測站俯瞰"
+      },
+      "r": null,
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "status": "placeholder",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p26",
+      "quest": "P26",
+      "name": {
+        "zh": "野銀傳統家屋（先問屋主）"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_p27",
+      "quest": "P27",
+      "name": {
+        "zh": "朗島灣的拼板舟（先問船主）"
+      },
+      "r": null,
+      "time": "any",
+      "seasons": [
+        "winter"
+      ],
+      "status": "placeholder",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_u1",
+      "quest": "U1",
+      "name": {
+        "zh": "母雞岩浮潛"
+      },
+      "place": "hen_rock_bay",
+      "r": 10,
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_u2",
+      "quest": "U2",
+      "name": {
+        "zh": "椰油港斷崖：跟潛水教練做淺水氣瓶潛水"
+      },
+      "place": "yayo_dive",
+      "r": 10,
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_u3",
+      "quest": "U3",
+      "name": {
+        "zh": "隱藏：旅人的水下視角"
+      },
+      "place": "hen_rock_bay",
+      "r": 10,
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "status": "placed",
+      "distanceOnly": false
+    }
+  ]
+}

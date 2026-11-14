@@ -14,7 +14,7 @@ try {
   browser = await launchBrowser();
   for (const vp of [
     { tag: 'desktop', v: { width: 1440, height: 900, deviceScaleFactor: 1 } },
-    { tag: 'mobile', v: { width: 393, height: 852, deviceScaleFactor: 3, isMobile: true, hasTouch: true } },
+    { tag: 'mobile', v: { width: 390, height: 844, deviceScaleFactor: 3, isMobile: true, hasTouch: true } },
   ]) {
     const T = vp.tag;
     const page = await browser.newPage();
@@ -39,6 +39,20 @@ try {
     await sleep(900);
     rep.checks[`${T}-journalGuideLinks`] = await ev(() => document.querySelectorAll('a[href*="guide"]').length);
     await page.screenshot({ path: path.join(OUT, `${T}-journal.png`) });
+    // QA M5: every 手札 tab is visible inside the notebook and clear of the ✕ (390 px phones wrap them to 2 rows)
+    rep.checks[`${T}-tabsVisible`] = await ev(() => {
+      const nb = document.getElementById('journal').getBoundingClientRect();
+      const x = document.getElementById('journal-close').getBoundingClientRect();
+      const hit = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+      const tabs = [...document.querySelectorAll('#journal-tabs button')].map((b) => ({ t: b.textContent, r: b.getBoundingClientRect() }));
+      const bad = tabs.filter(({ r }) => r.width === 0 || r.left < nb.left - 60 || r.right > nb.right + 60 || r.right > window.innerWidth || hit(r, x)).map((b) => b.t);
+      return bad.length ? bad : true;
+    });
+    // QA M3 / M4: the 族語 tab shows Traditional Chinese only (no English categories, no developer notes)
+    await page.click('#journal-tabs [data-tab="glossary"]');
+    await sleep(500);
+    rep.checks[`${T}-glossaryZhOnly`] = await ev(() => { const t = document.getElementById('journal').innerText; return !/｜(phrase|nature|food)|Phase [A-Z]/.test(t) || t.slice(0, 300); });
+    await page.screenshot({ path: path.join(OUT, `${T}-journal-glossary.png`) });
     rep.checks[`${T}-party`] = await ev(() => window.__TAO_RPG__.party().controlled);
     await page.close();
   }
@@ -49,7 +63,7 @@ try {
   await g.close();
   const c = rep.checks;
   rep.ok = rep.errors.length === 0 && rep.http4xx.length === 0 && c.guideStatus === 200
-    && ['desktop', 'mobile'].every((t) => c[`${t}-coverGuideLinks`] === 0 && c[`${t}-journalGuideLinks`] === 0 && c[`${t}-imorod`]);
+    && ['desktop', 'mobile'].every((t) => c[`${t}-coverGuideLinks`] === 0 && c[`${t}-journalGuideLinks`] === 0 && c[`${t}-imorod`] && c[`${t}-tabsVisible`] === true && c[`${t}-glossaryZhOnly`] === true);
   fs.writeFileSync(path.join(OUT, 'report-smoke.json'), JSON.stringify(rep, null, 2));
   console.log(JSON.stringify(rep, null, 1));
 } finally {

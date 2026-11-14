@@ -1,4 +1,7 @@
 import * as THREE from 'three';
+import { seasonLook } from '../render/look';
+import { setPaintLook, worldStyle } from '../render/stylize';
+import { PAINT } from '../render/styleConfig';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Assets } from './assets';
 import { Input, type InputAction } from './input';
@@ -12,12 +15,20 @@ import { addQuestPlaces, hostPlaces } from '../world/places';
 import { TaroTerraces } from '../world/paddies';
 import { sample, sampleHM, gridAsync, TERRAIN_BOX, distToRing } from '../world/height';
 import { Player, type PlayerMode } from '../entities/player';
-import { NpcSystem, type NpcActor } from '../entities/npcs';
+import { NpcSystem, NPC_LOAD_AHEAD, type NpcActor } from '../entities/npcs';
 import { UI, type Overlay } from '../ui/dom';
 import { isIOS, preferredPixelRatio } from './device';
 import { quality } from './quality';
 import { clamp } from './math';
-import { fmt, type DialogueFile, type DialogueNode, type DialogueUnlocks, type PlayableOrigin, type UiContent } from './content';
+import { checkShape, fmt, type DialogueNode, type DialogueUnlocks, type PlayableOrigin, type UiContent } from './content';
+import { content, type ContentDB } from '../content/loader';
+import { Dialogue } from '../systems/dialogue';
+import { Inventory } from '../systems/inventory';
+import { Gathering, type LiveNode } from '../systems/gathering';
+import { PhotoSpots } from '../systems/photoSpots';
+import { Recipes } from '../systems/recipes';
+import { Outfits } from '../systems/outfits';
+import { fitClock, seasonTag } from '../systems/timeWindow';
 import { yieldToUi } from './frame';
 import { lastPaintMs, Island, WORLD_BOX } from '../world/island';
 import { initCollision, canStand, PLAYER_RADIUS } from '../world/collision';
@@ -31,7 +42,7 @@ import type { QuestDef, QuestStep, Role, StepLine } from '../quests/types';
 import { readSave, writeSave, clearSave, validateSave, type SaveJSON } from './save';
 import { CHAR_WORLD_H } from '../entities/billboard';
 import type { QuestCardVM } from '../ui/dom';
-import { showDive, showSongCard, renderAlbum, renderSaveTab, type AlbumVM, type SongVM } from '../ui/phase1b';
+import { closeImagePopup, showDive, showSongCard, renderAlbum, renderSaveTab, type AlbumVM, type SongVM } from '../ui/phase1b';
 
 const ROLE_ZH: Record<Role, string> = { m: '族男', f: '族女', t: '旅人' };
 type DlgLine = { who: string; zh: string; tao: string; portrait?: string; unlocks?: DialogueUnlocks };
@@ -82,13 +93,43 @@ export class Game {
   private places: Record<string, PlaceRec> = {};
   private groundFx = true;
   private diveOpen = false;
-  private dialogues!: DialogueFile;
+  /** bundled content (content/*.json via src/content/loader.ts) and the systems built on it */
+  private db!: ContentDB;
+  private dlg!: Dialogue;
+  private inv!: Inventory;
+  private gathering!: Gathering;
+  private photos!: PhotoSpots;
+  private recipeSys!: Recipes;
+  private outfits!: Outfits;
+  /** per-NPC talk counter (rotates chat lines) */
+  private chatTurn = new Map<string, number>();
   private camYaw = 0.62;
   private camPitch = 0.6;
   private camDist = 22;
   private camBtn = 0;
   private dlgQueue: DlgLine[] = [];
   private mg: { kind: 'taro' | 'fish'; t: number; dir: number; s0: number; s1: number } | null = null;
+  /** quest mini-game (sea trip): called with the result instead of the free-play rewards */
+  private mgDone: ((ok: boolean) => void) | null = null;
+  /** test hook: the next mini-game hits by itself */
+  private mgAuto = false;
+  /** party split: last state applied to each follower (`st|at`) so a member is moved only when it changes */
+  private memberKey: Partial<Record<Role, string>> = {};
+  /** NPC streaming: re-check distances every 0.4 s */
+  private streamTick = 0;
+  private streamAt = 0;
+
+  /** load NPC sprites near the camera target, dispose far ones (hysteresis in NpcSystem.stream) */
+  private streamNpcs(): void {
+    this.streamTick = 1;
+    this.streamAt = performance.now();
+    // the title screen shows the island from far away: no NPC sprites until the journey starts
+    if (!this.state.started) return;
+    const c = this.focus ?? { x: this.player.x, z: this.player.z };
+    // the camera sits at target + (sin yaw, cos yaw) × distance: the visible ground is the other way
+    const ahead = this.camDist * NPC_LOAD_AHEAD;
+    this.npcs.stream(c.x - Math.sin(this.camYaw) * ahead, c.z - Math.cos(this.camYaw) * ahead, this.camDist, charZoomScale(this.camDist));
+  }
   private raf = 0;
   private frameNo = 0;
   private contextLost = false;
@@ -197,6 +238,7 @@ export class Game {
       onScooter: () => this.toggleScooter(),
       onFastTravel: (id) => this.fastTravel(id),
       onSwitch: (r) => this.switchMember(r),
+      onSoloAbort: () => this.abortSolo(),
       onContinue: () => {
         const sv = readSave();
         if (sv) this.resume(sv);
@@ -318,9 +360,12 @@ export class Game {
   }
 
   private async buildWorld(): Promise<void> {
-    this.places = this.assets.data('places').places;
-    this.dialogues = this.assets.data('dialogues');
-    this.content = this.assets.data('ui');
+    this.db = content();
+    this.places = JSON.parse(JSON.stringify(this.db.places)) as Record<string, PlaceRec>;
+    this.dlg = new Dialogue(this.db.dialogues);
+    this.content = checkShape<UiContent>('ui', this.db.ui);
+    checkShape('glossary', this.db.glossary);
+    checkShape('milestones', this.db.milestones);
     this.ui.setContent(this.content);
 
     this.island = new Island(this.assets);
@@ -368,19 +413,48 @@ export class Game {
     this.party = new Party(this.assets);
     this.party.group.visible = false;
     this.scene.add(this.party.group);
-    this.quests = new QuestEngine(this.assets.data('quests'));
+    this.quests = new QuestEngine(this.db.questFile);
+    this.inv = new Inventory(this.db.items, () => this.quests);
+    this.gathering = new Gathering(this.db.gatherNodes);
+    this.photos = new PhotoSpots(this.db.photoSpots);
+    this.outfits = new Outfits(this.db.outfits, () => this.quests);
+    this.ui.codexVM = () => ({
+      inv: this.inv,
+      outfits: ROLES.flatMap((r) => this.outfits.available(r, this.quests.outfits).map((def) => ({ def, role: r, worn: this.outfits.equipped[r] === def.id }))),
+      roleZh: ROLE_ZH,
+      onWear: (r, id) => void this.wearOutfit(r, id).then(() => this.refreshJournal()),
+    });
+    this.recipeSys = new Recipes(
+      this.db.recipes,
+      this.db.items,
+      (id) => this.db.npcs.find((n) => n.id === id)?.name.zh ?? id,
+      (id) => this.places[id]?.zh ?? id,
+      (id) => {
+        const n = this.db.gatherNodes.find((g) => g.id === id);
+        return n ? { label: n.label, place: n.place } : null;
+      },
+    );
     // M5: every finished step's glossary / toast, also auto steps finished inside refresh()
     this.quests.onGives = (g) => {
       if (g.glossary?.length) {
         const fresh = this.state.unlock(this.state.glossary, g.glossary);
         if (fresh.length) this.ui.toast('族語詞卡', `學會 ${fresh.length} 個新詞，已寫進手札。`);
       }
+      if (g.recipe) this.state.unlock(this.state.recipes, [g.recipe]);
+      const ing = (g.items ?? []).filter((i) => this.db.items.get(i)?.category === 'ingredient');
+      if (ing.length) this.state.unlock(this.state.ingredients, ing);
+      g.items?.forEach((i) => this.quests.collect.add(`item:${i}`));
+      if (g.outfits?.length) {
+        for (const o of g.outfits) void this.outfits.ensure(o, (rel) => this.assets.acquire(rel));
+        if (!g.toast) this.ui.toast('解鎖服裝', `${g.outfits.map((o) => this.outfits.byId.get(o)?.name.zh ?? o).join('、')}：在手札的「背包」頁可以換穿。`);
+      }
       if (g.toast) this.ui.toast(g.toast[0], g.toast[1]);
     };
+    this.quests.onParty = () => this.applyPartyState();
     this.scene.add(this.markerRoot);
 
     this.addQuestPlaces();
-    this.npcs = new NpcSystem(this.assets, this.assets.data('npcs').npcs, this.places);
+    this.npcs = new NpcSystem(this.assets, this.db.npcs, this.places);
     this.npcs.applySchedule(this.state.period, this.state.season);
     this.scene.add(this.npcs.group);
 
@@ -424,6 +498,8 @@ export class Game {
       this.ui.hideOverlaysStart();
       this.quests.reset();
       this.quests.flags.add('party_created');
+      this.memberKey = {};
+      this.syncStay(false);
       this.syncQuestCtx();
       this.quests.refresh();
       this.refreshPartyUi();
@@ -458,6 +534,9 @@ export class Game {
       this.party.setup(this.assets, this.partyOutfits(), c, this.player, pos);
       this.party.group.visible = true;
       this.player.setOutfit(this.assets, this.roleOutfit(c));
+      // worn outfits: load their art (missing art keeps the everyday look), then dress everyone
+      const worn = Object.values(this.quests.wear).filter((x): x is string => !!x);
+      if (worn.length) void Promise.all(worn.map((id) => this.outfits.ensure(id, (rel) => this.assets.acquire(rel)))).then(() => this.applyOutfits());
       if (sv.party.scooter && this.quests.flags.has('has_scooter')) this.player.setScooter(true);
       this.ui.setScooter(this.player.scooter);
       this.camYaw = CAM_DEFAULT.yaw;
@@ -472,6 +551,10 @@ export class Game {
       this.setLang(this.state.lang);
       this.syncQuestCtx();
       this.handleQuestEvents(this.quests.refresh(), true); // M4: silent, but marks the log dirty
+      // party split: members stay where the save put them (no re-placing at their task spot)
+      this.memberKey = {};
+      this.syncStay(false);
+      if (this.quests.memberBlock(c)) this.applyPartyState();
       this.refreshPartyUi();
       this.questDirty = true;
       this.ui.toast('讀取存檔', '從上次離開的地方繼續。');
@@ -488,6 +571,8 @@ export class Game {
   }
 
   private setPeriod(p: Period): void {
+    // gathering: daily limits reset when the night ends
+    if (this.quests && Gathering.newDay(this.state.period, p)) this.gathering.resetDay(this.quests.counters);
     this.state.period = p;
     this.state.seenTimes.add(p);
     if (this.state.seenTimes.size === 4) this.maybeMilestone('all-times', this.content.text.allTimesTitle, this.content.text.allTimesBody);
@@ -525,13 +610,16 @@ export class Game {
     this.terraces.apply({ zenith: pre.zenith, horizon: pre.horizon, sunDir: pre.sunDir, sunColor: pre.sunColor, night: p === 'night' ? 1 : p === 'dusk' ? 0.5 : 0 });
     this.renderer.toneMappingExposure = pre.exposure;
     if (this.post.bloom) {
-      this.post.bloom.strength = pre.bloom;
+      this.post.bloom.strength = pre.bloom * (worldStyle() === 'watercolor' ? PAINT.bloom : 1);
       this.post.bloom.threshold = p === 'night' ? 0.55 : p === 'dusk' ? 0.72 : 0.86;
     }
     if (this.post.grade) {
-      this.post.grade.uniforms.uWarm.value = p === 'dusk' ? 0.6 : p === 'dawn' ? 0.35 : s === 'manoyotoyon' ? 0.25 : 0;
-      this.post.grade.uniforms.uSat.value = s === 'off' ? 0.94 : 1.08;
+      const look = seasonLook(s); // src/render/styleConfig.ts
+      this.post.grade.uniforms.uWarm.value = p === 'dusk' ? 0.6 : p === 'dawn' ? 0.35 : look.warm;
+      this.post.grade.uniforms.uSat.value = look.sat;
+      this.post.grade.uniforms.uVignette.value = worldStyle() === 'watercolor' ? PAINT.vignette : 0.28;
     }
+    setPaintLook(p, s);
     document.documentElement.dataset.period = p;
     document.documentElement.dataset.season = s;
   }
@@ -607,6 +695,7 @@ export class Game {
   /** close every modal layer: mini-game, dialogue queue, journal, travel sheet, help */
   private closeAll(): void {
     if (this.mg) this.cancelMinigame();
+    if (this.diveOpen) closeImagePopup(); // the dive counts as seen; playDive finishes the step
     this.dlgQueue = [];
     this.afterDialogue = null;
     this.ui.closeDialogue();
@@ -617,13 +706,20 @@ export class Game {
   }
 
   /** closest NPC (preferred) or decor interactable in reach, shared by the prompt and the interact action */
-  private nearestTarget(): { npc: NpcActor } | { spot: { q: QuestDef; st: QuestStep } } | { it: WorldDecor['interactables'][number] } | null {
+  private nearestTarget(): { npc: NpcActor } | { spot: { q: QuestDef; st: QuestStep; sub: number } } | { gather: LiveNode } | { it: WorldDecor['interactables'][number] } | null {
     const px = this.player.x;
     const pz = this.player.z;
     const npc = this.npcs.nearest(px, pz, 2.4);
-    if (npc) return { npc };
+    // nearest gather spot in range (貝類 / 海菜 share the 東清 shore)
+    const g = this.gatherSpots().filter((s) => Math.hypot(s.x - px, s.z - pz) <= s.r).sort((a, b) => Number(!!a.blocked) - Number(!!b.blocked) || Math.hypot(a.x - px, a.z - pz) - Math.hypot(b.x - px, b.z - pz))[0];
+    // a passer-by wandering over a gather node must not block it (they only have small talk)
+    if (npc && !(g && npc.def.role === 'passerby')) return { npc };
     const spot = this.nearestQuestSpot(px, pz);
+    // quest spots have wide radii (8–12 m) and would swallow the small gather nodes inside them:
+    // a gather node wins when the quest step can't run now, or when the player stands closer to the node
+    if (spot && g && (!spot.ready || Math.hypot(g.x - px, g.z - pz) < spot.d)) return { gather: g };
     if (spot) return { spot };
+    if (g) return { gather: g };
     let best: WorldDecor['interactables'][number] | null = null;
     let bestD = Infinity;
     for (const it of this.decor.interactables) {
@@ -644,7 +740,11 @@ export class Game {
       return;
     }
     if (near && 'spot' in near) {
-      this.useQuestSpot(near.spot.q, near.spot.st);
+      this.useQuestSpot(near.spot.q, near.spot.st, near.spot.sub);
+      return;
+    }
+    if (near && 'gather' in near) {
+      this.useGatherNode(near.gather);
       return;
     }
     if (near) {
@@ -670,7 +770,7 @@ export class Game {
     list.length = 0;
     const p = this.player;
     list.push(p.mode === 'scooter' ? p.rideSprite : p.mode === 'canoe' ? p.canoeSprite : p.sprite);
-    for (const a of this.npcs.actors) if (a.sprite.mesh.visible) list.push(a.sprite);
+    for (const a of this.npcs.actors) if (a.sprite?.mesh.visible) list.push(a.sprite);
     if (this.state.started) this.party.sprites(list);
     const cam = this.camera;
     const boxes = this.tintBox;
@@ -680,7 +780,7 @@ export class Game {
     for (const s of list) {
       if (s.mesh.scale.x !== zs) s.mesh.scale.setScalar(zs);
     }
-    for (const a of this.npcs.actors) if (!a.sprite.mesh.visible && a.sprite.mesh.scale.x !== zs) a.sprite.mesh.scale.setScalar(zs);
+    for (const a of this.npcs.actors) if (a.sprite && !a.sprite.mesh.visible && a.sprite.mesh.scale.x !== zs) a.sprite.mesh.scale.setScalar(zs);
     for (const s of list) {
       const m = s.mesh.position;
       s.shade = s === p.canoeSprite ? 0 : shadeAt(m.x, m.z);
@@ -716,6 +816,10 @@ export class Game {
   }
 
   private roleOutfit(r: Role): string {
+    return this.outfits.look(r, { sheet: this.baseOutfit(r), portrait: this.basePortrait(r) }, this.state.gender === 'f' ? 'f' : 'm').sheet;
+  }
+
+  private baseOutfit(r: Role): string {
     if (r === 'm') return 'player';
     if (r === 'f') return 'player_f';
     return this.state.gender === 'f' ? 'player_visitor_f' : 'player_visitor';
@@ -731,9 +835,30 @@ export class Game {
 
   /** Painted portraits: 族男 local / 族女 local_f; traveller visitor_m / visitor (old 外國 saves migrate in GameState.fromJSON). */
   private rolePortrait(r: Role): string {
+    return this.outfits.look(r, { sheet: this.baseOutfit(r), portrait: this.basePortrait(r) }, this.state.gender === 'f' ? 'f' : 'm').portrait;
+  }
+
+  private basePortrait(r: Role): string {
     if (r === 'm') return 'local';
     if (r === 'f') return 'local_f';
     return this.state.gender === 'f' ? 'visitor' : 'visitor_m';
+  }
+
+  /** wear an unlocked outfit (null = everyday clothes); swaps the sprite and the portrait, falls back when art is missing */
+  private async wearOutfit(r: Role, id: string | null): Promise<boolean> {
+    if (id) await this.outfits.ensure(id, (rel) => this.assets.acquire(rel));
+    if (!this.outfits.equip(r, id, this.quests.outfits)) return false;
+    this.applyOutfits();
+    this.saveNow();
+    return true;
+  }
+
+  private applyOutfits(): void {
+    if (!this.state.started) return;
+    const c = this.party.controlled;
+    this.player.setOutfit(this.assets, this.roleOutfit(c));
+    for (const f of this.party.followers) if (f.role) f.assign(this.assets, f.role, this.roleOutfit(f.role));
+    this.refreshPartyUi();
   }
 
   /** board / leave a tatala (debug hook today; the tatala quest line will call this) */
@@ -754,6 +879,18 @@ export class Game {
     }
     const node = this.dialogueNode(id);
     if (!node) {
+      // first talk: the set's intro node (its words / milestones), until everything it teaches is learned
+      const intro = this.dlg.get(id)?.intro;
+      const iNode = intro ? this.dialogueNode(intro) : undefined;
+      if (iNode && (iNode.unlocks?.glossary ?? []).some((w) => !this.state.glossary.has(w))) {
+        this.openLines(preferWho ? fallbackWho : iNode.speaker?.zh || fallbackWho, iNode.lines, iNode.unlocks, portrait);
+        return;
+      }
+      const lines = this.npcChat(id);
+      if (lines.length) {
+        this.openLines(fallbackWho, lines.map((l) => ({ zh: l.zh, tao: l.tao ?? '' })), undefined, portrait);
+        return;
+      }
       this.openLines(fallbackWho, [{ zh: this.content.text.fallbackLine, tao: '' }], undefined, portrait);
       return;
     }
@@ -761,11 +898,27 @@ export class Game {
     this.openLines(who, node.lines, node.unlocks, portrait);
   }
 
-  /** a dialogue node by id (notes / origins and unknown ids → undefined) */
+  /** chat lines of an NPC dialogue set (greet / duty / idle by time and season / after-quest / recipe keeper) */
+  private npcChat(id: string): { zh: string; tao?: string }[] {
+    const set = this.dlg.get(id);
+    if (!set) return [];
+    const turn = this.chatTurn.get(id) ?? 0;
+    this.chatTurn.set(id, turn + 1);
+    const npc = set.npc;
+    const ks = npc ? this.recipeSys.keeperState(npc, this.recipeCtx()) : null;
+    const learned = npc ? this.db.recipes.some((r) => r.keeper === npc && this.state.recipes.has(r.id)) : false;
+    return this.dlg.chat(id, {
+      time: this.state.period === 'night' ? 'night' : 'day',
+      season: seasonTag(this.state.season),
+      done: (q) => this.quests.done.has(q),
+      keeper: ks || learned ? { active: !!ks, learned, missing: ks ? Object.entries(ks.missing).map(([i, n]) => `${this.inv.name(i)} ×${n}`).join('、') : '' } : null,
+      turn,
+    });
+  }
+
+  /** a legacy dialogue node by id (notes / origins, NPC sets and unknown ids → undefined) */
   private dialogueNode(id: string): DialogueNode | undefined {
-    if (id === 'notes' || id === 'origins') return undefined;
-    const n = this.dialogues[id] as DialogueNode | undefined;
-    return n && Array.isArray(n.lines) ? n : undefined;
+    return this.dlg.node(id) as DialogueNode | undefined;
   }
 
   private handleFish(): void {
@@ -773,7 +926,7 @@ export class Game {
     if (this.state.season === 'rayon') {
       const node = this.dialogueNode('fish_rayon');
       if (!node) return;
-      this.openLines(node.speaker?.zh || fisher, node.lines, undefined, 'fisher');
+      this.openLines(node.speaker?.zh || fisher, node.lines, undefined, 'villager_harbor');
       // the mini-game starts when this dialogue ends, however it is advanced (button, E/Space/Enter)
       this.afterDialogue = () => this.startMinigame('fish');
       return;
@@ -781,28 +934,47 @@ export class Game {
     const key = this.state.season === 'meyvanwa' ? 'fish_meyvanwa' : 'fish_closed';
     const node = this.dialogueNode(key);
     if (!node) return;
-    this.openLines(node.speaker?.zh || fisher, node.lines, node.unlocks, 'fisher');
+    this.openLines(node.speaker?.zh || fisher, node.lines, node.unlocks, 'villager_harbor');
   }
 
-  private startMinigame(kind: 'taro' | 'fish'): void {
+  private startMinigame(kind: 'taro' | 'fish', done?: (ok: boolean) => void): void {
     this.mg = { kind, t: 0.08, dir: 1, s0: 0.62, s1: 0.78 };
+    this.mgDone = done ?? null;
     const m = this.content.minigames[kind];
     this.activity = 'minigame';
     this.ui.openMinigame(m.title, m.desc);
+    if (this.mgAuto) {
+      this.mgAuto = false;
+      this.mg.t = (this.mg.s0 + this.mg.s1) / 2;
+      this.hitMinigame();
+    }
   }
 
   private cancelMinigame(): void {
+    const done = this.mgDone;
+    this.mgDone = null;
     this.mg = null;
     this.ui.closeMinigame();
     if (this.activity === 'minigame') this.activity = 'explore';
+    // closing a quest mini-game counts as a miss (the sea trip steps ashore)
+    if (done && this.player.mode === 'canoe') this.setCanoe(false);
   }
 
   private hitMinigame(): void {
     if (!this.mg) return;
     const ok = this.mg.t >= this.mg.s0 && this.mg.t <= this.mg.s1;
     const m = this.content.minigames[this.mg.kind];
+    const kind = this.mg.kind;
+    const done = this.mgDone;
+    this.mgDone = null;
     this.cancelMinigame();
+    if (done) {
+      done(ok);
+      return;
+    }
     if (ok) {
+      // recipes: every success is one ingredient in the bag (水芋 from the taro field, 飛魚 from the fishing spot)
+      this.addIngredient(kind === 'taro' ? 'soli' : 'alibangbang', 1, kind === 'taro' ? '水芋田採收' : '捕飛魚體驗');
       const st = this.state;
       st.unlock(st.ingredients, m.unlocks.ingredients);
       st.unlock(st.glossary, m.unlocks.glossary);
@@ -826,20 +998,140 @@ export class Game {
   }
 
   private refreshPartyUi(): void {
-    this.ui.setParty(ROLES.map((r) => ({ role: r, label: ROLE_ZH[r], portrait: this.rolePortrait(r), active: r === this.party.controlled })));
+    const E = this.quests;
+    this.ui.setParty(ROLES.map((r) => ({
+      role: r,
+      label: ROLE_ZH[r],
+      portrait: this.rolePortrait(r),
+      active: r === this.party.controlled,
+      status: this.memberStatus(r),
+      away: E.members[r].st !== 'party',
+      locked: r !== this.party.controlled && !!E.memberBlock(r),
+    })));
+    // split banner: regroup point + who is where; 放棄出海 while a solo trip runs
+    if (E.isSplit()) {
+      const away = ROLES.filter((r) => E.members[r].st !== 'party').map((r) => `${ROLE_ZH[r]}：${this.memberStatus(r)}`);
+      const meet = E.meet ? `集合點：${this.placeZh(E.meet)}｜` : '';
+      this.ui.setSplit(`${E.solo ? `只能操控${ROLE_ZH[E.solo]}｜` : '分頭行動｜'}${meet}${away.join('；')}`, !!E.solo);
+    } else this.ui.setSplit(null, false);
+  }
+
+  private placeZh(id?: string): string {
+    if (!id) return '';
+    // places first, then landmarks (e.g. dasenshan → 大森山); never show a raw id to players
+    return this.places[id]?.zh ?? this.photos.resolve({ places: this.places, landmarks: LANDMARKS }, id)?.zh ?? '';
+  }
+
+  /** HUD line for a member: 在隊上 / 離隊：task（place） / 在 place 等 */
+  private memberStatus(r: Role): string {
+    const m = this.quests.members[r];
+    if (m.st === 'party') return '在隊上';
+    if (m.st === 'wait') return `在${this.placeZh(m.at)}等${m.task && !m.task.includes('等') ? `（${m.task}）` : ''}`;
+    return `離隊：${m.task ?? ''}${m.at ? `（${this.placeZh(m.at)}）` : ''}`;
+  }
+
+  /** the a akes (女性長輩) of a village: npcs.json elder 'f' (quests.json elders.f) */
+  private hostFemaleId(v: string = this.state.origin ?? 'yayo'): string {
+    return this.quests.file.elders?.f?.[v] ?? 'weaver_elder';
+  }
+
+  /** who an NPC token in quest data means: @host = the host family's elder, @hostf = the host village's a akes, @giver = the quest's 女／男耆老 */
+  private npcFor(token: string | undefined, q: QuestDef): string {
+    if (token === '@host') return this.hostId();
+    if (token === '@hostf') return this.hostFemaleId();
+    if (token === '@giver') return this.giverId(q);
+    return token ?? '';
+  }
+
+  private giverId(q: QuestDef): string {
+    const v = this.state.origin ?? 'yayo';
+    const g = q.giver ?? 'm';
+    return this.quests.file.elders?.[g]?.[v] ?? (g === 'm' ? `elder_${v}` : 'weaver_elder');
+  }
+
+  /**
+   * Party split (docs/phase1/PARTY_SPLIT.md): pin away / waiting followers, send newly away ones to their place,
+   * keep control on a member who may act (solo → the solo member; busy → someone in the party), refresh the HUD.
+   */
+  private applyPartyState(): void {
+    if (!this.party || !this.state.started) return;
+    const E = this.quests;
+    const me = this.party.controlled;
+    if (E.memberBlock(me)) {
+      const next = E.solo ?? ROLES.find((r) => r !== me && !E.memberBlock(r));
+      if (next && next !== me) {
+        const why = E.members[me].st !== 'party' ? `${ROLE_ZH[me]}${this.memberStatus(me)}` : '';
+        this.takeControl(next);
+        this.ui.toast(`換成${ROLE_ZH[next]}`, why || `現在操控${ROLE_ZH[next]}。`);
+      }
+    }
+    this.syncStay(true);
+    this.refreshPartyUi();
+    this.questDirty = true;
+  }
+
+  /** followers: away / waiting members (or everyone, when the leader is away) stay put; changed ones go to their place */
+  private syncStay(move: boolean): void {
+    const E = this.quests;
+    const leaderAway = E.members[this.party.controlled].st !== 'party';
+    for (const f of this.party.followers) {
+      const m = E.members[f.role];
+      f.stay = m.st !== 'party' || leaderAway;
+      const key = `${m.st}|${m.at ?? ''}`;
+      const prev = this.memberKey[f.role];
+      this.memberKey[f.role] = key;
+      if (!move || prev === key || m.st === 'party' || !m.at) continue;
+      // a switchable away member who just stopped being controlled keeps standing where the player left them;
+      // busy members and those who finished their part (wait) go to their place / the regroup point
+      if (prev === undefined && m.st === 'away' && m.ctrl) continue;
+      const p = this.places[m.at];
+      if (!p) continue;
+      const k = ROLES.indexOf(f.role);
+      f.place(p.x + Math.cos(k * 2.1) * 1.6, p.z + Math.sin(k * 2.1) * 1.6, 0);
+    }
+    if (move && !leaderAway) {
+      // members back in the party rejoin the leader
+      const back = this.party.followers.filter((f) => !f.stay && Math.hypot(f.x - this.player.x, f.z - this.player.z) > 12);
+      if (back.length) this.party.snapAround(this.player);
+    }
+  }
+
+  /** 放棄出海: the solo member gives up and everyone regroups (the quest goes back to its abortTo step) */
+  private abortSolo(): void {
+    if (!this.quests.solo) return;
+    if (this.mg) this.cancelMinigame();
+    if (this.player.mode === 'canoe') this.setCanoe(false);
+    const q = this.quests.abortSolo();
+    this.ui.toast('放棄出海', `${q ? `「${q.name.zh}」回到上一步。` : ''}大家在岸邊會合了，之後可以再試。`);
+    this.party.snapAround(this.player);
+    this.questDirty = true;
+    this.saveNow();
   }
 
   /** take control of another member: the player swaps place / outfit with that follower */
   private switchMember(role: Role): void {
     if (!this.state.started || !this.party || role === this.party.controlled) return;
     if (this.isModalOpen()) return;
+    const block = this.quests.memberBlock(role);
+    if (block) {
+      this.ui.toast(`不能換成${ROLE_ZH[role]}`, block);
+      return;
+    }
     if (this.player.mode === 'canoe') {
       this.ui.toast('先上岸', '划船時不能換人。');
       return;
     }
+    this.takeControl(role);
+  }
+
+  /** swap control (no rule checks): together → swap places; split → the camera jumps to that member's place */
+  private takeControl(role: Role): void {
     const f = this.party.follower(role);
     if (!f) return;
+    if (this.player.mode === 'canoe') this.setCanoe(false);
+    const E = this.quests;
     const old = this.party.controlled;
+    const together = E.members[role].st === 'party' && E.members[old].st === 'party';
     const ox = this.player.x;
     const oz = this.player.z;
     const oyaw = this.player.yaw;
@@ -850,7 +1142,14 @@ export class Game {
     f.place(ox, oz, oyaw);
     this.party.controlled = role;
     this.party.resetTrail(this.player);
+    delete this.memberKey[role];
+    delete this.memberKey[old];
+    this.syncStay(true);
     this.focus = null;
+    if (!together) {
+      this.snapCam = true;
+      this.ui.toast(`切換到${ROLE_ZH[role]}`, E.members[role].st === 'party' ? '回到隊伍這邊。' : this.memberStatus(role));
+    }
     this.refreshPartyUi();
     this.questDirty = true;
     this.saveNow();
@@ -860,11 +1159,26 @@ export class Game {
   private speaker(who: string, npc: NpcActor | null): { who: string; portrait?: string } {
     if (who === '@npc' && npc) return { who: npc.def.name.zh, portrait: npc.def.portrait };
     if (who === '@me') return { who: ROLE_ZH[this.party.controlled], portrait: this.protagonistPortrait() };
+    // NPC ids (content quests name the speaker directly) and @host / @hostf / @giver tokens
+    const id = this.speakerNpcId(who, npc);
+    if (id) {
+      const d = this.npcs.byId(id)?.def ?? this.db.npcs.find((n) => n.id === id);
+      if (d) return { who: d.name.zh, portrait: d.portrait };
+    }
     if (who === '@m' || who === '@f' || who === '@t') {
       const r = who.slice(1) as Role;
       return { who: ROLE_ZH[r], portrait: this.rolePortrait(r) };
     }
     return { who };
+  }
+
+  /** NPC id behind a speaker token (@host 主人家男耆老, @hostf 主人家女耆老, @giver 任務分派的耆老) or an NPC id */
+  private speakerNpcId(who: string, npc: NpcActor | null): string | null {
+    if (who === '@host') return this.hostId();
+    if (who === '@hostf') return this.hostFemaleId();
+    // @giver in a line = the elder the player is talking to (the giver's own talk step)
+    if (who === '@giver') return npc?.def.id ?? null;
+    return this.db.npcs.some((n) => n.id === who) ? who : null;
   }
 
   private toDlg(lines: StepLine[], npc: NpcActor | null): DlgLine[] {
@@ -878,14 +1192,15 @@ export class Game {
   }
 
   /** run a step's dialogue, then complete it (extra lines: Tao hints / translations said in the same talk) */
-  private runStep(q: QuestDef, st: QuestStep, npc: NpcActor | null, extra: DlgLine[] = [], onDone?: () => void): void {
+  private runStep(q: QuestDef, st: QuestStep, npc: NpcActor | null, extra: DlgLine[] = [], onDone?: () => void, sub = -1): void {
     const lines = [...this.toDlg(st.lines ?? [], npc), ...extra];
     const idx = this.quests.active.get(q.id);
     const finish = (): void => {
       onDone?.();
-      // S8: only complete the step that opened this dialogue
+      // S8: only complete the step (member part) that opened this dialogue
       if (this.quests.active.get(q.id) !== idx) return;
-      this.completeStep(q);
+      if (sub >= 0 && this.quests.taskDone(q, sub)) return;
+      this.completeStep(q, sub);
     };
     if (!lines.length) {
       finish();
@@ -894,8 +1209,9 @@ export class Game {
     this.openQueue(lines, finish);
   }
 
-  private completeStep(q: QuestDef): void {
-    const ev = this.quests.advance(q); // glossary / toast via quests.onGives (M5)
+  private completeStep(q: QuestDef, sub = -1): void {
+    // glossary / toast via quests.onGives (M5); a member part of a tasks step finishes the step when it is the last one
+    const ev = sub >= 0 ? this.quests.completeTask(q, sub) : this.quests.advance(q);
     this.syncQuestCtx();
     ev.push(...this.quests.refresh());
     this.handleQuestEvents(ev);
@@ -925,8 +1241,17 @@ export class Game {
   /** why the controlled member cannot do this step right now (null = go) */
   private stepBlock(q: QuestDef, st: QuestStep): string | null {
     const role = this.party.controlled;
+    const E = this.quests;
+    // party split: a solo trip blocks everything else; quests whose members are all away wait for them
+    if (E.solo && E.members[E.solo].quest !== q.id) return `${ROLE_ZH[E.solo]}正在${E.members[E.solo].task ?? '外面'}，先完成或放棄出海再來。`;
+    const roles = st.actor ?? q.roles;
+    if (!roles.includes(role)) {
+      const away = roles.filter((r) => E.memberBlock(r));
+      if (away.length && away.length === roles.length) return `${away.map((r) => `${ROLE_ZH[r]}${this.memberStatus(r)}`).join('；')}，暫時不能做這件事。`;
+    }
+    for (const r of st.requires ?? []) if (E.members[r].st !== 'party') return `${ROLE_ZH[r]}還沒回隊（${this.memberStatus(r)}）。`;
     if (!this.quests.canAct(st, q, role)) return `這件事要請${(st.actor ?? q.roles).map((r) => ROLE_ZH[r]).join('或')}來做。`;
-    const w = this.quests.whenOk(q.when);
+    const w = this.questWindow(q);
     if (!w.ok) return `${w.why}再來吧。`;
     const last = this.quests.active.get(q.id) === q.steps.length - 1;
     const mi = last ? this.quests.missingItem(q) : null;
@@ -934,7 +1259,10 @@ export class Game {
     const need = st.need ?? q.need;
     if (need) {
       const miss = this.missingMembers(need);
-      if (miss.length) return `還需要${miss.join('、')}一起到場。`;
+      if (miss.length) {
+        const away = ROLES.filter((r) => r !== role && E.members[r].st !== 'party' && need.some((n) => n.includes(r)));
+        return `還需要${miss.join('、')}一起到場。${away.length ? `（${away.map((r) => `${ROLE_ZH[r]}${this.memberStatus(r)}`).join('；')}）` : ''}`;
+      }
     }
     if (st.translate && !this.untranslated().length) return '還沒有聽到只說族語的提示。';
     return null;
@@ -992,7 +1320,7 @@ export class Game {
       const ph = q.hint.phrase ? this.quests.file.phrases[q.hint.phrase] : undefined;
       if (!ph) continue;
       ids.push(id);
-      out.push({ who: npc.def.name.zh, portrait: npc.def.portrait, zh: '（長輩只用族語說了一句話。聽不懂……先記進筆記本，帶去椰油的學校問族語老師。）', tao: ph.tao });
+      out.push({ who: npc.def.name.zh, portrait: npc.def.portrait, zh: '（長輩只用族語說了一句話。聽不懂……先記進手札，帶去椰油的學校問族語老師。）', tao: ph.tao });
     }
     return { lines: out, ids };
   }
@@ -1010,23 +1338,23 @@ export class Game {
   }
 
   /** quest-aware talk: a runnable step wins; otherwise explain what is missing; otherwise the NPC's usual lines */
-  private talkToNpc(npc: NpcActor): void {
+  private talkToNpc(npc: NpcActor, prefer?: string): void {
     const id = npc.def.id;
     // batch 1b: 第一次見到某人 (U2 needs the dive coach) — refresh so a quest unlocked by meeting is runnable now
     if (!this.quests.flags.has(`met_npc_${id}`)) {
       this.quests.flags.add(`met_npc_${id}`);
       this.handleQuestEvents(this.quests.refresh());
     }
-    const cands: { q: QuestDef; st: QuestStep }[] = [];
+    const cands: { q: QuestDef; st: QuestStep; sub: number }[] = [];
     for (const [qid] of this.quests.active) {
       const q = this.quests.get(qid)!;
-      const st = this.quests.step(q);
-      if (!st || st.kind !== 'talk') continue;
-      if ((st.npc === '@host' ? this.hostId() : st.npc) === id) cands.push({ q, st });
+      for (const o of this.quests.openSteps(q)) {
+        if (o.st.kind === 'talk' && this.npcFor(o.st.npc, q) === id) cands.push({ q, st: o.st, sub: o.sub });
+      }
     }
     const rank = (q: QuestDef): number => (q.line === 'main' ? 0 : q.line === 'side' ? 1 : 2);
-    cands.sort((a, b) => rank(a.q) - rank(b.q));
-    let run: { q: QuestDef; st: QuestStep } | null = null;
+    cands.sort((a, b) => (a.q.id === prefer ? -1 : 0) - (b.q.id === prefer ? -1 : 0) || rank(a.q) - rank(b.q));
+    let run: { q: QuestDef; st: QuestStep; sub: number } | null = null;
     let why: { q: QuestDef; msg: string } | null = null;
     for (const c of cands) {
       const msg = this.stepBlock(c.q, c.st);
@@ -1044,12 +1372,13 @@ export class Game {
       this.runStep(run.q, run.st, npc, [...extra, ...tao], () => {
         if (tr) this.markTranslated();
         this.markHeard(taoIds);
-      });
+      }, run.sub);
       if (why && why.q.line === 'main' && why.msg.startsWith('這件事要請')) {
         this.ui.toast(why.q.name.zh, `${why.msg}（點左上角頭像切換）`);
       }
       return;
     }
+    if (this.shopIngredient(npc)) return;
     if (teacher && this.quests.done.has('X03') && this.untranslated().length) {
       const lines = [{ ...this.speaker('@npc', npc), zh: '又聽到族語了？我來翻譯。', tao: '' }, ...this.translateLines(npc)];
       this.openQueue(lines, () => {
@@ -1080,50 +1409,48 @@ export class Game {
   }
 
   private spotPos(st: QuestStep): { x: number; z: number } | null {
-    const id = st.spot;
-    if (!id) return null;
-    if (st.kind === 'photo') {
-      const ps = this.quests.file.photoSpots[id];
-      if (ps?.landmark) {
-        const lm = LANDMARKS.find((l) => l.id === ps.landmark);
-        return lm ? { x: lm.x, z: lm.z } : null;
-      }
-      const p = ps?.place ? this.places[ps.place] : undefined;
-      return p ? { x: p.x, z: p.z } : null;
-    }
-    const p = this.places[id];
+    const p = st.spot ? this.photos.resolve({ places: this.places, landmarks: LANDMARKS }, st.spot) : null;
     return p ? { x: p.x, z: p.z } : null;
   }
 
   private spotName(st: QuestStep): string {
-    const ps = st.spot ? this.quests.file.photoSpots[st.spot] : undefined;
-    if (ps?.landmark) return LANDMARKS.find((l) => l.id === ps.landmark)?.zh ?? st.spot ?? '';
-    const p = ps?.place ? this.places[ps.place] : st.spot ? this.places[st.spot] : undefined;
-    return p?.zh ?? st.spot ?? '';
+    return (st.spot ? this.photos.resolve({ places: this.places, landmarks: LANDMARKS }, st.spot)?.zh : '') || st.spot || '';
   }
 
-  private nearestQuestSpot(px: number, pz: number): { q: QuestDef; st: QuestStep } | null {
-    let best: { q: QuestDef; st: QuestStep } | null = null;
+  /** a quest's own window plus its photo spot's window (time / season / periods / tide) */
+  private questWindow(q: QuestDef): { ok: boolean; why: string } {
+    const w = this.quests.windowOk(q);
+    if (!w.ok) return w;
+    const ps = this.photos.window(q.id);
+    return ps ? this.quests.windowOk(ps) : w;
+  }
+
+  private nearestQuestSpot(px: number, pz: number): { q: QuestDef; st: QuestStep; sub: number; d: number; ready: boolean } | null {
+    let best: { q: QuestDef; st: QuestStep; sub: number; d: number; ready: boolean } | null = null;
     let bd = Infinity;
     for (const [qid] of this.quests.active) {
       const q = this.quests.get(qid)!;
-      const st = this.quests.step(q);
-      if (!st || (st.kind !== 'spot' && st.kind !== 'photo')) continue;
-      const p = this.spotPos(st);
-      if (!p) continue;
-      // several quests can share a spot (e.g. the host taro field): steps the controlled member can do win
-      const d = Math.hypot(p.x - px, p.z - pz);
-      if (d > (st.r ?? 6)) continue;
-      const score = d + (this.quests.canAct(st, q, this.party.controlled) ? 0 : 1000);
-      if (score < bd) {
-        bd = score;
-        best = { q, st };
+      for (const { st, sub } of this.quests.openSteps(q)) {
+        if (st.kind !== 'spot' && st.kind !== 'photo') continue;
+        const p = this.spotPos(st);
+        if (!p) continue;
+        // several quests can share a spot (e.g. the host taro field): steps the controlled member can do win
+        const d = Math.hypot(p.x - px, p.z - pz);
+        if (d > (st.r ?? 6)) continue;
+        // photo steps belong to the traveller; a step that would only show a "not now" toast loses to one that can run
+        const me = this.party.controlled;
+        const can = this.quests.canAct(st, q, me) && (st.kind !== 'photo' || me === 't');
+        const score = d + (can ? 0 : 1000) + (can && this.stepBlock(q, st) ? 500 : 0);
+        if (score < bd) {
+          bd = score;
+          best = { q, st, sub, d, ready: score < 500 };
+        }
       }
     }
     return best;
   }
 
-  private useQuestSpot(q: QuestDef, st: QuestStep): void {
+  private useQuestSpot(q: QuestDef, st: QuestStep, sub = -1): void {
     if (st.kind === 'photo' && this.party.controlled !== 't') {
       this.ui.toast('只有旅人能拍照', '點左上角的旅人頭像（或按 3）再來拍。');
       return;
@@ -1141,11 +1468,87 @@ export class Game {
     }
     if (st.dive) {
       void this.playDive(st.dive).then(() => {
-        this.runStep(q, st, null);
+        this.runStep(q, st, null, [], undefined, sub);
       });
       return;
     }
-    this.runStep(q, st, null);
+    if (st.minigame) {
+      // sea trip: board the tatala, play the timing game; success finishes the step, a miss can be retried (or given up)
+      if (st.canoe) this.setCanoe(true);
+      this.startMinigame(st.minigame, (ok) => {
+        if (st.canoe && this.player.mode === 'canoe') this.setCanoe(false);
+        if (ok) this.runStep(q, st, null, [], undefined, sub);
+        else this.ui.toast(q.name.zh, this.quests.solo ? '沒抓到時機。再試一次，或按「放棄出海」回岸邊和大家會合。' : '沒抓到時機，再試一次。');
+      });
+      return;
+    }
+    this.runStep(q, st, null, [], undefined, sub);
+  }
+
+  // ------------------------------------------------------------------ recipes: ingredients from gathering / shop / mini-games
+
+  private recipeCtx() {
+    return { active: this.quests.active, get: (id: string) => this.quests.get(id), step: (q: QuestDef) => this.quests.step(q), count: (i: string) => this.inv.count(i) };
+  }
+
+  /** ingredients the active recipe quests still need (item → missing count) */
+  private neededIngredients(): Record<string, number> {
+    return this.recipeSys.needed(this.recipeCtx());
+  }
+
+  /** gather / observe nodes that are live now */
+  private gatherSpots(): LiveNode[] {
+    return this.gathering.live({
+      places: this.places,
+      windowOk: (w) => this.quests.windowOk(w),
+      counters: this.quests.counters,
+      flags: this.quests.flags,
+      count: (i) => this.inv.count(i),
+      known: (i) => this.inv.known(i),
+      needed: () => this.neededIngredients(),
+    });
+  }
+
+  private useGatherNode(n: LiveNode): void {
+    if (n.blocked) {
+      this.ui.toast(n.label, n.blocked);
+      return;
+    }
+    this.gathering.use(this.quests, n.id);
+    if (n.node.sets) this.quests.flags.add(n.node.sets);
+    if (n.kind === 'observe') {
+      this.inv.observe(n.item);
+      const d = this.db.items.get(n.item);
+      this.ui.toast('圖鑑＋1', `${d?.name.zh ?? n.item}：${d?.description ?? ''}（遠遠看就好，不要打擾）`);
+      this.syncQuestCtx();
+      this.handleQuestEvents(this.quests.refresh());
+      this.questDirty = true;
+      this.saveNow();
+      return;
+    }
+    this.addIngredient(n.item, 1, '採集');
+  }
+
+  private addIngredient(id: string, n = 1, how = ''): void {
+    this.inv.add(id, n);
+    if (this.db.items.get(id)?.category === 'ingredient') this.state.unlock(this.state.ingredients, [id]);
+    const cat = this.db.items.get(id)?.category === 'ingredient' ? '食材' : '物品';
+    this.ui.toast(`${cat}＋${n}`, `${this.inv.name(id)}${how ? `（${how}）` : ''}｜背包裡有 ${this.inv.count(id)} 份`);
+    this.syncQuestCtx();
+    this.handleQuestEvents(this.quests.refresh());
+    this.questDirty = true;
+    this.saveNow();
+  }
+
+  /** buying a needed ingredient from a shop NPC (旅人靠購買); true when it handled the talk */
+  private shopIngredient(npc: NpcActor): boolean {
+    const want = this.recipeSys.shopWants(npc.def.id, this.neededIngredients());
+    if (!want.length) return false;
+    const names = want.map((w) => `${w.zh} ×${w.n}`).join('、');
+    this.openQueue([{ ...this.speaker('@npc', npc), zh: `要買${names}？好，拿去吧。`, tao: '' }], () => {
+      for (const w of want) this.addIngredient(w.id, w.n, '在店裡買的');
+    });
+    return true;
   }
 
   /** per-frame quest work, throttled: unlocks / auto steps, HUD tracker, ❗ markers, autosave */
@@ -1153,7 +1556,7 @@ export class Game {
     this.questTick -= dt;
     this.saveTick -= dt;
     for (const m of this.markers.values()) {
-      if (m.npc) m.obj.position.set(m.npc.x, m.npc.sprite.mesh.position.y + CHAR_WORLD_H * m.npc.sprite.mesh.scale.y + 0.25, m.npc.z);
+      if (m.npc?.sprite) m.obj.position.set(m.npc.x, m.npc.sprite.mesh.position.y + CHAR_WORLD_H * m.npc.sprite.mesh.scale.y + 0.25, m.npc.z);
     }
     if (this.questTick > 0 && !this.questDirty) return;
     this.questTick = 0.5;
@@ -1182,7 +1585,7 @@ export class Game {
       const q = this.quests.get(id);
       const st = q ? this.quests.step(q) : null;
       if (!q || !st || st.kind !== 'auto' || !st.lines?.length) continue;
-      if (!this.quests.whenOk(q.when).ok || (st.until && !this.quests.evalReq(st.until))) continue;
+      if (!this.questWindow(q).ok || (st.until && !this.quests.evalReq(st.until))) continue;
       this.runStep(q, st, null);
       return;
     }
@@ -1213,10 +1616,20 @@ export class Game {
       const st = this.quests.step(q);
       const blocks: string[] = [];
       if (status === 'active' && st && q.playable) {
-        const w = this.quests.whenOk(q.when);
+        const w = this.questWindow(q);
         if (!w.ok) blocks.push(`現在不行：${w.why}`);
         const mi = this.quests.missingItem(q);
         if (mi) blocks.push(`需要道具：${mi.zh}（${mi.from} 可以取得）`);
+        const roles = st.actor ?? q.roles;
+        const away = roles.filter((r) => this.quests.memberBlock(r));
+        if (away.length && away.length === roles.length) blocks.push(`成員離隊：${away.map((r) => `${ROLE_ZH[r]}${this.memberStatus(r)}`).join('；')}`);
+        // recipes: what is still missing and where to get it
+        if (q.recipe && st.kind === 'auto') {
+          const need = this.neededIngredients();
+          for (const [id, n] of Object.entries(need)) {
+            if (st.until && JSON.stringify(st.until).includes(`"${id}"`)) blocks.push(`還缺${this.inv.name(id)} ×${n}：${this.recipeSys.how(id)}`);
+          }
+        }
       }
       let hint: QuestCardVM['hint'] = null;
       if (status === 'active') {
@@ -1243,6 +1656,7 @@ export class Game {
         placeholder: !q.playable,
         tracked: cur?.id === q.id,
         ground: q.ground === 'fishing' ? '漁場（依傳統由族男出海）' : q.ground === 'dive' ? '潛點（觀光休閒，誰都能去）' : undefined,
+        giver: q.giver ? `${this.db.meta.giverLabels?.[q.giver] ?? (q.giver === 'f' ? '女性長輩交辦、驗收' : '男性長輩交辦、驗收')}（${this.npcs.byId(this.giverId(q))?.def.name.zh ?? ''}）` : undefined,
         song: q.song && status !== 'locked' ? this.songVM(q.song) : null,
       });
     }
@@ -1254,7 +1668,7 @@ export class Game {
 
   /** ❗ over NPCs / spots with a step to do (黃 = new quest, 藍 = next step) + who can do it */
   private updateMarkers(): void {
-    const want = new Map<string, { x: number; z: number; y: number; npc?: NpcActor; cls: string; roles: Set<Role> }>();
+    const want = new Map<string, { x: number; z: number; y: number; npc?: NpcActor; cls: string; roles: Set<Role>; label?: string }>();
     const add = (key: string, rec: { x: number; z: number; y: number; npc?: NpcActor }, step0: boolean, roles: Role[]): void => {
       const cur = want.get(key);
       if (cur) {
@@ -1266,19 +1680,36 @@ export class Game {
     };
     const px = this.player.x;
     const pz = this.player.z;
-    for (const [qid, idx] of this.quests.active) {
-      const q = this.quests.get(qid)!;
+    const E = this.quests;
+    for (const [qid, idx] of E.active) {
+      const q = E.get(qid)!;
       if (!q.playable) continue;
-      const st = q.steps[idx];
-      if (!st) continue;
-      const roles = st.actor ?? q.roles;
-      if (st.kind === 'talk') {
-        const a = this.npcs.byId(st.npc === '@host' ? this.hostId() : st.npc ?? '');
-        if (a && a.sprite.mesh.visible) add(`npc:${a.def.id}`, { x: a.x, z: a.z, y: 0, npc: a }, idx === 0, roles);
-      } else if (st.kind === 'spot' || st.kind === 'photo') {
-        const p = this.spotPos(st);
-        if (p && Math.hypot(p.x - px, p.z - pz) < 70) add(`spot:${st.spot}`, { x: p.x, z: p.z, y: Math.max(0, this.island.heightAt(p.x, p.z)) + 2.6 }, idx === 0, roles);
+      // a solo trip: only its own steps are marked
+      if (E.solo && E.members[E.solo].quest !== q.id) continue;
+      for (const { st } of E.openSteps(q)) {
+        const roles = st.actor ?? q.roles;
+        if (st.kind === 'talk') {
+          const a = this.npcs.byId(this.npcFor(st.npc, q));
+          if (a && a.visible) add(`npc:${a.def.id}`, { x: a.x, z: a.z, y: 0, npc: a }, idx === 0, roles);
+        } else if (st.kind === 'spot' || st.kind === 'photo') {
+          const p = this.spotPos(st);
+          if (p && Math.hypot(p.x - px, p.z - pz) < 70) add(`spot:${st.spot}`, { x: p.x, z: p.z, y: Math.max(0, this.island.heightAt(p.x, p.z)) + 2.6 }, idx === 0, roles);
+        }
       }
+    }
+    // party split: the regroup point, and where each away member stands
+    const groundY = (x: number, z: number): number => Math.max(0, this.island.heightAt(x, z));
+    if (E.meet && this.places[E.meet]) {
+      const p = this.places[E.meet];
+      want.set('meet', { x: p.x, z: p.z, y: groundY(p.x, p.z) + 3.2, cls: 'meet', roles: new Set(ROLES), label: '集' });
+    }
+    for (const f of this.party.followers) {
+      if (!f.stay) continue;
+      want.set(`mem:${f.role}`, { x: f.x, z: f.z, y: f.active.mesh.position.y + CHAR_WORLD_H + 0.3, cls: 'member', roles: new Set(ROLES), label: this.quests.file.roles[f.role].icon });
+    }
+    for (const g of this.gatherSpots()) {
+      if (g.blocked) continue; // no 採 marker until the node can be used; the prompt explains why when standing on it
+      if (Math.hypot(g.x - px, g.z - pz) < 70) want.set(`gather:${g.id}`, { x: g.x, z: g.z, y: groundY(g.x, g.z) + 2.4, cls: 'gather', roles: new Set(ROLES), label: '採' });
     }
     if (this.quests.done.has('X03') && this.untranslated().length) {
       const t = this.npcs.byId('teacher_yayo');
@@ -1304,11 +1735,12 @@ export class Game {
         this.markers.set(k, m);
       }
       const roles = ROLES.filter((r) => w.roles.has(r));
-      const key = `${w.cls}|${roles.join('')}|${me}`;
+      const key = `${w.cls}|${roles.join('')}|${me}|${w.label ?? ''}`;
       if (m.key !== key) {
         m.key = key;
         m.el.className = `q-mark ${w.cls}${w.roles.has(me) ? '' : ' other'}`;
-        (m.el.querySelector('i') as HTMLElement).textContent = roles.length === 3 ? '' : roles.map((r) => this.quests.file.roles[r].icon).join('');
+        (m.el.querySelector('b') as HTMLElement).textContent = w.label ?? '!';
+        (m.el.querySelector('i') as HTMLElement).textContent = roles.length === 3 || w.label ? '' : roles.map((r) => this.quests.file.roles[r].icon).join('');
       }
       if (!w.npc) m.obj.position.set(w.x, w.y, w.z);
     }
@@ -1322,11 +1754,12 @@ export class Game {
     const hp = hostPlaces(P, home);
     if (!hp) return;
     Object.assign(P, hp);
+    // the host village's a akes (女性長輩, NPC cast rev) waits on the host family's porch for J1–J3 / Q07
     if (this.npcs) {
-      const w = this.npcs.byId('weaver_elder');
-      if (w) {
+      const id = this.hostFemaleId(home);
+      if (this.npcs.byId(id)) {
         this.npcs.applySchedule(this.state.period, this.state.season);
-        this.npcs.place('weaver_elder', P.host_weave.x, P.host_weave.z);
+        this.npcs.place(id, P.host_weave.x, P.host_weave.z);
       }
     }
   }
@@ -1468,16 +1901,16 @@ export class Game {
 
   /** quests.json revision tag stored with saves (informational, see audit S1) */
   private questRev(): string {
-    const qf = this.assets.data('quests') as { rev?: string; quests?: unknown[] };
-    return qf.rev ?? `q${qf.quests?.length ?? 0}`;
+    return `c${this.db.meta.version ?? 1}-q${this.db.quests.length}`;
   }
 
   private refreshJournal(): void {
     if (this.quests) this.ui.setQuests(this.questCards());
     this.ui.renderJournal(this.state, {
-      glossary: this.assets.data('glossary').entries,
-      recipes: this.assets.data('recipes'),
-      milestones: this.assets.data('milestones').milestones,
+      glossary: this.db.glossary,
+      ingredients: [...this.db.items.values()].filter((i) => i.category === 'ingredient'),
+      recipes: this.db.recipes,
+      milestones: this.db.milestones,
     });
   }
 
@@ -1491,6 +1924,7 @@ export class Game {
       if (st.kind === 'photo') return this.party.controlled === 't' ? `拍照：${this.spotName(st)}` : '拍照（只有旅人能拍）';
       return q.name.zh;
     }
+    if ('gather' in near) return near.gather.blocked ? `${near.gather.label}（${near.gather.blocked}）` : near.gather.label;
     return near.it.label;
   }
 
@@ -1517,6 +1951,7 @@ export class Game {
     const blocked = !this.state.started || this.isModalOpen();
     this.player.update(dt, this.input, this.camera, blocked);
     if (this.state.started) this.party.update(dt, this.camera, this.player);
+    if (this.streamTick <= 0 || performance.now() - this.streamAt > 400) this.streamNpcs();
     this.npcs.update(dt, this.camera);
     this.updateCharacterTint(dt);
     this.decor.update(dt, this.camera, t, this.state.season === 'rayon' || this.state.season === 'meyvanwa');
@@ -1567,7 +2002,7 @@ export class Game {
     // tilt-shift: stronger when close (diorama feel), lighter on wide shots
     // closest zoom is for looking at detail: widen the sharp band and soften the blur so the ground near the party stays crisp
     const near = this.groundFx ? 1 - THREE.MathUtils.smoothstep(c.dist, 17, 26) : 0;
-    this.post.setTilt((c.dist < 30 ? 2.4 : c.dist < 60 ? 1.6 : 1.0) - near * 0.9, 0.5, (c.dist < 30 ? 0.2 : 0.26) + near * 0.08);
+    this.post.setTilt(((c.dist < 30 ? 2.4 : c.dist < 60 ? 1.6 : 1.0) - near * 0.9) * (worldStyle() === 'watercolor' ? PAINT.tiltShift : 1), 0.5, (c.dist < 30 ? 0.2 : 0.26) + near * 0.08);
 
     this.ui.setPrompt(this.nearestPrompt());
     if (this.state.started) this.questFrame(dt);
@@ -1679,6 +2114,7 @@ export class Game {
     }
     this.player.spawn(x, z);
     this.party.snapAround(this.player);
+    this.streamTick = 0;
     this.resetView();
     this.ui.toast(fmt(this.content.text.travelTitle, { name: zh }), this.content.text.travelBody);
   }
@@ -1696,7 +2132,7 @@ export class Game {
       shadeStats: () => shadeStats(),
       tints: () => [
         { id: '@player', tint: (this.player.mode === 'walk' ? this.player.sprite : this.player.mode === 'scooter' ? this.player.rideSprite : this.player.canoeSprite).tintValue },
-        ...this.npcs.actors.map((a) => ({ id: a.def.id, tint: a.sprite.tintValue, opacity: a.sprite.opacityValue, behind: a.sprite.behind, shade: a.sprite.shade })),
+        ...this.npcs.actors.filter((a) => a.sprite).map((a) => ({ id: a.def.id, tint: a.sprite!.tintValue, opacity: a.sprite!.opacityValue, behind: a.sprite!.behind, shade: a.sprite!.shade })),
       ],
       /** nearest spot (on standable ground) whose shade coverage is ≥ min, searching around (x, z) */
       findShade: (x: number, z: number, min = 0.95, maxR = 30) => {
@@ -1721,13 +2157,28 @@ export class Game {
       playerMode: (): PlayerMode => this.player.mode,
       portrait: () => this.protagonistPortrait(),
       mode: () => this.mode,
-      setTime: (p: Period) => this.setPeriod(p),
-      setSeason: (s: Season) => this.setSeason(s),
+      /** period dawn/day/dusk/night, or the content windows 'day' / 'night' */
+      setTime: (p: Period) => {
+        this.setPeriod(p);
+        this.syncQuestCtx();
+        this.questDirty = true;
+      },
+      /** game season (meyvanwa / rayon / manoyotoyon / off) or a content tag: 'summer' → rayon, 'winter' → off */
+      setSeason: (s: Season | 'summer' | 'winter') => {
+        this.setSeason(s === 'summer' ? 'rayon' : s === 'winter' ? 'off' : s);
+        this.syncQuestCtx();
+        this.questDirty = true;
+      },
+      /** current clock as content sees it */
+      clock: () => ({ season: this.state.season, seasonTag: seasonTag(this.state.season), period: this.state.period, time: this.state.period === 'night' ? 'night' : 'day' }),
       setLang: (m: LangMode) => this.setLang(m),
       openJournal: () => this.setOverlay('journal', true),
       closeJournal: () => this.setOverlay('journal', false),
       interactNearest: () => this.tryInteract(),
-      teleport: (x: number, z: number) => this.player.spawn(x, z),
+      teleport: (x: number, z: number) => {
+        this.player.spawn(x, z);
+        this.streamTick = 0;
+      },
       places: this.places,
       /** sheet row the controlled character shows (0.1.1 facing check) */
       facing: () => ({ dir: this.player.active.dir, yaw: this.player.yaw, mode: this.player.mode, walking: this.player.active.walking }),
@@ -1798,6 +2249,7 @@ export class Game {
         if (this.activity === 'minigame') open.push('minigame');
         if (this.activity === 'dialogue') open.push('dialogue');
         if (this.overlay) open.push(this.overlay);
+        if (this.diveOpen) open.push('dive');
         return open;
       },
       /** test hooks for the P1 regressions (fish hand-off, dialogue queue, stuck input) */
@@ -1810,6 +2262,43 @@ export class Game {
       quality: () => quality(),
       saveState: () => this.state.toJSON(),
       setOutfit: (k: string) => this.player.setOutfit(this.assets, k),
+      /** Phase B: outfits — unlock (as a quest reward would), wear (null = everyday clothes), what a member looks like */
+      unlockOutfit: (id: string) => {
+        if (!this.outfits.byId.has(id)) return false;
+        this.quests.outfits.add(id);
+        this.saveNow();
+        return true;
+      },
+      wearOutfit: (r: Role, id: string | null) => this.wearOutfit(r, id),
+      outfitLook: (r: Role) => ({ sheet: this.roleOutfit(r), portrait: this.rolePortrait(r), worn: this.outfits.equipped[r] ?? null, shown: this.party.controlled === r ? this.player.outfit : this.party.followers.find((f) => f.role === r)?.outfit ?? null, unlocked: [...this.quests.outfits] }),
+      /** Phase B: bag + 圖鑑 counts, and the content summary */
+      codex: () => this.inv.codex().map((c) => ({ id: c.def.id, known: c.known, n: c.n })),
+      content: () => ({
+        quests: this.db.quests.length,
+        playable: this.db.quests.filter((q) => q.playable).length,
+        items: this.db.items.size,
+        recipes: this.db.recipes.length,
+        npcs: this.db.npcs.length,
+        dialogues: this.db.dialogues.size,
+        photoSpots: this.db.photoSpots.length,
+        gatherNodes: this.db.gatherNodes.length,
+        outfits: this.db.outfits.length,
+        places: Object.keys(this.db.places).length,
+        /** every place id a split / meet can name (the HUD shows their zh names) */
+        splitPlaces: [...new Set(this.db.quests.flatMap((q) => q.steps.flatMap((s) => [...Object.values(s.split ?? {}).map((x) => x?.at), s.meet])).filter((x): x is string => !!x))],
+      }),
+      /** Phase B: use a live gather / observe node now (wherever the player stands) */
+      gather: (nodeId: string) => {
+        const n = this.gatherSpots().find((g) => g.id === nodeId);
+        if (!n) return false;
+        this.useGatherNode(n);
+        return true;
+      },
+      /** Phase B: NPC chat lines without opening the box (dialogue sets: greet / duty / idle / keeper / after) */
+      chat: (npcId: string) => {
+        const d = this.db.npcs.find((n) => n.id === npcId);
+        return d?.dialogue ? this.npcChat(d.dialogue) : [];
+      },
       /** walk up to a named NPC and talk (demo / screenshot hook) */
       talkTo: (id: string) => {
         const a = this.npcs.byId(id);
@@ -1849,7 +2338,7 @@ export class Game {
         const st = q ? this.quests.step(q) : null;
         if (!q || !st) return null;
         if (st.kind === 'talk') {
-          const a = this.npcs.byId(st.npc === '@host' ? this.hostId() : st.npc ?? '');
+          const a = this.npcs.byId(this.npcFor(st.npc, q));
           return a ? { kind: 'npc', id: a.def.id, x: a.x, z: a.z } : null;
         }
         const p = this.spotPos(st);
@@ -1857,7 +2346,7 @@ export class Game {
       },
       useSpot: () => {
         const s2 = this.nearestQuestSpot(this.player.x, this.player.z);
-        if (s2) this.useQuestSpot(s2.q, s2.st);
+        if (s2) this.useQuestSpot(s2.q, s2.st, s2.sub);
         return !!s2;
       },
       tracker: () => this.ui.el('#quest-tracker').textContent,
@@ -1908,7 +2397,191 @@ export class Game {
       clearFocus: () => {
         this.focus = null;
       },
+      // ---- Party split & recipes batch: test hooks (docs/phase1/TEST_HOOKS.md)
+      /** teleport to a place id (places.json + derived), an NPC id, or a quest's current target */
+      goto: (id: string) => {
+        const a = this.npcs.byId(id);
+        const p = a ? { x: a.x + 1.1, z: a.z + 0.6 } : this.places[id] ? { x: this.places[id].x, z: this.places[id].z + 1.2 } : null;
+        if (!p) return false;
+        const s2 = canStand(p.x, p.z, PLAYER_RADIUS) ? p : (api.roadPointNear(p.x, p.z, 6) ?? p);
+        this.player.spawn(s2.x, s2.z);
+        this.party.snapAround(this.player);
+        this.streamTick = 0;
+        return true;
+      },
+      setWorld: (o: { season?: Season; period?: Period }) => {
+        if (o.season) this.setSeason(o.season);
+        if (o.period) this.setPeriod(o.period);
+        this.syncQuestCtx();
+        this.questDirty = true;
+        return { season: this.state.season, period: this.state.period };
+      },
+      /** put the clock / season where a quest's window (time / seasons / periods / tide, + its photo spot) allows it */
+      fitWhen: (id: string) => {
+        const q = this.quests.get(id);
+        if (!q) return null;
+        const ps = this.photos.window(q.id);
+        const w = { ...q, ...(ps ? { time: ps.time ?? q.time, seasons: ps.seasons?.length ? ps.seasons : q.seasons, periods: ps.periods ?? q.periods } : {}) };
+        const c = fitClock(w, { season: this.state.season, period: this.state.period });
+        if (c) {
+          if (c.season !== this.state.season) this.setSeason(c.season);
+          if (c.period !== this.state.period) this.setPeriod(c.period);
+        }
+        this.syncQuestCtx();
+        this.questDirty = true;
+        return { season: this.state.season, period: this.state.period, ok: this.questWindow(q).ok };
+      },
+      giveItem: (id: string, n = 1) => {
+        this.quests.items[id] = Math.max(0, (this.quests.items[id] ?? 0) + n);
+        this.quests.collect.add(`item:${id}`);
+        if (this.db.items.get(id)?.category === 'ingredient') this.state.unlock(this.state.ingredients, [id]);
+        this.syncQuestCtx();
+        this.handleQuestEvents(this.quests.refresh(), true);
+        this.questDirty = true;
+        return this.quests.items[id];
+      },
+      items: () => ({ ...this.quests.items }),
+      recipes: () => ({ recipes: [...this.state.recipes], ingredients: [...this.state.ingredients], need: this.neededIngredients() }),
+      /** unlock a quest now (prerequisites skipped), optionally at step k */
+      startQuest: (id: string, k = 0) => {
+        const q = this.quests.get(id);
+        if (!q) return false;
+        this.quests.done.delete(id);
+        this.quests.active.set(id, Math.max(0, Math.min(k, q.steps.length - 1)));
+        this.questDirty = true;
+        return true;
+      },
+      /** finish the current step (or the next member part of a tasks step) without playing it; party effects apply */
+      completeStep: (id: string, role?: Role) => {
+        const q = this.quests.get(id);
+        if (!q || !this.quests.active.has(id)) return null;
+        const open = this.quests.openSteps(q);
+        const o = open.find((x) => !role || x.st.actor?.includes(role)) ?? open[0];
+        this.closeAll();
+        this.completeStep(q, o && o.sub >= 0 ? o.sub : -1);
+        return { status: this.quests.status(q), step: this.quests.active.get(id) ?? null };
+      },
+      /** party split state: per member status / place / position / switch block, solo, regroup point */
+      members: () => {
+        const pos = this.party.positions(this.player);
+        return {
+          controlled: this.party.controlled,
+          solo: this.quests.solo,
+          meet: this.quests.meet,
+          split: this.quests.isSplit(),
+          m: { ...this.quests.members.m, pos: pos.m, block: this.quests.memberBlock('m'), status: this.memberStatus('m') },
+          f: { ...this.quests.members.f, pos: pos.f, block: this.quests.memberBlock('f'), status: this.memberStatus('f') },
+          t: { ...this.quests.members.t, pos: pos.t, block: this.quests.memberBlock('t'), status: this.memberStatus('t') },
+          banner: (this.ui.el('#party-split') as HTMLElement).hidden ? null : this.ui.el('#ps-text').textContent,
+        };
+      },
+      forceSplit: (spec: Partial<Record<Role, { at: string; task: string; ctrl?: boolean }>>, meet?: string) => {
+        this.quests.forceSplit(spec, meet);
+        return api.members();
+      },
+      forceSolo: (role: Role = 'm', at = 'harbor', waitAt = 'harbor', task = '出海捕飛魚') => {
+        this.quests.forceSolo(role, at, waitAt, task);
+        return api.members();
+      },
+      forceRegroup: () => {
+        this.quests.forceRegroup();
+        this.party.snapAround(this.player);
+        return api.members();
+      },
+      abortSolo: () => this.abortSolo(),
+      /** next mini-game succeeds by itself (sea trip / taro / fish) */
+      autoMinigame: (on = true) => {
+        this.mgAuto = on;
+      },
+      /**
+       * Play the current step of a quest for real, fast: pick a member who may do it (switching like the HUD
+       * does), teleport to the NPC / spot, bring the party, talk / use the spot, auto-hit a mini-game, read
+       * through the dialogue. Returns what happened and, when it could not run, the in-game reason.
+       */
+      runStep: (id: string, opts: { fitWhen?: boolean } = {}) => {
+        const q = this.quests.get(id);
+        if (!q) return { ok: false, why: 'no such quest' };
+        if (!this.quests.active.has(id)) return { ok: false, why: `status ${this.quests.status(q)}` };
+        if (opts.fitWhen) api.fitWhen(id);
+        this.closeAll();
+        const before = JSON.stringify([this.quests.active.get(id) ?? -1, this.quests.done.has(id), [...this.quests.tasksDone].length]);
+        const progressed = (): boolean => JSON.stringify([this.quests.active.get(id) ?? -1, this.quests.done.has(id), [...this.quests.tasksDone].length]) !== before;
+        const open = this.quests.openSteps(q);
+        if (!open.length) return { ok: false, why: 'no open step' };
+        const E = this.quests;
+        // prefer a part / step the controlled member can do, else one whose member can be switched to
+        const pick = open.find((o) => (o.st.actor ?? q.roles).includes(this.party.controlled) && !E.memberBlock(this.party.controlled))
+          ?? open.find((o) => (o.st.actor ?? q.roles).some((r) => !E.memberBlock(r)))
+          ?? open[0];
+        const st = pick.st;
+        if (st.kind === 'placeholder') return { ok: false, why: 'placeholder' };
+        if (st.kind === 'auto') {
+          this.syncQuestCtx();
+          this.handleQuestEvents(this.quests.refresh());
+          this.runPendingAutoLines();
+          for (let i = 0; i < 200 && this.mode === 'dialogue'; i++) this.advanceDialogue();
+          return { ok: progressed(), why: progressed() ? '' : `auto step waits: ${st.until ? JSON.stringify(st.until) : this.questWindow(q).why}` };
+        }
+        const roles = st.actor ?? q.roles;
+        if (!roles.includes(this.party.controlled)) {
+          const r = roles.find((x) => !E.memberBlock(x));
+          if (!r) return { ok: false, why: roles.map((x) => E.memberBlock(x)).join(' ') };
+          this.switchMember(r);
+          if (this.party.controlled !== r) return { ok: false, why: `cannot switch to ${r}` };
+        }
+        // go there
+        let target: { x: number; z: number } | null = null;
+        let npc: NpcActor | undefined;
+        if (st.kind === 'talk') {
+          npc = this.npcs.byId(this.npcFor(st.npc, q));
+          if (!npc) return { ok: false, why: `npc ${st.npc} missing` };
+          target = { x: npc.x + 1.1, z: npc.z + 0.6 };
+        } else target = this.spotPos(st);
+        if (!target) return { ok: false, why: 'no target position' };
+        if (this.player.mode === 'canoe') this.setCanoe(false);
+        this.player.spawn(target.x, target.z);
+        this.party.snapAround(this.player);
+        this.streamTick = 0;
+        if (this.activity !== 'cover') this.activity = 'explore';
+        if (npc) this.talkToNpc(npc, id);
+        else {
+          if (st.minigame) this.mgAuto = true;
+          this.useQuestSpot(q, st, pick.sub);
+        }
+        for (let i = 0; i < 300 && (this.mode === 'dialogue' || this.dlgQueue.length); i++) this.advanceDialogue();
+        this.mgAuto = false;
+        const block = this.stepBlock(q, st);
+        return { ok: progressed(), why: progressed() ? '' : block ?? 'did not progress', step: this.quests.active.get(id) ?? null, status: this.quests.status(q), controlled: this.party.controlled };
+      },
+      /** run a quest from where it is to the end with runStep (stops at the first step that cannot run) */
+      runQuest: (id: string, opts: { fitWhen?: boolean; max?: number } = {}) => {
+        const trace: unknown[] = [];
+        for (let i = 0; i < (opts.max ?? 20) && this.quests.active.has(id); i++) {
+          const r = api.runStep(id, opts);
+          trace.push(r);
+          if (!r.ok) break;
+        }
+        return { done: this.quests.done.has(id), trace };
+      },
+      /** world interactables (taro fields, fishing spot, clinic, lookout) — for tests that play the free mini-games */
+      interactables: () => this.decor.interactables.map((it) => ({ ...it })),
+      /** recipe gather spots that are live now (only for ingredients a recipe still needs) */
+      gatherSpots: () => this.gatherSpots(),
+      /** zh name the HUD shows for a place / landmark id ('' when unknown) */
+      placeZh: (id: string) => this.placeZh(id),
+      /** what E would do here: npc:<id> / spot:<quest> / gather:<item> / it:<kind> / null */
+      nearTarget: () => {
+        const n = this.nearestTarget();
+        if (!n) return null;
+        if ('npc' in n) return `npc:${n.npc.def.id}`;
+        if ('spot' in n) return `spot:${n.spot.q.id}`;
+        if ('gather' in n) return `gather:${n.gather.id}`;
+        return `it:${n.it.kind}`;
+      },
+      /** NPC streaming: sprites alive now, sheets held, ids */
+      npcLoaded: () => ({ loaded: this.npcs.loadedIds().length, total: this.npcs.actors.length, ...this.assets.streamStats(), groups: this.npcs.loadedGroups(), ids: this.npcs.loadedIds() }),
       renderInfo: () => ({ ...this.renderer.info.render, trees: this.island.treeCount }),
+      memory: () => ({ ...this.renderer.info.memory }),
     };
     (window as unknown as { __TAO_RPG__: typeof api }).__TAO_RPG__ = api;
   }

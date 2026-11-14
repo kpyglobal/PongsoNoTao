@@ -1,0 +1,185 @@
+{
+  "file": "villages/ivalino",
+  "village": "ivalino",
+  "quests": [
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "ivalino",
+      "id": "IV-F1",
+      "arc": "village",
+      "giver": "f",
+      "name": {
+        "zh": "野銀的水芋田長輩：補種芋苗",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K6",
+        "unlock": "水芋田長輩的信任",
+        "kind": "a akes・水芋田"
+      },
+      "req": "K6",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "野銀的水芋田長輩請你幫忙補種",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "前幾天採收了，空出來的地方要補種。這幾株芋苗拿去，插進泥巴裡。"
+            },
+            {
+              "who": "@npc",
+              "zh": "田裡的事，我們女人最清楚。跟著我做就對了。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "taro_seedling",
+              "taro_seedling",
+              "taro_seedling"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "taro_ivalino",
+          "r": 6,
+          "text": "到野銀水芋田，把芋苗插進泥裡",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "泥巴好深，腳都陷進去了！"
+            },
+            {
+              "who": "旁白",
+              "zh": "三株芋苗種好了。"
+            }
+          ],
+          "gives": {
+            "consume": {
+              "taro_seedling": 3
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "向水芋田長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "種得很好。等它長大，要好幾個月呢。水要一直流，芋頭才會好吃。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "taro_replanted"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "野銀",
+        "zh": "野銀的水芋田長輩採收後要補種芋苗。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "summer"
+      ],
+      "time": "any",
+      "village": "ivalino",
+      "id": "IV-M1",
+      "arc": "village",
+      "giver": "m",
+      "name": {
+        "zh": "野銀的長輩：飛魚季的規矩",
+        "en": ""
+      },
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "review": [
+        "飛魚季規矩與漁獲分配的公開程度"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人一起聽",
+        "season": "夏季（飛魚季）",
+        "pre": "K6",
+        "unlock": "手札「飛魚季的規矩」",
+        "kind": "a akey・飛魚季"
+      },
+      "req": "K6",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_ivalino",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "聽野銀的長輩說飛魚季的規矩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "飛魚季的時候，什麼時候出海、魚怎麼分，是我們男人一起商量的。"
+            },
+            {
+              "who": "@npc",
+              "zh": "一條船回來，魚先分給船組，再分給親戚。行動不方便的長輩，也不會被忘記。"
+            },
+            {
+              "who": "@npc",
+              "zh": "飛魚季結束了，就停下來，讓魚回去。這是對海的禮。"
+            },
+            {
+              "who": "旁白",
+              "zh": "能公開的規矩只有一部分，各部落也不一樣，還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "rules_fishing_heard"
+            ],
+            "toast": [
+              "手札",
+              "「飛魚季的規矩」已寫進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "野銀",
+        "zh": "飛魚季時，野銀的長輩會說說飛魚季的規矩。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "file": "modern",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "E1",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "便利商店的泡麵",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男、族女",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q05",
+        "unlock": "糧倉、部落關係的選擇結果",
+        "kind": ""
+      },
+      "req": "Q05",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "E2",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "水芋田廢耕",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 2,
+      "need": [
+        "m",
+        "f"
+      ],
+      "text": {
+        "who": "族男、族女",
+        "coop": "選「接手耕作」要雙人：族男＋族女",
+        "season": "等待飛魚期",
+        "pre": "R3",
+        "unlock": "下一年的 R1",
+        "kind": ""
+      },
+      "req": "R3",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "E3",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "觀光旺季（東清）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "族人主導，旅人加入",
+        "coop": "雙人：族人＋旅人，從兩邊看同一件事",
+        "season": "飛魚季前後",
+        "pre": "Q05",
+        "unlock": "尊重值、部落關係",
+        "kind": ""
+      },
+      "req": "Q05",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "E4",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "進口食材",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "待確認",
+        "coop": "待確認",
+        "season": "待族人提供",
+        "pre": "Q05",
+        "unlock": "待族人提供觀點",
+        "kind": ""
+      },
+      "req": "Q05",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "E5",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "族人認為最重要的現代挑戰",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "待確認",
+        "coop": "待確認",
+        "season": "待族人提供",
+        "pre": "待確認",
+        "unlock": "待確認",
+        "kind": ""
+      },
+      "req": {
+        "pending": true
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "N1",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "親從子名（選用尾聲）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男、族女",
+        "coop": "單人",
+        "season": "一個遊戲年之後",
+        "pre": "完成一個遊戲年",
+        "unlock": "改稱 Syaman-、Sinan-，解鎖「教導孩子辨認魚類」",
+        "kind": ""
+      },
+      "req": {
+        "flag": "year_done"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "Y1",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "衛生所醫師的安全下水與工作提醒",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q06",
+        "unlock": "急救卡、受傷後恢復較快",
+        "kind": ""
+      },
+      "req": "Q06",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "Y2",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "營養師的島嶼飲食課",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q06 或 E1",
+        "unlock": "營養卡、Y3",
+        "kind": "OR"
+      },
+      "req": {
+        "any": [
+          "Q06",
+          "E1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "Y3",
+      "line": "side",
+      "arc": "modern",
+      "village": null,
+      "name": {
+        "zh": "和營養師比較傳統食物與進口食物（食物主權）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f",
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "族女＋旅人",
+        "coop": "雙人：族女＋旅人，在衛生所",
+        "season": "全年",
+        "pre": "Y2 且 G1",
+        "unlock": "食物主權卡、糧倉說明加註",
+        "kind": "AND"
+      },
+      "req": {
+        "all": [
+          "Y2",
+          "G1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    }
+  ]
+}

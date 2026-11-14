@@ -1,0 +1,345 @@
+{
+  "file": "tatala",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "T1",
+      "line": "main",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "拜師",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人（NPC 長輩）",
+        "season": "全年",
+        "pre": "Q05、部落關係達標（光做主線就夠）",
+        "unlock": "T2",
+        "kind": ""
+      },
+      "req": {
+        "all": [
+          "Q05",
+          {
+            "stat": "relation",
+            "min": 4
+          }
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    },
+    {
+      "id": "T2",
+      "line": "main",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "跟長輩近海練習",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "待確認",
+        "pre": "T1",
+        "unlock": "T3、V4、划船小遊戲",
+        "kind": "漁場（族男）"
+      },
+      "req": "T1",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "ground": "fishing",
+      "giver": "m"
+    },
+    {
+      "id": "T3",
+      "line": "main",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "上山認識造舟的樹",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男；旅人可參觀",
+        "coop": "族男可單人；旅人參觀要雙人：族男＋旅人",
+        "season": "等待飛魚期",
+        "pre": "T2",
+        "unlock": "T4",
+        "kind": ""
+      },
+      "req": "T2",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "song": "s09",
+      "giver": "m"
+    },
+    {
+      "id": "T4",
+      "line": "main",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "拼板造船",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "等待飛魚期",
+        "pre": "T3",
+        "unlock": "own_boat、T5、T6、T8",
+        "kind": ""
+      },
+      "req": "T3",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    },
+    {
+      "id": "T5",
+      "line": "side",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "新船下水的芋頭（選用，整段待確認）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 3,
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "族男、族女；旅人須受主人邀請",
+        "coop": "三人：族男＋族女＋旅人",
+        "season": "落成時（待確認）",
+        "pre": "T4、R4",
+        "unlock": "部落關係",
+        "kind": "AND"
+      },
+      "req": {
+        "all": [
+          "T4",
+          "R4"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    },
+    {
+      "id": "T6",
+      "line": "side",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "駕自己的船捕飛魚",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "summer"
+      ],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "飛魚季（當地）",
+        "pre": "T4、M2",
+        "unlock": "另一個飛魚來源、T7",
+        "kind": "季節＋漁場（族男）"
+      },
+      "req": {
+        "all": [
+          "T4",
+          "M2"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "ground": "fishing",
+      "giver": "m"
+    },
+    {
+      "id": "T7",
+      "line": "side",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "夜間火炬捕飛魚（大船）",
+        "en": ""
+      },
+      "time": "night",
+      "seasons": [
+        "summer"
+      ],
+      "periods": [
+        "night"
+      ],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人（NPC 大船船組）",
+        "season": "飛魚季夜間",
+        "pre": "T6",
+        "unlock": "成長技能",
+        "kind": "季節＋時段＋漁場（族男）"
+      },
+      "req": "T6",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "ground": "fishing",
+      "giver": "m"
+    },
+    {
+      "id": "T8",
+      "line": "side",
+      "arc": "tatala",
+      "village": null,
+      "name": {
+        "zh": "小蘭嶼（整段待族人同意）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "待確認",
+        "pre": "T4",
+        "unlock": "隱藏故事",
+        "kind": ""
+      },
+      "req": "T4",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    }
+  ]
+}

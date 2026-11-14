@@ -1,0 +1,436 @@
+{
+ "version": 1,
+ "frame": {
+  "w": 64,
+  "h": 96
+ },
+ "sheet": {
+  "w": 256,
+  "h": 768,
+  "cols": 4,
+  "rows": 8,
+  "rows_dir": [
+   "s",
+   "w",
+   "n",
+   "e"
+  ],
+  "walk_rows": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "idle_rows": [
+   4,
+   5,
+   6,
+   7
+  ]
+ },
+ "filter": "nearest",
+ "atlases": {
+  "yayo": {
+   "file": "sprites/npc_atlas_yayo.png",
+   "w": 1024,
+   "h": 1536,
+   "bytes": 121245,
+   "sheets": {
+    "boy": {
+     "x": 0,
+     "y": 0
+    },
+    "elder_f_yayo": {
+     "x": 256,
+     "y": 0
+    },
+    "elder_yayo": {
+     "x": 512,
+     "y": 0
+    },
+    "shop_yayo": {
+     "x": 768,
+     "y": 0
+    },
+    "teacher_yayo": {
+     "x": 0,
+     "y": 768
+    },
+    "uncle": {
+     "x": 256,
+     "y": 768
+    },
+    "villager_harbor": {
+     "x": 512,
+     "y": 768
+    },
+    "youth_f": {
+     "x": 768,
+     "y": 768
+    }
+   }
+  },
+  "iraraley": {
+   "file": "sprites/npc_atlas_iraraley.png",
+   "w": 768,
+   "h": 1536,
+   "bytes": 96412,
+   "sheets": {
+    "auntie": {
+     "x": 0,
+     "y": 0
+    },
+    "culture_worker": {
+     "x": 256,
+     "y": 0
+    },
+    "elder_f_iraraley": {
+     "x": 512,
+     "y": 0
+    },
+    "elder_iraraley": {
+     "x": 0,
+     "y": 768
+    },
+    "girl": {
+     "x": 256,
+     "y": 768
+    },
+    "youth_m": {
+     "x": 512,
+     "y": 768
+    }
+   }
+  },
+  "iranmeylek": {
+   "file": "sprites/npc_atlas_iranmeylek.png",
+   "w": 768,
+   "h": 1536,
+   "bytes": 97111,
+   "sheets": {
+    "boy__green": {
+     "x": 0,
+     "y": 0
+    },
+    "elder_f_iranmeylek": {
+     "x": 256,
+     "y": 0
+    },
+    "elder_iranmeylek": {
+     "x": 512,
+     "y": 0
+    },
+    "player_researcher": {
+     "x": 0,
+     "y": 768
+    },
+    "villager_iranmeylek": {
+     "x": 256,
+     "y": 768
+    },
+    "youth_f__stripe": {
+     "x": 512,
+     "y": 768
+    }
+   }
+  },
+  "ivalino": {
+   "file": "sprites/npc_atlas_ivalino.png",
+   "w": 768,
+   "h": 1536,
+   "bytes": 82589,
+   "sheets": {
+    "auntie__scarf": {
+     "x": 0,
+     "y": 0
+    },
+    "elder_ivalino": {
+     "x": 256,
+     "y": 0
+    },
+    "girl__orange": {
+     "x": 512,
+     "y": 0
+    },
+    "villager_taro": {
+     "x": 0,
+     "y": 768
+    },
+    "youth_m__black": {
+     "x": 256,
+     "y": 768
+    }
+   }
+  },
+  "imorod": {
+   "file": "sprites/npc_atlas_imorod.png",
+   "w": 1024,
+   "h": 1536,
+   "bytes": 126923,
+   "sheets": {
+    "boy__red": {
+     "x": 0,
+     "y": 0
+    },
+    "clinic": {
+     "x": 256,
+     "y": 0
+    },
+    "clinic_doctor": {
+     "x": 512,
+     "y": 0
+    },
+    "elder_imorod": {
+     "x": 768,
+     "y": 0
+    },
+    "nutritionist": {
+     "x": 0,
+     "y": 768
+    },
+    "uncle__cap": {
+     "x": 256,
+     "y": 768
+    },
+    "weaver_elder": {
+     "x": 512,
+     "y": 768
+    },
+    "youth_f__denim": {
+     "x": 768,
+     "y": 768
+    }
+   }
+  },
+  "iratay": {
+   "file": "sprites/npc_atlas_iratay.png",
+   "w": 768,
+   "h": 1536,
+   "bytes": 78347,
+   "sheets": {
+    "elder_f_iratay": {
+     "x": 0,
+     "y": 0
+    },
+    "elder_iratay": {
+     "x": 256,
+     "y": 0
+    },
+    "girl__pink": {
+     "x": 512,
+     "y": 0
+    },
+    "villager_iratay": {
+     "x": 0,
+     "y": 768
+    },
+    "youth_m__shirt": {
+     "x": 256,
+     "y": 768
+    }
+   }
+  },
+  "harbor": {
+   "file": "sprites/npc_atlas_harbor.png",
+   "w": 768,
+   "h": 1536,
+   "bytes": 90455,
+   "sheets": {
+    "dive_coach": {
+     "x": 0,
+     "y": 0
+    },
+    "geologist": {
+     "x": 256,
+     "y": 0
+    },
+    "harbor": {
+     "x": 512,
+     "y": 0
+    },
+    "rental_owner": {
+     "x": 0,
+     "y": 768
+    },
+    "tourist": {
+     "x": 256,
+     "y": 768
+    }
+   }
+  }
+ },
+ "npcs": {
+  "clinic_doctor": {
+   "atlas": "imorod",
+   "sheet": "clinic_doctor"
+  },
+  "clinic_nurse": {
+   "atlas": "imorod",
+   "sheet": "clinic"
+  },
+  "culture_worker": {
+   "atlas": "iraraley",
+   "sheet": "culture_worker"
+  },
+  "dive_coach": {
+   "atlas": "harbor",
+   "sheet": "dive_coach"
+  },
+  "elder_f_iranmeylek": {
+   "atlas": "iranmeylek",
+   "sheet": "elder_f_iranmeylek"
+  },
+  "elder_f_iraraley": {
+   "atlas": "iraraley",
+   "sheet": "elder_f_iraraley"
+  },
+  "elder_f_iratay": {
+   "atlas": "iratay",
+   "sheet": "elder_f_iratay"
+  },
+  "elder_f_yayo": {
+   "atlas": "yayo",
+   "sheet": "elder_f_yayo"
+  },
+  "elder_imorod": {
+   "atlas": "imorod",
+   "sheet": "elder_imorod"
+  },
+  "elder_iranmeylek": {
+   "atlas": "iranmeylek",
+   "sheet": "elder_iranmeylek"
+  },
+  "elder_iraraley": {
+   "atlas": "iraraley",
+   "sheet": "elder_iraraley"
+  },
+  "elder_iratay": {
+   "atlas": "iratay",
+   "sheet": "elder_iratay"
+  },
+  "elder_ivalino": {
+   "atlas": "ivalino",
+   "sheet": "elder_ivalino"
+  },
+  "elder_yayo": {
+   "atlas": "yayo",
+   "sheet": "elder_yayo"
+  },
+  "geologist": {
+   "atlas": "harbor",
+   "sheet": "geologist"
+  },
+  "harbor_staff": {
+   "atlas": "harbor",
+   "sheet": "harbor"
+  },
+  "nutritionist": {
+   "atlas": "imorod",
+   "sheet": "nutritionist"
+  },
+  "rental_owner": {
+   "atlas": "harbor",
+   "sheet": "rental_owner"
+  },
+  "shop_yayo": {
+   "atlas": "yayo",
+   "sheet": "shop_yayo"
+  },
+  "teacher_yayo": {
+   "atlas": "yayo",
+   "sheet": "teacher_yayo"
+  },
+  "tourist_a": {
+   "atlas": "harbor",
+   "sheet": "tourist"
+  },
+  "tourist_b": {
+   "atlas": "iranmeylek",
+   "sheet": "player_researcher"
+  },
+  "villager_harbor": {
+   "atlas": "yayo",
+   "sheet": "villager_harbor"
+  },
+  "villager_imorod_a": {
+   "atlas": "imorod",
+   "sheet": "uncle__cap"
+  },
+  "villager_imorod_b": {
+   "atlas": "imorod",
+   "sheet": "youth_f__denim"
+  },
+  "villager_imorod_c": {
+   "atlas": "imorod",
+   "sheet": "boy__red"
+  },
+  "villager_iranmeylek": {
+   "atlas": "iranmeylek",
+   "sheet": "villager_iranmeylek"
+  },
+  "villager_iranmeylek_b": {
+   "atlas": "iranmeylek",
+   "sheet": "youth_f__stripe"
+  },
+  "villager_iranmeylek_c": {
+   "atlas": "iranmeylek",
+   "sheet": "boy__green"
+  },
+  "villager_iraraley_a": {
+   "atlas": "iraraley",
+   "sheet": "auntie"
+  },
+  "villager_iraraley_b": {
+   "atlas": "iraraley",
+   "sheet": "youth_m"
+  },
+  "villager_iraraley_c": {
+   "atlas": "iraraley",
+   "sheet": "girl"
+  },
+  "villager_iratay": {
+   "atlas": "iratay",
+   "sheet": "villager_iratay"
+  },
+  "villager_iratay_b": {
+   "atlas": "iratay",
+   "sheet": "youth_m__shirt"
+  },
+  "villager_iratay_c": {
+   "atlas": "iratay",
+   "sheet": "girl__pink"
+  },
+  "villager_ivalino_a": {
+   "atlas": "ivalino",
+   "sheet": "auntie__scarf"
+  },
+  "villager_ivalino_b": {
+   "atlas": "ivalino",
+   "sheet": "youth_m__black"
+  },
+  "villager_ivalino_c": {
+   "atlas": "ivalino",
+   "sheet": "girl__orange"
+  },
+  "villager_taro": {
+   "atlas": "ivalino",
+   "sheet": "villager_taro"
+  },
+  "villager_yayo_a": {
+   "atlas": "yayo",
+   "sheet": "uncle"
+  },
+  "villager_yayo_b": {
+   "atlas": "yayo",
+   "sheet": "youth_f"
+  },
+  "villager_yayo_c": {
+   "atlas": "yayo",
+   "sheet": "boy"
+  },
+  "weaver_elder": {
+   "atlas": "imorod",
+   "sheet": "weaver_elder"
+  }
+ }
+}

@@ -1,0 +1,542 @@
+{
+  "note": "路人（非族人的遊客、各年齡層、小孩）與之後新增的 NPC 放這裡：每人一筆資料就好，不用改程式。id 對照 docs/phase1/NPC_CAST.md。沒有走路圖時用 fallbackSheet（不填：遊客用 tourist、其他用 uncle），沒有頭像時對話框不顯示頭像。路人不穿族人傳統服飾（outsider: true）。不想讓人搭話就設 talkable: false。",
+  "npcs": [
+    {
+      "id": "pb_couple_m",
+      "name": {
+        "zh": "情侶旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_couple",
+      "kind": "pb_couple_m",
+      "home": "iranmeylek_beach",
+      "sheet": "pb_couple_m",
+      "portrait": "pb_couple_m",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek_beach",
+            "iranmeylek"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_couple_f",
+      "name": {
+        "zh": "情侶旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_couple",
+      "kind": "pb_couple_f",
+      "home": "iranmeylek_beach",
+      "sheet": "pb_couple_f",
+      "portrait": "pb_couple_f",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek_beach",
+            "iranmeylek"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_middle_m",
+      "name": {
+        "zh": "跟團的中年旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_tour",
+      "kind": "pb_middle_m",
+      "home": "harbor",
+      "sheet": "pb_middle_m",
+      "portrait": "pb_middle_m",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor",
+            "yayo_shop",
+            "yayo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_middle_f",
+      "name": {
+        "zh": "中年女旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_tour",
+      "kind": "pb_middle_f",
+      "home": "harbor",
+      "sheet": "pb_middle_f",
+      "portrait": "pb_middle_f",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor",
+            "yayo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_retiree_m",
+      "name": {
+        "zh": "退休旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_retiree",
+      "kind": "pb_retiree_m",
+      "home": "imorod",
+      "sheet": "pb_retiree_m",
+      "portrait": "pb_retiree_m",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "iratay",
+            "imorod"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_retiree_f",
+      "name": {
+        "zh": "退休旅客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_retiree",
+      "kind": "pb_retiree_f",
+      "home": "imorod",
+      "sheet": "pb_retiree_f",
+      "portrait": "pb_retiree_f",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "iratay",
+            "imorod"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_backpacker",
+      "name": {
+        "zh": "背包客",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_backpacker",
+      "kind": "pb_backpacker",
+      "home": "airport",
+      "sheet": "pb_backpacker",
+      "portrait": "pb_backpacker",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "airport"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "airport",
+            "iratay",
+            "iratay_school"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_family_dad",
+      "name": {
+        "zh": "全家出遊的爸爸",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_family",
+      "kind": "pb_family_dad",
+      "home": "rental",
+      "sheet": "pb_family_dad",
+      "portrait": "pb_family_dad",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "rental",
+            "harbor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pb_family_mom",
+      "name": {
+        "zh": "全家出遊的媽媽",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_pb_family",
+      "kind": "pb_family_mom",
+      "home": "rental",
+      "sheet": "pb_family_mom",
+      "portrait": "pb_family_mom",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "rental",
+            "harbor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kid_tourist_girl",
+      "name": {
+        "zh": "小旅客・女孩",
+        "tao": ""
+      },
+      "role": "passerby",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_kid_tourist_girl",
+      "kind": "kid_tourist_girl",
+      "home": "rental",
+      "sheet": "kid_tourist_girl",
+      "portrait": "kid_tourist_girl",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "rental",
+            "harbor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kid_quest_tourist",
+      "name": {
+        "zh": "好奇的小旅客",
+        "tao": ""
+      },
+      "role": "questVillager",
+      "village": null,
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_kid_quest_tourist",
+      "kind": "kid_quest_tourist",
+      "home": "iranmeylek",
+      "sheet": "kid_quest_tourist",
+      "portrait": "kid_quest_tourist",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "iranmeylek_beach",
+            "iranmeylek"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kid_quest_local",
+      "name": {
+        "zh": "愛畫畫的部落女孩",
+        "tao": ""
+      },
+      "role": "questVillager",
+      "village": "iratay",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_kid_quest_local",
+      "kind": "kid_quest_local",
+      "home": "iratay_school",
+      "sheet": "kid_quest_local",
+      "portrait": "kid_quest_local",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay_school",
+            "iratay"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kid_local_ball",
+      "name": {
+        "zh": "踢球的部落男孩",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iraraley",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_kid_local_ball",
+      "kind": "kid_local_ball",
+      "home": "iraraley",
+      "sheet": "kid_local_ball",
+      "portrait": "kid_local_ball",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+  "file": "language",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "X01",
+      "line": "main",
+      "arc": "lang",
+      "village": null,
+      "name": {
+        "zh": "到椰油的學校找族語老師",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day",
+        "dusk"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q02",
+        "unlock": "手札族語詞卡、X02、X03",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "白天到椰油的學校找族語老師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們好，我在這裡的學校教族語。"
+            },
+            {
+              "who": "@npc",
+              "zh": "聽到長輩說的族語，不懂的話就記下來，帶來問我。學會的詞會寫進手札的族語詞卡。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "vocab_page"
+            ],
+            "toast": [
+              "族語詞卡",
+              "手札的「族語詞卡」可以開始收集了。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "租車行老闆",
+        "zh": "族語老師白天在椰油的學校。"
+      },
+      "playable": true
+    },
+    {
+      "id": "X02",
+      "line": "main",
+      "arc": "lang",
+      "village": null,
+      "name": {
+        "zh": "學第一句：akokey（你好）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "X01",
+        "unlock": "族語詞卡 1 詞、NPC 打招呼提示",
+        "kind": ""
+      },
+      "req": "X01",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "跟族語老師學第一句：akokey（你好）",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "第一句就學打招呼。",
+              "tao": "akokey"
+            },
+            {
+              "who": "@npc",
+              "zh": "見到長輩就說 akokey，大家都會很高興。"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "akokey"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族語老師",
+        "zh": "再跟族語老師說一次話，學第一句。"
+      },
+      "playable": true
+    },
+    {
+      "id": "X03",
+      "line": "main",
+      "arc": "lang",
+      "village": null,
+      "name": {
+        "zh": "把長輩的族語提示帶給老師翻譯",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day",
+        "dusk"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "X01 且 收到第一則只說族語的提示",
+        "unlock": "翻譯流程、X04、Z1",
+        "kind": "AND＋族語提示"
+      },
+      "req": {
+        "all": [
+          "X01",
+          {
+            "flag": "tao_hint_heard"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "把長輩只說族語的提示帶給族語老師翻譯",
+          "translate": true,
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "長輩跟你們說了族語？我看看筆記。"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "wawa"
+            ],
+            "toast": [
+              "翻譯流程",
+              "之後聽到只說族語的提示，都可以帶來給老師翻譯。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族語老師",
+        "zh": "聽到長輩只說族語的提示後，帶回椰油的學校給老師翻譯。"
+      },
+      "playable": true
+    },
+    {
+      "id": "X04",
+      "line": "side",
+      "arc": "lang",
+      "village": null,
+      "name": {
+        "zh": "族語詞卡收集 10 個詞",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "X03",
+        "unlock": "X05、W4",
+        "kind": "數量 10"
+      },
+      "req": "X03",
+      "steps": [
+        {
+          "kind": "auto",
+          "text": "族語詞卡收集 10 個詞",
+          "until": {
+            "count": "words",
+            "min": 10
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族語老師",
+        "zh": "多跟長輩、族人說話，學到的詞會自動寫進族語詞卡。"
+      },
+      "playable": true
+    },
+    {
+      "id": "X05",
+      "line": "side",
+      "arc": "lang",
+      "village": null,
+      "name": {
+        "zh": "族語詞卡收集 20 個詞",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "X04",
+        "unlock": "隱藏任務 H1",
+        "kind": "數量 20"
+      },
+      "req": "X04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    }
+  ]
+}

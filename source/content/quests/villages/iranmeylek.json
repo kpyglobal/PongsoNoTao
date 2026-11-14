@@ -1,0 +1,330 @@
+{
+  "file": "villages/iranmeylek",
+  "village": "iranmeylek",
+  "quests": [
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "iranmeylek",
+      "id": "IM-F1",
+      "arc": "village",
+      "giver": "f",
+      "name": {
+        "zh": "東清的女性長輩：退潮時只拿需要的",
+        "en": ""
+      },
+      "tide": "low",
+      "review": [
+        "東清潮間帶的採集規矩"
+      ],
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年（退潮）",
+        "pre": "K5",
+        "unlock": "貝類、海菜、潮間帶規矩",
+        "kind": "a akes・潮間帶"
+      },
+      "req": "K5",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_iranmeylek",
+          "text": "東清的女性長輩帶你去潮間帶",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "退潮了，跟我來。潮間帶是大家的廚房，要留給明天，也要留給別人。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "跟著長輩在潮間帶撿貝類、採海菜，太小的放回去",
+          "lines": [
+            {
+              "who": "elder_f_iranmeylek",
+              "zh": "這個太小了，放回去，讓牠再長大。"
+            },
+            {
+              "who": "@me",
+              "zh": "那這個呢？"
+            },
+            {
+              "who": "elder_f_iranmeylek",
+              "zh": "這個可以。夠吃就好，不要裝滿。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iranmeylek",
+          "text": "回到東清的女性長輩身邊",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今天就這些，剛剛好。潮水要回來了，我們上去吧。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "shellfish",
+              "seaweed"
+            ],
+            "relation": 1,
+            "flags": [
+              "tide_rules_im"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "退潮時，東清的女性長輩會去潮間帶，可以跟她學怎麼採。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "summer"
+      ],
+      "time": "day",
+      "village": "iranmeylek",
+      "id": "IM-M1",
+      "arc": "village",
+      "giver": "m",
+      "name": {
+        "zh": "東清的長輩：出海前的繩索與槳",
+        "en": ""
+      },
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "夏季（飛魚季）",
+        "pre": "MS1",
+        "unlock": "族男的出海準備",
+        "kind": "a akey・拼板舟"
+      },
+      "req": "MS1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_iranmeylek",
+          "actor": [
+            "m"
+          ],
+          "text": "東清的長輩要族男自己檢查一次",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "上次教你看，這次你自己來。繩子、槳，一樣一樣看。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "iranmeylek_beach",
+          "r": 8,
+          "actor": [
+            "m"
+          ],
+          "text": "族男到東清灣沙灘，把繩索拉直、檢查槳",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這段繩子磨得很薄了，要換。槳沒問題。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_iranmeylek",
+          "actor": [
+            "m"
+          ],
+          "text": "向東清的長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "看得對。海上出事，常常是從一條小繩子開始的。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "paddles_checked"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "飛魚季時，東清的長輩要族男自己檢查繩索與槳。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "iranmeylek",
+      "id": "IM-V1",
+      "arc": "village",
+      "name": {
+        "zh": "東清的族人：清晨的海灣",
+        "en": ""
+      },
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K5",
+        "unlock": "東清族人的信任",
+        "kind": "關鍵人物"
+      },
+      "req": "K5",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iranmeylek",
+          "text": "東清的族人說起看日出的遊客",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "每天清晨，很多遊客來東清灣看日出。人多是好事，可是垃圾也多。"
+            },
+            {
+              "who": "@npc",
+              "zh": "還有人坐到拼板舟上拍照……那是別人家的船啊。可以幫我一起去海灣看看嗎？"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "iranmeylek_beach",
+          "r": 8,
+          "text": "到東清灣沙灘撿垃圾，客氣地請遊客離拼板舟遠一點",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "不好意思，這是族人的船，可以到旁邊拍嗎？謝謝！"
+            },
+            {
+              "who": "旁白",
+              "zh": "撿起了寶特瓶和塑膠袋。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_iranmeylek",
+          "text": "回報東清的族人",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "謝謝你們。我們不是不歡迎遊客，只是希望大家記得，這裡是有人住的地方。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "im_bay_clean"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "東清的族人在煩惱清晨看日出的遊客，去問問他怎麼了。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": "iranmeylek",
+      "id": "IM-V2",
+      "arc": "village",
+      "name": {
+        "zh": "東清的族人：回家的理由",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "IM-V1",
+        "unlock": "東清族人的故事",
+        "kind": "夜晚・故事"
+      },
+      "req": "IM-V1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iranmeylek",
+          "text": "晚上在東清，聽族人說他為什麼回到島上",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "我以前在臺北工作十幾年，每天坐捷運，看不到海。"
+            },
+            {
+              "who": "@npc",
+              "zh": "後來阿爸身體不好，我就回來了。現在開民宿、帶導覽，也跟長輩學出海。"
+            },
+            {
+              "who": "@npc",
+              "zh": "年輕人回來不容易，工作少。可是你看這片海，晚上這麼安靜，我就知道我選對了。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "im_story"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "東清",
+        "zh": "晚上東清的族人常在灣邊乘涼。"
+      }
+    }
+  ]
+}

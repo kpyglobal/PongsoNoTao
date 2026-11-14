@@ -1,0 +1,98 @@
+{
+  "songs": {
+    "s01": {
+      "title": "01 aibangbang 漁獲歌",
+      "tao": "Teyaro aibangbang na nitawaz ni ama",
+      "zh": "爸爸網到了很多飛魚",
+      "quests": [
+        "M4",
+        "A2"
+      ],
+      "activity": "飛魚返航、分配漁獲",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s10": {
+      "title": "10 asa vasit 釣魚歌",
+      "tao": "asa vasit adwa kawi",
+      "zh": "帶著一支 vasit 竹和二支 kawi 竹做的釣魚竿",
+      "quests": [
+        "F1",
+        "G4"
+      ],
+      "activity": "近岸釣魚、魚類分類",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s05": {
+      "title": "05 o sikalopi 釣魚記",
+      "tao": "O Sikalopi mi vavahay do rarahan",
+      "zh": "喔！住在路邊的 sikalopi",
+      "quests": [
+        "F2"
+      ],
+      "activity": "漁獲裝滿網袋回家",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s09": {
+      "title": "09 mita mangayo 砍材歌",
+      "tao": "mita mangayo dojim Nazagi",
+      "zh": "我們去 Nazag 砍木材",
+      "quests": [
+        "T3",
+        "A1"
+      ],
+      "activity": "上山認樹、搬造舟木材",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s02": {
+      "title": "02 zing zing zing 小胖豬",
+      "tao": "Zing zing zing kwak kwak kwak",
+      "zh": "小豬在沙灘上抖動及甩掉身上的沙子",
+      "quests": [
+        "J3"
+      ],
+      "activity": "餵豬餵雞",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s03": {
+      "title": "03 jika cimoy 雨停吧",
+      "tao": "Jika cimoy mo peyreherehep",
+      "zh": "天上一片烏雲，不要下雨",
+      "quests": [
+        "P25"
+      ],
+      "activity": "下雨天、氣象站",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    },
+    "s08": {
+      "title": "08 tana lilikey 頑皮兄妹",
+      "tao": "tana lilikei namen sira wari",
+      "zh": "雖然我們兄弟姐妹還小",
+      "quests": [
+        "Q07"
+      ],
+      "activity": "主人家爐灶邊的日常",
+      "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "url": "https://web.klokah.tw/text/main.php?user=sing42",
+      "status": "暫定"
+    }
+  }
+}

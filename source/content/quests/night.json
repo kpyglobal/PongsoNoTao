@@ -1,0 +1,555 @@
+{
+  "file": "night",
+  "arc": "night",
+  "note": "夜晚內容大方向：少量採集、拍照景點、部落活動或故事（方向，不是限制）。冬季拍照 P30 也放這裡。",
+  "quests": [
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": null,
+      "id": "NT1",
+      "arc": "night",
+      "name": {
+        "zh": "涼亭下的夜晚故事",
+        "en": ""
+      },
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "review": [
+        "黑翅飛魚傳說的公開版本與講述方式"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人一起聽",
+        "season": "全年",
+        "pre": "Q07",
+        "unlock": "故事頁「黑翅飛魚」",
+        "kind": "夜晚・故事"
+      },
+      "req": "Q07",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "晚上到主人家，聽長輩說可以公開的故事",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "晚上涼快，來坐。今天說一個大家都可以聽的故事。"
+            },
+            {
+              "who": "@npc",
+              "zh": "很久以前，我們的祖先不懂飛魚，什麼魚都一起煮，結果生病了。"
+            },
+            {
+              "who": "@npc",
+              "zh": "後來黑翅膀的飛魚來到夢裡，教祖先什麼時候捕、怎麼煮、哪些不能混在一起。"
+            },
+            {
+              "who": "@npc",
+              "zh": "所以飛魚的規矩不是隨便定的，是飛魚教我們的。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這是流傳較廣的版本，各部落說法不同，還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "story_black_wing"
+            ],
+            "toast": [
+              "故事頁",
+              "「黑翅飛魚」已寫進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "晚上主人家的長輩常在家門口乘涼，說不定會說故事。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": "iranmeylek",
+      "id": "NT2",
+      "arc": "night",
+      "name": {
+        "zh": "頭燈下的潮間帶（只看不採）",
+        "en": ""
+      },
+      "tide": "low",
+      "needsItem": {
+        "item": "headlamp",
+        "from": "S1"
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年（黃昏退潮時）",
+        "pre": "S1（頭燈）、I2",
+        "unlock": "寄居蟹圖鑑",
+        "kind": "黃昏・觀察"
+      },
+      "req": {
+        "all": [
+          "S1",
+          "I2"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "黃昏退潮、天色變暗時，戴頭燈到東清灣潮間帶觀察",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "白天看不到的生物，天一暗就出來了。"
+            },
+            {
+              "who": "旁白",
+              "zh": "把燈光壓低，看完就把石頭放回原位。寄居蟹已記進圖鑑。"
+            }
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            },
+            "flags": [
+              "seen_hermit_crab"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "夜裡退潮的時候，帶著頭燈去潮間帶，會看到白天沒有的生物。"
+      },
+      "periods": [
+        "dusk"
+      ]
+    },
+    {
+      "line": "photo",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": null,
+      "id": "NT3",
+      "arc": "night",
+      "name": {
+        "zh": "路邊的蘭嶼角鴞（不打閃光）",
+        "en": ""
+      },
+      "review": [
+        "族人對貓頭鷹的看法與禁忌",
+        "是否適合由族人角色帶隊"
+      ],
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "蘭嶼角鴞圖鑑、照片",
+        "kind": "夜晚・拍照"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "owl_road",
+          "r": 6,
+          "text": "晚上在漁人到椰油的路邊，安靜聽角鴞的叫聲，遠遠拍一張",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "長輩不太喜歡在晚上談這種鳥，我們安靜看就好，不要學牠叫。"
+            },
+            {
+              "who": "@t",
+              "zh": "不打閃光、不放音樂引牠，遠遠拍一張就走。"
+            },
+            {
+              "who": "旁白",
+              "zh": "蘭嶼角鴞已記進圖鑑。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "saw_scops_owl"
+            ],
+            "counter": {
+              "ecology": 1
+            }
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "遊客",
+        "zh": "聽說晚上沿著西岸的路，有時候會聽到「咕——咕」的叫聲。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": "iratay",
+      "id": "NT4",
+      "arc": "night",
+      "name": {
+        "zh": "漁人部落的晚會",
+        "en": ""
+      },
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "review": [
+        "晚會的形式（現代社區活動，非祭儀）",
+        "可公開演唱的歌"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人一起",
+        "season": "全年",
+        "pre": "IT-V2",
+        "unlock": "漁人族人的信任、晚會照片",
+        "kind": "夜晚・部落活動"
+      },
+      "req": "IT-V2",
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "iratay_school",
+          "r": 8,
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "晚上三人一起到漁人的學校操場參加晚會",
+          "lines": [
+            {
+              "who": "villager_iratay",
+              "zh": "你們來啦！先拿東西吃，孩子們等一下要唱歌。"
+            },
+            {
+              "who": "@f",
+              "zh": "好熱鬧，好多長輩都來了。"
+            },
+            {
+              "who": "@t",
+              "zh": "我帶著族女幫我編的小袋子來的。"
+            },
+            {
+              "who": "villager_iratay",
+              "zh": "很好看。這是我們部落的晚會，不是祭典，大家放輕鬆。"
+            },
+            {
+              "who": "旁白",
+              "zh": "想拍人之前，先問一聲。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iratay",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "向漁人的女性長輩道謝",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "吃飽了嗎？地瓜是我們田裡的。下次白天再來幫忙挖。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "gathering_done"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "漁人的族人邀大家晚上到學校操場參加晚會。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "winter"
+      ],
+      "time": "night",
+      "village": null,
+      "id": "NT5",
+      "arc": "night",
+      "name": {
+        "zh": "冬夜的東北季風",
+        "en": ""
+      },
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人一起聽",
+        "season": "冬季",
+        "pre": "Q07",
+        "unlock": "手札「冬天的島」",
+        "kind": "夜晚・故事"
+      },
+      "req": "Q07",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "冬天晚上，聽主人家長輩說東北季風的季節",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "冬天風大浪大，船都拉上岸了。男人補網、修船，女人照顧田、整理家裡。"
+            },
+            {
+              "who": "@npc",
+              "zh": "海不讓我們出去的時候，就好好休息，等飛魚回來。"
+            },
+            {
+              "who": "@t",
+              "zh": "原來冬天也有冬天要做的事。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "winter_page"
+            ],
+            "toast": [
+              "手札",
+              "「冬天的島」已寫進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "冬天晚上，主人家長輩會說說季風季節的生活。"
+      }
+    },
+    {
+      "line": "photo",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": "yayo",
+      "id": "P28",
+      "arc": "photo",
+      "name": {
+        "zh": "開元港的夜燈",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "照片",
+        "kind": "夜晚・拍照"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "harbor",
+          "r": 9,
+          "text": "晚上在開元港拍港邊的燈火",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "白天熱鬧的港口，晚上安安靜靜的。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "港務人員",
+        "zh": "晚上的開元港燈火很漂亮。"
+      }
+    },
+    {
+      "line": "photo",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "night",
+      "village": "iranmeylek",
+      "id": "P29",
+      "arc": "photo",
+      "name": {
+        "zh": "東清灣的月出",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "照片",
+        "kind": "夜晚・拍照"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "iranmeylek_beach",
+          "r": 8,
+          "text": "晚上在東清灣沙灘拍月亮從海上升起",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "月光照在海面上，拼板舟的影子也看得到。"
+            },
+            {
+              "who": "旁白",
+              "zh": "不要走到船旁邊，也不要坐在船上。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "東清灣不只日出漂亮，月亮升起來也很美。"
+      }
+    },
+    {
+      "line": "photo",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "winter"
+      ],
+      "time": "day",
+      "village": "iraraley",
+      "id": "P30",
+      "arc": "photo",
+      "name": {
+        "zh": "東北季風的浪（從岸上遠拍）",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "冬季",
+        "pre": "Q04",
+        "unlock": "照片",
+        "kind": "冬季・拍照"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "iraraley",
+          "r": 10,
+          "text": "冬天在朗島岸邊，遠遠拍季風打上來的浪",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "浪好大，難怪冬天船都不出海。"
+            },
+            {
+              "who": "旁白",
+              "zh": "風浪大時不要靠近岸邊的礁石。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "朗島",
+        "zh": "冬天東北季風一來，朗島的浪特別大。"
+      }
+    }
+  ]
+}

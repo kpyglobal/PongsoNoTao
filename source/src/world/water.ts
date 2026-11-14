@@ -4,6 +4,9 @@
  * adds depth-baked turquoise reefs, fine ripples, foam, sun glints & caustics.
  */
 import * as THREE from 'three';
+import { seasonLook, applyMix } from '../render/look';
+import { worldStyle } from '../render/stylize';
+import { WATER } from '../render/styleConfig';
 import { Reflector } from 'three/addons/objects/Reflector.js';
 import type { LightPreset, Period, Season } from '../core/timeSeason';
 import { yieldIfBusy } from '../core/frame';
@@ -33,6 +36,9 @@ const frag = /* glsl */ `
   uniform vec3 uSunColor;
   uniform float uNight;
   uniform float uWave;
+  uniform float uPaint;
+  uniform float uStreak;
+  uniform float uStreakW;
   uniform sampler2D uLand;
   uniform vec4 uLandBox;
   uniform vec3 uFogColor;
@@ -86,7 +92,22 @@ const frag = /* glsl */ `
     vec3 col = mix(sea,refl,reflW);
     vec3 H = normalize(V+normalize(uSunDir));
     float spec = pow(max(dot(N,H),0.0),160.0);
-    col += uSunColor*spec*(1.6-uNight*0.8);
+    col += uSunColor*spec*(1.6-uNight*0.8)*(1.0-uPaint*0.6);
+    if (uPaint > 0.5) {
+      // watercolor sea: soft-stepped washes (turquoise shallows → deep blue), reflections kept faint
+      float sb = shallow*3.0;
+      float q = (floor(sb) + smoothstep(0.3,0.7,fract(sb)))/3.0;
+      vec3 seaP = mix(uDeep, uShallow, q);
+      col = mix(col, seaP + (col - sea)*0.3, 0.72);
+      // painted ripple strokes: short wavy light dashes with a darker under-stroke (more in rough seas)
+      float r1 = sin(p.y*3.1 + p.x*0.4 + sin(p.x*0.7+uTime*0.25)*1.6 + uTime*0.4);
+      float dash = smoothstep(0.55,0.75, noise(p*vec2(0.55,2.4)+vec2(uTime*0.05,0.0)));
+      float th = 1.0 - uStreakW - 0.015*uWave;
+      float lite = smoothstep(th,th+uStreakW,r1)*dash;
+      float dark = smoothstep(th,th+uStreakW,-r1)*dash;
+      col = mix(col, mix(uShallow, vec3(1.0), 0.5), lite*uStreak*(1.0-uNight*0.6));
+      col *= 1.0 - dark*uStreak*0.25*(1.0-shallow*0.5);
+    }
     float shimmer = pow(max(0.0,sin(p.x*7.0 + p.y*1.4 + uTime*1.1)),18.0);
     col += uSunColor*shimmer*spec*0.9;
 
@@ -133,6 +154,9 @@ export class Ocean {
         uSunColor: { value: new THREE.Color('#fff3d0') },
         uNight: { value: 0 },
         uWave: { value: 1 },
+        uPaint: { value: 1 },
+        uStreak: { value: WATER.streak },
+        uStreakW: { value: WATER.streakWidth },
         uLand: { value: landTex },
         uLandBox: { value: new THREE.Vector4(box.xMin, box.zMin, box.xMax, box.zMax) },
         uFogColor: { value: new THREE.Color('#cfe6ef') },
@@ -173,16 +197,19 @@ export class Ocean {
     (u.uSunDir.value as THREE.Vector3).copy(preset.sunDir);
     (u.uSunColor.value as THREE.Color).copy(preset.sunColor);
     u.uNight.value = period === 'night' ? 1 : period === 'dusk' ? 0.35 : 0;
-    u.uWave.value = season === 'off' ? 1.8 : season === 'rayon' ? 0.85 : 1.15;
-    // winter sea is deeper/cooler; harvest season catches warm light
-    if (season === 'off') (u.uShallow.value as THREE.Color).multiply(new THREE.Color('#a4bdcb'));
-    if (season === 'manoyotoyon') (u.uShallow.value as THREE.Color).lerp(new THREE.Color('#d2b67c'), 0.12);
+    // season look (src/render/styleConfig.ts SEASON_LOOK): vivid summer turquoise, rough grey-blue monsoon sea
+    const look = seasonLook(season);
+    const k = period === 'night' ? 0.3 : 1;
+    u.uWave.value = look.wave;
+    applyMix(u.uDeep.value as THREE.Color, [look.waterDeep[0], look.waterDeep[1] * k]);
+    applyMix(u.uShallow.value as THREE.Color, [look.waterShallow[0], look.waterShallow[1] * k]);
   }
 
   update(t: number, fog?: THREE.Fog | null): void {
     this.frame++;
     const u = this.mat.uniforms;
     u.uTime.value = t;
+    u.uPaint.value = worldStyle() === 'watercolor' ? 1 : 0;
     if (fog) {
       (u.uFogColor.value as THREE.Color).copy(fog.color);
       u.uFogNear.value = fog.near;

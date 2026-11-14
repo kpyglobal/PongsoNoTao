@@ -27,6 +27,35 @@
     return `<div class="portrait seal-wrap" aria-hidden="true"><span class="seal">${seal || "·"}</span></div>`;
   }
 
+  /** outfit variants (traditional clothes / traveller accessories) as alternates on the same card */
+  function variantBar(p) {
+    if (!p.variants || !p.variants.length) return "";
+    const all = [{ portrait: p.portrait, label: "日常" }].concat(p.variants);
+    return `<div class="variants" role="group" aria-label="${p.role}的服裝">${all
+      .map(
+        (v, i) =>
+          `<button type="button" class="variant${i === 0 ? " on" : ""}" aria-pressed="${i === 0}" data-src="./guide/portraits/${v.portrait}.webp" data-note="${v.note || ""}">${v.label}</button>`
+      )
+      .join("")}</div><p class="meta variant-note" aria-live="polite"></p>`;
+  }
+
+  function bindVariants(root) {
+    root.addEventListener("click", (e) => {
+      const b = e.target.closest && e.target.closest("button.variant");
+      if (!b) return;
+      const card = b.closest(".person");
+      const img = card && card.querySelector(".portrait img");
+      if (!img) return;
+      img.src = b.dataset.src;
+      card.querySelectorAll("button.variant").forEach((x) => {
+        x.classList.toggle("on", x === b);
+        x.setAttribute("aria-pressed", String(x === b));
+      });
+      const note = card.querySelector(".variant-note");
+      if (note) note.textContent = b.dataset.note || "";
+    });
+  }
+
   function renderPeople(data) {
     const party = $("#party-grid");
     const travel = $("#travel-grid");
@@ -38,6 +67,7 @@
         (p) => `
       <article class="person">
         ${portraitBox("./guide/portraits/" + p.portrait + ".webp", p.role, p.seal)}
+        ${variantBar(p)}
         <h3>${p.role}</h3>
         ${p.nameNote ? `<p class="meta">${p.nameNote}</p>` : ""}
         <p class="bio">${decorateTao(p.bio)}</p>
@@ -50,11 +80,14 @@
         (p) => `
       <article class="person compact">
         ${portraitBox("./guide/portraits/" + p.portrait + ".webp", p.role, p.seal)}
+        ${variantBar(p)}
         <h3>${p.role}</h3>
         <p class="bio">${decorateTao(p.bio)}</p>
       </article>`
       )
       .join("");
+    bindVariants(party);
+    bindVariants(travel);
 
     npc.innerHTML = data.npcs
       .map((p) => {

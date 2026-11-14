@@ -1,0 +1,195 @@
+{
+  "file": "villages/imorod",
+  "village": "imorod",
+  "quests": [
+    {
+      "line": "side",
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "winter"
+      ],
+      "time": "day",
+      "village": "imorod",
+      "id": "IO-F1",
+      "arc": "village",
+      "giver": "f",
+      "name": {
+        "zh": "織布長輩：把苧麻線捲好",
+        "en": ""
+      },
+      "review": [
+        "飛魚季不織布的規矩"
+      ],
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "冬季（非飛魚季）",
+        "pre": "K1、J1",
+        "unlock": "苧麻線、OF2",
+        "kind": "a akes・紡織"
+      },
+      "req": {
+        "all": [
+          "K1",
+          "J1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "weaver_elder",
+          "actor": [
+            "f"
+          ],
+          "text": "紅頭的織布長輩請族女幫忙捲線",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "妳處理過苧麻了，現在來學捲線。線捲得好，布才織得平。"
+            },
+            {
+              "who": "@npc",
+              "zh": "飛魚季的時候我們不織布，所以冬天要多做一點。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "imorod",
+          "r": 6,
+          "actor": [
+            "f"
+          ],
+          "text": "族女在紅頭的簷廊下，把苧麻線一圈一圈捲好",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "一圈、兩圈……手要放鬆，線才不會斷。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "weaver_elder",
+          "actor": [
+            "f"
+          ],
+          "text": "把捲好的線交給織布長輩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "捲得很漂亮。這一捲給妳留著，以後用得到。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "ramie_thread"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "紅頭",
+        "zh": "冬天紅頭的織布長輩需要人幫忙捲苧麻線。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "imorod",
+      "id": "IO-M1",
+      "arc": "village",
+      "giver": "m",
+      "name": {
+        "zh": "紅頭的長輩：上山看羊",
+        "en": ""
+      },
+      "review": [
+        "「打獵」在達悟文化中的實際內容（羊群、山林）",
+        "羊耳記號的說明"
+      ],
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K1",
+        "unlock": "看到山上的羊（A4 解鎖）",
+        "kind": "a akey・山林"
+      },
+      "req": "K1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_imorod",
+          "actor": [
+            "m"
+          ],
+          "text": "紅頭的長輩要族男一起上山看羊",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "山上的事，男人要懂。今天上去看看我們家的羊（kagling）。",
+              "tao": "kagling"
+            },
+            {
+              "who": "@npc",
+              "zh": "每家的羊，耳朵上的記號不一樣。不是自己家的，不要碰。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "hongtoushan",
+          "r": 10,
+          "actor": [
+            "m"
+          ],
+          "text": "族男跟長輩上紅頭山，數一數山坡上的羊",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "一、二、三……耳朵缺一角的是我們家的，總共五隻。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_imorod",
+          "actor": [
+            "m"
+          ],
+          "text": "向紅頭的長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "五隻，對。以後羊走丟了，你就知道去哪裡找。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "saw_goats"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "紅頭",
+        "zh": "紅頭的長輩負責山上的事，族男可以跟他上山看羊。"
+      }
+    }
+  ]
+}

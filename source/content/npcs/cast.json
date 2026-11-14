@@ -1,0 +1,1771 @@
+{
+  "note": "role: elder_m = a akey (漁獵、拼板舟), elder_f = a akes (芋頭、食物、紡織); recipeKeeper = recipe id she teaches.",
+  "npcs": [
+    {
+      "id": "elder_imorod",
+      "name": {
+        "zh": "紅頭的長輩",
+        "tao": "Imorod a akey"
+      },
+      "role": "elder_m",
+      "village": "imorod",
+      "duties": [
+        "hunt"
+      ],
+      "dutyText": "上山（照顧羊群）與山林",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_imorod",
+      "kind": "elder",
+      "home": "imorod",
+      "schedule": [
+        {
+          "seasons": [
+            "meyvanwa"
+          ],
+          "times": [
+            "dawn",
+            "dusk"
+          ],
+          "waypoints": [
+            "imorod",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "taro_imorod",
+            "imorod"
+          ]
+        }
+      ],
+      "portrait": "elder_imorod",
+      "sheet": "elder_imorod"
+    },
+    {
+      "id": "elder_ivalino",
+      "name": {
+        "zh": "野銀的長輩",
+        "tao": "Ivalino a akey"
+      },
+      "role": "elder_m",
+      "village": "ivalino",
+      "duties": [
+        "flyingfish"
+      ],
+      "dutyText": "飛魚季的規矩與漁獲分配",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_ivalino",
+      "kind": "elder",
+      "home": "ivalino",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino",
+            "taro_ivalino"
+          ]
+        }
+      ],
+      "portrait": "elder_ivalino",
+      "sheet": "elder_ivalino"
+    },
+    {
+      "id": "elder_yayo",
+      "name": {
+        "zh": "椰油的長輩",
+        "tao": "Yayo a akey"
+      },
+      "role": "elder_m",
+      "village": "yayo",
+      "duties": [
+        "flyingfish",
+        "net"
+      ],
+      "dutyText": "飛魚季出海、漁網與漁團",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_yayo",
+      "kind": "elder",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "yayo",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        }
+      ],
+      "portrait": "elder_yayo",
+      "sheet": "elder_yayo"
+    },
+    {
+      "id": "clinic_nurse",
+      "name": {
+        "zh": "衛生所護理師",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "imorod",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "clinic_nutrition",
+      "kind": "clinic",
+      "home": "clinic",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "clinic"
+          ]
+        }
+      ],
+      "portrait": "nurse"
+    },
+    {
+      "id": "villager_taro",
+      "name": {
+        "zh": "水芋田長輩",
+        "tao": ""
+      },
+      "role": "elder_f",
+      "village": "ivalino",
+      "duties": [
+        "taro"
+      ],
+      "dutyText": "水芋田",
+      "recipeKeeper": "rc-boiled-taro",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_villager_taro",
+      "kind": "villager_taro",
+      "home": "ivalino",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "dawn",
+            "day"
+          ],
+          "waypoints": [
+            "taro_ivalino",
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        }
+      ],
+      "portrait": "villager_taro",
+      "elder": "f",
+      "action": "taro_intro"
+    },
+    {
+      "id": "villager_harbor",
+      "name": {
+        "zh": "拼板舟漁人",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": null,
+      "kind": "villager_harbor",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "rayon",
+            "meyvanwa"
+          ],
+          "times": [
+            "dawn",
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "harbor"
+          ]
+        }
+      ],
+      "portrait": "villager_harbor",
+      "action": "auto-fish"
+    },
+    {
+      "id": "villager_iranmeylek",
+      "name": {
+        "zh": "東清的族人",
+        "tao": ""
+      },
+      "role": "questVillager",
+      "village": "iranmeylek",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_villager_iranmeylek",
+      "kind": "villager_iranmeylek",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "dawn"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "villager_iranmeylek"
+    },
+    {
+      "id": "villager_iratay",
+      "name": {
+        "zh": "漁人的族人",
+        "tao": ""
+      },
+      "role": "questVillager",
+      "village": "iratay",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_villager_iratay",
+      "kind": "villager_iratay",
+      "home": "iratay",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day"
+          ],
+          "waypoints": [
+            "iratay",
+            "airport",
+            "taro_iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        }
+      ],
+      "portrait": "villager_iratay"
+    },
+    {
+      "id": "tourist_a",
+      "name": {
+        "zh": "剛下飛機的訪客",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iratay",
+      "outsider": true,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "tourist",
+      "home": "airport",
+      "schedule": [
+        {
+          "seasons": [
+            "off",
+            "manoyotoyon"
+          ],
+          "times": [
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "airport",
+            "iratay",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "airport",
+            "harbor"
+          ]
+        }
+      ],
+      "portrait": "tourist"
+    },
+    {
+      "id": "tourist_b",
+      "name": {
+        "zh": "東清灣的旅人",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iranmeylek",
+      "outsider": true,
+      "talkable": false,
+      "dialogue": "visitor_chat",
+      "kind": "player_researcher",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "off"
+          ],
+          "times": [
+            "dawn",
+            "day"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor",
+            "iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "researcher"
+    },
+    {
+      "id": "harbor_staff",
+      "name": {
+        "zh": "開元港港務人員",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "harbor_welcome",
+      "kind": "harbor",
+      "home": "harbor",
+      "portrait": "harbor_staff",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elder_iraraley",
+      "name": {
+        "zh": "朗島的長輩",
+        "tao": "Iraraley a akey"
+      },
+      "role": "elder_m",
+      "village": "iraraley",
+      "duties": [
+        "boat"
+      ],
+      "dutyText": "造拼板舟、上山選木",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_iraraley",
+      "kind": "elder",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "elder_iraraley",
+      "sheet": "elder_iraraley"
+    },
+    {
+      "id": "elder_iranmeylek",
+      "name": {
+        "zh": "東清的長輩",
+        "tao": "Iranmeylek a akey"
+      },
+      "role": "elder_m",
+      "village": "iranmeylek",
+      "duties": [
+        "boat",
+        "flyingfish"
+      ],
+      "dutyText": "拼板舟出海、繩索與划槳",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_iranmeylek",
+      "kind": "elder",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "elder_iranmeylek",
+      "sheet": "elder_iranmeylek"
+    },
+    {
+      "id": "elder_iratay",
+      "name": {
+        "zh": "漁人的長輩",
+        "tao": "Iratay a akey"
+      },
+      "role": "elder_m",
+      "village": "iratay",
+      "duties": [
+        "flyingfish"
+      ],
+      "dutyText": "飛魚季出海與分魚",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_iratay",
+      "kind": "elder",
+      "home": "iratay",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay"
+          ]
+        }
+      ],
+      "portrait": "elder_iratay",
+      "sheet": "elder_iratay"
+    },
+    {
+      "id": "teacher_yayo",
+      "name": {
+        "zh": "族語老師",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "teacher_idle",
+      "kind": "teacher_yayo",
+      "home": "yayo_school",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo_school"
+          ]
+        }
+      ],
+      "portrait": "teacher_yayo"
+    },
+    {
+      "id": "rental_owner",
+      "name": {
+        "zh": "租車行老闆",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "rental_idle",
+      "kind": "rental_owner",
+      "home": "rental",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "rental"
+          ]
+        }
+      ],
+      "portrait": "rental_owner"
+    },
+    {
+      "id": "shop_yayo",
+      "name": {
+        "zh": "雜貨店老闆",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "shop_idle",
+      "kind": "shop_yayo",
+      "home": "yayo_shop",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo_shop"
+          ]
+        }
+      ],
+      "portrait": "shop_yayo"
+    },
+    {
+      "id": "dive_coach",
+      "name": {
+        "zh": "潛水教練",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "coach_idle",
+      "kind": "dive_coach",
+      "home": "dive_shop",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "dive_shop"
+          ]
+        }
+      ],
+      "portrait": "dive_coach"
+    },
+    {
+      "id": "weaver_elder",
+      "name": {
+        "zh": "織布的婦女長輩",
+        "tao": ""
+      },
+      "role": "elder_f",
+      "village": "imorod",
+      "duties": [
+        "weaving"
+      ],
+      "dutyText": "織布",
+      "recipeKeeper": "rc-boiled-flyingfish",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_weaver_elder",
+      "kind": "weaver_elder",
+      "home": "imorod",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        }
+      ],
+      "portrait": "weaver_elder",
+      "elder": "f"
+    },
+    {
+      "id": "clinic_doctor",
+      "name": {
+        "zh": "衛生所醫師",
+        "tao": ""
+      },
+      "role": "outsider",
+      "village": "imorod",
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_clinic_doctor",
+      "kind": "clinic_doctor",
+      "home": "clinic_yard",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "clinic_yard"
+          ]
+        }
+      ],
+      "portrait": "clinic_doctor"
+    },
+    {
+      "id": "nutritionist",
+      "name": {
+        "zh": "營養師",
+        "tao": ""
+      },
+      "role": "outsider",
+      "village": "imorod",
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_nutritionist",
+      "kind": "nutritionist",
+      "home": "clinic_yard",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "clinic_yard",
+            "imorod",
+            "clinic_yard"
+          ]
+        }
+      ],
+      "portrait": "nutritionist"
+    },
+    {
+      "id": "culture_worker",
+      "name": {
+        "zh": "部落文化工作者",
+        "tao": ""
+      },
+      "role": "service",
+      "village": "iraraley",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_culture_worker",
+      "kind": "culture_worker",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "culture_worker"
+    },
+    {
+      "id": "geologist",
+      "name": {
+        "zh": "地質學家",
+        "tao": ""
+      },
+      "role": "outsider",
+      "village": "iratay",
+      "outsider": true,
+      "talkable": true,
+      "dialogue": "dlg_geologist",
+      "kind": "geologist",
+      "home": "airport",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "airport"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "airport",
+            "iratay",
+            "airport"
+          ]
+        }
+      ],
+      "portrait": "geologist"
+    },
+    {
+      "id": "villager_yayo_a",
+      "name": {
+        "zh": "椰油的族人",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "uncle",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "taro_yayo",
+            "yayo"
+          ]
+        }
+      ],
+      "portrait": "uncle"
+    },
+    {
+      "id": "villager_yayo_b",
+      "name": {
+        "zh": "椰油的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_f",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "taro_yayo",
+            "yayo"
+          ]
+        }
+      ],
+      "portrait": "youth_f"
+    },
+    {
+      "id": "villager_yayo_c",
+      "name": {
+        "zh": "椰油的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "yayo",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "boy",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "taro_yayo"
+          ]
+        }
+      ],
+      "portrait": "boy"
+    },
+    {
+      "id": "villager_iraraley_a",
+      "name": {
+        "zh": "朗島的族人",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iraraley",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "auntie",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley",
+            "iraraley"
+          ]
+        }
+      ],
+      "portrait": "auntie"
+    },
+    {
+      "id": "villager_iraraley_b",
+      "name": {
+        "zh": "朗島的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iraraley",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_m",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley",
+            "iraraley"
+          ]
+        }
+      ],
+      "portrait": "youth_m"
+    },
+    {
+      "id": "villager_iraraley_c",
+      "name": {
+        "zh": "朗島的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iraraley",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "girl",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "girl"
+    },
+    {
+      "id": "villager_iranmeylek_b",
+      "name": {
+        "zh": "東清的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iranmeylek",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_f__stripe",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek",
+            "iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "youth_f"
+    },
+    {
+      "id": "villager_iranmeylek_c",
+      "name": {
+        "zh": "東清的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iranmeylek",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "boy__green",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "boy"
+    },
+    {
+      "id": "villager_ivalino_a",
+      "name": {
+        "zh": "野銀的族人",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "ivalino",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "auntie__scarf",
+      "home": "ivalino",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino",
+            "taro_ivalino",
+            "ivalino"
+          ]
+        }
+      ],
+      "portrait": "auntie"
+    },
+    {
+      "id": "villager_ivalino_b",
+      "name": {
+        "zh": "野銀的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "ivalino",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_m__black",
+      "home": "ivalino",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino",
+            "taro_ivalino",
+            "ivalino"
+          ]
+        }
+      ],
+      "portrait": "youth_m"
+    },
+    {
+      "id": "villager_ivalino_c",
+      "name": {
+        "zh": "野銀的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "ivalino",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "girl__orange",
+      "home": "ivalino",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino",
+            "taro_ivalino"
+          ]
+        }
+      ],
+      "portrait": "girl"
+    },
+    {
+      "id": "villager_imorod_a",
+      "name": {
+        "zh": "紅頭的族人",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "imorod",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "uncle__cap",
+      "home": "imorod",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "taro_imorod",
+            "imorod"
+          ]
+        }
+      ],
+      "portrait": "uncle"
+    },
+    {
+      "id": "villager_imorod_b",
+      "name": {
+        "zh": "紅頭的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "imorod",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_f__denim",
+      "home": "imorod",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "taro_imorod",
+            "imorod"
+          ]
+        }
+      ],
+      "portrait": "youth_f"
+    },
+    {
+      "id": "villager_imorod_c",
+      "name": {
+        "zh": "紅頭的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "imorod",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "boy__red",
+      "home": "imorod",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "taro_imorod"
+          ]
+        }
+      ],
+      "portrait": "boy"
+    },
+    {
+      "id": "villager_iratay_b",
+      "name": {
+        "zh": "漁人的青年",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iratay",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "youth_m__shirt",
+      "home": "iratay",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay",
+            "iratay"
+          ]
+        }
+      ],
+      "portrait": "youth_m"
+    },
+    {
+      "id": "villager_iratay_c",
+      "name": {
+        "zh": "漁人的孩子",
+        "tao": ""
+      },
+      "role": "ambient",
+      "village": "iratay",
+      "outsider": false,
+      "talkable": false,
+      "dialogue": "",
+      "kind": "girl__pink",
+      "home": "iratay",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay"
+          ]
+        }
+      ],
+      "portrait": "girl"
+    },
+    {
+      "id": "elder_f_yayo",
+      "name": {
+        "zh": "椰油的女性長輩",
+        "tao": "Yayo a akes"
+      },
+      "role": "elder_f",
+      "village": "yayo",
+      "duties": [
+        "food"
+      ],
+      "dutyText": "食物：煮食與保存",
+      "recipeKeeper": "rc-dried-flyingfish",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_f_yayo",
+      "kind": "elder_f_yayo",
+      "home": "yayo",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "taro_yayo"
+          ]
+        }
+      ],
+      "portrait": "elder_f_yayo",
+      "elder": "f"
+    },
+    {
+      "id": "elder_f_iraraley",
+      "name": {
+        "zh": "朗島的女性長輩",
+        "tao": "Iraraley a akes"
+      },
+      "role": "elder_f",
+      "village": "iraraley",
+      "duties": [
+        "field"
+      ],
+      "dutyText": "田地：山藥與小米",
+      "recipeKeeper": "rc-boiled-yam",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_f_iraraley",
+      "kind": "elder_f_iraraley",
+      "home": "iraraley",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iraraley",
+      "elder": "f"
+    },
+    {
+      "id": "elder_f_iranmeylek",
+      "name": {
+        "zh": "東清的女性長輩",
+        "tao": "Iranmeylek a akes"
+      },
+      "role": "elder_f",
+      "village": "iranmeylek",
+      "duties": [
+        "food",
+        "tide"
+      ],
+      "dutyText": "潮間帶採集與料理",
+      "recipeKeeper": "rc-shellfish-seaweed",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_f_iranmeylek",
+      "kind": "elder_f_iranmeylek",
+      "home": "iranmeylek",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iranmeylek",
+      "elder": "f"
+    },
+    {
+      "id": "elder_f_iratay",
+      "name": {
+        "zh": "漁人的女性長輩",
+        "tao": "Iratay a akes"
+      },
+      "role": "elder_f",
+      "village": "iratay",
+      "duties": [
+        "field",
+        "taro"
+      ],
+      "dutyText": "田地：地瓜與水芋",
+      "recipeKeeper": "rc-taro-sweetpotato",
+      "outsider": false,
+      "talkable": true,
+      "dialogue": "dlg_elder_f_iratay",
+      "kind": "elder_f_iratay",
+      "home": "iratay",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iratay",
+      "elder": "f"
+    }
+  ]
+}

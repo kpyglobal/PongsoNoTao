@@ -1,0 +1,149 @@
+{
+  "_note": "Proposed by the art worker (NPC cast rev). Not wired: the code worker adds these to public/data/npcs.json. kind = own sheet (not 'elder', so they do not take the male elder's fixed spot). 'interact' is a placeholder id for the recipe-keeper dialogue. Also proposed: villager_taro home stays ivalino (waypoints ivalino/taro_ivalino only), weaver_elder home imorod instead of host_weave.",
+  "npcs": [
+    {
+      "id": "elder_f_yayo",
+      "kind": "elder_f_yayo",
+      "name": {
+        "zh": "椰油的女性長輩",
+        "tao": "Yayo a akes"
+      },
+      "home": "yayo",
+      "interact": "recipe_keeper",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "taro_yayo"
+          ]
+        }
+      ],
+      "portrait": "elder_f_yayo"
+    },
+    {
+      "id": "elder_f_iraraley",
+      "kind": "elder_f_iraraley",
+      "name": {
+        "zh": "朗島的女性長輩",
+        "tao": "Iraraley a akes"
+      },
+      "home": "iraraley",
+      "interact": "recipe_keeper",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iraraley"
+    },
+    {
+      "id": "elder_f_iranmeylek",
+      "kind": "elder_f_iranmeylek",
+      "name": {
+        "zh": "東清的女性長輩",
+        "tao": "Iranmeylek a akes"
+      },
+      "home": "iranmeylek",
+      "interact": "recipe_keeper",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iranmeylek"
+    },
+    {
+      "id": "elder_f_iratay",
+      "kind": "elder_f_iratay",
+      "name": {
+        "zh": "漁人的女性長輩",
+        "tao": "Iratay a akes"
+      },
+      "home": "iratay",
+      "interact": "recipe_keeper",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay"
+          ]
+        }
+      ],
+      "portrait": "elder_f_iratay"
+    }
+  ]
+}

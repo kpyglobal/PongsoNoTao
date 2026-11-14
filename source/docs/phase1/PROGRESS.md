@@ -158,3 +158,247 @@
 - R4 audit (01:0x CST): fresh clone of v0.1.0 `source/` diffed against the tree; full write-up in docs/phase1/AUDIT-0.1.1.md. Fixed: (A1) findSafeStand could move 17 of 2 795 old 0.1.0 standing spots into thin gaps between buildings (cut-off pockets) → roomy-spot-first search, now 0 stranded and check-roads tests it every run (fixture scripts/dev/fixtures/v010-spots.json); (A2) travelerFrom removed, old intl saves still load; (A4) 2 village lantern posts + 3 fish racks stood inside buildings → slid along the road edge (one 椰油 rack left out); (A5) placement resolver 250 → ~90 ms at load, identical output (hash); (A6) dead code (scooterTex, CharacterSheet, SAVE_VERSION, FOOT alias, ~45 lines CSS). Docs: ASSET_MANIFEST / DESIGN_BLUEPRINT no longer list deleted files or the 外國 traveller.
 - R3 build + checks on the final tree (build 00:57 CST, after all R2/R4 code changes; tsc re-run 01:30): npm run build OK (typecheck, check-fonts 1010 chars, vite). tsc OK; check-roads OK (140 targets, corridors clear, 2 795 old 0.1.0 spots → 0 stranded); test-walkout ALL OK (desktop keys + mobile joystick, facing ×6); smoke-phase1 OK (no guide links, guide.html 200); test-audit OK (incl. intl save migration); verify-phase1 OK; verify-phase1b OK; capture-party OK. Every run: 0 console errors, 0 4xx.
 - R5 README: bilingual repo README with 攻略 / Guide link and 0.1.1 notes (warning + rights lines unchanged); staged from tao-rpg-backup-0.1.1/README-repo-0.1.1.md.
+- R6 push (01:3x CST): PR https://github.com/kpyglobal/PongsoNoTao/pull/2 rebase-merged → main 015b155 (tree identical to the staged commit; 257 removed files deleted from the repo, __pycache__ no longer shipped); tag v0.1.1 + pre-release https://github.com/kpyglobal/PongsoNoTao/releases/tag/v0.1.1. Pages built 015b155. Live: game + guide.html 200, 0 console errors, 0 4xx, no guide links (first load right after deploy saw one transient CDN 503, gone on recheck; every dist file curl-checked 200). test-walkout got a LIVE_URL option.
+- R6 live walk-out (01:5x CST): LIVE_URL test-walkout against https://kpyglobal.github.io/PongsoNoTao/ ALL OK (desktop keys + mobile joystick walk off the dock, facing ×6, no trees on roads, 0 console errors, 0 4xx).
+- R7 backup: /workspace/tao-rpg-backup-0.1.1/tao-rpg-0.1.1-final.tar.gz (whole tree minus node_modules and dist, incl. screenshots / font-samples / art-src, ~0.5 GB).
+
+# NPC cast
+(2026-11-14 2 AM task from Larry: portraits + sprites for every key NPC and ambient villagers in all six villages. Resume from the last step below.)
+- Step 0: backup of the whole tree (minus node_modules/dist/screenshots/fonts-src) → /workspace/tao-rpg-backup-cast/before-cast.tar.
+- Step 1–2: inventory + roster written to docs/phase1/NPC_CAST.md (20 key NPCs incl. 4 new guide-only roles, 6 ambient bases × 3 variants, 18 ambient villagers). Next: portraits (art-src/portraits/<id>.jpg → public/assets/portraits/<id>.webp).
+- Step 3a: portraits generated + saved to art-src/portraits: elder_yayo, elder_iraraley, elder_iranmeylek, elder_ivalino, elder_imorod, elder_iratay.
+- Step 3b: + villager_taro, weaver_elder, villager_harbor, teacher_yayo, shop_yayo, rental_owner.
+- Step 3c: + dive_coach, harbor_staff, nurse_new (replaces nurse src later), clinic_doctor, nutritionist, culture_worker.
+- Step 3d: + geologist, researcher, tourist, ambient auntie/uncle/youth_m/youth_f/boy(2nd try; 1st looked teen, discarded)/girl. All portrait sources done.
+- Step 3e: keyed 27 portraits -> public/assets/portraits/*.webp (440x560). clinic_doctor + uncle white-key ate the white coat/singlet -> regenerated same image on green, chroma-keyed clean (sources replaced).
+- Step 4a: generator features added (fig.py/poses.py): per-entry scale/heads (children), glasses, beard (moustache/goatee/stubble), hair 'bald' + 'pigtails', props paddle/leaves/cloth/net/rope/keys/hammer/radio. Regenerated all 20 existing sheets to /tmp: byte-identical.
+- Step 4b: cast.py: 17 key NPC entries + 6 ambient bases + 12 variant() outfits (KEY_NPCS/AMBIENT lists); clinic (nurse: teal scrubs, golden skin), harbor (light-blue shirt, moustache, radio), player_researcher (black lowtail, bucket hat) updated to match their new portraits. Wrote 39 NPC walk sheets to public/assets/sprites/characters (player sheets unchanged).
+- Step 5a: npcs.json: 39 NPCs (19 old + doctor/nutritionist/culture_worker/geologist + 16 ambient). Elders keep kind 'elder' + new 'sheet'; other key NPCs kind=<own sheet>; portraits all unique. villager_iranmeylek/villager_iratay (quest K-visit NPCs) re-skinned as ambient adults (uncle__polo / auntie__apron) with their old schedules kept. src: NpcDef.sheet + content check, Assets loads every npcs.json sheet after data (fixed old NPC sheet list removed), fish dialogue portrait fisher->villager_harbor, places.ts derived 'clinic_yard'.
+- Step 6: guide data.json npcs: 6 elders (own cards), weaver, canoe fisher, shop, coach, port staff, nurse, researcher, tourist, ambient villagers card added; teacher/culture/geo/doctor/nutrition/farmer/rental now have their own portraits (seals dropped). 22 guide portrait copies (trimmed, 520 tall). Removed obsolete: portraits elder/farmer/fisher/harbor (game+guide+art-src), sheets elder/farmer/fisher/villager + their cast.py entries. Regenerated everything to /tmp: identical to public, sheet set matches 1:1.
+- Step 6b: guide Iansui subset rebuilt (old codepoints + guide.html/data.json/guide.js; 17 new glyphs, 224->234 KB, default fontTools options).
+- Step 7a: screenshots-cast/key-npcs.png (21 cards: portrait + in-game sprite, Iansui labels) + ambient.png (6 bases x 3 outfits).
+- Step 7b: scripts/capture-cast.mjs (port 8845): 39 NPCs spawn, every talkable key NPC opens with its own portrait, village shots yayo/ivalino/imorod (+ lineups) and a key-NPC lineup at 開元港; 0 console errors, 0 4xx.
+- Step 8: checks — build+tsc OK, check-roads OK, capture-cast OK, test-walkout ALL OK, smoke-phase1 ok, verify-phase1b 56 ok / exit 0, test-audit all ok when run alone (one M1 timing fail when run in parallel with verify-phase1b: the test waits a fixed 1.5 s after reload; passed on solo rerun). NPC_CAST.md 'As built' section added. DONE (not pushed).
+
+# NPC cast rev
+
+(2026-11-14 09:22 request: female elders + division of labour, recipe keepers, unique faces for the two quest villagers, image optimisation + NPC atlases, guide/contact sheets. ART ONLY: no src/, no quests/recipes data.)
+
+- Step 0: backup /workspace/tao-rpg-backup-castrev/before-castrev.tar.
+- Step 1: 6 new portrait sources (art-src/portraits): elder_f_yayo (food, pot+ladle), elder_f_iraraley (yam field, yams in a net bag), elder_f_iranmeylek (shore, straw hat, shells+seaweed bucket), elder_f_iratay (sweet potato/taro field, hairband, basin), villager_iranmeylek (curly hair, olive tee, towel), villager_iratay (woman, short layered hair, coral shirt, tote).
+- Step 2: portraits re-keyed from art-src at their max on-screen size. Dialogue portrait is 196 CSS px wide (118 on
+  mobile), aspect 440:560 → **330×420 WebP q80 (method 6, alpha kept)**, bottom-centre anchored as before
+  (scripts/key_art.py PW/PH/PQ). q chosen by eye on 3 faces at 2× zoom: q78–95 indistinguishable, q70 slightly
+  soft, q60 loses wrinkles. Guide copies cut from the same full-res key, trimmed to the figure: NPC cards 360 px
+  tall, party / traveller (local, local_f, visitor, visitor_m) 480 px tall. 37 portraits (31 old + 6 new).
+  Side-by-side: screenshots-cast/portraits-optimised-vs-original.png (as seen at 196 CSS px @2×, plus 2× face crops).
+- Step 3: new sprites (scripts/octo): fig.py hand items pot / yams / bucket / basin + `towel` detail; cast.py
+  elder_f_yayo / elder_f_iraraley / elder_f_iranmeylek / elder_f_iratay (golden_d, elder build) and
+  villager_iranmeylek (curly hair, olive tee, towel) / villager_iratay (bob, coral shirt, tote). Removed the variants
+  uncle__polo / auntie__apron (only the two quest villagers used them): cast lines + sheets deleted. All other 49
+  sheets regenerated byte-identical before step 5.
+- Step 4: public/data/npcs.json: only villager_iranmeylek / villager_iratay `kind` + `portrait` → own id (text edit,
+  nothing else touched). Guide data.json: male elder cards get their role, 4 a akes cards + 2 quest villager cards
+  added, 水芋田長輩 / 織布長輩 become 野銀 / 紅頭 a akes, each keeper card names her dish. Guide font
+  (public/guide/fonts/iansui.woff2) re-subset for 32 new glyphs (234 → 238 KB). Docs: NPC_CAST.md §5 (village table),
+  RECIPE_KEEPERS.md, npcs_additions.json (proposed entries for the 4 a akes, not wired).
+- Step 5: sprites losslessly optimised: pyoxipng level 6 + zopfli, safe chunk strip, every sheet decoded and compared
+  RGBA-equal to the original (alpha-0 bleed texels included). Note: generate_octo output is now no longer
+  byte-equal to public/ — compare decoded pixels, or re-run the optimiser after regenerating.
+  Size test (all 55 character sheets): PNG unoptimised 1,475,711 B → PNG oxipng 847,937 B → **WebP lossless
+  (exact) 465,100 B**, also pixel-identical. Kept PNG as briefed; WebP lossless is the smallest lossless option if
+  the loader accepts it (one-line change in build_atlas.py / the optimiser).
+- Step 6: NPC atlases (scripts/octo/build_atlas.py, reads npcs.json read-only): one lossless PNG per village group
+  public/assets/sprites/npc_atlas_<group>.png + manifest public/assets/sprites/npc_atlas.json.
+  Groups: the six villages + `harbor` (harbor / airport / rental / dive shop outsiders). Non-village homes map via
+  PLACE_GROUP (yayo_school, yayo_shop → yayo; clinic, clinic_yard, host_weave → imorod). Sheets are packed
+  2 rows high, ≤4 across (768 or 1024 × 1536), so no empty slots. Atlas pixels are verified equal to the sheets.
+  The 4 proposed a akes are already packed (yayo / iraraley / iranmeylek / iratay).
+
+  **npc_atlas.json format (for the code worker)**
+  ```
+  { "version": 1,
+    "frame": {"w":64,"h":96},
+    "sheet": {"w":256,"h":768,"cols":4,"rows":8,"rows_dir":["s","w","n","e"],"walk_rows":[0,1,2,3],"idle_rows":[4,5,6,7]},
+    "filter": "nearest",
+    "atlases": { "<group>": {"file":"sprites/npc_atlas_<group>.png","w":768|1024,"h":1536,"bytes":N,
+                             "sheets": {"<sheetName>": {"x":X,"y":Y}, ...}} , ...},
+    "npcs": { "<npcId>": {"atlas":"<group>","sheet":"<sheetName>"}, ... } }
+  ```
+  `file` is relative to public/assets/. A frame (col c, row r) of sheet s in atlas g is the pixel rect
+  x = sheets[s].x + c*64, y = sheets[s].y + r*96, 64×96 — same layout as the single sheets, so
+  makeCharacter only needs an atlas texture + offset (UV offset = x/w, 1 - (y+96)/h for flipY textures,
+  repeat = 64/w, 96/h). Lazy loading: load an atlas when the player gets near any NPC in it (group = its home
+  village; roamers sit in `harbor`), dispose() it when no NPC of that group is within range; GPU cost per atlas
+  4.5 MiB (768 wide) / 6 MiB (1024 wide) vs 0.75 MiB per single sheet. sheet name = def.sheet ?? def.kind, as now.
+  After the switch the 43 single NPC sheets in sprites/characters (676,797 B) can be deleted; player / ride /
+  canoe sheets stay single.
+- Step 7: contact sheets regenerated (scripts/octo/contact_cast.py, contact_elders.py): screenshots-cast/key-npcs.png
+  (27 cards, elders paired by village), ambient.png (uncle__polo / auntie__apron gone), elders-by-village.png (new),
+  portraits-optimised-vs-original.png. capture-cast (on an isolated copy at /tmp/castrev-wt so the live dist and
+  src were untouched): all 39 NPCs spawn, 14 dialogue portraits own, 0 console errors, 0 4xx; check-roads OK; build OK.
+  Known: scripts/capture-party.mjs:57 and capture-traveller.mjs:65 assert dialogue portrait naturalWidth === 440;
+  they now need 330 (outside this pass's edit scope, left for the code worker).
+- Sizes (bytes, before → after): game portraits 1,442,876 (31) → 773,564 (37; the same 31 = 644,328, −55 %);
+  guide portraits 1,008,250 (26) → 579,262 (32; same 26 = 476,942, −53 %); character sheets 1,364,506 (51) →
+  847,937 (55, lossless); props 353,870 → 353,495. Total 4.17 MB → 2.55 MB (−39 %) with 6 more characters, plus
+  the new atlases 694,326 B (which replace 676,797 B of single NPC sheets once the loader switches).
+
+# Party split & recipes
+
+Brief (2026-11-14 9:22 AM, from Larry's pt103u): A 食譜 per village, B 生產類女耆老／漁獵造舟男耆老 分工,
+C party split (temporary leave, solo 族男 sea trip, 3-way main-story split + regroup), D NPC streaming + perf,
+E debug hooks + TEST_HOOKS.md. No art edits (the other worker owns sprites / portraits / art-src), no push.
+
+- Step 0 (done): backup /workspace/tao-rpg-backup-split/before-split.tar (+ dist-before/). RECIPE_KEEPERS.md and
+  npc_atlas.json not there yet → placeholders from the existing cast, adapt when they land.
+- Step 1 (done): scripts/perf-mobile.mjs (WebGL texture/renderbuffer byte accounting + frame / rAF CPU time at
+  390×844 @2×); baseline on the pre-batch build → perf-before.json.
+
+# Watercolor-ink style
+
+Brief (2026-11-14 10:09): world (terrain, sea, buildings, rocks, trees, props) in watercolor (soft washes, paper
+grain) + a bit of ink (dark-brown contours, light hatching only in shadows); target art-src/style-ref/
+target_watercolor_ink.jpg. Sprites and UI untouched. New files + minimal marked hooks only (another worker is in
+src/). Switchable (風格：水彩／原始), quality tier, debug hook, before/after perf + screenshots in screenshots-style/.
+Then: 3 cartoon-restyle test portraits (same designs, watercolor fills + ink lines only), not applied in game.
+
+- Step 0: backup /workspace/tao-rpg-backup-style/before-style.tar.
+- Step 1: src/render/stylize.ts (new): StylizePass replaces RenderPass: world without sprites → own target with a
+  depth texture; one paint pass (pigment-bleed wobble, soft value bands, edge darkening, paper grain + wash blotches,
+  dark-brown contours from depth silhouettes + Laplacian creases, shadow hatching on the high tier) writing the
+  world depth back; then the sprites alone (layer 31) on top, depth-tested. Hook: src/core/post.ts, 2 marked lines
+  (import + addPass). Toggle row 風格 mounted into the 操作說明 sheet from stylize.ts (no dom.ts edit).
+
+- Step 2: tuning. Sea: the ocean (transparent, no depth write) is made to write depth in the world pass only, so the
+  sea floor under it gets no ink and the shoreline gets a contour. Darks lifted (screen) + light paper tint so the
+  world reads as translucent washes; first pass was too grey, values pulled back (uLift 0.05, paper 0.12, bands 0.35).
+  Quality tier: high = full (pooling + hatching); mobile = no pooling taps, no hatching (contours + wobble + bands +
+  paper only). Debug: window.__TAO_STYLE__.set('original'|'watercolor'), .params (uniforms), .pass.cpuMs.
+- Step 3: scripts/capture-style.mjs (new): same build, same spot, original vs watercolor shots + rAF frame time,
+  desktop 1440×900 and mobile 390×844@2× → screenshots-style/*.png + perf-style.json.
+- Step 4 (STYLE TEST, per Larry: one style for everything): restyled portraits (same faces/designs, only colouring +
+  ink lines) art-src/portraits/cartoon-test/{local,elder_yayo,visitor}.jpg; u1 restyle art-src/style-test/
+  u1_watercolor.jpg; items flying fish / taro / sweet potato: 24 px pixel icons (scripts/octo/item_icons.py →
+  art-src/style-test/icon_*.png) + 圖鑑 plates art-src/style-test/item_*.jpg. Sheet: screenshots-style/style-test.png
+  (scripts/octo/style_test_sheet.py). Nothing in game replaced; waiting for Larry's approval.
+- Step 2 (done): quest data model for party split (types.ts: split / meet / solo / regroup / requires / tasks /
+  minigame / canoe, quest giver / abortTo / recipe) + QuestEngine member states (saved; old saves load as "all in
+  party"). Design: docs/phase1/PARTY_SPLIT.md.
+- Step 3 (done): playable scenarios (scripts/quests/playable-split.mjs): Q07 3-way main-story split + regroup at
+  host_home, J1 族女 busy / others bring water, M1 → M2 (auto when the flying-fish season starts) → M3 族男 solo sea
+  trip (tatala + fish mini-game, 放棄出海 → abortTo). 分工 givers (rules.mjs GIVER): 女耆老 for taro / food /
+  weaving jobs, 男耆老 for fishing / hunting / tatala jobs; each wrapped with 領工作 + 回報 steps at @giver.
+- Step 4 (done): 食譜 (scripts/quests/recipes.mjs → FD1–FD6, recipes.json): talk to the keeper → collect (fish
+  mini-game, taro mini-game, shop, gather spots) → learn → notebook 食材與營養.
+- Step 5 (done): HUD (member status under each chip, dimmed / locked, split banner + 放棄出海), markers (regroup,
+  away members, gather spots), follower `stay`.
+- Step 6 (done): NPC streaming (distance load / unload with hysteresis, refcounted textures, disposed geometry /
+  materials) + MSAA off on coarse-pointer devices (multisampled targets were the largest GPU item on phones).
+- Step 7 (done): debug hooks + docs/phase1/TEST_HOOKS.md; scripts/test-split.mjs (save / load mid-split included).
+- Steering 10:02 (art worker done, see # NPC cast rev):
+  - npcs.json: the 4 a akes from npcs_additions.json added (+ `elder: 'f'`); 水芋田長輩 home 野銀 (waypoints
+    ivalino / taro_ivalino), 織布長輩 home 紅頭 (imorod), both `elder: 'f'`. quests.json `elders.f` now = each
+    village's a akes. New token `@hostf` (host village's a akes; she waits on the host porch host_weave) replaces the
+    hard-coded weaver in Q07 / J1 / J2. dialogues.json `recipe_keeper` node (generic, 「還要請族人確認」).
+  - Recipes per RECIPE_KEEPERS.md: 椰油 飛魚乾 (elder_f_yayo), 朗島 水煮山藥 (elder_f_iraraley), 東清 水煮貝類與海菜
+    (elder_f_iranmeylek, new rc-shellfish-seaweed; new ingredients shellfish 貝類 / seaweed 海菜, tao "" until
+    confirmed, gathered on the 東清灣 shore: derived place tide_iranmeylek), 野銀 水煮芋頭 (villager_taro), 紅頭 水煮飛魚
+    (weaver_elder), 漁人 芋頭與地瓜 (elder_f_iratay). rc-boiled-sweetpotato (水煮地瓜) dropped.
+  - NPC loading switched to the per-village atlases: Assets reads npc_atlas.json, NpcActor acquires its group's
+    atlas (refcounted, disposed when no NPC of that group is in range), SpriteBillboard gets a `region` (UV window of
+    the sheet slot). Fallback to the single sheet if an NPC is missing from the manifest.
+  - capture-party.mjs:57 / capture-traveller.mjs:65 → portrait width 330.
+- Steering 10:31 (hold on image assets): the lossless-WebP atlases I had made (pixel-identical, 694 KB → 367 KB) and
+  the deletion of the 43 single NPC sheets were both REVERTED to the art worker's files (byte-identical manifest,
+  PNG atlases and 43 sheets restored from /workspace/tao-rpg-backup-split/). Code runs from the PNG atlases; the 43
+  single sheets are now unused (only loaded as a fallback) and can be deleted once the art style is settled.
+- Tests adapted to the batch: verify-phase1 (Q07 is now a split → runQuest; 133 quests = 127 + 6 食譜),
+  verify-phase1b (分工 jobs now start / end at @giver → runQuest; J1 actor check via quest().block).
+
+## Art style notes (style test v6, 2026-11-14)
+- Style settings (ink, paper, palette from the target picture, seasons, time of day, night glow, sea streaks) all live in `src/render/styleConfig.ts`.
+- 圖鑑 illustrations: locked style = the hand-drawn flying fish (`art-src/style-test/v3/item_flyingfish.jpg`).
+- Travellers may wear glasses (`art-src/portraits/style-v6/*_glasses.jpg`). **Underwater images (u1/u2/u3 and any later dive art) must show the travellers WITHOUT glasses.**
+
+# Phase A: content data (2026-11-14)
+
+- New `content/` tree (data only; the game still reads `public/data/` until the refactor): seeded by `scripts/content/migrate-legacy.mjs` (one-off), then new quests, items, dialogue, outfits, gather nodes, photo spots.
+- `scripts/validate-content.mjs`: unique ids, references, split / solo structure, village 分工 + keeper coverage, outsider-outfit rule, simplified-character scan, completability fixpoint. Current: 161 quests (76 playable, all completable), 23 items, 7 recipes, 43 NPCs, 34 dialogue sets, 0 errors.
+- Docs: `CONTENT_SCHEMA.md` (format + how to add), `CONTENT_PHASE_A.md` (design, open questions, cultural review list).
+
+## Phase A — art unification (2026-11-14)
+- Backup of all previous art: /workspace/tao-rpg-backup-art-prev/art-prev-2026-11-14.tar.gz.
+- 37 portraits restyled to the locked v2 portrait style (watercolor + fine dark-brown ink); sources in art-src/portraits/*.jpg, keyed + fitted with `python3 scripts/key_art.py portraits` (transparent, 330×420 + guide copies).
+- Underwater U1/U2/U3×3 restyled (traveller wears a snorkel mask, no glasses); sources art-src/underwater/v2/.
+- 圖鑑 plates for all 11 items (v3 flying-fish style) in art-src/items/ → public/assets/items/illus_<id>.webp (512²) + icons/icon_<id>.png (24² pixel icons; names = the illustration/icon keys in content/items, 23 items; art-src/items/icon_src_<id>.jpg = optional bolder icon source). `python3 scripts/convert-phase-a.py` rebuilds underwater + items. NOT yet wired into the UI.
+- Review sheet: screenshots-style/phase-a-review.png (`python3 scripts/phase-a-sheet.py`).
+
+# Phase B: modular refactor (2026-11-14)
+
+Status log (newest last). To resume: read this list, then docs/phase1/ARCHITECTURE.md.
+
+- [done] Content loader `src/content/` (import.meta.glob + validate). `public/data/` and the old quest generator removed (backup in /workspace/backups/legacy-public-data-and-generator-1300.tgz).
+- [done] Systems in `src/systems/`: timeWindow, partySplit, inventory, gathering, photoSpots, recipes, outfits, dialogue. 背包/圖鑑 tab with the 23 item icons and drawings.
+- [done] Outfits: portrait swap (local_trad, local_f_trad, visitor_m_acc, visitor_acc); no sprite variants, so the base sprite is kept.
+- [done] Traveller accessories renamed 織草帽 / 織草小袋 (ids kept). Guide shows outfit variants on the same card. Guide font subset rebuilt for 服編鎖飾.
+- [done] content-polish merged and deleted (手札, 族語詞卡, 男性/女性長輩; giver labels come from content/meta.json).
+- [done] 13 passers-by + 2 quest-kid side quests (KD1, KD2); the geologist (man) was already in cast.json.
+- [done] 5 new places placed; check-roads OK.
+- [done] Test hooks + docs (TEST_HOOKS.md, ARCHITECTURE.md). capture-party / capture-traveller fixed (waited for the portrait to load).
+- [done] 14:00 Interaction fix: 族女 at a shared spot no longer gets the traveller's photo step; a small gather node inside a wide quest-spot circle now wins when the player stands on it.
+- [done] verify-phase1: the Q03 role-gate check talks again when a new village side quest (IV-M1) runs first.
+- [done] test-split: shore gathering needs low tide (dawn); the test sets dawn and matches nodes by item. Passers-by no longer block gather nodes (E gathers instead of chatting). test-split ALL OK at 14:30.
+- [done] Full re-run on the final dist (/tmp/afterB3/summary.txt): perf, test-content, verify-phase1, verify-phase1b, smoke, test-audit, test-split, test-walkout, capture-party and capture-traveller all exit 0 with no FAIL lines. tsc, build, validate-content, check-roads and check-fonts OK.
+- Atlas test (15:10): packing the 13 passer-by sheets into the village atlases raised GPU memory (peak 82.9→88.9 MB), because the atlases grow to 3 rows and load whole. Reverted to the old atlases (backup in /workspace/backups/npc-atlas-pre-pb-*.tgz). The passers-by stay single sheets, streamed by distance. build_atlas.py now knows the iranmeylek_beach and iratay_school homes.
+- Final perf (mobile 390x844), before→after: GPU harbour 64.6→69.6 MB; village 72.9→72.9 MB; peak 80.9→79.1 MB. JS heap harbour 85→53 MB. Frame p50 harbour 4.0→4.9 ms, village 3.5→3.6 ms.
+
+**Phase B: DONE (2026-11-14 ~15:10 CST).** Not pushed.
+
+# Leftovers (pre-0.1.3)
+
+Started 2026-11-14 15:15 CST. Status log (newest last).
+
+- [done] Collected the leftovers (PROGRESS.md, CONTENT_PHASE_A.md, ARCHITECTURE.md, AUDIT-0.1.1.md, collaborator notes; no TODO/FIXME left in src or scripts).
+- [done] Version 0.1.3 in package.json and package-lock.json. There is no in-game version text.
+- [done] Gather nodes whose `requires` is unmet (the 漁人 sweet-potato field before permission, the night shore without a headlamp) now show a hint instead of silently hiding. The hint comes from the new `requiresHint` field in content; no 採 marker shows until the node can be used. test-content checks this.
+- [done] 15:16 Outfit walk sheets wired: player_trad, player_f_trad, player_visitor_acc, player_visitor_f_acc. They come from `sheet` / `sheetByGender` in content/outfits/outfits.json; accessories now swap the sheet too. Riding and paddling fall back to the base outfit's sheets (outfitBaseSheet). Missing art still falls back to the base. test-content checks wear → portrait + walk sheet on screen, riding, and reload: PASS.
+- [done] Docs: CONTENT_PHASE_A.md (stale questions and the striped-band wording), TEST_HOOKS.md (`shown`), ASSET_MANIFEST.md (variant sheets), ARCHITECTURE.md.
+- [done] Checked the night quests (NT1, NT4, NT5, IM-V2): their NPCs keep a night schedule at home, so they are reachable. Every NPC portrait file exists.
+- [done] Full check run on the 0.1.3 dist (/tmp/leftovers/summary.txt). Everything passed. verify-phase1 crashed in 1 s on the first run (a browser that another worker was running on the box detached it) and passed when re-run on its own port. test-walkout timed out at 90 s while the box was loaded; its budget is now 150 s, and it passed on re-run.
+- [done] 16:20 QA bug list (/workspace/tao-qa/qa/BUGS.md, 18 bugs):
+  - H1 X04 only reached 9 words. The six male elders had lost their first-talk 族語 lesson (elder_home) in the Phase A dialogue move. Dialogue sets now have an `intro` (a node told on the first talk while its words are unlearned), and the six elder sets use elder_home. validate-content now counts the words play can reach (14 of 17) and fails if any quest needs more.
+  - H2 Outfit 404s: stale. The QA copy predates the real sheets (player_trad etc.); test-content shows 0 missing sheets.
+  - H3 Desktop arrow keys on the dock: the collision sim never sticks at any camera yaw. QA's stop is at the arrival spot with the arrival yaw (0.7), so the player never moved, which points to a story line opening over the walk. test-walkout now closes such a dialogue like a player would and logs mode / modals / focus if it ever stops. slideMove also tries the move turned ±30° / ±60° when both axis slides fail at a corner.
+  - M1 goat 圖鑑: Inventory.known() also reads `unlockFlag` (quest flags).
+  - M2 raw ids in the HUD: placeZh() looks up landmarks too (dasenshan → 大森山) and never shows an id. test-content checks every split / meet place.
+  - M3 / M4 族語 tab: categories 語言／自然／食材. alibaong's developer note moved to `review`. validate-content rejects English categories and "Phase…" notes; smoke checks the tab.
+  - M5 390 px phone: the 手札 tabs wrap to two rows. smoke (now 390×844) checks every tab is visible and clear of ✕.
+  - M6 dive popup: openModals() lists 'dive'; closeAll() closes it and the step still finishes; a missing image shows a placeholder. verify-phase1b checks this.
+  - L1 party snap: followers go behind the leader only where they can stand (else beside or on the leader). test-content checks 野銀 / 東清 / 紅頭.
+  - L2 Tao slots: "Kaiyuan" / "Surprise" blanked (places.json, ui.json). validate-content rejects known non-Tao words in `tao`.
+  - L3 host_tagakal dropped from the derived place list (no lot, unused).
+  - L4 NT2, the night shellfish node and the hermit-crab node relabelled 黃昏 (they open at dusk with the placeholder tide).
+  - L5 / L9 test timing: verify-phase1b waits for the ❗ marker (quest tick), and test-split polls the atlas groups instead of sleeping.
+  - L6 gn_ovi_peak moved onto open ground (ox −1.5, oz 3). check-roads now needs every gather node's centre to be walkable (r 1.2).
+  - L7 song s08 spelling (lilikey / lilikei): left for the consultant, not guessed.
+  - L8: information only, no change.
+- [done] ~17:30 Check run on the QA-fix dist (/tmp/qafix/summary.txt): test-content, verify-phase1b, test-walkout (arrow keys and joystick), test-split, verify-phase1, test-audit, capture-party, capture-traveller and perf-mobile all exit 0 with no FAIL lines. smoke (390×844), tsc, build, validate-content, check-roads and check-fonts OK.
+
+**Leftovers (pre-0.1.3): DONE.** Version 0.1.3, not pushed. The open questions are listed above.
+
+## Open questions for Larry (pre-0.1.3), not guessed
+1. Phase A questions 1–5 (M3 without MS1, outfits worn anywhere, seasons, owl spot, 漁人 gathering). The defaults are in the game; see ARCHITECTURE.md.
+2. Sacred-place photos P05 / P07 / P18 can be unlocked but never completed. Keep them as placeholders, drop them, or turn them into "view from afar" notes?
+3. 85 of the 163 quests are still placeholders (for example A2 needs M4; A4 / J4 need goats and a thatch field in the world). Which ones should become playable next?
+4. `host_tagakal` (the host family's tagakal): removed from the derived place list (QA L3), since no lot exists and no content used it. Should a host tagakal come back with a quest, and on which lot? (check-roads reports no clear lot for 野銀's tagakal.)
+5. Audit A9: the layout leaves out 3 buildings (a 椰油 modern house, a 野銀 涼亭, a 漁人 makarang). Is that OK, or should they be moved somewhere they fit?
+6. Real tide data. The tide is still a placeholder (low tide at dawn and dusk). This is why NT2 and the night shore nodes open at dusk.
+7. The 跟隨／待命／前往 party command menu: Phase 2, or sooner?
+8. Should the four outfits also get riding and paddling sheets? Today the base outfit shows on the scooter and the tatala.
+9. (For the consultant) Song s08: the title says `tana lilikey` but the lyric says `tana lilikei`. Which spelling is right? (QA L7)
+10. (For the consultant) The four traditional / accessory walk sheets (player_trad, player_f_trad) need the same review as their portraits.
+
+## Art leftovers (for the art worker, not code)
+- ~~nurse_new portrait~~: closed. nurse.webp was already redone in the v2 style (2026-11-14).
+- Outfit ride_ / canoe_ variants, if Larry wants them (question 8).

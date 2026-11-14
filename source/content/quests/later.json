@@ -1,0 +1,643 @@
+{
+  "file": "later",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "W1",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "糧倉在飛魚終食前達到「剛好」",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 0,
+      "text": {
+        "who": "全隊",
+        "coop": "不需同時到場",
+        "season": "飛魚季尾聲",
+        "pre": "G1 且 G2",
+        "unlock": "里程碑「剛好」",
+        "kind": "AND"
+      },
+      "req": {
+        "all": [
+          "G1",
+          "G2"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "W2",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "把芋頭分給三戶親族",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男、族女",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "R4 或 G1",
+        "unlock": "部落關係",
+        "kind": "OR"
+      },
+      "req": {
+        "any": [
+          "R4",
+          "G1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "W3",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "跟族男修補一張漁網",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "m"
+      ],
+      "text": {
+        "who": "旅人（男旅版內容較多）",
+        "coop": "雙人：旅人＋族男",
+        "season": "全年",
+        "pre": "V6",
+        "unlock": "結網進階卡",
+        "kind": ""
+      },
+      "req": "V6",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    },
+    {
+      "id": "W4",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "整理 10 張圖鑑卡給族語老師看",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "X04",
+        "unlock": "族語詞卡加上食物詞",
+        "kind": "數量 10"
+      },
+      "req": "X04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "W5",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "數一數路邊的陸蟹並回報（不抓）",
+        "en": ""
+      },
+      "time": "night",
+      "seasons": [],
+      "periods": [
+        "night"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "陸蟹季的夜間",
+        "pre": "C2",
+        "unlock": "生態值、陸蟹保育卡",
+        "kind": ""
+      },
+      "req": "C2",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "H1",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "隱藏：替族語老師錄一段長輩的話（先問同意）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "旅人＋任一族人",
+        "coop": "雙人：旅人＋族人",
+        "season": "全年",
+        "pre": "X05",
+        "unlock": "長輩故事卡",
+        "kind": "隱藏"
+      },
+      "req": "X05",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true
+    },
+    {
+      "id": "H2",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "隱藏：營養師的飲食小調查",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "第一次見到營養師",
+        "unlock": "營養與健康卡",
+        "kind": "隱藏：第一次見面"
+      },
+      "req": {
+        "flag": "met_dietitian"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true
+    },
+    {
+      "id": "H3",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "隱藏：潮池生物觀察（只看不採）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "tide": "low",
+      "roles": [
+        "f",
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "族女＋旅人",
+        "coop": "雙人：族女＋旅人",
+        "season": "退潮時段",
+        "pre": "成就「準時退潮」3 次",
+        "unlock": "生態值、潮池觀察卡",
+        "kind": "隱藏＋潮汐"
+      },
+      "req": {
+        "count": "lowTideOnTime",
+        "min": 3
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true
+    },
+    {
+      "id": "H4",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "隱藏：在學校辦島嶼照片小展",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "相簿任 6 張（收集門檻）",
+        "unlock": "部落關係、族語詞卡加地名",
+        "kind": "隱藏：收集門檻"
+      },
+      "req": {
+        "count": "photos",
+        "min": 6
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true
+    },
+    {
+      "id": "B2",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "文化工作者講海岸地名的故事（內容待確認）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人（NPC 文化工作者）",
+        "season": "全年",
+        "pre": "B1 且 相簿「北岸奇岩」一套",
+        "unlock": "故事卡（待族人提供）、族語詞卡加地名",
+        "kind": "AND＋收集門檻"
+      },
+      "req": {
+        "all": [
+          "B1",
+          "P01",
+          "P02",
+          "P03",
+          "P04",
+          "P05",
+          "P06",
+          "P08",
+          "P09"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "D1",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "找到正在野外調查的地質學家（❗ 會移動）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "白天",
+        "pre": "Q02",
+        "unlock": "相簿照片的地質筆記欄、岩石圖鑑、D2",
+        "kind": "會移動的 ❗"
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "D2",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "跟地質學家看火山岩海岸",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人（NPC 地質學家）",
+        "season": "白天",
+        "pre": "D1",
+        "unlock": "火山與岩石地質卡、D3",
+        "kind": ""
+      },
+      "req": "D1",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "D3",
+      "line": "side",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "從步道與路邊觀察海蝕地形",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人（NPC 地質學家）",
+        "season": "白天、退潮時段較安全",
+        "pre": "D2 且 相簿「東岸」一套",
+        "unlock": "海蝕地質卡、地質學家的隱藏調查紀錄",
+        "kind": "AND＋收集門檻"
+      },
+      "req": {
+        "all": [
+          "D2",
+          "P10",
+          "P11",
+          "P12",
+          "P13",
+          "P14",
+          "P15"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "U3",
+      "line": "photo",
+      "arc": "later",
+      "village": null,
+      "name": {
+        "zh": "隱藏：旅人的水下視角",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "同 U1",
+        "pre": "由旅人完成 U1",
+        "unlock": "旅人視角水下照片組（3 張，只是收藏）",
+        "kind": "隱藏：由旅人完成 U1"
+      },
+      "req": {
+        "flag": "u1_by_t"
+      },
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "hen_rock_bay",
+          "r": 10,
+          "dive": "POV",
+          "actor": [
+            "t"
+          ],
+          "text": "旅人帶著相機再去母雞岩浮潛，拍一組水下照片",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "這次換我用相機拍，珊瑚、魚群都想留下來。"
+            }
+          ],
+          "gives": {
+            "toast": [
+              "旅人水下照片",
+              "3 張照片已收進「相簿與水下」。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "旅人",
+        "zh": "浮潛的時候帶相機，應該可以拍到很不一樣的畫面。"
+      },
+      "playable": true,
+      "hidden": true,
+      "ground": "dive"
+    }
+  ]
+}

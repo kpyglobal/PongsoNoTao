@@ -4,10 +4,11 @@
  * along its own footsteps (a breadcrumb trail of positions the leader actually stood on, so they
  * never cut through buildings or taro fields). Followers ride when the leader rides.
  */
+import { outfitBaseSheet } from '../systems/outfits';
 import * as THREE from 'three';
 import type { Assets } from '../core/assets';
 import { BlobShadow, CHAR_WORLD_H, makeCharacter, SpriteBillboard } from './billboard';
-import { canStand, findSafeStand, slideMove, NPC_RADIUS } from '../world/collision';
+import { canStand, findSafeStand, slideMove, NPC_RADIUS, PLAYER_RADIUS } from '../world/collision';
 import type { Player } from './player';
 import type { Role } from '../quests/types';
 
@@ -27,12 +28,14 @@ export class Follower {
   /** small per-follower sideways offset so the line looks loose, not a conga line */
   side: number;
   stuck = 0;
+  /** party split: this member is away / waiting somewhere and does not follow the leader */
+  stay = false;
 
   constructor(assets: Assets, role: Role, outfit: string, side: number) {
     this.role = role;
     this.side = side;
     this.sprite = makeCharacter(assets, outfit, CHAR_WORLD_H);
-    this.ride = new SpriteBillboard(assets.sheetClone(`characters/ride_${outfit}_sheet.png`), { cols: 4, rows: 4, worldH: CHAR_WORLD_H, kind: 'ride' });
+    this.ride = new SpriteBillboard(assets.sheetClone(`characters/ride_${assets.textures.has(`characters/ride_${outfit}_sheet.png`) ? outfit : outfitBaseSheet(outfit)}_sheet.png`), { cols: 4, rows: 4, worldH: CHAR_WORLD_H, kind: 'ride' });
     this.ride.mesh.visible = false;
     this.outfit = outfit;
   }
@@ -50,7 +53,8 @@ export class Follower {
     if (outfit === this.outfit) return;
     this.outfit = outfit;
     this.sprite.swapSheet(assets.sheetClone(`characters/${outfit}_sheet.png`));
-    this.ride.swapSheet(assets.sheetClone(`characters/ride_${outfit}_sheet.png`));
+    const ride = assets.textures.has(`characters/ride_${outfit}_sheet.png`) ? outfit : outfitBaseSheet(outfit);
+    this.ride.swapSheet(assets.sheetClone(`characters/ride_${ride}_sheet.png`));
   }
 
   place(x: number, z: number, yaw = this.yaw): void {
@@ -128,8 +132,12 @@ export class Party {
 
   /** put the followers right behind the leader (fast travel, loading a save) */
   snapAround(leader: { x: number; z: number; yaw: number }): void {
-    this.followers.forEach((f, i) => {
-      f.place(leader.x - Math.sin(leader.yaw) * 1.4 * (i + 1) + f.side, leader.z - Math.cos(leader.yaw) * 1.4 * (i + 1), leader.yaw);
+    this.followers.filter((f) => !f.stay).forEach((f, i) => {
+      const x = leader.x - Math.sin(leader.yaw) * 1.4 * (i + 1) + f.side;
+      const z = leader.z - Math.cos(leader.yaw) * 1.4 * (i + 1);
+      // QA L1: behind the leader can be inside a building (e.g. arriving at 野銀) → nearest standable spot
+      const p = [{ x, z }, { x: leader.x + f.side, z: leader.z }, { x: leader.x + f.side * 0.5, z: leader.z + 0.6 }].find((c) => canStand(c.x, c.z, PLAYER_RADIUS)) ?? { x: leader.x, z: leader.z };
+      f.place(p.x, p.z, leader.yaw);
     });
     this.resetTrail(leader);
   }
@@ -161,7 +169,19 @@ export class Party {
     }
     const riding = leader.mode === 'scooter';
     const hidden = leader.mode === 'canoe';
-    this.followers.forEach((f, i) => {
+    let slot = 0;
+    this.followers.forEach((f) => {
+      if (f.stay) {
+        // split: stands where the task is (never hidden by the leader's canoe, never rides)
+        if (f.hidden || f.riding) {
+          f.setVis(false, false);
+          f.sync();
+        }
+        f.active.walking = false;
+        f.active.updateBillboard(camera, dt, true);
+        return;
+      }
+      const i = slot++;
       if (f.hidden !== hidden || f.riding !== riding) {
         f.setVis(hidden, riding);
         f.sync();

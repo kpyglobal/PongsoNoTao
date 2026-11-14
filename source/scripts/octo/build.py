@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import poses
-from cast import PLAYERS, NPCS
+from cast import PLAYERS, NPCS, OUTFIT_SHEETS
 
 OUT = os.environ.get('OCTO_OUT') or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'public', 'assets', 'sprites', 'characters')
 
@@ -42,7 +42,7 @@ def main(jobs):
     only = [k for k in os.environ.get('OCTO_ONLY', '').split(',') if k]
     keep = (lambda ks: [k for k in ks if k in only]) if only else (lambda ks: ks)
     if 'walk' in jobs:
-        for k in keep(PLAYERS + NPCS):
+        for k in keep(PLAYERS + NPCS + list(OUTFIT_SHEETS)):
             save(poses.walk_sheet(k), f'{k}_sheet.png')
     if 'ride' in jobs:
         for k in keep(PLAYERS):

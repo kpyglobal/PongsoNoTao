@@ -8,12 +8,12 @@
  */
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { isIOS } from './device';
+import { isCoarsePointer, isIOS } from './device';
 import { quality } from './quality';
+import { StylizePass } from '../render/stylize'; // [watercolor-ink style hook]
 
 const TiltShift = {
   uniforms: {
@@ -146,7 +146,10 @@ function pickTarget(renderer: THREE.WebGLRenderer, cssW: number, cssH: number): 
   const pr = renderer.getPixelRatio();
   const w = Math.max(1, Math.floor(cssW * pr));
   const h = Math.max(1, Math.floor(cssH * pr));
-  const ios = isIOS();
+  // phones / tablets (iOS and touch Android): no MSAA. Two 4× half-float multisample buffers at ~1.75× DPR cost
+  // ~140 MB of GPU memory on a phone (perf-mobile.mjs, 2026-11-14); the pixel-art sprites are alpha-tested, so
+  // MSAA never smoothed their edges anyway, and at that DPR the terrain edges stay clean.
+  const ios = isIOS() || isCoarsePointer();
   const attempts: RtOpts[] = ios
     ? [
         { type: THREE.UnsignedByteType, samples: 0 },
@@ -181,7 +184,8 @@ export class PostFX {
     try {
       const rt = pickTarget(renderer, size.x, size.y);
       this.composer = new EffectComposer(renderer, rt);
-      this.composer.addPass(new RenderPass(scene, camera));
+      // [watercolor-ink style hook] StylizePass = RenderPass + watercolor/ink paint pass (src/render/stylize.ts)
+      this.composer.addPass(new StylizePass(scene, camera as THREE.PerspectiveCamera));
       const q = quality();
       this.bloom = new UnrealBloomPass(new THREE.Vector2(size.x, size.y), 0.25, 0.55, 0.82);
       if (q.bloomScale !== 1) {

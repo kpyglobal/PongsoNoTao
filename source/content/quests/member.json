@@ -1,0 +1,518 @@
+{
+  "file": "member",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "J1",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "跟婦女長輩處理苧麻：剝皮、浸泡、曬乾",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人（NPC 婦女長輩）",
+        "season": "當地非飛魚季",
+        "pre": "R3",
+        "unlock": "苧麻圖鑑、J2",
+        "kind": "季節"
+      },
+      "req": "R3",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "族女向女性長輩接下工作：去簷廊幫忙處理苧麻",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "苧麻收回來了，要剝皮、浸泡、曬乾。族女去簷廊幫婦女長輩，這要忙一陣子。"
+            },
+            {
+              "who": "@npc",
+              "zh": "其他人先去忙別的，等一下帶水過去幫她。"
+            }
+          ],
+          "split": {
+            "f": {
+              "at": "host_weave",
+              "task": "在簷廊處理苧麻",
+              "ctrl": false
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "shop_yayo",
+          "actor": [
+            "m",
+            "t"
+          ],
+          "text": "族男或旅人先到椰油的雜貨店買飲水，帶去簷廊",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "要帶水去給在簷廊忙的人？拿去吧。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "water"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "actor": [
+            "m",
+            "t"
+          ],
+          "need": [
+            "f"
+          ],
+          "regroup": true,
+          "text": "帶水到簷廊，幫忙把苧麻收好，接族女回隊",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "來，苧麻的皮這樣剝下來，泡在水裡，再拿去曬乾。"
+            },
+            {
+              "who": "@f",
+              "zh": "有你們幫忙快多了！原來要這麼多步驟，才會變成可以織的線。"
+            },
+            {
+              "who": "旁白",
+              "zh": "依文獻記載，飛魚汛期婦女不織布，所以這件事在非飛魚季才做；各部落細節還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "ramie_card"
+            ],
+            "toast": [
+              "苧麻圖鑑",
+              "已寫進手札。族女回到隊上了。"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "族女向女性長輩回報：苧麻處理好了",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "苧麻都處理好了？做得很好，大家一起幫忙就快了。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "女性長輩在找族女幫忙處理苧麻；族女會留在簷廊，其他人要帶水去幫她。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "J2",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "看婦女長輩在簷廊織一小段布",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人（NPC 婦女長輩）",
+        "season": "當地非飛魚季",
+        "pre": "J1",
+        "unlock": "織布學習卡（只畫簡單的背帶織布機，不畫織紋與禮衣）",
+        "kind": "季節"
+      },
+      "req": "J1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "actor": [
+            "f"
+          ],
+          "text": "族女在簷廊看婦女長輩織一小段布",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這是背帶織布機，腰靠著這條帶子，線就拉緊了。你先看就好。"
+            },
+            {
+              "who": "旁白",
+              "zh": "織布有一些禁忌，例如喪忌期間不碰織布機、男子不跨過織布機。這裡只用旁白說明，遊戲不會讓你去做。"
+            },
+            {
+              "who": "旁白",
+              "zh": "織紋與禮衣不在這裡呈現，等族人校對後再決定。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "weaving_card"
+            ],
+            "toast": [
+              "織布學習卡",
+              "已寫進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "婦女長輩",
+        "zh": "苧麻曬好了，族女可以來簷廊看看織布。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "J3",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "在家屋附近餵豬、餵雞",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "全年（可重複）",
+        "pre": "Q03",
+        "unlock": "家畜圖鑑（kois 豬）、糧倉",
+        "kind": ""
+      },
+      "req": "Q03",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩接下工作：在家屋附近餵豬、餵雞",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "家屋附近的豬和雞該餵了，交給你。做好了回來跟我說。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "actor": [
+            "f"
+          ],
+          "text": "族女在主人家附近餵豬、餵雞",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "豬和雞都餓了，先餵牠們。",
+              "tao": "kois"
+            },
+            {
+              "who": "@f",
+              "zh": "餵完再去看看糧倉。"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "kois"
+            ],
+            "flags": [
+              "granary"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩回報：在家屋附近餵豬、餵雞",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "餵過了？我看過了，做得很好。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "家屋旁邊的豬和雞要有人餵，族女會去。"
+      },
+      "playable": true,
+      "song": "s02",
+      "giver": "f"
+    },
+    {
+      "id": "J4",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "隱藏：茅草地的午後（幫主人家割茅草）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人（NPC 婦女長輩）",
+        "season": "飛魚季後的夏秋",
+        "pre": "第一次走進茅草地遇到婦女長輩",
+        "unlock": "茅草圖鑑、主人家的一句讚美",
+        "kind": "隱藏：第一次見面"
+      },
+      "req": {
+        "flag": "met_thatch_elder"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true,
+      "giver": "f"
+    },
+    {
+      "id": "A2",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "把小一點的飛魚放在外圍，留給行動不便的長輩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "summer"
+      ],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人（NPC 船組）",
+        "season": "飛魚季（當地）",
+        "pre": "M4",
+        "unlock": "部落關係、「分享」故事卡",
+        "kind": "季節"
+      },
+      "req": "M4",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "song": "s01",
+      "giver": "m"
+    },
+    {
+      "id": "A3",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "飛魚季後修整田埂與灌溉水道",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "飛魚季後（約 7 月）",
+        "pre": "R1",
+        "unlock": "生態值、水芋田照顧卡",
+        "kind": ""
+      },
+      "req": "R1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "m"
+          ],
+          "text": "向女性長輩接下工作：飛魚季後修整田埂與灌溉水道",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "飛魚季過了，田埂和水道該修一修。交給你了，做好了回來跟我說。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 8,
+          "actor": [
+            "m"
+          ],
+          "text": "飛魚季後，族男修整田埂與灌溉水道",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "田埂被水沖壞了一點，補一補，水道也清一清。"
+            },
+            {
+              "who": "旁白",
+              "zh": "修田埂的月份還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            },
+            "toast": [
+              "水芋田照顧卡",
+              "已寫進手札。"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "m"
+          ],
+          "text": "向女性長輩回報：飛魚季後修整田埂與灌溉水道",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "田埂和水道修好了？我看過了，做得很好。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "非飛魚季的時候，田埂和水道要整理。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "A4",
+      "line": "side",
+      "arc": "member",
+      "village": null,
+      "name": {
+        "zh": "隱藏：找回走失的羊（kagling）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day",
+        "dusk"
+      ],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "第一次在山邊看到羊群",
+        "unlock": "羊的圖鑑、族語詞卡加 kagling",
+        "kind": "隱藏：第一次發現"
+      },
+      "req": {
+        "flag": "saw_goats"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "hidden": true,
+      "giver": "m"
+    }
+  ],
+  "note": "A1 moved to quests/split.json (now a playable leave-and-return quest)."
+}
