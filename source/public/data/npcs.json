@@ -1,0 +1,663 @@
+{
+  "npcs": [
+    {
+      "id": "elder_imorod",
+      "kind": "elder",
+      "name": {
+        "zh": "紅頭的長輩",
+        "tao": "Imorod a akey"
+      },
+      "home": "imorod",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "meyvanwa"
+          ],
+          "times": [
+            "dawn",
+            "dusk"
+          ],
+          "waypoints": [
+            "imorod",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "imorod",
+            "taro_imorod",
+            "imorod"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "elder_ivalino",
+      "kind": "elder",
+      "name": {
+        "zh": "野銀的長輩",
+        "tao": "Ivalino a akey"
+      },
+      "home": "ivalino",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino",
+            "taro_ivalino"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "elder_yayo",
+      "kind": "elder",
+      "name": {
+        "zh": "椰油的長輩",
+        "tao": "Yayo a akey"
+      },
+      "home": "yayo",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "yayo",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "clinic_nurse",
+      "kind": "clinic",
+      "name": {
+        "zh": "衛生所護理師",
+        "tao": ""
+      },
+      "home": "clinic",
+      "interact": "clinic_nutrition",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "imorod"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "clinic"
+          ]
+        }
+      ],
+      "portrait": "nurse"
+    },
+    {
+      "id": "villager_taro",
+      "kind": "farmer",
+      "name": {
+        "zh": "水芋田長輩",
+        "tao": ""
+      },
+      "home": "ivalino",
+      "interact": "taro_intro",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "dawn",
+            "day"
+          ],
+          "waypoints": [
+            "taro_ivalino",
+            "ivalino",
+            "taro_iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "ivalino"
+          ]
+        }
+      ],
+      "portrait": "farmer"
+    },
+    {
+      "id": "villager_harbor",
+      "kind": "fisher",
+      "name": {
+        "zh": "拼板舟漁人",
+        "tao": ""
+      },
+      "home": "yayo",
+      "interact": "auto-fish",
+      "schedule": [
+        {
+          "seasons": [
+            "rayon",
+            "meyvanwa"
+          ],
+          "times": [
+            "dawn",
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo",
+            "harbor"
+          ]
+        }
+      ],
+      "portrait": "fisher"
+    },
+    {
+      "id": "villager_iranmeylek",
+      "kind": "villager",
+      "name": {
+        "zh": "東清的族人",
+        "tao": ""
+      },
+      "home": "iranmeylek",
+      "interact": "",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "dawn"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "local"
+    },
+    {
+      "id": "villager_iratay",
+      "kind": "fisher",
+      "name": {
+        "zh": "漁人的族人",
+        "tao": ""
+      },
+      "home": "iratay",
+      "interact": "",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day"
+          ],
+          "waypoints": [
+            "iratay",
+            "airport",
+            "taro_iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        }
+      ],
+      "portrait": "fisher"
+    },
+    {
+      "id": "tourist_a",
+      "kind": "tourist",
+      "name": {
+        "zh": "剛下飛機的訪客",
+        "tao": ""
+      },
+      "home": "airport",
+      "interact": "",
+      "schedule": [
+        {
+          "seasons": [
+            "off",
+            "manoyotoyon"
+          ],
+          "times": [
+            "day",
+            "dusk"
+          ],
+          "waypoints": [
+            "airport",
+            "iratay",
+            "harbor"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "airport",
+            "harbor"
+          ]
+        }
+      ],
+      "portrait": "visitor"
+    },
+    {
+      "id": "tourist_b",
+      "kind": "player_researcher",
+      "name": {
+        "zh": "東清灣的旅人",
+        "tao": ""
+      },
+      "home": "iranmeylek",
+      "interact": "visitor_chat",
+      "schedule": [
+        {
+          "seasons": [
+            "off"
+          ],
+          "times": [
+            "dawn",
+            "day"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor",
+            "iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "visitor"
+    },
+    {
+      "id": "harbor_staff",
+      "kind": "harbor",
+      "name": {
+        "zh": "開元港港務人員",
+        "tao": ""
+      },
+      "home": "harbor",
+      "interact": "harbor_welcome",
+      "portrait": "harbor",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "yayo"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "harbor"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "elder_iraraley",
+      "kind": "elder",
+      "name": {
+        "zh": "朗島的長輩",
+        "tao": "Iraraley a akey"
+      },
+      "home": "iraraley",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iraraley"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iraraley",
+            "taro_iraraley"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "elder_iranmeylek",
+      "kind": "elder",
+      "name": {
+        "zh": "東清的長輩",
+        "tao": "Iranmeylek a akey"
+      },
+      "home": "iranmeylek",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iranmeylek"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iranmeylek",
+            "taro_iranmeylek"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "elder_iratay",
+      "kind": "elder",
+      "name": {
+        "zh": "漁人的長輩",
+        "tao": "Iratay a akey"
+      },
+      "home": "iratay",
+      "interact": "elder_home",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "night"
+          ],
+          "waypoints": [
+            "iratay"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "iratay",
+            "taro_iratay"
+          ]
+        }
+      ],
+      "portrait": "elder"
+    },
+    {
+      "id": "teacher_yayo",
+      "kind": "villager",
+      "name": {
+        "zh": "族語老師",
+        "tao": ""
+      },
+      "home": "yayo_school",
+      "interact": "teacher_idle",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo_school"
+          ]
+        }
+      ],
+      "portrait": "local"
+    },
+    {
+      "id": "rental_owner",
+      "kind": "fisher",
+      "name": {
+        "zh": "租車行老闆",
+        "tao": ""
+      },
+      "home": "rental",
+      "interact": "rental_idle",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "rental"
+          ]
+        }
+      ],
+      "portrait": "fisher"
+    },
+    {
+      "id": "shop_yayo",
+      "kind": "farmer",
+      "name": {
+        "zh": "雜貨店老闆",
+        "tao": ""
+      },
+      "home": "yayo_shop",
+      "interact": "shop_idle",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "yayo_shop"
+          ]
+        }
+      ],
+      "portrait": "farmer"
+    },
+    {
+      "id": "dive_coach",
+      "kind": "fisher",
+      "name": {
+        "zh": "潛水教練",
+        "tao": ""
+      },
+      "home": "dive_shop",
+      "interact": "coach_idle",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "dive_shop"
+          ]
+        }
+      ],
+      "portrait": "fisher"
+    },
+    {
+      "id": "weaver_elder",
+      "kind": "farmer",
+      "name": {
+        "zh": "織布的婦女長輩",
+        "tao": ""
+      },
+      "home": "host_weave",
+      "interact": "weaver_idle",
+      "schedule": [
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "*"
+          ],
+          "waypoints": [
+            "host_weave"
+          ]
+        }
+      ],
+      "portrait": "farmer"
+    }
+  ]
+}

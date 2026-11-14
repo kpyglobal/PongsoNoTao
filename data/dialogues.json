@@ -1,0 +1,274 @@
+{
+  "notes": "僅族語模式顯示的羅馬拼音在原型中為教學草稿，須於 Phase C 與族語協作者校訂後再視為正式文本。",
+  "origins": {
+    "yayo": {
+      "zh": "海風從開元港那邊吹過來。椰油的店家與灘頭還是這麼熱鬧——歡迎回家。",
+      "tao": "Yayo — pongso no Tao. (教學草稿)"
+    },
+    "iraraley": {
+      "zh": "朗島的路很寬，潮間帶也很大。長輩說，從前東清和椰油的人路過這裡，總會跟人打招呼。",
+      "tao": "Iraraley. (教學草稿)"
+    },
+    "iranmeylek": {
+      "zh": "東清灣的清晨來得特別早。傳說這裡是天神下凡的地方；今天，飛魚的海就在眼前。",
+      "tao": "Iranmeylek. (教學草稿)"
+    },
+    "ivalino": {
+      "zh": "野銀還保留著最完整的地下屋聚落。石牆與水芋田就在部落旁邊，像一本還沒闔上的族人日誌。",
+      "tao": "Ivalino. (教學草稿)"
+    },
+    "imorod": {
+      "zh": "紅頭是飛魚傳說開始的地方。衛生所、郵局、八代灣與南方的小蘭嶼，都從這裡望出去。",
+      "tao": "Imorod. (教學草稿)"
+    },
+    "iratay": {
+      "zh": "漁人的腹地雖小，卻是島上最平坦的出海口。跑道的風聲裡，有人回來，也有人剛到。",
+      "tao": "Iratay. (教學草稿)"
+    },
+    "visitor": {
+      "zh": "船靠上開元港。請記得：拼板舟、地下屋與曬魚架都是族人的生活與財產，靠近前先問一聲。歡迎以訪客的身分好好聽、好好走。",
+      "tao": "Pongso no Tao. Maran kamo. (教學草稿)"
+    }
+  },
+  "elder_home": {
+    "speaker": {
+      "zh": "部落長輩",
+      "tao": "akey"
+    },
+    "lines": [
+      {
+        "zh": "來得好。先把這幾個詞放進手札：這座島叫 Pongso no Tao，人之島。",
+        "tao": "Pongso no Tao."
+      },
+      {
+        "zh": "招魚祭是 meyvanwa，飛魚季叫 rayon，飛魚是 alibangbang。我們的小船叫 tatala，水芋是 soli，種水芋的田有人稱為 alibaong。",
+        "tao": "meyvanwa · rayon · alibangbang · tatala · soli · alibaong"
+      },
+      {
+        "zh": "寫族語的時候，記得那個小小的「’」——它是喉塞音，是一個字母，不是重音。ng 是一個鼻音，像 mangay「去」；要分開念 n 和 g 就寫 man-gamo。重音不在最後一個音節時，書上會標 í、á、é、ó。",
+        "tao": "’ · mangay · man-gamo · í á é ó"
+      },
+      {
+        "zh": "這些不只是「單字」。飛魚是海神的禮物，怎麼捕、怎麼煮、何時停，都是對祂的禮。想再多聽，就到田裡、港口和衛生所走走吧。",
+        "tao": "alibangbang · soli · tagakal  (教學草稿)"
+      }
+    ],
+    "unlocks": {
+      "glossary": [
+        "pongso-no-tao",
+        "meyvanwa",
+        "rayon",
+        "alibangbang",
+        "tatala",
+        "soli",
+        "alibaong",
+        "ciriciring",
+        "orthography"
+      ],
+      "milestones": [
+        "hear-words"
+      ]
+    }
+  },
+  "clinic_nutrition": {
+    "speaker": {
+      "zh": "衛生所護理師",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "歡迎到蘭嶼衛生所。我可以從營養學跟你說一說「飛魚與水芋」為什麼常一起出現在桌上。",
+        "tao": "alibangbang · soli"
+      },
+      {
+        "zh": "飛魚（alibangbang）提供優質蛋白質、Omega-3 脂肪酸與維生素 D；水芋（soli）是溫和的複合碳水、膳食纖維與鉀。划舟、下田，正好需要這樣的搭配。",
+        "tao": "alibangbang · soli"
+      },
+      {
+        "zh": "傳統上，飛魚有自己的烹煮規範，不要和某些食物混煮——這是文化裡的飲食禮，也是長輩的提醒。營養說明是補充，不是要取代這個禮。",
+        "tao": "yakanan no among no rayon  (教學草稿)"
+      }
+    ],
+    "unlocks": {
+      "glossary": [
+        "alibangbang",
+        "soli"
+      ],
+      "recipes": [
+        "fish-and-taro"
+      ],
+      "ingredients": [
+        "soli",
+        "alibangbang"
+      ],
+      "milestones": [
+        "clinic-notes"
+      ],
+      "clinic": true
+    }
+  },
+  "taro_intro": {
+    "speaker": {
+      "zh": "水芋田",
+      "tao": "alibaong / soli"
+    },
+    "lines": [
+      {
+        "zh": "梯田的水很涼。趁節奏對了，輕輕採收一株水芋。請只體驗教學田，不要走進別人的田埂。",
+        "tao": "soli · alibaong"
+      }
+    ]
+  },
+  "fish_rayon": {
+    "speaker": {
+      "zh": "灘頭的漁人",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "現在是飛魚季 rayon。教學用的時機練習，只在這處體驗點進行；真正的漁團與火把，是族人自己的事。看準飛魚躍出的瞬間再出手。",
+        "tao": "rayon · alibangbang · tatala"
+      }
+    ]
+  },
+  "fish_meyvanwa": {
+    "speaker": {
+      "zh": "灘頭的漁人",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "今夜與清晨屬於招魚祭 meyvanwa。先學會名字、學會等待。教學捕魚請改到飛魚季再來。",
+        "tao": "meyvanwa"
+      }
+    ]
+  },
+  "fish_closed": {
+    "speaker": {
+      "zh": "灘頭的漁人",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "現在不是捕飛魚的時候。終食祭之後，飛魚不再被食用；休漁期改作其他漁法。尊重季節，也是尊重飛魚。",
+        "tao": "manoyotoyon"
+      }
+    ]
+  },
+  "jimagaod_look": {
+    "speaker": {
+      "zh": "南岸眺望",
+      "tao": "Jimagaod"
+    },
+    "lines": [
+      {
+        "zh": "南方那座小島是小蘭嶼 Jimagaod。傳統上與紅頭海域的漁獵、以及椰子等資源相關。改日再以 tatala 航渡——此刻先把名字收入手札。",
+        "tao": "Jimagaod"
+      }
+    ],
+    "unlocks": {
+      "glossary": [
+        "jimagaod"
+      ],
+      "ingredients": [
+        "coconut"
+      ],
+      "milestones": [
+        "look-jimagaod"
+      ]
+    }
+  },
+  "harbor_welcome": {
+    "speaker": {
+      "zh": "開元港港務人員",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "歡迎來到開元港！船班看天氣，東北季風一來就可能停航，回程記得多留一天。",
+        "tao": "Pongso no Tao"
+      },
+      {
+        "zh": "灘頭的拼板舟是各家族的財產，拍照前先問一聲，也請不要坐上去或觸摸船眼的圖紋。",
+        "tao": "tatala"
+      }
+    ],
+    "unlocks": {
+      "glossary": [
+        "tatala"
+      ]
+    }
+  },
+  "visitor_chat": {
+    "speaker": {
+      "zh": "東清灣的旅人",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "我在記錄潮間帶的植物——馬鞍藤、文殊蘭都長在沙灘邊。部落的人說，地下屋和涼亭 tagakal 要先打招呼再靠近。",
+        "tao": "tagakal"
+      }
+    ]
+  },
+  "teacher_idle": {
+    "speaker": {
+      "zh": "族語老師",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "想學族語，隨時來學校找我。",
+        "tao": ""
+      }
+    ]
+  },
+  "rental_idle": {
+    "speaker": {
+      "zh": "租車行老闆",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "騎車慢慢來，安全第一。",
+        "tao": ""
+      }
+    ]
+  },
+  "shop_idle": {
+    "speaker": {
+      "zh": "雜貨店老闆",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "需要什麼再來看看。",
+        "tao": ""
+      }
+    ]
+  },
+  "coach_idle": {
+    "speaker": {
+      "zh": "潛水教練",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "飛魚季的時候部落灘頭不能浮潛，椰油斷層也不能潛。等季節過了再來找我。",
+        "tao": ""
+      }
+    ]
+  },
+  "weaver_idle": {
+    "speaker": {
+      "zh": "織布的婦女長輩",
+      "tao": ""
+    },
+    "lines": [
+      {
+        "zh": "慢慢看，慢慢學。能公開的部分我再教你們。",
+        "tao": ""
+      }
+    ]
+  }
+}

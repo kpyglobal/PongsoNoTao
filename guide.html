@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#164e52" />
+    <link rel="icon" type="image/png" href="./favicon.png" />
+    <title>旅人手札｜Pongso no Tao｜蘭嶼文化島</title>
+    <meta name="description" content="《Pongso no Tao｜蘭嶼文化島》互動式旅人手札：認識角色與六個部落，任務線與地圖預設收起，避免還沒玩就看到後面的路。" />
+    <link rel="stylesheet" href="./guide/fonts/fonts.css" />
+    <link rel="stylesheet" href="./guide/guide.css" />
+    <link rel="preload" href="./guide/fonts/iansui.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./guide/fonts/literata.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <div class="page">
+      <div class="sheet">
+        <header class="mast">
+          <p class="eyebrow">Pongso no Tao</p>
+          <h1>蘭嶼文化島｜旅人手札</h1>
+          <p class="lede">
+            這份手札只幫忙認識島上的人、路，以及任務的輪廓。任務線和地圖預設收起來，避免還沒走完，就看見後面的風景。隱藏的事只留下很輕的句子，再點一次才看得到。
+          </p>
+          <div class="mast-actions">
+            <a class="btn btn-primary" href="./">回到島上</a>
+            <a class="btn" href="#howto">先看操作</a>
+          </div>
+        </header>
+
+        <nav class="toc" aria-label="手札目錄">
+          <a href="#howto">開始與操作</a>
+          <a href="#people">人物</a>
+          <a href="#places">部落</a>
+          <a href="#quests">任務線</a>
+          <a href="#map">地圖</a>
+          <a href="#hidden">還沒說完的事</a>
+        </nav>
+
+        <div class="content">
+          <p id="guide-error" class="warn-inline" hidden></p>
+
+          <section class="block" id="howto">
+            <p class="kicker">START</p>
+            <h2>開始與操作</h2>
+            <p>
+              隊伍是固定的三人：族男、族女，再加上一位旅人。旅人可選男生或女生。三位都是大學生，放假一起回島。
+            </p>
+            <p class="culture-note">
+              遊戲裡的男女分工與飲食規範，是以達悟族傳統文化中較為一般的做法為起點，並不代表所有家庭、部落或時代都完全如此。遊戲不模擬祭儀，只呈現族人同意公開的生活面向。
+            </p>
+
+            <div class="howto">
+              <article class="card">
+                <h3>電腦</h3>
+                <ul>
+                  <li><span class="keys">W</span> <span class="keys">A</span> <span class="keys">S</span> <span class="keys">D</span> 或方向鍵走路</li>
+                  <li>拖曳畫面轉視角，滾輪拉近拉遠。按 <span class="keys">Q</span>／<span class="keys">R</span> 也可旋轉</li>
+                  <li>按 <span class="keys">M</span> 或點「步行｜機車」切換電動機車。環島公路較快，田埂與碼頭會自動放慢</li>
+                  <li>靠近人物或地點後，按 <span class="keys">E</span>（或 F、空白鍵）互動</li>
+                  <li>按 <span class="keys">J</span> 或右上角打開圖鑑手札；按 <span class="keys">L</span> 打開任務頁</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>手機</h3>
+                <ul>
+                  <li>左下方滑動即可走路</li>
+                  <li>單指拖曳轉視角，雙指開合縮放。點「視角」可回到預設，或微調遠近</li>
+                  <li>點「步行｜機車」騎上電動機車</li>
+                  <li>靠近後，點畫面提示或右下「互動」</li>
+                  <li>右上角打開圖鑑手札；點小地圖可環島傳送</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>視角</h3>
+                <ul>
+                  <li>拉到最近時，距離跟本來差不多</li>
+                  <li>剛進去時的預設，會再遠一點，路比較寬</li>
+                  <li>拉到最遠，可以看到整個部落</li>
+                  <li>人物會跟著遠近稍微調整大小，不會小到看不見，也不會大到擋住路</li>
+                  <li>點「視角」會回到新的預設</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>隊伍、任務與存檔</h3>
+                <ul>
+                  <li>左上角三個頭像是族男、族女和旅人。點一下就換人操控；電腦也可按 <span class="keys">1</span>／<span class="keys">2</span>／<span class="keys">3</span>，或按 <span class="keys">C</span> 輪流切換</li>
+                  <li>其他人會跟在後面。之後也可以請隊友在原地等，或先走到一個地方會合</li>
+                  <li>需要兩個人同時到場的事，等人齊了才會開始</li>
+                  <li>進度會自動存在這台裝置的瀏覽器裡。手札裡可以匯出存檔檔案，或複製一段存檔碼，換裝置時再匯入</li>
+                </ul>
+                <p class="warn-inline">清除瀏覽器資料，或使用無痕模式，存檔就會不見。建議偶爾把存檔匯出一份。</p>
+              </article>
+            </div>
+            <p class="soft" style="margin-top:1rem;">
+              設定裡可以把文字調成小、中、大，也可以隨時把介面與對話切換成臺灣繁體中文或英文。族語會出現在任務、提示和詞彙表裡；點詞會打開一張像筆記本的小卡。
+            </p>
+          </section>
+
+          <section class="block" id="people">
+            <p class="kicker">PEOPLE</p>
+            <h2>人物</h2>
+            <p class="soft">固定的兩位族人，加上你選的那位旅人。名字還在等家人給定的，先這樣稱呼就好。</p>
+            <div id="party-grid" class="grid-party"></div>
+            <p class="traveller-note">旅人有四種出發的樣子，也可以按「隨機」。不論哪一種，飛魚季時灘頭與拼板舟都要先學會距離。</p>
+            <div id="travel-grid" class="grid-travel"></div>
+            <h3>島上還會遇見的人</h3>
+            <p class="soft">他們願意指路，卻不會把後面的故事一次說完。</p>
+            <div id="npc-grid" class="grid-npc"></div>
+          </section>
+
+          <section class="block" id="places">
+            <p class="kicker">ISLAND</p>
+            <h2>環島路與六個部落</h2>
+            <p>
+              一條環島公路繞過六個部落。朗島在北岸，東清在東岸，野銀在東南，紅頭與漁人在西南岸，椰油在西岸、開元港旁。
+            </p>
+            <div id="place-grid" class="grid-places"></div>
+            <p class="ring-note">
+              騎機車走環島公路會比較快；走進田埂、碼頭或部落小路，車子會自己放慢。每個部落的季節不一定同一天轉換，走進哪裡，就看哪裡的時候。
+            </p>
+          </section>
+        </div>
+
+        <div class="content content-wide">
+          <section class="block spoiler-section" id="quests">
+            <p class="kicker">QUESTS</p>
+            <h2>任務線</h2>
+            <div class="spoiler" id="quest-spoiler" data-state="closed">
+              <div class="spoiler-cover">
+                <h3>先不要看後面的路</h3>
+                <p>打開後會看到主線、支線與相簿的輪廓，以及每件事大概要做什麼。還沒自己走一遭以前，建議先收著。</p>
+                <button type="button" class="btn btn-primary" data-open>打開任務線</button>
+              </div>
+              <div class="spoiler-body">
+                <div class="spoiler-toolbar" id="quest-tabs">
+                  <div class="tabs" role="tablist" aria-label="任務類型">
+                    <button type="button" class="tab" role="tab" data-panel="panel-main" aria-selected="true">主線</button>
+                    <button type="button" class="tab" role="tab" data-panel="panel-side" aria-selected="false">支線</button>
+                    <button type="button" class="tab" role="tab" data-panel="panel-photo" aria-selected="false">相簿</button>
+                  </div>
+                  <button type="button" class="btn btn-ghost" data-close>收起任務線</button>
+                </div>
+                <p class="soft">主線大約三到五小時，是必走的路。支線與相簿都是選做，不會擋住主線。點開一則，只看簡短的目標，不是逐步的走法。</p>
+                <div id="panel-main" class="panel is-on" role="tabpanel"></div>
+                <div id="panel-side" class="panel" role="tabpanel"></div>
+                <div id="panel-photo" class="panel" role="tabpanel"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="block spoiler-section" id="map">
+            <p class="kicker">MAP</p>
+            <h2>攻略地圖</h2>
+            <div class="spoiler" id="map-spoiler" data-state="closed">
+              <div class="spoiler-cover">
+                <h3>地圖也先折起來</h3>
+                <p>打開後，可以點部落、人物與拍照地點。神聖或需要保持距離的地方，只從外面、遠遠地看。有些地點要先問過才拍。</p>
+                <button type="button" class="btn btn-primary" data-open>打開攻略地圖</button>
+              </div>
+              <div class="spoiler-body">
+                <div class="spoiler-toolbar">
+                  <div class="tabs" role="group" aria-label="地圖圖層">
+                    <button type="button" class="tab" data-filter="all" aria-pressed="true">全部</button>
+                    <button type="button" class="tab" data-filter="village" aria-pressed="false">部落</button>
+                    <button type="button" class="tab" data-filter="npc" aria-pressed="false">人物</button>
+                    <button type="button" class="tab" data-filter="photo" aria-pressed="false">拍照</button>
+                  </div>
+                  <button type="button" class="btn btn-ghost" data-close>收起地圖</button>
+                </div>
+                <div class="map-stage-wrap">
+                  <div class="map-toolbar">
+                    <span class="soft" style="margin:0;font-size:0.9rem;">拖曳移動，滾輪或雙指縮放</span>
+                    <div class="map-zoom">
+                      <button type="button" id="zoom-out" aria-label="縮小">−</button>
+                      <button type="button" id="zoom-reset" aria-label="重置地圖">重置</button>
+                      <button type="button" id="zoom-in" aria-label="放大">+</button>
+                    </div>
+                  </div>
+                  <div id="map-viewport" class="map-viewport">
+                    <div id="map-world" class="map-world">
+                      <img src="./guide/map.webp" alt="蘭嶼環島示意：六個部落繞著一條公路，南方有一座小島" width="1000" height="1020" />
+                    </div>
+                  </div>
+                  <div id="map-pop" class="map-pop">
+                    <p class="placeholder">點地圖上的記號，看看那個地方。</p>
+                  </div>
+                </div>
+                <ul class="legend">
+                  <li><i class="lg-v"></i>部落</li>
+                  <li><i class="lg-n"></i>人物</li>
+                  <li><i class="lg-p"></i>拍照</li>
+                  <li><i class="lg-s"></i>只在外面遠拍</li>
+                  <li><i class="lg-c"></i>先問再拍</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="content">
+          <section class="block" id="hidden">
+            <p class="kicker">QUIET</p>
+            <h2>還沒說完的事</h2>
+            <p class="hint-lead">
+              有些事不會寫在任務單上。下面只留下幾句像風一樣的話。先看見的是第一句；再點一次，才看得到後面那句。
+            </p>
+            <div id="hint-list" class="hints"></div>
+          </section>
+        </div>
+
+        <footer class="colophon">
+          <p><span class="tao">Pongso no Tao</span>｜蘭嶼文化島　旅人手札</p>
+          <p>字型：芫荽 Iansui、Literata，皆為 SIL Open Font License 1.1。</p>
+          <p><a href="./">回到遊戲</a></p>
+        </footer>
+      </div>
+    </div>
+    <script src="./guide/guide.js" defer></script>
+  </body>
+</html>
