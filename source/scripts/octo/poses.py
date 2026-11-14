@@ -197,7 +197,7 @@ def ride_end(key, i, back=False):
             for sg in (-1, 1):
                 kc = (cx + sg * 6.0 * S, GY - 24 * S + yb)
                 kneec = f.bot if f.r['bottom']['kind'] != 'shorts' else f.skin
-                cv.fill(cv.ell(kc[0], kc[1], 2.8 * S, 3.2 * S), kneec, ('ell', kc[0] - 2, kc[1] - 2, 4 * S, 4 * S))
+                cv.fill(cv.ell(kc[0], kc[1], 2.8 * S, 3.2 * S), kneec, ('soft', kc[0] - 2, kc[1] - 2, 4 * S, 4 * S, 0.3), contour=False)
             # front fender hugging the wheel
             fen = cv.ell(cx, GY - rw - 1.5 * S, 3.6 * S, 3.4 * S) & (cv.Y < GY - rw + 1.5 * S)
             cv.fill(fen, body, ('ell', cx - 1.5, GY - rw - 4 * S, 4 * S, 4 * S))

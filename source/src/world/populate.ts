@@ -7,6 +7,9 @@ import {
   TARO_FIELDS,
   FACILITIES,
   LANDMARKS,
+  HARBOUR_LANTERN_DZ,
+  ROAD_W,
+  FOOTPRINT,
   vlocal,
   villageYaw,
   villageExtent,
@@ -61,6 +64,28 @@ interface Boat {
   baseY: number;
   seasons: Season[] | null;
   nightOnly?: boolean;
+}
+
+/**
+ * 0.1.1: slide a road-edge prop (lantern post, fish rack) along the road until it is `margin` clear of
+ * every building footprint and on dry ground; null = no room within 3.2 m (the prop is left out).
+ */
+function freeEdgeU(v: VillageDef, u: number, w: number, margin: number): number | null {
+  for (let i = 0; i <= 16; i++) {
+    const du = (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 0.4;
+    const p = vlocal(v, u + du, w);
+    if (getHeight(p.x, p.z) < 0.1) continue;
+    const hit = ALL_STRUCTURES.some((st) => {
+      const f = FOOTPRINT[st.kind];
+      const dx = p.x - st.x;
+      const dz = p.z - st.z;
+      const c = Math.cos(st.yaw);
+      const sn = Math.sin(st.yaw);
+      return Math.abs(dx * c - dz * sn) < f.hw + margin && Math.abs(dx * sn + dz * c) < f.hd + margin;
+    });
+    if (!hit) return u + du;
+  }
+  return null;
 }
 
 export class WorldDecor {
@@ -142,8 +167,12 @@ export class WorldDecor {
     for (const v of VILLAGE_DEFS) {
       b.bucket(v.id);
       const ext = villageExtent(v);
-      const spots: [number, number][] = [[-ext.hu + 2.5, 0.6], [ext.hu - 2.5, 0.6], [0, 1.6], [-3.5, -0.7], [3.5, -0.7], [-1.2, 4.4], [2.4, 4.4]];
-      for (const [u, w] of spots) {
+      // 0.1.1: posts line the seaward edge of the village road, just outside its 1.5 m corridor
+      const pw = ROAD_W + 1.75;
+      const spots: [number, number][] = [[-ext.hu + 2.5, pw], [ext.hu - 2.5, pw], [0, pw], [-4.2, pw], [4.6, pw], [-8, pw], [8.4, pw]];
+      for (const [u0, w] of spots) {
+        const u = freeEdgeU(v, u0, w, 0.35);
+        if (u === null) continue;
         const p = vlocal(v, u, w);
         const gh = Math.max(0.15, getHeight(p.x, p.z));
         b.frame(p.x, gh, p.z, villageYaw(v) + u * 0.1);
@@ -162,8 +191,10 @@ export class WorldDecor {
   private buildRacks(b: ArchBuilder): void {
     for (const v of VILLAGE_DEFS) {
       b.bucket(v.id);
-      for (const u of [-5.5, 6.2]) {
-        const p = vlocal(v, u, 1.2);
+      for (const u0 of [-5.5, 6.2]) {
+        const u = freeEdgeU(v, u0, ROAD_W + 1.75, 1.0); // seaward road edge, clear of the corridor (0.1.1)
+        if (u === null) continue;
+        const p = vlocal(v, u, ROAD_W + 1.75);
         b.frame(p.x, getHeight(p.x, p.z) - 0.03, p.z, villageYaw(v));
         addFishRack(b);
       }
@@ -194,7 +225,7 @@ export class WorldDecor {
     addHarbor(b);
     this.addLantern(h.x + 1.5 - 15.4, 3.3, h.z - 7.2, 'beacon', 1.8);
     this.addLantern(h.x + 1.5 - 11.0, 2.1, h.z - 0.6, 'beacon', 1.3);
-    for (const dz of [-3, 0, 3]) {
+    for (const dz of HARBOUR_LANTERN_DZ) {
       b.frame(h.x + 3.2, 0.7, h.z + dz, Math.PI / 2);
       const ly = addLanternPost(b, 1.9);
       this.addLantern(h.x + 3.2, 0.7 + ly, h.z + dz - 0.36, 'lantern', 1);

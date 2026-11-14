@@ -4,8 +4,7 @@
  * and dim their tint toward ~0.75 — no real-time shadow maps for sprites.
  */
 import { ALL_STRUCTURES } from './height';
-import { FACILITIES } from './layout';
-import { FOOT } from './collision';
+import { FACILITIES, FOOTPRINT } from './layout';
 
 interface Box { x: number; z: number; c: number; s: number; hw: number; hd: number }
 interface Circ { x: number; z: number; r: number }
@@ -51,7 +50,7 @@ export function buildShade(trees: readonly { kind: string; x: number; z: number;
   if (built) return;
   built = true;
   for (const st of ALL_STRUCTURES) {
-    const f = FOOT[st.kind];
+    const f = FOOTPRINT[st.kind];
     // narrow eave bands so only characters right under / against a building dim (not whole villages)
     const eave = st.kind === 'vahey' ? 0.25 : st.kind === 'makarang' || st.kind === 'tagakal' ? 0.4 : 0.55;
     addBox(st.x, st.z, st.yaw, f.hw + eave, f.hd + eave);

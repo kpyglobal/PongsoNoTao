@@ -3,8 +3,6 @@ import { PERIODS, SEASONS, type Period, type Season } from './timeSeason';
 export type LangMode = 'both' | 'zh' | 'tao';
 /** Player character: 男生 (m) or 女生 (f). Chosen on the origin screen, saved with the journal. */
 export type Gender = 'm' | 'f';
-/** 外來訪客 only: 臺灣本島 (tw) or 外國 (intl) traveller. Saved with the journal. */
-export type TravelerFrom = 'tw' | 'intl';
 export type OriginId = 'yayo' | 'iraraley' | 'iranmeylek' | 'ivalino' | 'imorod' | 'iratay' | 'visitor' | 'random';
 
 /** Plain-JSON snapshot of the journal / settings (groundwork for a versioned save, see audit P3-1). */
@@ -13,8 +11,8 @@ export interface GameStateJSON {
   origin: OriginId | null;
   /** optional so older saves (before the 男生／女生 choice) still load as 'm' */
   gender?: Gender;
-  /** optional so older saves load as 'tw' */
-  travelerFrom?: TravelerFrom;
+  /** legacy (before 2026-11: 'tw' | 'intl' traveller); ignored on load, no longer written */
+  travelerFrom?: string;
   period: Period;
   season: Season;
   lang: LangMode;
@@ -30,7 +28,6 @@ export interface GameStateJSON {
 export class GameState {
   origin: OriginId | null = null;
   gender: Gender = 'm';
-  travelerFrom: TravelerFrom = 'tw';
   period: Period = 'day';
   season: Season = 'rayon';
   lang: LangMode = 'both';
@@ -63,7 +60,6 @@ export class GameState {
       v: 1,
       origin: this.origin,
       gender: this.gender,
-      travelerFrom: this.travelerFrom,
       period: this.period,
       season: this.season,
       lang: this.lang,
@@ -80,9 +76,8 @@ export class GameState {
   static fromJSON(j: Partial<GameStateJSON>): GameState {
     const s = new GameState();
     if (j.gender === 'm' || j.gender === 'f') s.gender = j.gender;
-    // 2026-11: one traveller per gender. Old 外國 (intl) travellers migrate to the same-gender traveller;
-    // `gender` is kept as is, so a foreign woman becomes the female traveller.
-    s.travelerFrom = 'tw';
+    // 2026-11: one traveller per gender. Old 外國 (intl) saves load as the same-gender traveller
+    // (`travelerFrom` is ignored; `gender` is kept, so a foreign woman becomes the female traveller).
     // S4: whitelist, so an old or edited save never feeds an unknown value into the sky / schedule
     if (PERIODS.some((p) => p.id === j.period)) s.period = j.period as Period;
     if (SEASONS.some((x) => x.id === j.season)) s.season = j.season as Season;

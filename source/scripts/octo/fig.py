@@ -93,8 +93,7 @@ class Fig:
                 kn = (cx + sg * 0.31 * hh, d['knee'] + ady * 0.5)
                 an = (cx + sg * 0.29 * hh, d['ankle'] + ady)
                 legc = s.bot if s.r['bottom']['kind'] == 'pants' else s.skin
-                cv.fill(cv.cap(kn, an, d['rs'], d['rs'] * 0.8), legc, ('cyl', kn, an, d['rs']))
-                cv.fill(cv.cap(hj, kn, d['rt'], d['rs']), legc, ('cyl', hj, kn, d['rt']))
+                s.leg_fill(cv, hj, kn, an, d, legc)
                 s.foot_front(cv, an[0], an[1] - d['ankle'] + yoff, d, back, lifted=ady < -0.5)
             s.bottoms_front(cv, cx, d, wk)
         # back: pack goes over the torso later; front: big pack peeks out at the sides
@@ -264,6 +263,12 @@ class Fig:
                 x = int(cx + sg * 0.52 * hh - (1 if sg < 0 else 0))
                 for y in range(int(sy), int(waist + 0.1 * hh)):
                     cv.px(x, y, st['base'] if sg < 0 else st['sh'])
+        if s.r['top'].get('pocket'):  # small woven stripe on the left chest pocket
+            cols = [hx(c) for c in s.r['top']['pocket']]
+            x0, y0 = int(round(cx + 0.30 * hh)), int(round(sy + 0.42 * hh))
+            for i in range(4):
+                cv.px(x0 + i, y0, cols[i % 3])
+                cv.px(x0 + i, y0 + 1, cols[(i + 2) % 3])
         if s.r.get('camera'):
             x0, y0 = cx - 0.5 * hh, sy + 0.05 * hh
             x1, y1 = cx + 0.35 * hh, waist - 0.05 * hh
@@ -297,7 +302,7 @@ class Fig:
         if top['kind'] in ('shirt', 'coat'):
             sl = s.rp(top['shirt' if top['kind'] == 'shirt' else 'coat'])
             sl = darker(sl) if far else sl
-            f_ = 1.12 if top['kind'] == 'shirt' else 1.0
+            f_ = (0.62 if top.get('short') else 1.12) if top['kind'] == 'shirt' else 1.0
             if top['kind'] == 'coat':  # long sleeve to the wrist
                 cv.fill(cv.cap(sh_, el, d['ra'] + 0.6, d['rf'] + 0.6), sl, ('cyl', sh_, el, d['ra'] + 0.6))
                 w2 = (el[0] + (wr[0] - el[0]) * 0.85, el[1] + (wr[1] - el[1]) * 0.85)
@@ -352,7 +357,7 @@ class Fig:
     def head_frontal(s, cv, cx, cy, d, back, blink, helmet=None):
         hh, rx, ry = s.hh, d['rx'], d['ry']
         kind = s.r['hair'][0]
-        if helmet and kind in ('spiky', 'puff', 'bun', 'wavy'):
+        if helmet and kind in ('spiky', 'puff', 'bun', 'wavy', 'lowtail'):
             kind = 'short'
         if helmet and kind == 'wavylong':
             kind = 'bob'
@@ -417,7 +422,7 @@ class Fig:
         if back:
             nape = {'elder': cy + 0.12, 'short': cy + 0.30, 'spiky': cy + 0.32, 'bun': cy + 0.2,
                     'bob': cy + 0.55, 'long': cy + 0.6, 'ponytail': cy + 0.25, 'puff': cy + 0.35,
-                    'wavy': cy + 0.40, 'wavylong': cy + 0.6}[kind]
+                    'wavy': cy + 0.40, 'wavylong': cy + 0.6, 'lowtail': cy + 0.30}[kind]
             m = (big | cv.ell(cx, cy, rx + 0.06 * hh, ry + 0.02 * hh)) & (Y < cy + (nape - cy) * hh)
             if kind == 'spiky':
                 for k in (-1, 0, 1):
@@ -431,6 +436,8 @@ class Fig:
                 m &= Y > cy - 0.1 * hh
             cv.fill(m, s.hair, ('soft', cx - 0.2 * hh, cy - 0.3 * hh, rx * 1.4, ry * 1.2, 0.35),
                     pattern=s._wave_pat() if kind in ('wavy', 'wavylong') else None)
+            if kind == 'lowtail' and not helmet:
+                s._lowtail(cv, (cx + 0.5, cy + 0.25 * hh), (cx + 1.0, cy + 1.3 * hh))
             if kind == 'ponytail' and not helmet:
                 pt = cv.cap((cx, cy - 0.15 * hh), (cx + 0.5, cy + 0.85 * hh), 0.22 * hh, 0.13 * hh)
                 cv.fill(pt, s.hair, ('cyl', (cx, cy), (cx, cy + hh), 0.22 * hh))
@@ -477,6 +484,16 @@ class Fig:
             cv.fill(m, s.hair, sh)
             if kind == 'bun' and not s.r.get('hat') and not helmet:
                 cv.fill(cv.ell(cx, cy - 0.62 * hh, 0.22 * hh, 0.17 * hh), s.hair, ('ell', cx - 1, cy - 0.7 * hh, 0.3 * hh, 0.3 * hh))
+        elif kind == 'lowtail':  # pulled back into a low ponytail over one shoulder, loose strands at the temples
+            m = big & (Y < hl + np.clip((X - cx) * 0.25, 0, 1.6))
+            m |= big & (np.abs(X - cx) > rx * 0.86) & (Y < cy + 0.18 * hh)
+            for sg in (-1, 1):
+                m |= cv.cap((cx + sg * (rx + 0.04 * hh), cy - 0.1 * hh), (cx + sg * (rx + 0.08 * hh), cy + 0.32 * hh), 0.12 * hh, 0.08 * hh)
+            cv.fill(m, s.hair, sh, pattern=s._wave_pat())
+            for i in range(3):
+                cv.px(int(cx - rx * 0.6) + i, int(cy - 0.44 * hh) + (1 if i == 2 else 0), s.hair['hi'])
+            if not helmet:
+                s._lowtail(cv, (cx + rx + 0.02 * hh, cy + 0.3 * hh), (cx + rx + 0.16 * hh, cy + 1.25 * hh))
         elif kind == 'wavy':  # medium-short, tousled waves with a soft fringe
             vol = cv.ell(cx, cy - 0.16 * hh, rx + 0.16 * hh, ry * 0.95 + 0.06 * hh)
             wave = ((np.floor(X) % 4) < 2) * 1.2 + ((np.floor(X) % 4) == 2) * 0.5
@@ -508,6 +525,20 @@ class Fig:
             def curl(x, y):
                 return darker(s.hair) if (x * 3 + y * 5) % 7 == 0 else None
             cv.fill(m, s.hair, sh, pattern=curl)
+
+    def _lowtail(s, cv, a, b):
+        """wavy low ponytail from a (tie) to b (tips), with a red / white / black woven tie"""
+        hh = s.hh
+        m = cv.cap(a, b, 0.17 * hh, 0.11 * hh)
+        m &= cv.Y < b[1] + 0.11 * hh - ((np.floor(cv.X) % 3) == 1) * 1.0
+        cv.fill(m, s.hair, ('cyl', a, b, 0.17 * hh), pattern=s._wave_pat())
+        tie = s.r.get('tie')
+        if tie:
+            cols = [hx(c) for c in tie]
+            x0, y0 = int(round(a[0] - 0.14 * hh)), int(round(a[1]))
+            for i in range(max(3, int(round(0.3 * hh)))):
+                cv.px(x0 + i, y0, cols[i % 3])
+                cv.px(x0 + i, y0 + 1, cols[(i + 1) % 3])
 
     def _wave_pat(s):
         dk = darker(s.hair)
@@ -611,11 +642,13 @@ class Fig:
             s.leg_side(cv, hip, legs[1], d, far=True)
         kind = s.r['hair'][0]
         helmet = P.get('helmet')
-        if helmet and kind in ('spiky', 'puff', 'bun', 'wavy'):
+        if helmet and kind in ('spiky', 'puff', 'bun', 'wavy', 'lowtail'):
             kind = 'short'
         if helmet and kind == 'wavylong':
             kind = 'bob'
         hc = (neck[0] - 0.06 * hh, neck[1] - 0.58 * hh)
+        if kind == 'lowtail' and not helmet:
+            s._lowtail(cv, (hc[0] + 0.36 * hh, hc[1] + 0.28 * hh), (hc[0] + 0.5 * hh, hc[1] + 1.2 * hh))
         if kind == 'ponytail' and not helmet:
             pt = cv.cap((hc[0] + 0.40 * hh, hc[1] - 0.18 * hh), (hc[0] + 0.66 * hh, hc[1] + 0.62 * hh), 0.20 * hh, 0.11 * hh)
             cv.fill(pt, s.hair, ('cyl', (hc[0] + 0.4 * hh, hc[1]), (hc[0] + 0.66 * hh, hc[1] + hh), 0.2 * hh))
@@ -735,12 +768,16 @@ class Fig:
         bk = s.r['bottom']['kind']
         bot = darker(s.bot) if far else s.bot
         legc = bot if bk == 'pants' else skin
-        cv.fill(cv.cap(kn, an, d['rs'], d['rs'] * 0.8), legc, ('cyl', kn, an, d['rs']))
-        cv.fill(cv.cap(hip, kn, d['rt'], d['rs']), legc, ('cyl', hip, kn, d['rt']))
+        s.leg_fill(cv, hip, kn, an, d, legc)
         if bk == 'shorts':
             e = (hip[0] + (kn[0] - hip[0]) * 0.62, hip[1] + (kn[1] - hip[1]) * 0.62)
             cv.fill(cv.cap(hip, e, d['rt'] + 0.7), bot, ('cyl', hip, e, d['rt'] + 0.7))
         s.foot_side(cv, an, ang, d, far)
+
+    def leg_fill(s, cv, hj, kn, an, d, col):
+        """thigh + shin as ONE shape with one continuous shading (soft knees: no seam line, notch or dark knee pixels)"""
+        m = cv.cap(hj, kn, d['rt'], d['rs']) | cv.cap(kn, an, d['rs'], d['rs'] * 0.8)
+        cv.fill(m, col, ('limb', [hj, kn, an], [(d['rt'] + d['rs']) / 2, d['rs']]))
 
     def leg_pts(s, hip, ang, d):
         Lt = d['knee'] - d['hipj']
@@ -821,8 +858,8 @@ class Fig:
             m &= ~(ear & (Y > hy - 0.02 * hh))
             cv.fill(m, s.hair, shd)
             cv.fill(ear & ~m, s.skin, ('flat', 0.4))
-        elif kind in ('short', 'ponytail', 'elder', 'bun'):
-            lim = hy - (0.22 if kind in ('short', 'ponytail') else 0.28) * hh
+        elif kind in ('short', 'ponytail', 'elder', 'bun', 'lowtail'):
+            lim = hy - (0.22 if kind in ('short', 'ponytail', 'lowtail') else 0.28) * hh
             m = big & ((Y < lim) | (X > hx_ + 0.04 * hh))
             if kind == 'ponytail':
                 m |= big & (Y < lim + 1.6) & (X < hx_ - 0.2 * hh)

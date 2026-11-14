@@ -1,7 +1,7 @@
 {
   "name": "tao-rpg",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Pongso no Tao — Lanyu (Tao / Yami) interactive web RPG prototype",
   "scripts": {
@@ -11,12 +11,10 @@
     "fonts:check": "node scripts/check-fonts.mjs",
     "build": "npm run typecheck && npm run fonts:check && vite build",
     "preview": "vite preview",
-    "sprites": "python3 scripts/generate_sprites.py",
     "art": "python3 scripts/key_art.py portraits && python3 scripts/key_art.py plants",
-    "verify": "node scripts/verify-v4.mjs",
     "peek": "node scripts/dev/peek.mjs",
-    "verify:v4": "node scripts/verify-v4.mjs",
-    "sprites:chars": "python3 scripts/generate_octo.py walk ride canoe"
+    "sprites:chars": "python3 scripts/generate_octo.py walk ride canoe",
+    "verify": "node scripts/verify-phase1.mjs"
   },
   "dependencies": {
     "three": "^0.170.0"

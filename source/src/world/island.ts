@@ -11,6 +11,8 @@ import {
   noise,
   smoothstep,
   clamp01,
+  distToRing,
+  HARBOUR_QUAY,
 } from './height';
 import { terrainDetail, terrainFine, rng } from './textures';
 import { FACILITIES } from './layout';
@@ -21,6 +23,9 @@ import { preferredTerrainPaintSize } from '../core/device';
 import { surfaceHeight } from './collision';
 import { bilerp } from '../core/math';
 import { quality } from '../core/quality';
+
+/** trees / palms / rocks stay this far from a road centreline (1.5 m corridor + canopy) */
+const ROAD_PLANT_CLEAR = 2.4;
 
 export const WORLD_BOX = TERRAIN_BOX;
 
@@ -237,9 +242,13 @@ async function paintTerrain(width: number, height: number, onProgress?: (p: numb
         const hdx = x - FACILITIES.harbor.x;
         const hdz = z - FACILITIES.harbor.z;
         const hd2 = hdx * hdx + hdz * hdz;
-        if (hd2 < 130) {
-          const apron = smoothstep(11.4, 4.2, Math.sqrt(hd2)) * land;
-          col = mix(col, mix(C.road, C.paver, 0.4), apron * 0.62);
+        // 0.1.1: the reclaimed quay reads as paved concrete, not beach
+        const Q = HARBOUR_QUAY;
+        const qd = Math.max(Math.abs(x - Q.x) / Q.hx, Math.abs(z - Q.z) / Q.hz);
+        const quay = (1 - smoothstep(0.5, 0.62, qd)) * land;
+        if (hd2 < 130 || quay > 0) {
+          const apron = Math.max(hd2 < 130 ? smoothstep(11.4, 4.2, Math.sqrt(hd2)) * land * 0.62 : 0, quay * 0.85);
+          col = mix(col, mix(C.road, C.paver, 0.4), apron);
         }
         // stronger shoreline / cliff contrast so the walkable edge is obvious
         col = mix(col, mul(C.sand, 1.06), beach * 0.2);
@@ -515,6 +524,8 @@ export class Island {
         if (dens < 0.08 || r() > dens * 1.05) continue;
         const h = getHeight(jx, jz);
         if (h < 1.2) continue;
+        // 0.1.1: keep tree canopies off the road corridor
+        if (distToRing(jx, jz) < ROAD_PLANT_CLEAR) continue;
         const pick = r();
         const sc = 0.75 + dens * 0.55 + r() * 0.35;
         if (pick < 0.16) this.flora.add('bush', jx, jz, 0.9 * sc, { tint: 0.8 + r() * 0.25 });
@@ -535,6 +546,7 @@ export class Island {
       const z = -50 + r() * 100;
       const s = sample(x, z);
       if (s.mask < 0.8 || s.height < 0.35 || s.height > 2.6 || s.slope > 0.6 || s.road > 0.2 || s.cliff > 0.6) continue;
+      if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
       if (r() > 0.008 + s.village * 0.03) continue;
       if (r() < 0.6) this.flora.add('palm', x, z, 3.4 + r() * 1.3);
       else this.flora.add('pandanus', x, z, 1.7 + r() * 0.7);
@@ -558,6 +570,7 @@ export class Island {
       const z = -52 + r() * 124;
       const s = sample(x, z);
       if (s.mask < 0.6 || s.height < 0.25 || s.height > 2.2 || s.road > 0.1 || s.village > 0.4 || s.cliff > 0.5) continue;
+      if (Math.abs(x - HARBOUR_QUAY.x) < HARBOUR_QUAY.hx * 0.62 && Math.abs(z - HARBOUR_QUAY.z) < HARBOUR_QUAY.hz * 0.62) continue; // paved quay
       if (s.beach > 0.35 && r() < 0.5) { this.flora.add('morning_glory', x, z, 0.32 + r() * 0.18); n++; }
       else if (s.beach > 0.1 && s.beach < 0.6 && r() < 0.18) { this.flora.add('lily', x, z, 0.55 + r() * 0.25); n++; }
     }
@@ -584,6 +597,7 @@ export class Island {
       const s = sample(x, z);
       if (s.height < -0.9 || s.height > 1.2) continue;
       if (s.cliff < 0.35 || r() > s.cliff * 0.5) continue;
+      if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
       add(x, s.height + 0.05, z, 0.35 + r() * 0.9 * s.cliff, 0.8);
     }
     // talus & outcrops on steep slopes
@@ -593,6 +607,7 @@ export class Island {
       const s = sample(x, z);
       if (s.mask < 0.9 || s.slope < 1.0 || s.height < 2) continue;
       if (r() > 0.25) continue;
+      if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
       add(x, s.height, z, 0.3 + r() * 0.5, 0.7);
     }
     // iconic sea stacks: 軍艦岩 (Battleship Rock) off the NW coast, 雙獅岩 (Twin Lions) on the N coast

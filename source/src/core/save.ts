@@ -8,7 +8,6 @@ import type { Role } from '../quests/types';
 
 export const SAVE_KEY = 'tao-rpg:save:v1';
 export const SAVE_BACKUP_KEY = 'tao-rpg:save:backup';
-export const SAVE_VERSION = 1;
 const ROLES: readonly string[] = ['m', 'f', 't'];
 
 export interface SaveJSON {

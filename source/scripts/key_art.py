@@ -70,7 +70,7 @@ def key_white(path):
     zone = ndimage.binary_dilation(bg, iterations=3) & ~bg
     alpha = np.where(bg, 0.0, 1.0)
     soft = np.clip((255.0 - mn) / 45.0, 0, 1)
-    alpha = np.where(zone, np.minimum(alpha, np.maximum(soft, 0.15)), alpha)
+    alpha = np.where(zone, np.minimum(alpha, soft), alpha)
     al = np.clip(alpha, 1e-3, 1)[..., None]
     rgb = np.where(zone[..., None], (a - 255.0 * (1 - al)) / al, a)
     out = Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8)).convert('RGBA')

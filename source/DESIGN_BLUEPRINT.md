@@ -117,7 +117,6 @@
 - `npcs.json` — `schedule[]`：`seasons`、`times`、`waypoints`（`*` 為萬用）
 - `dialogues.json` — 開場與互動台詞（`zh` / `tao` / `unlocks`）
 - `milestones.json` — 成就
-- `asset_manifest.json` — 由 `scripts/generate_sprites.py` 產出的素材索引
 
 解鎖寫在 `GameState`（記憶體；Phase C 可接 localStorage）。
 

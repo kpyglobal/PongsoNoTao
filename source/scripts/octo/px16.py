@@ -111,6 +111,24 @@ class Cv:
             nn = np.stack([u * p[0], u * p[1], nz], -1)
             # tilt the normal a little up so the top of every limb catches light
             return nn @ L + 0.05
+        if kind == 'limb':  # one smooth cylinder along a bent polyline (hip→knee→ankle): no seam at the joint
+            _, pts, rs = shade
+            best_d = np.full(s.X.shape, np.inf)
+            out = np.zeros(s.X.shape)
+            for (x0, y0), (x1, y1), r in zip(pts[:-1], pts[1:], rs):
+                d = np.array([x1 - x0, y1 - y0], float)
+                ln = np.linalg.norm(d) + 1e-6
+                d /= ln
+                p = np.array([-d[1], d[0]])
+                t = np.clip((s.X - x0) * d[0] + (s.Y - y0) * d[1], 0, ln)
+                dist = np.hypot(s.X - (x0 + d[0] * t), s.Y - (y0 + d[1] * t))
+                u = np.clip(((s.X - x0) * p[0] + (s.Y - y0) * p[1]) / max(r, 0.5), -1, 1)
+                nz = np.sqrt(np.clip(1 - u * u, 0, 1))
+                v = np.stack([u * p[0], u * p[1], nz], -1) @ L + 0.05
+                closer = dist < best_d
+                out = np.where(closer, v, out)
+                best_d = np.where(closer, dist, best_d)
+            return out
         if kind == 'soft':  # gentle planar gradient: lit top-left, never deep (faces, hair masses)
             _, cx, cy, rx, ry, k = shade
             nx = np.clip((s.X - cx) / rx, -1.2, 1.2)
