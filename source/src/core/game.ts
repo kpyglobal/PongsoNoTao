@@ -2,12 +2,13 @@ import * as THREE from 'three';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Assets } from './assets';
 import { Input, type InputAction } from './input';
-import { GameState, type Gender, type LangMode, type TravelerFrom } from './state';
+import { GameState, type Gender, type LangMode } from './state';
 import { PRESETS, type Period, type Season } from './timeSeason';
 import { PostFX } from './post';
 import { SkyLighting } from '../world/sky';
 import { Ocean, bakeLandFieldAsync } from '../world/water';
 import { WorldDecor, type PlaceRec } from '../world/populate';
+import { addQuestPlaces, hostPlaces } from '../world/places';
 import { TaroTerraces } from '../world/paddies';
 import { sample, sampleHM, gridAsync, TERRAIN_BOX, distToRing } from '../world/height';
 import { Player, type PlayerMode } from '../entities/player';
@@ -22,7 +23,7 @@ import { lastPaintMs, Island, WORLD_BOX } from '../world/island';
 import { initCollision, canStand, PLAYER_RADIUS } from '../world/collision';
 import { buildShade, shadeAt, shadeStats } from '../world/shade';
 import type { SpriteBillboard } from '../entities/billboard';
-import { LANDMARKS, VILLAGE_DEFS, villageStructures, type Structure } from '../world/layout';
+import { LANDMARKS } from '../world/layout';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Party, ROLES } from '../entities/party';
 import { QuestEngine, tideAt, type QuestEvent } from '../quests/engine';
@@ -169,11 +170,11 @@ export class Game {
     this.input.onAction = (a) => this.onAction(a);
     this.input.onAnyKey = () => this.ui.onAnyKey();
     this.ui.hooks = {
-      onOrigin: (id, gender, from) => {
+      onOrigin: (id, gender) => {
         // S2: one save slot — ask before a new journey replaces it
         const meta = this.saveMeta(readSave());
         if (meta && !window.confirm(`開始新旅程會覆蓋現有存檔：\n${meta}\n\n確定要重新開始嗎？（想保留可以先到手札「存檔」匯出）`)) return;
-        this.begin(id, gender, from, 't');
+        this.begin(id, gender, 't');
       },
       onPeriod: (p) => this.setPeriod(p),
       onSeason: (s) => this.setSeason(s),
@@ -391,7 +392,7 @@ export class Game {
    * `lead` = who is controlled first (the UI starts with the traveller). Debug / older scripts:
    * selectOrigin('visitor', g) → traveller lead; selectOrigin(village, g) → 族男 / 族女 lead by g.
    */
-  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, from: TravelerFrom = this.state.travelerFrom, lead?: Role): void {
+  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, lead?: Role): void {
     const T = this.content.text;
     try {
       const home = id === 'visitor' ? 'yayo' : id;
@@ -401,8 +402,6 @@ export class Game {
       // S3: a fresh journal (nothing left over from an earlier or half-loaded run); keep the language setting
       Object.assign(this.state, new GameState(), { lang: this.state.lang, period: this.state.period, season: this.state.season });
       this.state.gender = gender === 'f' ? 'f' : 'm';
-      this.state.travelerFrom = 'tw'; // one traveller per gender (2026-11); `from` kept for old debug calls
-      void from;
       this.state.origin = home;
       this.state.started = true;
       this.setHostPlaces(home);
@@ -818,30 +817,8 @@ export class Game {
 
   /** shop / school in 椰油 and the rental near 開元港: derived spots for the new quest NPCs */
   private addQuestPlaces(): void {
-    const P = this.places;
-    const mk = (id: string, zh: string, p: { x: number; z: number }): void => {
-      if (!P[id]) P[id] = { id, zh, tao: '', x: p.x, z: p.z, kind: 'facility' };
-    };
-    const front = (st: Structure): { x: number; z: number } => ({
-      x: st.x + Math.sin(st.yaw) * (st.hd + 1.4),
-      z: st.z + Math.cos(st.yaw) * (st.hd + 1.4),
-    });
-    const yv = VILLAGE_DEFS.find((v) => v.id === 'yayo');
-    if (yv) {
-      const st = villageStructures(yv);
-      const shop = st.find((x) => x.kind === 'shop');
-      const school = st.find((x) => x.kind === 'modern');
-      if (shop) mk('yayo_shop', '椰油的雜貨店', front(shop));
-      if (school) mk('yayo_school', '椰油的學校', front(school));
-    }
-    const h = P.harbor;
-    if (h) mk('rental', '租車行', { x: h.x + 4.6, z: h.z + 2.2 });
-    // batch 1b: dive shop by 開元港, the two dive spots (modern recreation), host-family spots (set per save)
-    if (h) mk('dive_shop', '潛水店', { x: h.x + 6.4, z: h.z - 2.0 });
-    mk('hen_rock_bay', '母雞岩下方海灣', { x: 16.5, z: -40.5 });
-    mk('yayo_dive', '椰油港外潛點', { x: -35.5, z: 1.5 });
+    addQuestPlaces(this.places);
     this.setHostPlaces('yayo');
-    for (const id of ['yayo_shop', 'yayo_school']) if (!P[id] && P.yayo) mk(id, id, { x: P.yayo.x + 2, z: P.yayo.z + 2 });
   }
 
   private syncQuestCtx(): void {
@@ -1342,12 +1319,9 @@ export class Game {
   /** host-family spots for 族人分工 quests (J1–J3, R1–R3, A3): home village, its taro field, the weaver's porch */
   private setHostPlaces(home: string): void {
     const P = this.places;
-    const v = P[home] ?? P.yayo;
-    if (!v) return;
-    const taro = P[`taro_${home}`] ?? v;
-    P.host_home = { id: 'host_home', zh: `${v.zh}的主人家`, tao: '', x: v.x + 1.8, z: v.z + 2.4, kind: 'facility' };
-    P.host_taro = { id: 'host_taro', zh: taro.zh, tao: '', x: taro.x, z: taro.z, kind: 'facility' };
-    P.host_weave = { id: 'host_weave', zh: `${v.zh}的簷廊`, tao: '', x: v.x - 2.2, z: v.z + 1.6, kind: 'facility' };
+    const hp = hostPlaces(P, home);
+    if (!hp) return;
+    Object.assign(P, hp);
     if (this.npcs) {
       const w = this.npcs.byId('weaver_elder');
       if (w) {
@@ -1715,13 +1689,7 @@ export class Game {
       ready: true,
       state: this.state,
       timings: this.timings,
-      selectOrigin: (id: PlayableOrigin, gender?: Gender, from?: TravelerFrom) => this.begin(id, gender, from),
-      /** 外來訪客: 臺灣本島 (tw) / 外國 (intl) traveller (re-dresses the player when already on the island) */
-      setTraveler: (from: TravelerFrom) => {
-        this.state.travelerFrom = 'tw'; // 外國 option removed (2026-11)
-        void from;
-        if (this.state.started) this.player.setOutfit(this.assets, this.playerOutfit());
-      },
+      selectOrigin: (id: PlayableOrigin, gender?: Gender) => this.begin(id, gender),
       outfit: () => this.playerOutfit(),
       /** shade-zone coverage (0 sun … 1 shade) and the current sprite tint, for verify scripts */
       shadeAt: (x: number, z: number) => shadeAt(x, z),
@@ -1761,6 +1729,14 @@ export class Game {
       interactNearest: () => this.tryInteract(),
       teleport: (x: number, z: number) => this.player.spawn(x, z),
       places: this.places,
+      /** sheet row the controlled character shows (0.1.1 facing check) */
+      facing: () => ({ dir: this.player.active.dir, yaw: this.player.yaw, mode: this.player.mode, walking: this.player.active.walking }),
+      /** flora billboards within r of a road centreline (0.1.1 road audit; grass / flowers listed separately) */
+      roadFlora: (r = 1.5) => {
+        const out: Record<string, number> = {};
+        for (const it of this.island.flora.items) if (distToRing(it.x, it.z) < r) out[it.kind] = (out[it.kind] ?? 0) + 1;
+        return out;
+      },
       playerPos: () => ({ x: this.player.x, z: this.player.z, yaw: this.player.yaw, scooter: this.player.scooter, mode: this.player.mode }),
       cam: () => ({ yaw: this.camYaw, pitch: this.camPitch, dist: this.camDist }),
       camLimits: () => ({ min: CAM_MIN_DIST, def: CAM_DEFAULT.dist, max: CAM_MAX_DIST, scale: charZoomScale(this.camDist) }),

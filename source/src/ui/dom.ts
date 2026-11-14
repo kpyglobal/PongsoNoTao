@@ -1,5 +1,5 @@
 import { assetUrl } from '../core/paths';
-import type { Gender, GameState, LangMode, TravelerFrom } from '../core/state';
+import type { Gender, GameState, LangMode } from '../core/state';
 import { PERIODS, SEASONS, type Period, type Season } from '../core/timeSeason';
 import type { DataFiles, GlossaryEntry, MilestoneEntry, PlayableOrigin, UiContent } from '../core/content';
 import { TERRAIN_BOX } from '../world/height';
@@ -22,7 +22,7 @@ function readTextSize(): TextSize {
 export type Overlay = 'journal' | 'travel' | 'help';
 
 export interface UiHooks {
-  onOrigin: (id: PlayableOrigin, gender: Gender, from: TravelerFrom) => void;
+  onOrigin: (id: PlayableOrigin, gender: Gender) => void;
   onPeriod: (p: Period) => void;
   onSeason: (s: Season) => void;
   onLang: (m: LangMode) => void;
@@ -86,7 +86,6 @@ export class UI {
   hooks!: UiHooks;
   private selected: UiContent['origins'][number]['id'] | null = null;
   private gender: Gender = 'm';
-  /** 外來訪客 only: 臺灣本島 / 外國 / 隨機 */
   private content: UiContent | null = null;
   private overlay: Overlay | null = null;
   /** element focused before a dialog layer took focus (restored when it closes) */
@@ -127,7 +126,6 @@ export class UI {
             <div class="kicker">手繪田野筆記本 · 圖鑑手札</div>
             <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
             <p class="subtitle">兩位族人同學放假回島，帶著一位朋友一起來。</p>
-            <a class="guide-link cover-guide" id="cover-guide" href="guide.html" target="_blank" rel="noopener">攻略與文化導覽（新分頁）↗</a>
           </div>
           <p class="lede">隊伍固定三人：族男、族女，加上一位旅人。先選兩位族人的家鄉部落（主人家），再決定旅人來自哪裡、是男生還是女生。</p>
           <div class="origin-continue" id="origin-continue" hidden>
@@ -253,7 +251,6 @@ export class UI {
             <section class="nb-page nb-left">
               <header class="nb-top">
                 <h2 id="journal-title">圖鑑手札</h2>
-                <a class="guide-link" id="journal-guide" href="guide.html" target="_blank" rel="noopener">攻略與文化導覽 ↗</a>
               </header>
               <div class="nb-head" id="nb-head"></div>
               <div class="nb-list" id="nb-list"></div>
@@ -291,8 +288,7 @@ export class UI {
         const pool = this.content.origins.filter((o) => o.spawn && o.id !== 'visitor').map((o) => o.id);
         id = pool[Math.floor(Math.random() * pool.length)];
       }
-      // 2026-11: one traveller per gender (the 臺灣本島／外國 choice is gone)
-      this.hooks.onOrigin(id as PlayableOrigin, this.gender, 'tw');
+      this.hooks.onOrigin(id as PlayableOrigin, this.gender);
     });
     for (const g of ['m', 'f'] as const) {
       this.bindActivate(this.el(`#btn-gender-${g}`), () => this.setGender(g));

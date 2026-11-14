@@ -6,13 +6,16 @@ const DIRS = ['s', 'w', 'n', 'e'] as const;
 export type Dir = (typeof DIRS)[number];
 
 export function dirFromRelative(rel: number): Dir {
-  // rel = facingYaw - cameraYaw, wrapped -PI..PI
-  // 0 means facing the camera (show south / front)
+  // rel = facingYaw - cameraYaw, wrapped -PI..PI (yaw = atan2(dx, dz), camYaw = atan2 of the
+  // camera offset from the sprite). 0 means facing the camera (show south / front).
+  // +90° = moving along the camera's screen-right axis (cos camYaw, -sin camYaw) → the sheet's
+  // 'e' row (figure faces screen-right); -90° → 'w' (faces screen-left). 0.1.0 had these two
+  // swapped, so walking right showed the left-facing row.
   const a = ((rel + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
   const deg = (a * 180) / Math.PI;
   if (deg >= -45 && deg < 45) return 's';
-  if (deg >= 45 && deg < 135) return 'w';
-  if (deg >= -135 && deg < -45) return 'e';
+  if (deg >= 45 && deg < 135) return 'e';
+  if (deg >= -135 && deg < -45) return 'w';
   return 'n';
 }
 
@@ -53,6 +56,8 @@ export class SpriteBillboard {
   facing = 0; // yaw, 0 = toward +Z (south)
   walking = false;
   frame = 0;
+  /** direction row last shown (s / w / n / e; debug + tests) */
+  dir: Dir = 's';
   private acc = 0;
   kind: string;
   /** walk sheets with 8 rows carry idle rows 4-7 (s, w, n, e): [rest, inhale, blink, rest] */
@@ -152,6 +157,7 @@ export class SpriteBillboard {
   }
 
   setCell(dir: Dir, frame: number): void {
+    this.dir = dir;
     const row = DIRS.indexOf(dir);
     this.setFrame(frame % this.cols, row);
   }
@@ -187,6 +193,7 @@ export class SpriteBillboard {
         this.setCell(dir, 0);
         return;
       }
+      this.dir = dir;
       this.setFrame(this.idleFrame(dt), 4 + DIRS.indexOf(dir));
     }
   }

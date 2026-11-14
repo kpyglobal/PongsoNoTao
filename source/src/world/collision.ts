@@ -3,7 +3,7 @@
  * and safe standing queries. Keeps characters on dry land or paved decks
  * and sliding around buildings, walls, and sunken 水芋田 basins.
  */
-import { FACILITIES, ISLAND_CENTRE, type StructKind } from './layout';
+import { AIRPORT_PLANE, CLINIC_FOOT, FOOTPRINT, PLANE_FOOT, TERMINAL_FOOT, FACILITIES, HARBOUR_LANTERN_DZ, ISLAND_CENTRE } from './layout';
 import {
   TERRAIN_BOX,
   ALL_STRUCTURES,
@@ -42,14 +42,6 @@ interface Disc {
   top?: number;
 }
 
-export const FOOT: Record<StructKind, { hw: number; hd: number }> = {
-  vahey: { hw: 1.9, hd: 1.7 },
-  makarang: { hw: 1.3, hd: 1.15 },
-  tagakal: { hw: 1.25, hd: 1.15 },
-  modern: { hw: 1.7, hd: 1.4 },
-  shop: { hw: 1.9, hd: 1.6 },
-  church: { hw: 1.85, hd: 2.7 },
-};
 
 const solids: Obb[] = [];
 const pads: Obb[] = [];
@@ -85,18 +77,18 @@ export function initCollision(): void {
   discs.length = 0;
 
   for (const s of ALL_STRUCTURES) {
-    const f = FOOT[s.kind];
+    const f = FOOTPRINT[s.kind];
     addSolid(s.x, s.z, s.yaw, f.hw, f.hd);
   }
 
   const cl = FACILITIES.clinic;
-  addSolid(cl.x, cl.z, cl.yaw, 3.0, 1.9);
+  addSolid(cl.x, cl.z, cl.yaw, CLINIC_FOOT.hw, CLINIC_FOOT.hd);
 
   const t = FACILITIES.terminal;
-  addSolid(t.x, t.z, t.yaw, 3.7, 1.8);
+  addSolid(t.x, t.z, t.yaw, TERMINAL_FOOT.hw, TERMINAL_FOOT.hd);
   // commuter plane on the apron (local -1.5, 4.6 in terminal frame, yaw = -π/2)
-  const plane = worldOf(t.x, t.z, -1.5, 4.6, t.yaw);
-  addSolid(plane.x, plane.z, t.yaw, 2.3, 2.9);
+  const plane = worldOf(t.x, t.z, AIRPORT_PLANE.lx, AIRPORT_PLANE.lz, t.yaw);
+  addSolid(plane.x, plane.z, t.yaw, PLANE_FOOT.hw, PLANE_FOOT.hd);
 
   const h = FACILITIES.harbor;
   const hx = h.x + 1.5;
@@ -118,12 +110,22 @@ export function initCollision(): void {
   addDisc(hx - 15.4, hz - 7.2, 0.55);
   addDisc(hx - 11.0, hz - 0.6, 0.4);
   // land-side lantern posts
-  for (const dz of [-3, 0, 3]) addDisc(h.x + 3.2, h.z + dz, 0.28);
+  for (const dz of HARBOUR_LANTERN_DZ) addDisc(h.x + 3.2, h.z + dz, 0.28);
 
   const jl = FACILITIES.jimagaodLight;
   addDisc(jl.x, jl.z, 0.7);
 
   ready = true;
+}
+
+/** static colliders for audits / map overlays (solid boxes, walkable pads, solid discs) */
+export function staticColliders(): {
+  solids: readonly { x: number; z: number; yaw: number; hw: number; hd: number }[];
+  pads: readonly { x: number; z: number; yaw: number; hw: number; hd: number; top?: number }[];
+  discs: readonly { x: number; z: number; r: number }[];
+} {
+  if (!ready) initCollision();
+  return { solids, pads, discs };
 }
 
 function localOn(obb: Obb, x: number, z: number): { lx: number; lz: number } {
@@ -188,18 +190,26 @@ export function canStand(x: number, z: number, radius = PLAYER_RADIUS): boolean 
   return true;
 }
 
+const ROOMY_PAD = 0.65;
+
 /** Spiral search for the nearest dry, unblocked standing point. */
 export function findSafeStand(x: number, z: number, radius = PLAYER_RADIUS): { x: number; z: number } {
   if (!ready) initCollision();
   if (canStand(x, z, radius)) return { x, z };
-  for (let i = 1; i <= 56; i++) {
-    const rad = i * 0.4;
-    const steps = Math.max(8, i * 8);
-    for (let k = 0; k < steps; k++) {
-      const a = (k / steps) * Math.PI * 2 + i * 0.17;
-      const nx = x + Math.cos(a) * rad;
-      const nz = z + Math.sin(a) * rad;
-      if (canStand(nx, nz, radius)) return { x: nx, z: nz };
+  // 0.1.1: look for a roomy spot first (a 1 m clear disc), so a position inside a building is not moved into
+  // the thin gap between two neighbouring buildings, a pocket the party cannot walk out of
+  // (old saves; scripts/check-roads.mjs checks every spot a 0.1.0 player could stand on).
+  for (const need of [radius + ROOMY_PAD, radius]) {
+    for (let i = 1; i <= 56; i++) {
+      const rad = i * 0.4;
+      const steps = Math.max(8, i * 8);
+      for (let k = 0; k < steps; k++) {
+        const a = (k / steps) * Math.PI * 2 + i * 0.17;
+        const nx = x + Math.cos(a) * rad;
+        const nz = z + Math.sin(a) * rad;
+        // (both radii: a wider circle touches a dock / plaza pad sooner, so it alone could pass over water)
+        if (canStand(nx, nz, need) && (need === radius || canStand(nx, nz, radius))) return { x: nx, z: nz };
+      }
     }
   }
   // last resort: walk toward the island centre

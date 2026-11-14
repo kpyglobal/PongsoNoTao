@@ -8,6 +8,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { stoneTex, thatchTex, woodTex, plasterTex, sheetTex, tatalaTex, rng } from './textures';
+import { AIRPORT_PLANE } from './layout';
 
 export type MatKey =
   | 'stone' | 'stoneDark' | 'woodDark' | 'wood' | 'woodPale' | 'thatch' | 'thatchGold'
@@ -406,8 +407,9 @@ export function addAirport(b: ArchBuilder): void {
   b.box('metal', 0.06, 2.6, 0.06, -4.6, 1.3, 2.5, 0, 1);
   b.add('red', new THREE.ConeGeometry(0.16, 0.9, 6, 1, true), -4.25, 2.5, 2.5, 0, 0, Math.PI / 2);
   // small commuter plane (Dornier 228 style) on the apron
-  const px = -1.5;
-  const pz = 4.6;
+  // 0.1.1: parked beside the terminal; 0.1.1 moved the whole airport 0.8 m east so its wing clears the ring road
+  const px = AIRPORT_PLANE.lx;
+  const pz = AIRPORT_PLANE.lz;
   b.add('white', new THREE.CylinderGeometry(0.28, 0.24, 4.2, 10), px, 0.75, pz, 0, 0, Math.PI / 2);
   b.add('white', new THREE.ConeGeometry(0.28, 0.6, 10), px - 2.4, 0.75, pz, 0, 0, Math.PI / 2);
   b.box('white', 0.7, 0.07, 5.6, px - 0.4, 1.05, pz, 0, 1);

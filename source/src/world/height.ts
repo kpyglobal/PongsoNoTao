@@ -15,6 +15,7 @@ import {
   villageExtent,
   fieldLocal,
   tierShift,
+  ROADS,
   type Structure,
   type TaroField,
 } from './layout';
@@ -289,24 +290,32 @@ function jimagaod(x: number, z: number): { h: number; mask: number } {
 // human shaping: ring road, villages, pits, runway, harbour, taro terraces
 // ---------------------------------------------------------------------------
 
-/** Ring-road polyline through the six tribes + harbour (clockwise). */
-const RING: [number, number][] = [
-  [-36.5, -6.5], [-29.5, -9], [-22, -20], [-12, -32], [-2, -41.5], [10, -37], [20, -27],
-  [27.5, -23], [31, -8], [31.5, 6], [27, 16], [19, 25], [7, 36], [-6, 32.5],
-  [-14, 26.5], [-23.5, 26], [-25, 17.5], [-25.6, 4], [-27, -3], [-29.5, -9],
-];
+/** Ring road + harbour spur (layout.ts ROADS, 0.1.1). */
+/** reclaimed quay box (flat |dx| < 0.55 hx, |dz| < 0.55 hz, sloping into the sea beyond) */
+export const HARBOUR_QUAY = { x: -32.6, z: -6.4, hx: 4.7, hz: 5.5 };
+
+/** top of the coastal road embankment */
+const ROAD_BANK_H = 0.62;
+
+const ROAD_SEGS: [number, number, number, number][] = ROADS.flatMap((pl) => pl.slice(0, -1).map((p, i) => [p[0], p[1], pl[i + 1][0], pl[i + 1][1]] as [number, number, number, number]));
+
+/** read-only view of the road centrelines (road audit / map overlays) */
+export function roadPolylines(): readonly (readonly [number, number])[][] {
+  return ROADS;
+}
 
 export function distToRing(x: number, z: number): number {
   let best = 1e9;
-  for (let i = 0; i < RING.length - 1; i++) {
-    const [ax, az] = RING[i];
-    const [bx, bz] = RING[i + 1];
-    best = Math.min(best, segDist(x, z, ax, az, bx, bz).d);
-  }
+  for (const [ax, az, bx, bz] of ROAD_SEGS) best = Math.min(best, segDist(x, z, ax, az, bx, bz).d);
   return best;
 }
 
-export const ALL_STRUCTURES: Structure[] = VILLAGE_DEFS.flatMap((v) => villageStructures(v));
+/** 0.1.1: tagakal check the natural ground so none stands in the sea */
+export const ALL_STRUCTURES: Structure[] = (() => {
+  const all: Structure[] = [];
+  for (const v of VILLAGE_DEFS) all.push(...villageStructures(v, (x, z) => naturalRaw(x, z).h > 0.3, all));
+  return all;
+})();
 
 const VAHEY = ALL_STRUCTURES.filter((s) => s.kind === 'vahey');
 export const PIT_DEPTH = 0.95;
@@ -421,6 +430,15 @@ function raw(x: number, z: number): Raw {
     h = flattenRect(h, x, z, FACILITIES.terminal.x, FACILITIES.terminal.z, 2.6, 5.5, 1.1, 0.5);
   }
   if (nat.s > -0.02) h = flattenRect(h, x, z, -33.5, -6.2, 6.5, 3.4, 0.75);
+  // 0.1.1: reclaimed quay joining the 開元港 apron to the shore (in 0.1.0 a 4–5 m strip of sea
+  // separated the apron from the island, so the arriving party could never walk off the dock)
+  {
+    const qd = Math.max(Math.abs(x - HARBOUR_QUAY.x) / HARBOUR_QUAY.hx, Math.abs(z - HARBOUR_QUAY.z) / HARBOUR_QUAY.hz);
+    if (qd < 1) {
+      h = Math.max(h, flattenRect(h, x, z, HARBOUR_QUAY.x, HARBOUR_QUAY.z, HARBOUR_QUAY.hx, HARBOUR_QUAY.hz, 0.75, 0.55));
+      land = Math.max(land, 1 - smoothstep(0.6, 0.85, qd));
+    }
+  }
   // clinic pad (Imorod)
   h = flattenRect(h, x, z, FACILITIES.clinic.x, FACILITIES.clinic.z, 4.0, 4.0, 1.3, 0.5);
 
@@ -437,6 +455,12 @@ function raw(x: number, z: number): Raw {
 
   // ring road: gentle cut, packed concrete
   const rd = distToRing(x, z);
+  // 0.1.1: where the road hugs the shore it runs on a low seawall embankment, so the whole
+  // network stays walkable (no 1–2 m dips into the shallows at village ends / the airport)
+  if (rd < 2.6 && pit === 0 && h < ROAD_BANK_H && h > -3) {
+    h = lerp(h, ROAD_BANK_H, 1 - smoothstep(1.6, 2.6, rd));
+    land = Math.max(land, 1 - smoothstep(1.9, 2.4, rd));
+  }
   let road = 0;
   if (land > 0.5 && h > 0.35) {
     road = smoothstep(1.25, 0.55, rd) * (1 - pit);

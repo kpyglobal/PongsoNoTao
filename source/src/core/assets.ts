@@ -6,14 +6,6 @@ import { checkData, DATA_FILES, type DataFiles, type DataName } from './content'
 export const PLAYER_OUTFITS = ['player', 'player_f', 'player_visitor', 'player_visitor_f'] as const;
 export type PlayerOutfit = (typeof PLAYER_OUTFITS)[number];
 
-export interface CharacterSheet {
-  texture: THREE.Texture;
-  cols: number;
-  rows: number;
-  frameW: number;
-  frameH: number;
-}
-
 export class Assets {
   textures = new Map<string, THREE.Texture>();
   private json = new Map<DataName, unknown>();

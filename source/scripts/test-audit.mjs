@@ -60,9 +60,10 @@ try {
   await boot();
   await ev(() => window.__TAO_RPG__.continueSave());
   await sleep(1200);
-  const m3 = await ev(() => { const g = window.__TAO_RPG__; return { q1: g.quest('Q01'), st: { p: g.state.period, s: g.state.season }, started: g.state.started, from: g.state.travelerFrom, tOut: g.party().outfits.t, coll: g.collect() }; });
+  const m3 = await ev(() => { const g = window.__TAO_RPG__; return { q1: g.quest('Q01'), st: { p: g.state.period, s: g.state.season }, started: g.state.started, from: g.state.travelerFrom, saved: (g.saveNow(), JSON.parse(localStorage.getItem('tao-rpg:save:v1') || '{}').state?.travelerFrom), tOut: g.party().outfits.t, coll: g.collect() }; });
   check('M3 out-of-range step clamped, game resumes', m3.started && m3.q1.status === 'active', m3);
-  check('old intl traveller save → female traveller (tw), one picture per spot', m3.from === 'tw' && m3.tOut === 'player_visitor_f' && m3.coll.includes('uw:A') && m3.coll.includes('uw:B') && !m3.coll.includes('pov:5') && !m3.coll.some((k) => /^uw:[AB]:/.test(k)), { from: m3.from, tOut: m3.tOut, coll: m3.coll });
+  check('old intl traveller save → female traveller, field dropped, one picture per spot', m3.from === undefined && m3.tOut === 'player_visitor_f' && m3.coll.includes('uw:A') && m3.coll.includes('uw:B') && !m3.coll.includes('pov:5') && !m3.coll.some((k) => /^uw:[AB]:/.test(k)), { from: m3.from, tOut: m3.tOut, coll: m3.coll });
+  check('old intl field not written back on next save', m3.saved === undefined, { saved: m3.saved });
   check('S4 bad period / season fall back', m3.st.p === 'day' || ['dawn', 'day', 'dusk', 'night'].includes(m3.st.p), m3.st);
 } finally {
   await b.close();
