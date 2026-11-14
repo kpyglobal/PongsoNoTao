@@ -1,0 +1,96 @@
+{
+  "rules": {
+    "outsidersNeverWearTaoClothing": true,
+    "note": "旅人（t）不能有 kind: traditional 的服裝；旅人飾品必須 outsiderSafe: true。不含祭儀用品（銀盔、金片等）。"
+  },
+  "outfits": [
+    {
+      "id": "outfit_m_tao",
+      "who": [
+        "m"
+      ],
+      "kind": "traditional",
+      "name": {
+        "zh": "族男的傳統服飾",
+        "tao": ""
+      },
+      "unlockQuest": "OF1",
+      "sheet": "player_trad",
+      "portrait": "local_trad",
+      "icon": "icon_outfit_m_tao",
+      "excludes": [
+        "銀盔",
+        "金片",
+        "祭儀用品"
+      ],
+      "review": true,
+      "note": "外觀需依族人提供的參考圖繪製；穿著場合待確認。"
+    },
+    {
+      "id": "outfit_f_tao",
+      "who": [
+        "f"
+      ],
+      "kind": "traditional",
+      "name": {
+        "zh": "族女的傳統服飾",
+        "tao": ""
+      },
+      "unlockQuest": "OF2",
+      "sheet": "player_f_trad",
+      "portrait": "local_f_trad",
+      "icon": "icon_outfit_f_tao",
+      "excludes": [
+        "祭儀用品"
+      ],
+      "review": true,
+      "note": "外觀與紋樣需依族人提供的參考圖繪製；穿著場合待確認。"
+    },
+    {
+      "id": "acc_t_band",
+      "who": [
+        "t"
+      ],
+      "kind": "accessory",
+      "item": "acc_woven_band",
+      "name": {
+        "zh": "織草帽"
+      },
+      "layer": "head",
+      "unlockQuest": "OF3",
+      "outsiderSafe": true,
+      "icon": "icon_acc_woven_band",
+      "portraitByGender": {
+        "m": "visitor_m_acc",
+        "f": "visitor_acc"
+      },
+      "sheetByGender": {
+        "m": "player_visitor_acc",
+        "f": "player_visitor_f_acc"
+      }
+    },
+    {
+      "id": "acc_t_strap",
+      "who": [
+        "t"
+      ],
+      "kind": "accessory",
+      "item": "acc_bag_strap",
+      "name": {
+        "zh": "織草小袋"
+      },
+      "layer": "bag",
+      "unlockQuest": "OF3",
+      "outsiderSafe": true,
+      "icon": "icon_acc_bag_strap",
+      "portraitByGender": {
+        "m": "visitor_m_acc",
+        "f": "visitor_acc"
+      },
+      "sheetByGender": {
+        "m": "player_visitor_acc",
+        "f": "player_visitor_f_acc"
+      }
+    }
+  ]
+}

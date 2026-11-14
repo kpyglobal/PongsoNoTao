@@ -78,8 +78,22 @@ def key_white(path):
     return out
 
 
+# Max on-screen size: the dialogue portrait is 196 CSS px wide on desktop / 118 on mobile (aspect 440:560), so
+# 330x420 covers ~1.7x desktop and ~2.8x mobile DPR. WebP q80 was picked by eye (q78-95 look the same at 2x zoom).
+PW, PH, PQ = 330, 420, 80
+# guide copies, trimmed to the figure: NPC cards are 96-120 CSS px wide, party / traveller cards up to 230.
+GUIDE_H, GUIDE_PARTY_H, GUIDE_PARTY = 360, 480, ('local', 'local_f', 'visitor', 'visitor_m', 'local_trad', 'local_f_trad', 'visitor_acc', 'visitor_m_acc')
+
+
 def portraits(names=None):
+    import json
     os.makedirs('public/assets/portraits', exist_ok=True)
+    guide = set()
+    if os.path.exists('public/guide/data.json'):
+        gd = json.load(open('public/guide/data.json'))
+        for k in ('party', 'travellers', 'npcs'):
+            guide |= {p['portrait'] for p in gd.get(k, []) if p.get('portrait')}
+            guide |= {v['portrait'] for p in gd.get(k, []) for v in p.get('variants', [])}  # outfit variants on the same card
     for p in sorted(glob.glob('art-src/portraits/*.jpg')):
         name = os.path.splitext(os.path.basename(p))[0]
         if names and name not in names:
@@ -89,13 +103,20 @@ def portraits(names=None):
         im = key_white(p) if white else key(p, 'green')
         bb = im.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox()
         im = im.crop((bb[0], bb[1], bb[2], im.height))
-        # fit into 440x560 canvas, anchored bottom-centre
-        s = min(440 / im.width, 560 / im.height)
-        im = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
-        can = Image.new('RGBA', (440, 560), (0, 0, 0, 0))
-        can.alpha_composite(im, ((440 - im.width) // 2, 560 - im.height))
-        can.save(f'public/assets/portraits/{name}.webp', 'WEBP', quality=90, method=6)
-        print(name, os.path.getsize(f'public/assets/portraits/{name}.webp'))
+        # fit into the PW x PH canvas, anchored bottom-centre
+        s = min(PW / im.width, PH / im.height)
+        fit = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
+        can = Image.new('RGBA', (PW, PH), (0, 0, 0, 0))
+        can.alpha_composite(fit, ((PW - fit.width) // 2, PH - fit.height))
+        can.save(f'public/assets/portraits/{name}.webp', 'WEBP', quality=PQ, method=6)
+        out = f'{name} {os.path.getsize(f"public/assets/portraits/{name}.webp")}'
+        if name in guide:  # trimmed guide copy straight from the full-resolution key
+            gh = GUIDE_PARTY_H if name in GUIDE_PARTY else GUIDE_H
+            t = im.crop(im.getchannel('A').getbbox())
+            t = t.resize((round(t.width * gh / t.height), gh), Image.LANCZOS)
+            t.save(f'public/guide/portraits/{name}.webp', 'WEBP', quality=PQ, method=6)
+            out += f' guide {os.path.getsize(f"public/guide/portraits/{name}.webp")}'
+        print(out)
 
 
 def plants():

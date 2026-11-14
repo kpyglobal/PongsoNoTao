@@ -1,0 +1,414 @@
+{
+  "file": "taro",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "R1",
+      "line": "main",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "開墾、整地、引水",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男",
+        "coop": "單人",
+        "season": "等待飛魚期",
+        "pre": "Q03",
+        "unlock": "R2",
+        "kind": ""
+      },
+      "req": "Q03",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "m"
+          ],
+          "text": "向女性長輩接下工作：開墾、整地、引水",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "田要重新整理：開墾、整地、把水引進來，就交給你了。做好了回來跟我說。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 8,
+          "actor": [
+            "m"
+          ],
+          "text": "族男到主人家的水芋田，幫忙開墾、整地、引水",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "先把田裡的雜石搬開，再把水道清乾淨，讓山上的水流進田裡。"
+            },
+            {
+              "who": "旁白",
+              "zh": "依文獻記載，開墾水芋田多由男子負責，種植、除草與採收多由女子負責；各家做法不同，細節還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "taro_field_ready"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "m"
+          ],
+          "text": "向女性長輩回報：開墾、整地、引水",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "田整理好了？我看過了，做得很好。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "主人家的水芋田要先整地、引水，請族男去幫忙。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "R2",
+      "line": "main",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "種植水芋",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "待確認",
+        "pre": "R1",
+        "unlock": "R3",
+        "kind": ""
+      },
+      "req": "R1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩接下工作：種植水芋",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "水芋可以種了，這件事交給你。做好了回來跟我說。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 8,
+          "actor": [
+            "f"
+          ],
+          "text": "族女到水芋田種植水芋",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "水引進來了，可以種了。種法和時間我再問問家裡的長輩。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩回報：種植水芋",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "種好了？我看過了，做得很好。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "田整好了，換族女去種水芋。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "R3",
+      "line": "main",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "除草、照顧田地",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "全年（可重複）",
+        "pre": "R2",
+        "unlock": "R4、R5、生態值、E2",
+        "kind": ""
+      },
+      "req": "R2",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩接下工作：除草、照顧田地",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "田裡的草又長出來了，去除一除、照顧一下。做好了回來跟我說。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 8,
+          "actor": [
+            "f"
+          ],
+          "text": "族女到水芋田除草、照顧田地",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "把田裡的雜草拔掉，水芋才長得好。"
+            }
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "actor": [
+            "f"
+          ],
+          "text": "向女性長輩回報：除草、照顧田地",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "草拔完了？我看過了，做得很好。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "水芋田要常常除草，族女會去照顧。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "R4",
+      "line": "main",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "採收水芋",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "待確認",
+        "pre": "R3",
+        "unlock": "糧倉、R6、T5",
+        "kind": ""
+      },
+      "req": "R3",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "R5",
+      "line": "side",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "旅人協助採收、學料理（女旅版內容較多）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "雙人：旅人＋族女",
+        "season": "非祭典時期",
+        "pre": "R3、尊重值「學習中」",
+        "unlock": "尊重值、水芋卡",
+        "kind": ""
+      },
+      "req": {
+        "all": [
+          "R3",
+          {
+            "respect": "learning"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "R6",
+      "line": "main",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "水煮芋頭",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "R4",
+        "unlock": "水煮芋頭料理卡",
+        "kind": ""
+      },
+      "req": "R4",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "G1",
+      "line": "side",
+      "arc": "taro",
+      "village": null,
+      "name": {
+        "zh": "採收 5 顆芋頭給主人家",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女",
+        "coop": "單人",
+        "season": "待確認",
+        "pre": "R4",
+        "unlock": "糧倉、W1、W2（同一次採收也算 R6）",
+        "kind": "數量 5"
+      },
+      "req": "R4",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    }
+  ]
+}

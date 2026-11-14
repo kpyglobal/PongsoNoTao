@@ -56,11 +56,13 @@ try {
         // no traveller line in the intro: ask the traveller to say something via a quest-free talk (party switch line)
         await ev(() => { const g = window.__TAO_RPG__; g.closeAll(); });
       }
+      // the portrait loads on demand: wait until the image with that src has decoded before reading its width
+      await page.waitForFunction(() => { const i = document.querySelector('#dlg-portrait img'); return !i || !i.getAttribute('src') || (i.complete && i.naturalWidth > 0); }, { timeout: 10000, polling: 100 }).catch(() => {});
       const info = await ev(() => ({ outfit: window.__TAO_RPG__.outfit(), portrait: window.__TAO_RPG__.portrait(), party: window.__TAO_RPG__.party().outfits,
         img: document.querySelector('#dlg-portrait img')?.naturalWidth || 0 }));
       report[`${T}-${g}`] = { ...info, src };
       check(`${T}-${g}: traveller outfit + portrait`, info.outfit === (g === 'f' ? 'player_visitor_f' : 'player_visitor') && info.portrait === (g === 'f' ? 'visitor' : 'visitor_m'), info);
-      check(`${T}-${g}: dialogue shows the new traveller portrait`, src.includes(want) && info.img === 440, { src, w: info.img });
+      check(`${T}-${g}: dialogue shows the new traveller portrait`, src.includes(want) && info.img === 330, { src, w: info.img }); // 330×420 since NPC cast rev
       await ev(() => window.__TAO_RPG__.setCamera({ dist: 16, snap: true }));
       await shot(`0${g === 'm' ? 2 : 3}-traveller-${g}-dialogue`, 2500);
       // in-world close-up without the dialogue box

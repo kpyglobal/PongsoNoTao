@@ -1,7 +1,9 @@
 import { assetUrl } from '../core/paths';
 import type { Gender, GameState, LangMode } from '../core/state';
 import { PERIODS, SEASONS, type Period, type Season } from '../core/timeSeason';
-import type { DataFiles, GlossaryEntry, MilestoneEntry, PlayableOrigin, UiContent } from '../core/content';
+import type { GlossaryEntry, MilestoneEntry, PlayableOrigin, UiContent } from '../core/content';
+import type { ItemDef, RecipeDef } from '../content/types';
+import { codexPage, type CodexVM } from './codex';
 import { TERRAIN_BOX } from '../world/height';
 import { Notebook, h, nbTitle, nbMore, nbSource, type NbItem } from './notebook';
 
@@ -41,6 +43,8 @@ export interface UiHooks {
   onFastTravel: (id: string) => void;
   /** party bar: control this member */
   onSwitch: (role: 'm' | 'f' | 't') => void;
+  /** party split: the solo member gives up (放棄出海) and regroups */
+  onSoloAbort?: () => void;
   /** origin screen: resume the autosave */
   onContinue: () => void;
 }
@@ -51,6 +55,12 @@ export interface PartyChipVM {
   label: string;
   portrait: string;
   active: boolean;
+  /** party split: 在隊上 / 離隊：… / 在…等 (shown under the name) */
+  status?: string;
+  /** away or waiting somewhere (not with the group) */
+  away?: boolean;
+  /** cannot be switched to right now (busy / solo) */
+  locked?: boolean;
 }
 
 /** One card in the 任務 page (Game builds these from the quest engine; the UI only draws). */
@@ -69,6 +79,8 @@ export interface QuestCardVM {
   tracked: boolean;
   /** batch 1b: 漁場（族男）／潛點（誰都能去） chip */
   ground?: string;
+  /** 分工: 女耆老／男耆老 交辦、驗收 chip */
+  giver?: string;
   /** batch 1b: activity song (first line, text only) + ⓘ source */
   song?: { title: string; tao: string; zh: string; source: string } | null;
 }
@@ -93,6 +105,8 @@ export class UI {
   private journalTab = 'quests';
   /** batch 1b: pages drawn outside this file (相簿與水下, 存檔) */
   tabRenderers: Record<string, (pages: HTMLElement) => void> = {};
+  /** 背包／圖鑑 page data (Game sets it) */
+  codexVM: (() => CodexVM) | null = null;
   private questFilter: 'all' | 'active' | 'done' | 'locked' = 'all';
   private questLine: 'all' | 'main' | 'side' | 'photo' = 'all';
   private lastQuests: QuestCardVM[] = [];
@@ -123,7 +137,7 @@ export class UI {
       <div class="overlay-screen is-cover" id="origin-screen" style="display:none">
         <div class="cover-card">
           <div class="masthead">
-            <div class="kicker">手繪田野筆記本 · 圖鑑手札</div>
+            <div class="kicker">手繪田野手札 · 圖鑑</div>
             <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
             <p class="subtitle">兩位族人同學放假回島，帶著一位朋友一起來。</p>
           </div>
@@ -156,6 +170,10 @@ export class UI {
           <div class="party-row">
             <div class="party-bar" id="party-bar" role="group" aria-label="隊伍：點頭像切換操控的隊員"></div>
             <span class="tide-pill" id="tide-pill" hidden></span>
+          </div>
+          <div class="party-split" id="party-split" hidden>
+            <span class="ps-text" id="ps-text"></span>
+            <button type="button" class="ps-abort" id="btn-solo-abort" hidden>放棄出海</button>
           </div>
           <button type="button" class="quest-tracker" id="quest-tracker" hidden aria-label="打開任務頁">
             <span class="qt-line" id="qt-line"></span><span class="qt-name" id="qt-name"></span>
@@ -244,6 +262,7 @@ export class UI {
             <button type="button" data-tab="glossary" class="r2">族語</button>
             <button type="button" data-tab="food" class="r3">食材與營養</button>
             <button type="button" data-tab="album" class="r4">相簿與水下</button>
+            <button type="button" data-tab="bag" class="r7">背包</button>
             <button type="button" data-tab="milestones" class="r5">成就</button>
             <button type="button" data-tab="save" class="r6">存檔</button>
           </nav>
@@ -319,7 +338,7 @@ export class UI {
       const dot = document.createElement('i');
       dot.className = 'dot';
       b.append(dot, s.zh);
-      b.title = `${s.zh} ${s.tao}`;
+      b.title = s.tao ? `${s.zh} ${s.tao}` : s.zh;
       b.addEventListener('click', () => this.hooks.onSeason(s.id));
       seas.appendChild(b);
     }
@@ -380,6 +399,7 @@ export class UI {
     this.el('#cam-out').addEventListener('click', () => this.hooks.onZoom(1));
     this.el('#cam-reset').addEventListener('click', () => this.hooks.onCamReset());
     this.el('#btn-scooter').addEventListener('click', () => this.hooks.onScooter());
+    this.el('#btn-solo-abort').addEventListener('click', () => this.hooks.onSoloAbort?.());
     this.el('#btn-travel').addEventListener('click', (e) => {
       e.stopPropagation();
       this.hooks.onOverlay('travel', true);
@@ -735,6 +755,8 @@ export class UI {
     const img = fig.querySelector('img') as HTMLImageElement;
     if (portrait) {
       const src = assetUrl(`assets/portraits/${portrait}.webp`);
+      // portraits load on demand; a missing one (new data-only NPC without art yet) just hides the frame
+      img.onerror = () => box.classList.remove('has-portrait');
       if (img.getAttribute('src') !== src) {
         img.setAttribute('src', src);
         fig.classList.remove('pop');
@@ -807,7 +829,8 @@ export class UI {
   /** 圖鑑手札 (notebook): left page = short list, right page = the selected item (see ui/notebook.ts) */
   renderJournal(state: GameState, data: {
     glossary: GlossaryEntry[];
-    recipes: DataFiles['recipes'];
+    ingredients: ItemDef[];
+    recipes: RecipeDef[];
     milestones: MilestoneEntry[];
   }): void {
     let tab = this.journalTab;
@@ -847,24 +870,24 @@ export class UI {
     }
     if (tab === 'food') {
       const items: NbItem[] = [];
-      for (const e of data.recipes.ingredients) {
+      for (const e of data.ingredients) {
         const have = state.ingredients.has(e.id);
         items.push({
-          key: `i:${e.id}`, title: e.zh, tao: taoText(e.tao), mark: have ? 'done' : 'locked',
+          key: `i:${e.id}`, title: e.name.zh, tao: taoText(e.name.tao), mark: have ? 'done' : 'locked',
           render: (box) => {
             if (!have) return lockedDetail(box);
-            nbTitle(box, '傳統食材', e.zh, taoText(e.tao));
-            box.append(h('div', 'nd-label', '營養'), h('p', 'nd-body', e.nutrition));
+            nbTitle(box, '傳統食材', e.name.zh, taoText(e.name.tao));
+            box.append(h('div', 'nd-label', '營養'), h('p', 'nd-body', e.nutrition ?? ''));
           },
         });
       }
-      for (const e of data.recipes.recipes) {
+      for (const e of data.recipes) {
         const have = state.recipes.has(e.id);
         items.push({
-          key: `r:${e.id}`, title: e.zh, tao: taoText(e.tao), mark: have ? 'done' : 'locked',
+          key: `r:${e.id}`, title: e.name.zh, tao: taoText(e.name.tao), mark: have ? 'done' : 'locked',
           render: (box) => {
             if (!have) return lockedDetail(box);
-            nbTitle(box, e.clinicNote ? '傳統食譜｜衛生所筆記' : '傳統食譜', e.zh, taoText(e.tao));
+            nbTitle(box, e.clinicNote ? '傳統食譜｜衛生所筆記' : '傳統食譜', e.name.zh, taoText(e.name.tao));
             box.append(h('p', 'nd-body', e.steps));
             box.append(nbMore(e.clinicNote ? '營養與健康（衛生所筆記）' : '營養', [h('p', 'nd-body', e.nutrition)]));
           },
@@ -872,6 +895,10 @@ export class UI {
       }
       const got = items.filter((i) => i.mark !== 'locked').length;
       this.nb.show(tab, { heading: '食材與營養', sub: `記下 ${got} / ${items.length} 頁`, items });
+      return;
+    }
+    if (tab === 'bag') {
+      if (this.codexVM) this.nb.show(tab, codexPage(this.codexVM()));
       return;
     }
     if (tab === 'milestones') {
@@ -1020,6 +1047,7 @@ export class UI {
     for (const r of q.roles) chips.append(h('span', 'qc-role', r));
     if (q.coop) chips.append(h('span', 'qc-coop', q.coop));
     if (q.ground) chips.append(h('span', `qc-ground g-${q.ground.startsWith('漁場') ? 'fish' : 'dive'}`, q.ground));
+    if (q.giver) chips.append(h('span', `qc-giver g-${q.giver.startsWith('女') ? 'f' : 'm'}`, q.giver));
     box.append(chips);
     if (q.status === 'active') {
       box.append(h('div', 'nd-label', '目標'), h('p', 'nd-body nd-obj', q.objective + (q.progress ? `（${q.progress}）` : '')));
@@ -1062,7 +1090,7 @@ export class UI {
           const img = document.createElement('img');
           img.alt = '';
           img.decoding = 'async';
-          b.append(img, span('pm-name', ''));
+          b.append(img, span('pm-name', ''), span('pm-st', ''));
           b.addEventListener('click', () => this.hooks.onSwitch(m.role));
           return b;
         }),
@@ -1076,9 +1104,21 @@ export class UI {
       if (img.getAttribute('src') !== src) img.setAttribute('src', src);
       (b.querySelector('.pm-name') as HTMLElement).textContent = m.label;
       b.classList.toggle('on', m.active);
+      b.classList.toggle('away', !!m.away);
+      b.classList.toggle('locked', !!m.locked);
+      (b.querySelector('.pm-st') as HTMLElement).textContent = m.away ? (m.status ?? '') : '';
+      b.title = m.status ?? '';
       b.setAttribute('aria-pressed', m.active ? 'true' : 'false');
-      b.setAttribute('aria-label', `${m.active ? '目前操控：' : '切換到'}${m.label}`);
+      b.setAttribute('aria-label', `${m.active ? '目前操控：' : '切換到'}${m.label}${m.status ? `（${m.status}）` : ''}`);
     });
+  }
+
+  /** party split banner: who is where, regroup point, and the 放棄出海 button while a solo trip runs */
+  setSplit(text: string | null, canAbort: boolean): void {
+    const box = this.el('#party-split');
+    box.hidden = !text;
+    if (text) this.el('#ps-text').textContent = text;
+    this.el('#btn-solo-abort').hidden = !canAbort;
   }
 
   setTide(text: string | null): void {

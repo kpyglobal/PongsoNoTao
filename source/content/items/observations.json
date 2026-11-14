@@ -1,0 +1,82 @@
+{
+  "note": "只看不採的圖鑑項目（collectible: false），由觀察點或任務旗標記錄。",
+  "items": [
+    {
+      "id": "land_crab",
+      "name": {
+        "zh": "陸蟹",
+        "tao": ""
+      },
+      "category": "observe",
+      "collectible": false,
+      "description": "夏天夜裡過馬路的陸蟹。",
+      "codex": "陸蟹在夏夜下海釋放幼生。開車騎車放慢，不抓、不擋路，數一數就好。",
+      "icon": "icon_land_crab",
+      "illustration": "illus_land_crab",
+      "unlockFlag": "seen_land_crab",
+      "sources": [
+        {
+          "kind": "observe",
+          "node": "gn_landcrab_road"
+        }
+      ]
+    },
+    {
+      "id": "hermit_crab",
+      "name": {
+        "zh": "寄居蟹",
+        "tao": ""
+      },
+      "category": "observe",
+      "collectible": false,
+      "description": "夜間潮間帶背著殼走路的寄居蟹。",
+      "codex": "寄居蟹需要合適的殼才能長大，不要把殼帶走當紀念品。",
+      "icon": "icon_hermit_crab",
+      "illustration": "illus_hermit_crab",
+      "unlockFlag": "seen_hermit_crab",
+      "sources": [
+        {
+          "kind": "observe",
+          "node": "gn_hermit_im"
+        }
+      ]
+    },
+    {
+      "id": "scops_owl",
+      "name": {
+        "zh": "蘭嶼角鴞",
+        "tao": ""
+      },
+      "category": "observe",
+      "collectible": false,
+      "description": "夜裡在路邊樹林叫的蘭嶼角鴞。",
+      "codex": "蘭嶼特有的小型貓頭鷹。觀察時不打閃光、不放錄音引牠。族人對貓頭鷹有自己的看法，請尊重。",
+      "icon": "icon_scops_owl",
+      "illustration": "illus_scops_owl",
+      "unlockFlag": "saw_scops_owl",
+      "review": true,
+      "sources": [
+        {
+          "kind": "observe",
+          "node": "gn_owl_road"
+        }
+      ]
+    },
+    {
+      "id": "goat",
+      "name": {
+        "zh": "山羊",
+        "tao": "kagling"
+      },
+      "category": "observe",
+      "collectible": false,
+      "description": "紅頭山坡上的羊。",
+      "codex": "島上的羊是各家養的，耳朵上的記號代表是哪一家。不是自己家的不要碰。",
+      "icon": "icon_goat",
+      "illustration": "illus_goat",
+      "unlockFlag": "saw_goats",
+      "review": true,
+      "sources": []
+    }
+  ]
+}

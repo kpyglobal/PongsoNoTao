@@ -1,0 +1,626 @@
+{
+  "file": "recipes",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "FD1",
+      "line": "side",
+      "arc": "recipe",
+      "village": "ivalino",
+      "name": {
+        "zh": "食譜：野銀的水煮芋頭",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K6（認識野銀的人）",
+        "unlock": "料理卡「水煮芋頭」",
+        "kind": "食譜"
+      },
+      "req": "K6",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "向野銀的女性長輩請教「水煮芋頭」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學水煮芋頭？好啊，先把材料準備好：水芋三顆。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：水芋三顆",
+          "until": {
+            "all": [
+              {
+                "item": "soli",
+                "min": 3
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "把食材帶回去給野銀的女性長輩，學會「水煮芋頭」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是水煮芋頭。洗乾淨，水煮就好，最簡單，也最常吃。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-boiled-taro",
+            "consume": {
+              "soli": 3
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「水煮芋頭」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "野銀",
+        "zh": "野銀有位會做水煮芋頭的長輩，備齊三顆水芋再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-boiled-taro",
+        "village": "ivalino",
+        "keeper": "villager_taro"
+      }
+    },
+    {
+      "id": "FD2",
+      "line": "side",
+      "arc": "recipe",
+      "village": "imorod",
+      "name": {
+        "zh": "食譜：紅頭的水煮飛魚",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [
+        "summer"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "飛魚季",
+        "pre": "K1（認識紅頭的人）",
+        "unlock": "料理卡「水煮飛魚」",
+        "kind": "食譜"
+      },
+      "req": "K1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "weaver_elder",
+          "text": "向紅頭的女性長輩請教「水煮飛魚」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學水煮飛魚？好啊，先把材料準備好：飛魚兩條。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：飛魚兩條",
+          "until": {
+            "all": [
+              {
+                "item": "alibangbang",
+                "min": 2
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "weaver_elder",
+          "text": "把食材帶回去給紅頭的女性長輩，學會「水煮飛魚」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是水煮飛魚。水煮、調味簡單。有些東西不能跟飛魚一起煮，這是規矩。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-boiled-flyingfish",
+            "consume": {
+              "alibangbang": 2
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「水煮飛魚」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "紅頭",
+        "zh": "紅頭有位會做水煮飛魚的長輩，備齊兩條飛魚再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-boiled-flyingfish",
+        "village": "imorod",
+        "keeper": "weaver_elder"
+      }
+    },
+    {
+      "id": "FD3",
+      "line": "side",
+      "arc": "recipe",
+      "village": "yayo",
+      "name": {
+        "zh": "食譜：椰油的飛魚乾",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [
+        "summer"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "飛魚季",
+        "pre": "K3（認識椰油的人）",
+        "unlock": "料理卡「飛魚乾」",
+        "kind": "食譜"
+      },
+      "req": "K3",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_yayo",
+          "text": "向椰油的女性長輩請教「飛魚乾」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學飛魚乾？好啊，先把材料準備好：飛魚三條。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：飛魚三條",
+          "until": {
+            "all": [
+              {
+                "item": "alibangbang",
+                "min": 3
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_yayo",
+          "text": "把食材帶回去給椰油的女性長輩，學會「飛魚乾」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是飛魚乾。處理好、曬乾，收起來以後慢慢吃。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-dried-flyingfish",
+            "consume": {
+              "alibangbang": 3
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「飛魚乾」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "椰油",
+        "zh": "椰油有位會做飛魚乾的長輩，備齊三條飛魚再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-dried-flyingfish",
+        "village": "yayo",
+        "keeper": "elder_f_yayo"
+      }
+    },
+    {
+      "id": "FD4",
+      "line": "side",
+      "arc": "recipe",
+      "village": "iraraley",
+      "name": {
+        "zh": "食譜：朗島的水煮山藥",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K4（認識朗島的人）",
+        "unlock": "料理卡「水煮山藥」",
+        "kind": "食譜"
+      },
+      "req": "K4",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_iraraley",
+          "text": "向朗島的女性長輩請教「水煮山藥」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學水煮山藥？好啊，先把材料準備好：山藥兩根。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：山藥兩根",
+          "until": {
+            "all": [
+              {
+                "item": "ovi",
+                "min": 2
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iraraley",
+          "text": "把食材帶回去給朗島的女性長輩，學會「水煮山藥」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是水煮山藥。去皮、水煮，就這麼簡單，滑滑的，好消化。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-boiled-yam",
+            "consume": {
+              "ovi": 2
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「水煮山藥」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "朗島",
+        "zh": "朗島有位會做水煮山藥的長輩，備齊兩根山藥再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-boiled-yam",
+        "village": "iraraley",
+        "keeper": "elder_f_iraraley"
+      }
+    },
+    {
+      "id": "FD5",
+      "line": "side",
+      "arc": "recipe",
+      "village": "iranmeylek",
+      "name": {
+        "zh": "食譜：東清的水煮貝類與海菜",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K5（認識東清的人）",
+        "unlock": "料理卡「水煮貝類與海菜」",
+        "kind": "食譜"
+      },
+      "req": "K5",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_iranmeylek",
+          "text": "向東清的女性長輩請教「水煮貝類與海菜」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學水煮貝類與海菜？好啊，先把材料準備好：貝類兩個、海菜兩把。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：貝類兩個、海菜兩把",
+          "until": {
+            "all": [
+              {
+                "item": "shellfish",
+                "min": 2
+              },
+              {
+                "item": "seaweed",
+                "min": 2
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iranmeylek",
+          "text": "把食材帶回去給東清的女性長輩，學會「水煮貝類與海菜」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是水煮貝類與海菜。洗乾淨，水煮，配芋頭或地瓜，就是海的味道。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-shellfish-seaweed",
+            "consume": {
+              "shellfish": 2,
+              "seaweed": 2
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「水煮貝類與海菜」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "東清",
+        "zh": "東清有位會做水煮貝類與海菜的長輩，備齊兩個貝類、兩把海菜再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-shellfish-seaweed",
+        "village": "iranmeylek",
+        "keeper": "elder_f_iranmeylek"
+      }
+    },
+    {
+      "id": "FD6",
+      "line": "side",
+      "arc": "recipe",
+      "village": "iratay",
+      "name": {
+        "zh": "食譜：漁人的芋頭與地瓜",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K2（認識漁人的人）",
+        "unlock": "料理卡「芋頭與地瓜」",
+        "kind": "食譜"
+      },
+      "req": "K2",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_iratay",
+          "text": "向漁人的女性長輩請教「芋頭與地瓜」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "想學芋頭與地瓜？好啊，先把材料準備好：水芋一顆、地瓜一顆。"
+            },
+            {
+              "who": "@npc",
+              "zh": "材料齊了再拿來，我做給你們看。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+            }
+          ]
+        },
+        {
+          "kind": "auto",
+          "text": "收集食材：水芋一顆、地瓜一顆",
+          "until": {
+            "all": [
+              {
+                "item": "soli",
+                "min": 1
+              },
+              {
+                "item": "wakay",
+                "min": 1
+              }
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iratay",
+          "text": "把食材帶回去給漁人的女性長輩，學會「芋頭與地瓜」",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "材料都齊了，你們看好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這就是芋頭與地瓜。兩個分開水煮，一起當飯吃，簡單，但是很飽。其他做法改天再問家裡的長輩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+            }
+          ],
+          "gives": {
+            "recipe": "rc-taro-sweetpotato",
+            "consume": {
+              "soli": 1,
+              "wakay": 1
+            },
+            "relation": 1,
+            "toast": [
+              "學會食譜",
+              "料理卡「芋頭與地瓜」已收進手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "漁人有位會做芋頭與地瓜的長輩，備齊一顆水芋、一顆地瓜再去找她。"
+      },
+      "playable": true,
+      "recipe": {
+        "id": "rc-taro-sweetpotato",
+        "village": "iratay",
+        "keeper": "elder_f_iratay"
+      }
+    }
+  ]
+}

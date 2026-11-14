@@ -7,7 +7,14 @@
       "tao": "",
       "portrait": "local",
       "nameNote": "預設名字尚待家人給定",
-      "bio": "從臺灣讀書放假回來的族人青年。出海、結網、開墾，多半由他先扛起。飛魚季時，船上的事歸他。"
+      "bio": "從臺灣讀書放假回來的族人青年。出海、結網、開墾，多半由他先扛起。飛魚季時，船上的事歸他。",
+      "variants": [
+        {
+          "portrait": "local_trad",
+          "label": "傳統服飾",
+          "note": "完成成就任務後解鎖"
+        }
+      ]
     },
     {
       "id": "local_f",
@@ -15,7 +22,14 @@
       "tao": "",
       "portrait": "local_f",
       "nameNote": "預設名字尚待家人給定",
-      "bio": "同樣回家的族人青年。潮間帶、水芋田、處理漁獲與烹煮，多半由她接手。飛魚季時不上拼板舟。"
+      "bio": "同樣回家的族人青年。潮間帶、水芋田、處理漁獲與烹煮，多半由她接手。飛魚季時不上拼板舟。",
+      "variants": [
+        {
+          "portrait": "local_f_trad",
+          "label": "傳統服飾",
+          "note": "完成成就任務後解鎖"
+        }
+      ]
     }
   ],
   "travellers": [
@@ -23,13 +37,27 @@
       "id": "visitor_m",
       "role": "旅人 · 男",
       "portrait": "visitor_m",
-      "bio": "族人的大學同學，一起回島。多半由族男帶路，可跟著學結網、看造船。"
+      "bio": "族人的大學同學，一起回島。多半由族男帶路，可跟著學結網、看造船。",
+      "variants": [
+        {
+          "portrait": "visitor_m_acc",
+          "label": "織草小袋",
+          "note": "族女親手編的日常小飾品，不是傳統服飾"
+        }
+      ]
     },
     {
       "id": "visitor",
       "role": "旅人 · 女",
       "portrait": "visitor",
-      "bio": "族人的大學同學，一起回島。多半由族女帶路，可跟著體驗潮間帶、水芋田與料理。"
+      "bio": "族人的大學同學，一起回島。多半由族女帶路，可跟著體驗潮間帶、水芋田與料理。",
+      "variants": [
+        {
+          "portrait": "visitor_acc",
+          "label": "織草帽與小袋",
+          "note": "族女親手編的日常小飾品，不是傳統服飾"
+        }
+      ]
     }
   ],
   "npcs": [
@@ -37,61 +65,207 @@
       "id": "teacher",
       "role": "族語老師",
       "place": "椰油的學校",
-      "portrait": null,
-      "seal": "語",
-      "bio": "聽不懂的話，可以帶到學校問問。學會的詞會慢慢寫進筆記本。"
+      "portrait": "teacher_yayo",
+      "bio": "聽不懂的話，可以帶到學校問問。學會的詞會慢慢寫進手札。"
     },
     {
       "id": "culture",
       "role": "部落文化工作者",
       "place": "朗島與野銀一帶",
-      "portrait": null,
-      "seal": "文",
+      "portrait": "culture_worker",
       "bio": "熟悉特定地方的距離與季節規矩。去那些地方之前，先聽他們說完再走近。"
     },
     {
       "id": "geo",
       "role": "地質學家",
       "place": "沿著環島路走",
-      "portrait": null,
-      "seal": "岩",
+      "portrait": "geologist",
       "bio": "頭上的記號會跟著移動。願意講火山岩，也願意講海岸怎麼被海寫出來。"
     },
     {
       "id": "doctor",
       "role": "衛生所醫師",
       "place": "紅頭衛生所",
-      "portrait": "nurse",
+      "portrait": "clinic_doctor",
       "bio": "若在田裡、潮間帶或出海時受了傷，來這裡就對了。也會提醒下水與工作時怎麼保護自己。"
     },
     {
       "id": "nutrition",
       "role": "營養師",
       "place": "紅頭衛生所旁",
-      "portrait": null,
-      "bio": "就在衛生所旁邊。想理解島上的飯桌，以及外來食物怎麼走進日常，可以坐下來聽。",
-      "seal": "食"
+      "portrait": "nutritionist",
+      "bio": "就在衛生所旁邊。想理解島上的飯桌，以及外來食物怎麼走進日常，可以坐下來聽。"
     },
     {
-      "id": "elder",
-      "role": "主人家長輩",
-      "place": "主人家屋",
-      "portrait": "elder",
-      "bio": "兩位族人的家人。提供住處與家裡的糧倉，也會把島上的規矩說清楚。"
+      "id": "elder_yayo",
+      "role": "椰油的男性長輩",
+      "tao": "Yayo a akey",
+      "place": "椰油部落 · Yayo a akey",
+      "portrait": "elder_yayo",
+      "bio": "椰油部落的長輩。若主人家在椰油，就是兩位族人的家人：提供住處與家裡的糧倉，也會把島上的規矩說清楚。飛魚季出海、漁網與漁團的事，由他決定。"
+    },
+    {
+      "id": "elder_f_yayo",
+      "role": "椰油的女性長輩",
+      "tao": "Yayo a akes",
+      "place": "椰油部落 · Yayo a akes",
+      "portrait": "elder_f_yayo",
+      "bio": "椰油部落的女性長輩，煮食與保存的事由她帶領。提著鋁鍋與木杓，家裡的飯菜與曬好的魚乾，都由她照看。收齊食材後，她會教你做「飛魚乾」。"
+    },
+    {
+      "id": "elder_iraraley",
+      "role": "朗島的男性長輩",
+      "tao": "Iraraley a akey",
+      "place": "朗島部落 · Iraraley a akey",
+      "portrait": "elder_iraraley",
+      "bio": "朗島部落的長輩。若主人家在朗島，就是兩位族人的家人。造拼板舟、上山選木的事，由他決定。"
+    },
+    {
+      "id": "elder_f_iraraley",
+      "role": "朗島的女性長輩",
+      "tao": "Iraraley a akes",
+      "place": "朗島部落 · Iraraley a akes",
+      "portrait": "elder_f_iraraley",
+      "bio": "朗島部落的女性長輩，山藥與小米的事由她帶領。網袋裡常裝著剛挖的山藥。田裡種什麼、什麼時候收，她最清楚。收齊食材後，她會教你做「水煮山藥」。"
+    },
+    {
+      "id": "elder_iranmeylek",
+      "role": "東清的男性長輩",
+      "tao": "Iranmeylek a akey",
+      "place": "東清部落 · Iranmeylek a akey",
+      "portrait": "elder_iranmeylek",
+      "bio": "東清部落的長輩。若主人家在東清，就是兩位族人的家人。拼板舟出海、繩索與划槳的事，由他決定。"
+    },
+    {
+      "id": "elder_f_iranmeylek",
+      "role": "東清的女性長輩",
+      "tao": "Iranmeylek a akes",
+      "place": "東清部落 · Iranmeylek a akes",
+      "portrait": "elder_f_iranmeylek",
+      "bio": "東清部落的女性長輩，潮間帶與料理的事由她帶領。戴著草帽、提著小桶，退潮時在礁石間採貝類與海菜。收齊食材後，她會教你做「水煮貝類與海菜」。"
+    },
+    {
+      "id": "elder_ivalino",
+      "role": "野銀的男性長輩",
+      "tao": "Ivalino a akey",
+      "place": "野銀部落 · Ivalino a akey",
+      "portrait": "elder_ivalino",
+      "bio": "野銀部落的長輩。若主人家在野銀，就是兩位族人的家人。飛魚季的規矩與漁獲怎麼分，由他決定。"
+    },
+    {
+      "id": "elder_imorod",
+      "role": "紅頭的男性長輩",
+      "tao": "Imorod a akey",
+      "place": "紅頭部落 · Imorod a akey",
+      "portrait": "elder_imorod",
+      "bio": "紅頭部落的長輩。若主人家在紅頭，就是兩位族人的家人。上山打獵與山林的事，由他決定。"
+    },
+    {
+      "id": "elder_iratay",
+      "role": "漁人的男性長輩",
+      "tao": "Iratay a akey",
+      "place": "漁人部落 · Iratay a akey",
+      "portrait": "elder_iratay",
+      "bio": "漁人部落的長輩。若主人家在漁人，就是兩位族人的家人。飛魚季出海與分魚的事，由他決定。"
+    },
+    {
+      "id": "elder_f_iratay",
+      "role": "漁人的女性長輩",
+      "tao": "Iratay a akes",
+      "place": "漁人部落 · Iratay a akes",
+      "portrait": "elder_f_iratay",
+      "bio": "漁人部落的女性長輩，地瓜與水芋的事由她帶領。抱著一盆地瓜，從田裡走回家。收齊食材後，她會教你做「芋頭與地瓜」。"
     },
     {
       "id": "farmer",
-      "role": "田邊的長輩",
-      "place": "各部落的水芋田一帶",
-      "portrait": "farmer",
-      "bio": "在田裡遇見時，常願意多說一句關於芋頭與日子的話。"
+      "role": "水芋田的女性長輩",
+      "place": "野銀部落的水芋田",
+      "portrait": "villager_taro",
+      "bio": "野銀部落的女性長輩，水芋田的事由她帶領。收齊食材後，她會教你做「水煮芋頭」。"
     },
     {
       "id": "harbor",
       "role": "租車行老闆",
       "place": "機場與開元港附近",
-      "portrait": "harbor",
+      "portrait": "rental_owner",
       "bio": "任一位隊員在這裡租到機車，全隊就都能騎。有需要時，也可以向他借救生衣。"
+    },
+    {
+      "id": "weaver",
+      "role": "織布的女性長輩",
+      "place": "紅頭部落的簷廊",
+      "portrait": "weaver_elder",
+      "bio": "紅頭部落的女性長輩，織布的事由她帶領，常在簷廊下整理織好的布。收齊食材後，她會教你做「水煮飛魚」。"
+    },
+    {
+      "id": "canoe_fisher",
+      "role": "拼板舟漁人",
+      "place": "開元港與椰油",
+      "portrait": "villager_harbor",
+      "bio": "在港邊整理拼板舟與漁具。想知道現在能不能出海捕魚，可以先問他。"
+    },
+    {
+      "id": "shop",
+      "role": "雜貨店老闆",
+      "place": "椰油的雜貨店",
+      "portrait": "shop_yayo",
+      "bio": "椰油雜貨店的老闆，日用品與補給都在這裡。"
+    },
+    {
+      "id": "coach",
+      "role": "潛水教練",
+      "place": "開元港旁的潛水店",
+      "portrait": "dive_coach",
+      "bio": "帶人下水之前，會先把安全的事講清楚。"
+    },
+    {
+      "id": "port",
+      "role": "開元港港務人員",
+      "place": "開元港",
+      "portrait": "harbor_staff",
+      "bio": "在碼頭指揮船班進出，也會跟剛上岸的人打招呼。"
+    },
+    {
+      "id": "nurse",
+      "role": "衛生所護理師",
+      "place": "紅頭衛生所門口",
+      "portrait": "nurse",
+      "bio": "想問飲食與營養的事，可以先找她聊聊。"
+    },
+    {
+      "id": "researcher",
+      "role": "東清灣的旅人",
+      "place": "東清一帶",
+      "portrait": "researcher",
+      "bio": "從臺灣本島來做研究的旅人，常拿著筆記本到處記錄。"
+    },
+    {
+      "id": "tourist",
+      "role": "剛下飛機的訪客",
+      "place": "機場與開元港之間",
+      "portrait": "tourist",
+      "bio": "剛到島上的觀光客，掛著相機到處走走看看。"
+    },
+    {
+      "id": "villager_iranmeylek",
+      "role": "東清的族人",
+      "place": "東清部落與水芋田",
+      "portrait": "villager_iranmeylek",
+      "bio": "脖子上總掛著一條白毛巾的東清族人。"
+    },
+    {
+      "id": "villager_iratay",
+      "role": "漁人的族人",
+      "place": "漁人部落",
+      "portrait": "villager_iratay",
+      "bio": "背著帆布袋、戴銀色圈耳環的漁人族人。"
+    },
+    {
+      "id": "villagers",
+      "role": "部落裡的族人",
+      "place": "六個部落與水芋田之間",
+      "portrait": "auntie",
+      "bio": "爸媽輩的叔叔阿姨、和兩位族人同輩的青年，還有跑來跑去的孩子。每個部落都遇得到。"
     }
   ],
   "villages": [
@@ -431,7 +605,7 @@
           "name": "把學過的詞慢慢寫進詞彙表",
           "who": "任一人",
           "season": "全年",
-          "goal": "學會的詞會一筆一筆進筆記本。寫到一定數量，老師會再給下一步。"
+          "goal": "學會的詞會一筆一筆寫進手札。寫到一定數量，老師會再給下一步。"
         }
       ]
     }
@@ -1425,7 +1599,7 @@
         "kind": "photo",
         "name": "蘭嶼航空站",
         "group": "西岸與港口",
-        "x": 31.0,
+        "x": 31,
         "y": 56.6,
         "note": "只拍風景，不拍旅客"
       },

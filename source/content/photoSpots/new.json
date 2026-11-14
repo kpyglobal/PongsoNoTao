@@ -1,0 +1,59 @@
+{
+  "photoSpots": [
+    {
+      "id": "ps_p28",
+      "quest": "P28",
+      "name": {
+        "zh": "開元港的夜燈"
+      },
+      "place": "harbor",
+      "r": 9,
+      "time": "night",
+      "seasons": [],
+      "status": "placed",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p29",
+      "quest": "P29",
+      "name": {
+        "zh": "東清灣的月出"
+      },
+      "place": "iranmeylek_beach",
+      "r": 8,
+      "time": "night",
+      "seasons": [],
+      "status": "proposed-place",
+      "distanceOnly": false
+    },
+    {
+      "id": "ps_p30",
+      "quest": "P30",
+      "name": {
+        "zh": "東北季風的浪"
+      },
+      "place": "iraraley",
+      "r": 10,
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "status": "placed",
+      "distanceOnly": true
+    },
+    {
+      "id": "ps_nt3",
+      "quest": "NT3",
+      "name": {
+        "zh": "路邊的蘭嶼角鴞"
+      },
+      "place": "owl_road",
+      "r": 6,
+      "time": "night",
+      "seasons": [],
+      "status": "proposed-place",
+      "distanceOnly": true,
+      "noFlash": true
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { seasonLook } from '../render/look';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Flora } from './flora';
 import {
@@ -667,10 +668,7 @@ export class Island {
 
   setSeason(season: Season): void {
     const c = this.uniforms.uSeason.value as THREE.Color;
-    if (season === 'manoyotoyon') c.setRGB(1.16, 1.02, 0.74); // late-summer gold
-    else if (season === 'off') c.setRGB(0.9, 0.97, 0.98); // winter / NE monsoon, cooler
-    else if (season === 'meyvanwa') c.setRGB(0.98, 1.02, 0.94);
-    else c.setRGB(1.02, 1.05, 0.96); // rayon: lush
+    c.setRGB(...seasonLook(season).grass); // src/render/styleConfig.ts SEASON_LOOK
   }
 
   heightAt(x: number, z: number): number {

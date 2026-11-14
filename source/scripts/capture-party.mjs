@@ -53,8 +53,10 @@ try {
         for (const k of want) {
           if (!seen.has(k) && src.endsWith(`portraits/${PORTRAIT[k]}.webp`)) {
             seen.add(k);
+            // portraits load on demand: wait for this one to decode before reading its width (was a race → 0 / old width)
+            await page.waitForFunction((want) => { const i = document.querySelector('#dlg-portrait img'); return i && i.getAttribute('src')?.endsWith(want) && i.complete && i.naturalWidth > 0; }, { timeout: 10000, polling: 100 }, `portraits/${PORTRAIT[k]}.webp`).catch(() => {});
             const w = await ev(() => document.querySelector('#dlg-portrait img')?.naturalWidth || 0);
-            check(`${T}: ${k} dialogue portrait ${PORTRAIT[k]}`, w === 440, { src, w });
+            check(`${T}: ${k} dialogue portrait ${PORTRAIT[k]}`, w === 330, { src, w }); // portraits are 330×420 since NPC cast rev (2026-11-14)
             await shot(`02-dialogue-${k}`, 2000);
           }
         }

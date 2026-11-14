@@ -1,0 +1,479 @@
+{
+  "file": "tide",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "I1",
+      "line": "main",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "看懂潮汐時鐘",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "I2",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "harbor_staff",
+          "text": "請開元港港務人員教你看潮汐時鐘",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "出海、下潮間帶前都要先看潮汐。"
+            },
+            {
+              "who": "@npc",
+              "zh": "一天大約有兩次退潮。我把潮汐時鐘放在畫面上方，退潮的時候再去潮間帶。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "tide_clock"
+            ],
+            "toast": [
+              "潮汐時鐘",
+              "畫面上方會顯示漲潮或退潮。現在先簡化成清晨與黃昏退潮。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "租車行老闆",
+        "zh": "開元港的港務人員最懂潮汐。"
+      },
+      "playable": true
+    },
+    {
+      "id": "I2",
+      "line": "main",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "潮間帶的早晨",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "tide": "low",
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女；旅人跟著去",
+        "coop": "族女可單人；旅人參加要雙人：族女＋旅人",
+        "season": "退潮時段",
+        "pre": "I1",
+        "unlock": "貝類、海藻卡（族語名待族人提供）、I3",
+        "kind": "潮汐"
+      },
+      "req": "I1",
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "iraraley",
+          "r": 10,
+          "actor": [
+            "f"
+          ],
+          "text": "退潮時，族女到朗島的潮間帶（旅人可以跟著去）",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "退潮了，礁岩露出來了。"
+            },
+            {
+              "who": "@f",
+              "zh": "貝類、海藻的族語名稱還要請族人告訴我們，今天先用中文記下來。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "tidepool_seen"
+            ],
+            "counter": {
+              "lowTideOnTime": 1
+            }
+          }
+        }
+      ],
+      "hint": {
+        "tier": "tao",
+        "from": "朗島的長輩",
+        "npc": "elder_iraraley",
+        "phrase": "ikongo",
+        "zh": "長輩問「海裡有什麼呢？」——意思是要你們退潮時去潮間帶看看。先看懂潮汐時鐘，再請族女帶路。"
+      },
+      "playable": true,
+      "giver": "f"
+    },
+    {
+      "id": "I3",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "只取需要的量",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "tide": "low",
+      "roles": [
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女、旅人",
+        "coop": "同 I2",
+        "season": "退潮時段",
+        "pre": "I2",
+        "unlock": "生態值、C1",
+        "kind": "潮汐"
+      },
+      "req": "I2",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "f"
+    },
+    {
+      "id": "C1",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "夜晚的陸蟹",
+        "en": ""
+      },
+      "time": "night",
+      "seasons": [],
+      "periods": [
+        "night"
+      ],
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女；旅人跟著去",
+        "coop": "族女可單人；旅人參加要雙人：族女＋旅人",
+        "season": "陸蟹季（待確認）的夜間",
+        "pre": "I2；可提早接，頭燈來自 S1",
+        "unlock": "陸蟹卡、水煮陸蟹料理卡、C2",
+        "kind": "提早接、道具卡關＋時段"
+      },
+      "req": "I2",
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "iraraley",
+          "r": 12,
+          "actor": [
+            "f"
+          ],
+          "text": "夜裡，族女帶著頭燈在朗島附近看看陸蟹（旅人可以跟著去）",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "頭燈照到了，路邊有螃蟹在走。",
+              "tao": "kalang"
+            },
+            {
+              "who": "@f",
+              "zh": "陸蟹的季節和規矩還要請族人確認，今晚先只看、不抓。"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "kalang"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "晚上路邊常看得到螃蟹，記得帶頭燈。"
+      },
+      "playable": true,
+      "needsItem": {
+        "item": "headlamp",
+        "from": "S1"
+      },
+      "giver": "f"
+    },
+    {
+      "id": "C2",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "護送陸蟹過馬路",
+        "en": ""
+      },
+      "time": "night",
+      "seasons": [],
+      "periods": [
+        "night"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人（騎車經過時觸發）",
+        "season": "陸蟹季的夜間",
+        "pre": "Q02、陸蟹季開始",
+        "unlock": "生態值",
+        "kind": ""
+      },
+      "req": {
+        "all": [
+          "Q02",
+          {
+            "flag": "crab_season"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "C3",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "現在不能吃的椰子蟹",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "遇到椰子蟹",
+        "unlock": "保育教育卡",
+        "kind": ""
+      },
+      "req": {
+        "flag": "met_coconut_crab"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "S1",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "到椰油的雜貨店買頭燈",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "頭燈（C1 需要）",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "shop_yayo",
+          "text": "到椰油的雜貨店買頭燈",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "頭燈嗎？晚上走路用得到。電池也幫你裝好了。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "headlamp"
+            ],
+            "toast": [
+              "取得：頭燈",
+              "夜晚的陸蟹（C1）需要它。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "椰油的雜貨店什麼都有。"
+      },
+      "playable": true
+    },
+    {
+      "id": "S2",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "到雜貨店買防曬與飲水",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "防曬（G3 需要，也降低曬傷機率）",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "shop_yayo",
+          "text": "到雜貨店買防曬與飲水",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "島上太陽很大，防曬和水都帶著。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "sunscreen",
+              "water"
+            ],
+            "toast": [
+              "取得：防曬、飲水",
+              "潮間帶撿貝類（G3）需要防曬。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "椰油的雜貨店有防曬和水。"
+      },
+      "playable": true
+    },
+    {
+      "id": "G3",
+      "line": "side",
+      "arc": "tide",
+      "village": null,
+      "name": {
+        "zh": "一次退潮撿 8 個貝類（太小的不撿）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "tide": "low",
+      "roles": [
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族女；旅人跟著去",
+        "coop": "族女可單人；旅人同行要雙人：族女＋旅人",
+        "season": "退潮時段",
+        "pre": "I3；可提早接，防曬來自 S2",
+        "unlock": "同一趟也算 I3、料理卡、糧倉",
+        "kind": "提早接、道具卡關＋潮汐＋數量 8"
+      },
+      "req": "I3",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "needsItem": {
+        "item": "sunscreen",
+        "from": "S2"
+      },
+      "giver": "f"
+    }
+  ]
+}

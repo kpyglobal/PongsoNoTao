@@ -9,6 +9,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { stoneTex, thatchTex, woodTex, plasterTex, sheetTex, tatalaTex, rng } from './textures';
 import { AIRPORT_PLANE } from './layout';
+import { BUILDING_ALBEDO as A } from '../render/styleConfig';
 
 export type MatKey =
   | 'stone' | 'stoneDark' | 'woodDark' | 'wood' | 'woodPale' | 'thatch' | 'thatchGold'
@@ -22,23 +23,23 @@ export function archMaterials(): Record<MatKey, THREE.Material> {
   if (MATS) return MATS;
   const std = (o: THREE.MeshStandardMaterialParameters) => new THREE.MeshStandardMaterial({ roughness: 0.9, metalness: 0, ...o });
   MATS = {
-    stone: std({ map: stoneTex(), color: 0xe2ddd2 }),
-    stoneDark: std({ map: stoneTex(), color: 0x9a948a }),
-    woodDark: std({ map: woodTex('#5c3f27') }),
-    wood: std({ map: woodTex('#8a6440') }),
-    woodPale: std({ map: woodTex('#b08a5c') }),
-    thatch: std({ map: thatchTex(true), color: 0xd8d0c0 }),
+    stone: std({ map: stoneTex(), color: A.stone }),
+    stoneDark: std({ map: stoneTex(), color: A.stoneDark }),
+    woodDark: std({ map: woodTex(A.woodDark) }),
+    wood: std({ map: woodTex(A.wood) }),
+    woodPale: std({ map: woodTex(A.woodPale) }),
+    thatch: std({ map: thatchTex(true), color: A.thatchTint }),
     thatchGold: std({ map: thatchTex(false) }),
     plaster: std({ map: plasterTex() }),
     paintBlue: std({ map: plasterTex(), color: 0xa9cfe0 }),
     paintMint: std({ map: plasterTex(), color: 0xb9dcc6 }),
     paintPink: std({ map: plasterTex(), color: 0xf0c6c0 }),
     paintCream: std({ map: plasterTex(), color: 0xf3e3bf }),
-    roofBlue: std({ map: sheetTex(), color: 0x3d78a8, roughness: 0.6, metalness: 0.15 }),
+    roofBlue: std({ map: sheetTex(), color: A.roofBlue, roughness: 0.6, metalness: 0.15 }),
     roofRed: std({ map: sheetTex(), color: 0xb5463a, roughness: 0.6, metalness: 0.15 }),
     roofGreen: std({ map: sheetTex(), color: 0x3f8a6a, roughness: 0.6, metalness: 0.15 }),
-    roofGrey: std({ map: sheetTex(), color: 0x7b8086, roughness: 0.6, metalness: 0.2 }),
-    concrete: std({ map: plasterTex(), color: 0x9a968d }),
+    roofGrey: std({ map: sheetTex(), color: A.roofGrey, roughness: 0.6, metalness: 0.2 }),
+    concrete: std({ map: plasterTex(), color: A.concrete }),
     asphalt: std({ color: 0x55575a }),
     red: std({ color: 0xb3332a, roughness: 0.6 }),
     black: std({ color: 0x1b1714, roughness: 0.7 }),
@@ -49,7 +50,7 @@ export function archMaterials(): Record<MatKey, THREE.Material> {
     lamp: std({ color: 0xf6e2b0, emissive: new THREE.Color('#ffc66b'), emissiveIntensity: 0.25, roughness: 0.5 }),
     metal: std({ color: 0x8f969c, roughness: 0.45, metalness: 0.6 }),
     tatala: std({ map: tatalaTex(1), roughness: 0.6, side: THREE.FrontSide }),
-    tatalaIn: std({ map: woodTex('#7a5636'), roughness: 0.9, side: THREE.BackSide }),
+    tatalaIn: std({ map: woodTex(A.woodInside), roughness: 0.9, side: THREE.BackSide }),
   };
   return MATS;
 }

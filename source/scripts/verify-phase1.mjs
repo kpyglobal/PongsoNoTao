@@ -100,8 +100,14 @@ try {
     // 4) role gate: Q03 needs 族男/族女 — traveller is refused
     await ev(() => window.__TAO_RPG__.switchMember('t'));
     await talk('elder_ivalino'); // traveller can still do the side visit K6 here
-    await talk('elder_ivalino', { keep: true });
-    const blocked = await ev(() => document.getElementById('dlg-zh').textContent);
+    // Phase B: village side quests (e.g. IV-M1, summer) can run here for the traveller first; keep talking until the Q03 gate shows
+    let blocked = '';
+    for (let i = 0; i < 4; i++) {
+      await talk('elder_ivalino', { keep: true });
+      blocked = await ev(() => document.getElementById('dlg-zh').textContent);
+      if (/族男或族女/.test(blocked)) break;
+      await drain();
+    }
     check(`${T}: traveller cannot do Q03 (role gate)`, /族男或族女/.test(blocked), blocked);
     await drain();
     await ev(() => window.__TAO_RPG__.switchMember('m'));
@@ -148,8 +154,9 @@ try {
     await drain();
     await talk('elder_yayo');
     check(`${T}: Q04 done (respect 初訪)`, (await q('Q04')).status === 'done' && (await ev(() => window.__TAO_RPG__.questState().respect)) === 0);
-    await talk('elder_ivalino');
-    check(`${T}: Q07 done with all three at the host`, (await q('Q07')).status === 'done');
+    // Q07 is a 3-way split since the party split & recipes batch (PARTY_SPLIT.md): split → three parts → regroup → rules
+    const q07 = await ev(() => window.__TAO_RPG__.runQuest('Q07'));
+    check(`${T}: Q07 done (3-way split + regroup at the host)`, q07.done && (await q('Q07')).status === 'done', q07.trace.slice(-1));
 
     if (T === 'desktop') {
       // 8) tide clock, intertidal (族女, low tide), photo (traveller only), item gate (headlamp)
@@ -192,7 +199,7 @@ try {
 
     // 9) quest log
     const counts = await ev(() => window.__TAO_RPG__.questCounts());
-    check(`${T}: 127 quests (40/57/30, batch 1b)`, counts.total === 127 && counts.main === 40 && counts.side === 57 && counts.photo === 30, counts);
+    check(`${T}: 163 quests (41/88/34: content/)`, counts.total === 163 && counts.main === 41 && counts.side === 88 && counts.photo === 34, counts);
     await ev(() => { const g = window.__TAO_RPG__; g.closeAll(); g.fastTravel('yayo'); });
     await sleep(1500);
     await shot('08-hud-tracker', 600);

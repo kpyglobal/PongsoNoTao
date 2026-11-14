@@ -1,0 +1,934 @@
+{
+  "file": "open",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "Q01",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "入島：搭飛機或搭船",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 3,
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人：全隊一起入島",
+        "season": "遊戲開始",
+        "pre": "建立旅人角色",
+        "unlock": "文化聲明、Q02、Q03、Q04",
+        "kind": ""
+      },
+      "req": {
+        "flag": "party_created"
+      },
+      "steps": [
+        {
+          "kind": "auto",
+          "text": "全隊一起搭船抵達開元港",
+          "lines": [
+            {
+              "who": "文化聲明",
+              "zh": "遊戲中呈現的男女分工、禁忌與飲食規範，以達悟族傳統文化中的一般性做法為設計起點，不代表所有家庭、部落或時代都完全如此。"
+            },
+            {
+              "who": "文化聲明",
+              "zh": "各部落在祭儀時程、禁忌細節與飲食習慣上各有差異，現代家庭的分工也已有許多變化。遊戲中不模擬祭儀本身，只呈現族人同意公開的飲食與生活面向。"
+            },
+            {
+              "who": "@m",
+              "zh": "到了！船靠岸了。這裡就是開元港。"
+            },
+            {
+              "who": "@f",
+              "zh": "先去港口旁的租車行租機車，再回家跟家人報到吧。"
+            },
+            {
+              "who": "@t",
+              "zh": "好期待！你們帶路，我跟著走。"
+            }
+          ]
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "全隊已經一起上島了。"
+      },
+      "playable": true
+    },
+    {
+      "id": "Q02",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "租機車",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人（租到後全隊可騎）",
+        "season": "全年",
+        "pre": "Q01",
+        "unlock": "has_scooter、2D 地圖、I1、K1–K6、X01、S1–S3",
+        "kind": ""
+      },
+      "req": "Q01",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "rental_owner",
+          "text": "到開元港旁的租車行租機車",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "要租機車嗎？一台給你們，三個人輪流騎都可以。"
+            },
+            {
+              "who": "@npc",
+              "zh": "環島公路晚上要騎慢一點，路上常有陸蟹過馬路。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "has_scooter"
+            ],
+            "toast": [
+              "機車租好了",
+              "全隊都能騎。按「機車」或 M 鍵切換。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "開元港旁邊就有租車行，老闆就站在店門口。"
+      },
+      "playable": true
+    },
+    {
+      "id": "Q03",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "回家報到",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f"
+      ],
+      "n": 1,
+      "text": {
+        "who": "族男、族女",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q01",
+        "unlock": "主人家庭、糧倉、R1",
+        "kind": ""
+      },
+      "req": "Q01",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "actor": [
+            "m",
+            "f"
+          ],
+          "text": "族男或族女回到家鄉部落，向主人家長輩報到",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "回來啦！路上累了吧？"
+            },
+            {
+              "who": "@npc",
+              "zh": "家裡都準備好了，你們的朋友也一起住下來。糧倉在屋子旁邊，以後一起照顧。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "host_family",
+              "granary"
+            ],
+            "toast": [
+              "回家報到",
+              "主人家庭與糧倉已加入手札。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "由族男或族女回家鄉部落，找主人家的長輩。"
+      },
+      "playable": true
+    },
+    {
+      "id": "Q04",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "椰油初訪導覽",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "雙人：旅人＋任一族人",
+        "season": "全年",
+        "pre": "Q01",
+        "unlock": "尊重值「初訪」、V1",
+        "kind": ""
+      },
+      "req": "Q01",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_yayo",
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "mf"
+          ],
+          "text": "旅人和一位族人一起，請椰油的長輩帶路認識部落",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這裡是椰油，開元港就在旁邊，很多人從這裡上島。"
+            },
+            {
+              "who": "@npc",
+              "zh": "走在部落裡先打招呼。想拍人或家屋，記得先問一聲。"
+            },
+            {
+              "who": "@t",
+              "zh": "好，我會先問。謝謝您！"
+            }
+          ],
+          "gives": {
+            "respect": "first",
+            "toast": [
+              "尊重值：初訪",
+              "旅人的文化尊重開始記錄。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "請旅人和一位族人一起去椰油，找椰油的長輩。"
+      },
+      "playable": true
+    },
+    {
+      "id": "Q05",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "認識六部落關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K1–K6 任四個",
+        "unlock": "各部落支線、人物頁、M1、F1、T1、E 系列",
+        "kind": "OR：任四個"
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "auto",
+          "text": "拜訪六部落關鍵人物中的任四位（K1–K6）",
+          "until": {
+            "any": [
+              "K1",
+              "K2",
+              "K3",
+              "K4",
+              "K5",
+              "K6"
+            ],
+            "n": 4
+          }
+        }
+      ],
+      "hint": {
+        "tier": "tao",
+        "from": "紅頭的長輩",
+        "npc": "elder_imorod",
+        "phrase": "mangay",
+        "zh": "長輩說自己也要先去找一找——意思是：別等人來，自己去各部落找人。拜訪六部落的關鍵人物吧。"
+      },
+      "playable": true
+    },
+    {
+      "id": "Q06",
+      "line": "side",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "受傷與衛生所",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "受傷時觸發",
+        "pre": "任一採集、下水或出海活動",
+        "unlock": "營養與健康卡、醫師與營養師人物頁、Y1、Y2",
+        "kind": ""
+      },
+      "req": {
+        "flag": "injured"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "Q07",
+      "line": "main",
+      "arc": "open",
+      "village": null,
+      "name": {
+        "zh": "聽主人家長輩說明島上的規矩",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 3,
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "全隊",
+        "coop": "三人：全隊在主人家屋",
+        "season": "全年",
+        "pre": "Q03 且 Q04",
+        "unlock": "尊重事件開始計分、手札規矩頁",
+        "kind": "AND"
+      },
+      "req": {
+        "all": [
+          "Q03",
+          "Q04"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "全隊到主人家，長輩請三個人分頭去辦事",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "大家都到了。晚上我來說說島上的規矩，先請你們分頭去辦幾件事。"
+            },
+            {
+              "who": "@npc",
+              "zh": "族男去開元港，問問拼板舟漁人最近海上的情形；族女去簷廊，幫婦女長輩收東西；旅人去椰油的雜貨店，買晚上要用的東西。"
+            },
+            {
+              "who": "@npc",
+              "zh": "辦完就回主人家集合，三個人到齊了我再說。"
+            },
+            {
+              "who": "旁白",
+              "zh": "隊伍分頭行動：點左上角頭像切換隊員，鏡頭會跳到那位隊員所在的地方。"
+            }
+          ],
+          "split": {
+            "m": {
+              "at": "harbor",
+              "task": "到開元港找拼板舟漁人",
+              "ctrl": true
+            },
+            "f": {
+              "at": "host_weave",
+              "task": "到簷廊幫婦女長輩",
+              "ctrl": true
+            },
+            "t": {
+              "at": "yayo_shop",
+              "task": "到椰油的雜貨店買東西",
+              "ctrl": true
+            }
+          },
+          "meet": "host_home"
+        },
+        {
+          "kind": "tasks",
+          "text": "三人分頭辦事（族男：開元港／族女：簷廊／旅人：雜貨店）",
+          "tasks": [
+            {
+              "role": "m",
+              "kind": "talk",
+              "npc": "villager_harbor",
+              "text": "族男到開元港，向拼板舟漁人問候",
+              "lines": [
+                {
+                  "who": "@npc",
+                  "zh": "主人家的長輩叫你來的？最近風浪還可以。出海的事，等季節到了再說。"
+                },
+                {
+                  "who": "@m",
+                  "zh": "好，我回去跟長輩說。"
+                }
+              ]
+            },
+            {
+              "role": "f",
+              "kind": "talk",
+              "npc": "@hostf",
+              "text": "族女到簷廊，幫婦女長輩把東西收進來",
+              "lines": [
+                {
+                  "who": "@npc",
+                  "zh": "來得正好，幫我把曬在外面的東西收進來。"
+                },
+                {
+                  "who": "@f",
+                  "zh": "收好了，我先回主人家。"
+                }
+              ]
+            },
+            {
+              "role": "t",
+              "kind": "talk",
+              "npc": "shop_yayo",
+              "text": "旅人到椰油的雜貨店，買晚上要用的飲水",
+              "lines": [
+                {
+                  "who": "@npc",
+                  "zh": "要買飲水？好，這些拿去。路上小心。"
+                },
+                {
+                  "who": "@t",
+                  "zh": "謝謝！我拿回主人家。"
+                }
+              ],
+              "gives": {
+                "items": [
+                  "water"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "regroup": true,
+          "text": "三人回到主人家集合",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "大家都回來了，進去找長輩吧。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "text": "全隊到主人家，聽長輩說明島上的規矩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "大家都到了，我說說島上的規矩。"
+            },
+            {
+              "who": "@npc",
+              "zh": "飛魚季的時候，灘頭和拼板舟有很多規矩。旅人不要進灘頭，也不要碰船。"
+            },
+            {
+              "who": "@npc",
+              "zh": "女孩子在飛魚季不碰拼板舟、不上船。"
+            },
+            {
+              "who": "@npc",
+              "zh": "部落的祭儀不要靠近，也不要拍。想拍人或家屋，先問一聲。"
+            },
+            {
+              "who": "@npc",
+              "zh": "曬魚架上的魚，是一家人一整年的糧食，不要隨便碰。"
+            },
+            {
+              "who": "@npc",
+              "zh": "每個家庭、每個部落做法不太一樣，不懂就問。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "rules_page",
+              "respect_scoring"
+            ],
+            "toast": [
+              "規矩頁",
+              "手札加上「島上的規矩」，尊重事件開始計分。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "主人家",
+        "zh": "回報到、導覽都完成後，三個人一起到主人家找長輩。"
+      },
+      "playable": true,
+      "song": "s08"
+    },
+    {
+      "id": "K1",
+      "line": "main",
+      "arc": "open",
+      "village": "imorod",
+      "name": {
+        "zh": "拜訪紅頭的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "紅頭支線、人物頁",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_imorod",
+          "text": "到紅頭，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到紅頭。"
+            },
+            {
+              "who": "@npc",
+              "zh": "衛生所也在紅頭這一帶，受傷了就去那裡。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K1"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說紅頭有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "K2",
+      "line": "main",
+      "arc": "open",
+      "village": "iratay",
+      "name": {
+        "zh": "拜訪漁人的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "漁人支線、人物頁",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iratay",
+          "text": "到漁人，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到漁人。"
+            },
+            {
+              "who": "@npc",
+              "zh": "機場就在我們部落旁邊，飛機起降都看得到。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K2"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說漁人有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "K3",
+      "line": "main",
+      "arc": "open",
+      "village": "yayo",
+      "name": {
+        "zh": "拜訪椰油的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "椰油支線、人物頁",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_yayo",
+          "text": "到椰油，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到椰油。"
+            },
+            {
+              "who": "@npc",
+              "zh": "開元港的船都在這裡靠岸。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K3"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說椰油有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "K4",
+      "line": "main",
+      "arc": "open",
+      "village": "iraraley",
+      "name": {
+        "zh": "拜訪朗島的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "朗島支線、人物頁",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_iraraley",
+          "text": "到朗島，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到朗島。"
+            },
+            {
+              "who": "@npc",
+              "zh": "朗島在北岸，潮間帶很寬。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K4"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說朗島有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "K5",
+      "line": "main",
+      "arc": "open",
+      "village": "iranmeylek",
+      "name": {
+        "zh": "拜訪東清的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "東清支線、人物頁、E3",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iranmeylek",
+          "text": "到東清，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到東清。"
+            },
+            {
+              "who": "@npc",
+              "zh": "東清灣是島上最早看到日出的地方之一。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K5"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說東清有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "K6",
+      "line": "main",
+      "arc": "open",
+      "village": "ivalino",
+      "name": {
+        "zh": "拜訪野銀的關鍵人物",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "野銀支線、人物頁",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_ivalino",
+          "text": "到野銀，拜訪部落的關鍵人物",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們來啦，歡迎到野銀。"
+            },
+            {
+              "who": "@npc",
+              "zh": "野銀的地下屋保存得很完整，拍照之前要先問屋主。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_K6"
+            ],
+            "relation": 1
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "聽說野銀有位長輩很照顧來訪的人，去部落裡問問看。"
+      },
+      "playable": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "note": "旅人專用的小飾品（族女縫製）。外來者不穿 Tao 傳統服飾，只能戴這類日常小東西。",
+  "items": [
+    {
+      "id": "acc_woven_band",
+      "name": {
+        "zh": "織草帽",
+        "tao": ""
+      },
+      "category": "accessory",
+      "collectible": true,
+      "description": "族女用原色的天然纖維替旅人編的草帽，帽上一圈素色的纖維帶。",
+      "codex": "沒有染色、沒有花紋的日常草帽，是朋友之間的心意，不是傳統服飾，也不帶祭儀紋樣。",
+      "icon": "icon_acc_woven_band",
+      "illustration": "illus_acc_woven_band",
+      "equip": {
+        "who": [
+          "t"
+        ],
+        "slot": "head",
+        "outfit": "acc_t_band"
+      },
+      "outsiderSafe": true,
+      "review": true,
+      "sources": []
+    },
+    {
+      "id": "acc_bag_strap",
+      "name": {
+        "zh": "織草小袋",
+        "tao": ""
+      },
+      "category": "accessory",
+      "collectible": true,
+      "description": "族女用原色纖維編的小袋子，掛在一條素色的扭繩上。",
+      "codex": "小小的原色織袋，可以裝零錢或撿到的漂亮石頭（看完要放回去）。日常用品，不是傳統服飾。",
+      "icon": "icon_acc_bag_strap",
+      "illustration": "illus_acc_bag_strap",
+      "equip": {
+        "who": [
+          "t"
+        ],
+        "slot": "bag",
+        "outfit": "acc_t_strap"
+      },
+      "outsiderSafe": true,
+      "review": true,
+      "sources": []
+    }
+  ]
+}

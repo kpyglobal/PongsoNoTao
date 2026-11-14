@@ -1,0 +1,152 @@
+{
+  "recipes": [
+    {
+      "id": "fish-and-taro",
+      "name": {
+        "zh": "飛魚與水芋",
+        "tao": "alibangbang · soli"
+      },
+      "village": null,
+      "keeper": null,
+      "quest": null,
+      "ingredients": {
+        "alibangbang": 1,
+        "soli": 1
+      },
+      "seasons": [],
+      "unlockedBy": "clinic-nutrition",
+      "steps": "傳統上，飛魚（鮮魚或飛魚乾）常和水芋一起準備。烹煮時要遵守飛魚不可與某些食物混煮的規矩——這是文化裡的飲食禮，也見於黑翅飛魚教導祖先的傳說。",
+      "nutrition": "蛋白質和複合碳水搭配得正好，很適合勞動的日子：飛魚補足必需胺基酸與脂肪酸，水芋提供較持久的能量與鉀。衛生所筆記把這份搭配同時放在「傳統食譜」與「營養學」兩頁上，彼此補充，誰也不取代誰。",
+      "clinicNote": true,
+      "icon": "dish_fish-and-taro",
+      "illustration": "illus_dish_fish-and-taro",
+      "review": true
+    },
+    {
+      "id": "rc-boiled-taro",
+      "name": {
+        "zh": "水煮芋頭",
+        "tao": "soli"
+      },
+      "village": "ivalino",
+      "keeper": "villager_taro",
+      "quest": "FD1",
+      "ingredients": {
+        "soli": 3
+      },
+      "seasons": [],
+      "unlockedBy": "recipe-keeper-野銀",
+      "steps": "水芋洗淨後以水煮熟，是最常見的吃法之一。削皮、切塊、煮多久，以及和哪些食物一起吃，各家做法不同，還要請族人確認。",
+      "nutrition": "水芋是溫和的複合碳水，富含膳食纖維與鉀；水煮保留養分、不加油，適合田裡與海上的勞動。",
+      "icon": "dish_rc-boiled-taro",
+      "illustration": "illus_dish_rc-boiled-taro",
+      "review": true
+    },
+    {
+      "id": "rc-boiled-flyingfish",
+      "name": {
+        "zh": "水煮飛魚",
+        "tao": "alibangbang"
+      },
+      "village": "imorod",
+      "keeper": "weaver_elder",
+      "quest": "FD2",
+      "ingredients": {
+        "alibangbang": 2
+      },
+      "seasons": [
+        "summer"
+      ],
+      "unlockedBy": "recipe-keeper-紅頭",
+      "steps": "飛魚季時以水煮為主、調味簡單。飛魚有自己的烹煮與食用規矩（例如不和某些食物混煮），細節還要請族人確認。",
+      "nutrition": "飛魚提供優質蛋白質、Omega-3 脂肪酸與維生素 D；水煮的做法少油、清淡。",
+      "icon": "dish_rc-boiled-flyingfish",
+      "illustration": "illus_dish_rc-boiled-flyingfish",
+      "review": true
+    },
+    {
+      "id": "rc-dried-flyingfish",
+      "name": {
+        "zh": "飛魚乾",
+        "tao": "alibangbang"
+      },
+      "village": "yayo",
+      "keeper": "elder_f_yayo",
+      "quest": "FD3",
+      "ingredients": {
+        "alibangbang": 3
+      },
+      "seasons": [
+        "summer"
+      ],
+      "unlockedBy": "recipe-keeper-椰油",
+      "steps": "飛魚季捕到的飛魚經處理後曬乾，收進糧倉，是一家人之後的糧食。處理、曬魚的方法與規矩還要請族人確認；遊戲中只呈現族人同意公開的部分。",
+      "nutrition": "曬乾濃縮了蛋白質與礦物質，方便保存；食用時的份量與搭配還要請族人與營養師說明。",
+      "icon": "dish_rc-dried-flyingfish",
+      "illustration": "illus_dish_rc-dried-flyingfish",
+      "review": true
+    },
+    {
+      "id": "rc-boiled-yam",
+      "name": {
+        "zh": "水煮山藥",
+        "tao": "ovi"
+      },
+      "village": "iraraley",
+      "keeper": "elder_f_iraraley",
+      "quest": "FD4",
+      "ingredients": {
+        "ovi": 2
+      },
+      "seasons": [],
+      "unlockedBy": "recipe-keeper-朗島",
+      "steps": "山藥去皮後水煮。山邊採集的地點與時節還要請族人確認。",
+      "nutrition": "山藥的黏質多醣與澱粉好消化，搭配蛋白質食物更均衡。",
+      "icon": "dish_rc-boiled-yam",
+      "illustration": "illus_dish_rc-boiled-yam",
+      "review": true
+    },
+    {
+      "id": "rc-shellfish-seaweed",
+      "name": {
+        "zh": "水煮貝類與海菜",
+        "tao": ""
+      },
+      "village": "iranmeylek",
+      "keeper": "elder_f_iranmeylek",
+      "quest": "FD5",
+      "ingredients": {
+        "shellfish": 2,
+        "seaweed": 2
+      },
+      "seasons": [],
+      "unlockedBy": "recipe-keeper-東清",
+      "steps": "退潮時在潮間帶採集的貝類與海菜，洗淨後以水煮熟。哪些可以採、什麼時候採，各部落有自己的規矩，還要請族人確認。",
+      "nutrition": "貝類提供蛋白質、鐵與鋅，海菜含碘與礦物質；水煮清淡，常與芋頭、地瓜等主食一起吃。",
+      "icon": "dish_rc-shellfish-seaweed",
+      "illustration": "illus_dish_rc-shellfish-seaweed",
+      "review": true
+    },
+    {
+      "id": "rc-taro-sweetpotato",
+      "name": {
+        "zh": "芋頭與地瓜",
+        "tao": "soli · wakay"
+      },
+      "village": "iratay",
+      "keeper": "elder_f_iratay",
+      "quest": "FD6",
+      "ingredients": {
+        "soli": 1,
+        "wakay": 1
+      },
+      "seasons": [],
+      "unlockedBy": "recipe-keeper-漁人",
+      "steps": "水芋與地瓜分別水煮，一起當作主食。份量與搭配還要請族人確認。",
+      "nutrition": "兩種根莖類一起吃，澱粉、纖維與鉀都充足，是勞動日的穩定能量來源。",
+      "icon": "dish_rc-taro-sweetpotato",
+      "illustration": "illus_dish_rc-taro-sweetpotato",
+      "review": true
+    }
+  ]
+}

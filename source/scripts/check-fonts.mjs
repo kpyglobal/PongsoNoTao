@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Build-time glyph coverage check: every CJK character used in src/ or public/data/ must exist in every
+// Build-time glyph coverage check: every CJK character used in src/ or content/ must exist in every
 // self-hosted subset font (public/fonts/*.woff2). Fails the build (exit 1) and names the missing
 // characters, so new copy never silently falls back to a system font. Fix: `npm run fonts`.
 // Zero dependencies: parses the WOFF2 table directory, brotli-decodes it with node:zlib and reads `cmap`.
@@ -9,7 +9,7 @@ import zlib from 'node:zlib';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const FONT_DIR = path.join(ROOT, 'public/fonts');
-const SCAN = [path.join(ROOT, 'src'), path.join(ROOT, 'public/data')];
+const SCAN = [path.join(ROOT, 'src'), path.join(ROOT, 'content')];
 const TEXT_EXT = new Set(['.ts', '.tsx', '.js', '.mjs', '.css', '.json', '.html']);
 
 // CJK radicals / symbols & punctuation / bopomofo / Han (BMP + ext.) / compatibility / vertical & fullwidth forms
@@ -140,4 +140,4 @@ if (bad) {
   console.error('check-fonts: FAILED. Rebuild the subsets with `npm run fonts` (needs fontTools, see scripts/build-fonts.py).');
   process.exit(1);
 }
-console.log(`check-fonts: OK. ${used.size} CJK characters from src/ and public/data/ are in all ${fonts.length} fonts.`);
+console.log(`check-fonts: OK. ${used.size} CJK characters from src/ and content/ are in all ${fonts.length} fonts.`);

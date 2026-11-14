@@ -2,7 +2,7 @@
 /**
  * Road network / reachability check (0.1.1). Bundles scripts/dev/road-audit.ts (which imports the
  * real src/world height, layout, collision and places code) with esbuild and runs it on the real
- * public/data. Exit 1 on any failure.
+ * content/ (src/content/loader.ts via scripts/dev/content-node.ts). Exit 1 on any failure.
  *   node scripts/check-roads.mjs [--png out.png]
  */
 import { build } from 'esbuild';

@@ -39,8 +39,13 @@ export function addQuestPlaces(P: Record<string, PlaceLike>): void {
   const h = P.harbor;
   if (h) mk('rental', '租車行', { x: h.x + 4.6, z: h.z + 2.2 });
   if (h) mk('dive_shop', '潛水店', { x: h.x + 6.4, z: h.z - 2.0 });
+  // the clinic yard beside the door (the nurse stands at the door itself), for the doctor + dietitian
+  const c = P.clinic;
+  if (c) mk('clinic_yard', '衛生所前庭', { x: c.x + 2.6, z: c.z + 3.4 });
   mk('hen_rock_bay', '母雞岩下方海灣', { x: 16.5, z: -40.5 });
   mk('yayo_dive', '椰油港外潛點', { x: -35.5, z: 1.5 });
+  // 東清 recipe (RECIPE_KEEPERS.md): intertidal gathering spot for 貝類 / 海菜, on the shore below the village
+  mk('tide_iranmeylek', '東清灣潮間帶', { x: 23.3, z: -19.0 });
   for (const id of ['yayo_shop', 'yayo_school']) if (!P[id] && P.yayo) mk(id, id, { x: P.yayo.x + 2, z: P.yayo.z + 2 });
 }
 

@@ -944,3 +944,9 @@ section.block:first-of-type { border-top: 0; padding-top: 1.2rem; }
 @media (max-width: 640px) {
   .map-viewport { height: min(46vh, 400px); }
 }
+
+/* outfit variants on a party / traveller card */
+.variants { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 8px 0 2px; }
+.variant { font: inherit; font-size: 0.85em; padding: 3px 10px; border-radius: 999px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; opacity: 0.75; }
+.variant.on { opacity: 1; font-weight: 700; }
+.variant-note { min-height: 1.2em; text-align: center; }

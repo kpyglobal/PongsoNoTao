@@ -1,0 +1,403 @@
+{
+  "file": "villages/iratay",
+  "village": "iratay",
+  "quests": [
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "iratay",
+      "id": "IT-F1",
+      "arc": "village",
+      "giver": "f",
+      "name": {
+        "zh": "漁人的女性長輩：地瓜田採收",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K2",
+        "unlock": "地瓜、地瓜田採集許可",
+        "kind": "a akes・田地"
+      },
+      "req": "K2",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_f_iratay",
+          "text": "漁人的女性長輩請你幫忙挖地瓜",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "地瓜可以挖了。田是我們家的，你來幫忙，挖到的分你一些。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "wakay_iratay",
+          "r": 6,
+          "text": "到漁人的地瓜田，跟著長輩把地瓜挖出來",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "這顆好大！"
+            },
+            {
+              "who": "elder_f_iratay",
+              "zh": "輕一點，不要把它挖破了。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iratay",
+          "text": "向漁人的女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "辛苦了，這些拿去。以後要地瓜，先跟我說一聲，就可以來田裡挖。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "wakay",
+              "wakay",
+              "wakay"
+            ],
+            "relation": 1,
+            "flags": [
+              "wakay_field_ok"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "漁人的女性長輩要採收地瓜，去幫忙吧。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [
+        "summer"
+      ],
+      "time": "day",
+      "village": "iratay",
+      "id": "IT-M1",
+      "arc": "village",
+      "giver": "m",
+      "name": {
+        "zh": "漁人的長輩：族男跟船組再出海",
+        "en": ""
+      },
+      "abortTo": 0,
+      "ground": "fishing",
+      "review": [
+        "漁團出海與分魚的公開程度"
+      ],
+      "text": {
+        "who": "族男",
+        "coop": "族男單獨（其他人在岸邊等）",
+        "season": "夏季（飛魚季）",
+        "pre": "M3、K2",
+        "unlock": "漁人長輩的信任、飛魚",
+        "kind": "a akey・單獨出海"
+      },
+      "req": {
+        "all": [
+          "M3",
+          "K2"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "elder_iratay",
+          "actor": [
+            "m"
+          ],
+          "text": "族男向漁人的長輩領出海的工作",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "聽說你在椰油出過海了。今天跟我們漁人的船組出去，一樣，只有你去。"
+            },
+            {
+              "who": "@npc",
+              "zh": "海況不好就回來，沒有人會笑你。"
+            },
+            {
+              "who": "旁白",
+              "zh": "出海期間只能操控族男，族女與旅人在漁人灘頭等。捕到魚，或按「放棄出海」，才會回來會合。"
+            }
+          ],
+          "solo": {
+            "role": "m",
+            "at": "iratay_shore",
+            "task": "跟漁人的船組出海",
+            "waitAt": "iratay_shore",
+            "giveUp": [
+              {
+                "who": "elder_iratay",
+                "zh": "回來了？好，平安最重要。下次再出去。"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "iratay_shore",
+          "r": 8,
+          "actor": [
+            "m"
+          ],
+          "minigame": "fish",
+          "canoe": true,
+          "text": "族男划拼板舟出海，看準飛魚躍出的時機（失敗可再試，或放棄出海）",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "捕到了！划回去。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "alibangbang",
+              "alibangbang"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "iratay_shore",
+          "r": 10,
+          "actor": [
+            "m"
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "regroup": true,
+          "text": "族男回到漁人灘頭，和族女、旅人會合",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "回來了！"
+            },
+            {
+              "who": "@t",
+              "zh": "我們一直在這裡等，沒有靠近船。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_iratay",
+          "actor": [
+            "m"
+          ],
+          "requires": [
+            "m"
+          ],
+          "text": "族男回報漁人的長輩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "平安回來就好。魚先分給船組，再帶一點回家給長輩。"
+            },
+            {
+              "who": "@npc",
+              "zh": "你阿公如果看到，一定很高興。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "iratay_trip"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "飛魚季時，漁人的長輩會邀族男跟漁人的船組出海；只有族男能去。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "day",
+      "village": "iratay",
+      "id": "IT-V1",
+      "arc": "village",
+      "name": {
+        "zh": "漁人的族人：從機場回來的阿嬤",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "K2",
+        "unlock": "漁人族人的信任",
+        "kind": "關鍵人物・現代生活"
+      },
+      "req": "K2",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iratay",
+          "text": "漁人的族人要去機場接媽媽",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "我媽媽去臺灣的醫院檢查，今天坐飛機回來。島上沒有大醫院，看病要跑來跑去。"
+            },
+            {
+              "who": "@npc",
+              "zh": "可以幫我去機場提行李嗎？我還要先去準備車子。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "airport",
+          "r": 9,
+          "text": "到蘭嶼機場幫阿嬤提行李",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "阿嬤，行李給我拿就好！"
+            },
+            {
+              "who": "旁白",
+              "zh": "阿嬤笑著把醫院的資料袋交給你，請你拿去衛生所。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "clinic_nurse",
+          "text": "把醫院的資料交給衛生所護理師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "謝謝，我們會照著臺灣醫院的建議，定期去家裡看阿嬤。"
+            },
+            {
+              "who": "@npc",
+              "zh": "島上的長輩看病不容易，大家互相幫忙很重要。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_iratay",
+          "text": "回報漁人的族人",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "真的太謝謝你們了。我媽說，下次要煮地瓜給你們吃。"
+            }
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "it_grandma"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "漁人的族人要去機場接剛看完病回來的媽媽。"
+      }
+    },
+    {
+      "line": "side",
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "playable": true,
+      "seasons": [],
+      "time": "any",
+      "village": "iratay",
+      "id": "IT-V2",
+      "arc": "village",
+      "name": {
+        "zh": "漁人的族人：晚會的邀請",
+        "en": ""
+      },
+      "text": {
+        "who": "任一人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "IT-V1",
+        "unlock": "晚會邀請（NT4、OF3）",
+        "kind": "關鍵人物"
+      },
+      "req": "IT-V1",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_iratay",
+          "text": "漁人的族人邀大家參加部落的晚會",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這幾天晚上，學校操場有部落的晚會，大家一起吃東西、聽孩子唱歌。你們三個一起來吧！"
+            },
+            {
+              "who": "@npc",
+              "zh": "旅人不用特別打扮。真的想戴點什麼，可以請族女幫你縫個小東西，紅頭的織布長輩會教。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "gathering_invite"
+            ],
+            "toast": [
+              "晚會邀請",
+              "晚上到漁人的學校操場參加晚會（NT4）。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "漁人",
+        "zh": "漁人的族人好像有好消息要說。"
+      }
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { uCharGlow, uCharGlowShape } from '../render/spriteGlow';
 import type { Assets } from '../core/assets';
 import { surfaceHeight, FEET_BIAS } from '../world/collision';
 
@@ -23,9 +24,33 @@ export function dirFromRelative(rel: number): Dir {
 const NO_SHINE_CAP = 0.78;
 function noShine(mat: THREE.MeshBasicMaterial): void {
   mat.onBeforeCompile = (sh) => {
-    sh.fragmentShader = sh.fragmentShader.replace(
+    // night halo (render/spriteGlow.ts, CHARACTER_GLOW in styleConfig.ts): transparent texels next to the
+    // silhouette are kept and painted with a faint warm glow instead of being discarded
+    sh.uniforms.uCharGlow = uCharGlow;
+    sh.uniforms.uCharGlowShape = uCharGlowShape;
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nuniform vec4 uCharGlow;\nuniform vec2 uCharGlowShape;')
+      .replace('#include <alphatest_fragment>', `float tHalo = 0.0;
+       #if defined( USE_ALPHATEST ) && defined( USE_MAP )
+       if (diffuseColor.a < alphaTest) {
+         if (uCharGlow.a > 0.0) {
+           vec2 tx = uCharGlowShape.x / vec2(textureSize(map, 0));
+           float m = max(max(texture2D(map, vMapUv + vec2(tx.x, 0.0)).a, texture2D(map, vMapUv - vec2(tx.x, 0.0)).a),
+                         max(texture2D(map, vMapUv + vec2(0.0, tx.y)).a, texture2D(map, vMapUv - vec2(0.0, tx.y)).a));
+           float m2 = max(max(texture2D(map, vMapUv + tx * 0.7).a, texture2D(map, vMapUv - tx * 0.7).a),
+                          max(texture2D(map, vMapUv + vec2(tx.x, -tx.y) * 0.7).a, texture2D(map, vMapUv + vec2(-tx.x, tx.y) * 0.7).a));
+           tHalo = smoothstep(0.2, 0.9, max(m, m2 * 0.8));
+         }
+         if (tHalo <= 0.0) discard;
+       }
+       #else
+       #include <alphatest_fragment>
+       #endif`)
+      .replace(
       '#include <opaque_fragment>',
-      `{ float lum = dot(outgoingLight, vec3(0.299, 0.587, 0.114));
+      `outgoingLight += outgoingLight * uCharGlowShape.y + uCharGlow.rgb * uCharGlowShape.y * 0.15;
+       if (tHalo > 0.0) { outgoingLight = uCharGlow.rgb; diffuseColor.a = tHalo * uCharGlow.a; }
+       { float lum = dot(outgoingLight, vec3(0.299, 0.587, 0.114));
          if (lum > ${NO_SHINE_CAP.toFixed(2)}) outgoingLight *= ${NO_SHINE_CAP.toFixed(2)} / lum; }
        #include <opaque_fragment>`,
     );
@@ -75,17 +100,26 @@ export class SpriteBillboard {
 
   constructor(
     tex: THREE.Texture,
-    opts: { cols: number; rows: number; worldH: number; kind?: string; anchor?: 'feet' | 'center' },
+    opts: {
+      cols: number; rows: number; worldH: number; kind?: string; anchor?: 'feet' | 'center';
+      /** the sheet is a sub-rectangle of an atlas texture: pixel rect (top-left origin) + atlas size */
+      region?: { x: number; y: number; w: number; h: number; atlasW: number; atlasH: number };
+    },
   ) {
     this.tex = tex;
     this.cols = opts.cols;
     this.rows = opts.rows;
     this.worldH = opts.worldH;
-    this.worldW = opts.worldH * ((tex.image?.width ?? 64) / opts.cols) / ((tex.image?.height ?? 64) / opts.rows);
+    const r = opts.region;
+    // UV window of the sheet (flipY texture: v grows upward, so the sheet's bottom edge is 1 - (y + h) / H)
+    this.uv = r ? { u0: r.x / r.atlasW, v0: 1 - (r.y + r.h) / r.atlasH, uw: r.w / r.atlasW, vh: r.h / r.atlasH } : { u0: 0, v0: 0, uw: 1, vh: 1 };
+    const sw = r ? r.w : tex.image?.width ?? 64;
+    const sh = r ? r.h : tex.image?.height ?? 64;
+    this.worldW = opts.worldH * (sw / opts.cols) / (sh / opts.rows);
     this.kind = opts.kind ?? 'sprite';
     this.hasIdle = opts.rows >= 8;
-    this.tex.repeat.set(1 / this.cols, 1 / this.rows);
-    this.tex.offset.set(0, 1 - 1 / this.rows);
+    this.tex.repeat.set(this.uv.uw / this.cols, this.uv.vh / this.rows);
+    this.setFrame(0, 0);
     this.tex.wrapS = this.tex.wrapT = THREE.ClampToEdgeWrapping;
     // MeshBasic = unlit: no specular, no env reflection; luminance capped below the bloom threshold
     const mat = new THREE.MeshBasicMaterial({
@@ -109,8 +143,18 @@ export class SpriteBillboard {
     if (feet) this.mesh.renderOrder = 2;
   }
 
+  /** free the GPU side: texture clone, plane geometry, material (NPC streaming) */
+  dispose(): void {
+    this.mesh.removeFromParent();
+    this.tex.dispose();
+    this.mesh.geometry.dispose();
+    (this.mesh.material as THREE.Material).dispose();
+  }
+
   /** swap to another sheet with the same grid (e.g. protagonist outfit) */
   swapSheet(tex: THREE.Texture): void {
+    // swapped sheets are always whole single sheets (player outfits)
+    this.uv = { u0: 0, v0: 0, uw: 1, vh: 1 };
     tex.repeat.set(1 / this.cols, 1 / this.rows);
     tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
     tex.offset.copy(this.tex.offset);
@@ -152,8 +196,12 @@ export class SpriteBillboard {
     return this.fade;
   }
 
+  /** sheet UV window inside its texture (whole texture for single sheets, a slot for NPC atlases) */
+  private uv: { u0: number; v0: number; uw: number; vh: number };
+
   setFrame(col: number, row: number): void {
-    this.tex.offset.set(col / this.cols, 1 - (row + 1) / this.rows);
+    const u = this.uv;
+    this.tex.offset.set(u.u0 + (col / this.cols) * u.uw, u.v0 + (1 - (row + 1) / this.rows) * u.vh);
   }
 
   setCell(dir: Dir, frame: number): void {
@@ -231,6 +279,12 @@ export function makeCharacter(assets: Assets, kind: string, worldH = CHAR_WORLD_
   return new SpriteBillboard(tex, { cols: 4, rows: 8, worldH, kind });
 }
 
+/** NPC from a streamed sheet ref (atlas slot or single sheet); the texture must already be acquired */
+export function makeNpcCharacter(assets: Assets, ref: { rel: string; region?: { x: number; y: number; w: number; h: number; atlasW: number; atlasH: number } }, kind: string, worldH = CHAR_WORLD_H): SpriteBillboard {
+  const tex = assets.sheetClone(ref.rel);
+  return new SpriteBillboard(tex, { cols: 4, rows: 8, worldH, kind, region: ref.region });
+}
+
 export function makeProp(
   assets: Assets,
   file: string,
@@ -255,6 +309,11 @@ export class BlobShadow {
     this.mesh.rotation.x = -Math.PI / 2;
     this.mesh.scale.set(rx, rz, 1);
     this.mesh.renderOrder = 1;
+  }
+  dispose(): void {
+    this.mesh.removeFromParent();
+    this.mesh.geometry.dispose();
+    (this.mesh.material as THREE.Material).dispose();
   }
   follow(x: number, z: number, ground?: number): void {
     this.mesh.position.set(x, (ground ?? surfaceHeight(x, z)) + 0.04, z);

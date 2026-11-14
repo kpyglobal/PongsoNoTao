@@ -1,7 +1,7 @@
 import { VILLAGE_DEFS, TARO_FIELDS, FACILITIES } from '../../src/world/layout';
 import { getHeight } from '../../src/world/height';
 import fs from 'node:fs';
-const file = 'public/data/places.json';
+const file = 'content/places.json';
 const j = JSON.parse(fs.readFileSync(file, 'utf8'));
 const P = j.places;
 const r1 = (n: number) => Math.round(n * 10) / 10;

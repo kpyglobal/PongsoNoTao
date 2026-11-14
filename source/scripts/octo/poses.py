@@ -4,7 +4,7 @@ import math
 import numpy as np
 from PIL import Image, ImageOps
 from px16 import Cv, hx
-from fig import Fig, GY, C, ik, darker, RP, STYLE
+from fig import Fig, GY, C, ik, darker, RP, STYLE, CARRY
 
 FW, FH = 64, 96
 RW = 96
@@ -52,18 +52,21 @@ def side_frame(key, i=None, breath=0, blink=False):
     near = _arm_pts(d, sh, arms[0], 14 if arms[0] > 0 else 8)
     far = _arm_pts(d, sh, arms[1], 14 if arms[1] > 0 else 8)
     P = dict(hip=hip, tilt=tilt, legs=legs, near_arm=near, far_arm=far, breath=breath, blink=blink)
-    if f.r.get('prop') == 'stick':
+    if f.r.get('prop') in ('stick', 'paddle'):
         wr = (sh[0] - 0.55 * hh, sh[1] + 1.25 * hh)
         el = ik(sh, wr, d['La'], d['Lf'], bend=-1)
         P['near_arm'] = (el, wr)
-        rp = RP(C['stick'])
+        paddle = f.r.get('prop') == 'paddle'
+        rp = RP(C['paddle'] if paddle else C['stick'])
         tipx = wr[0] - 0.15 * hh * ((1 if i in (0, 3) else -0.5) if i is not None else 0.3)
 
         def stick(cv):
-            m = cv.cap((wr[0] - 0.1 * hh, wr[1] - 0.3 * hh), (tipx, GY), 0.75)
+            m = cv.cap((wr[0] - 0.1 * hh, wr[1] - (1.0 if paddle else 0.3) * hh), (tipx, GY), 0.75)
             cv.fill(m, rp, ('cyl', (wr[0], wr[1]), (tipx, GY), 1.0))
+            if paddle:
+                cv.fill(cv.ell(tipx + 0.2, GY - 0.55 * hh, 1.6, 0.55 * hh), rp, ('cyl', (tipx, 0), (tipx, 96), 1.6))
         P['pre_near_arm'] = stick
-    elif f.r.get('prop') in ('basket', 'clipboard', 'notebook'):
+    elif f.r.get('prop') in CARRY:
         # carry hand stays low and still so the prop doesn't flail
         P['near_arm'] = _arm_pts(d, sh, -2 if i is None else arms[0] * 0.3, 10)
     f.side(cv, P)

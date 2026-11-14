@@ -244,6 +244,19 @@ export function slideMove(x: number, z: number, dx: number, dz: number, radius =
     const sz = z + dz * t;
     if (canStand(sx, sz, radius)) return { x: sx, z: sz };
   }
+  // QA H3: head-on into a collider corner (e.g. the 開元港 quay edge with 8-way arrow keys) neither the straight
+  // move nor the single-axis slides work; try the move turned ±30° / ±60° (along the corner) at a shorter length
+  const len = Math.hypot(dx, dz);
+  if (len > 1e-6) {
+    for (const a of [0.52, -0.52, 1.05, -1.05]) {
+      const c = Math.cos(a);
+      const sn = Math.sin(a);
+      const k = Math.max(0.5, c);
+      const tx = x + (dx * c - dz * sn) * k;
+      const tz = z + (dx * sn + dz * c) * k;
+      if (canStand(tx, tz, radius)) return { x: tx, z: tz };
+    }
+  }
   return ensureStanding(x, z, radius);
 }
 

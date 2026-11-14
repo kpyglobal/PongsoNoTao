@@ -1,0 +1,432 @@
+{
+  "file": "visitor",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "V1",
+      "line": "main",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "主動問能不能幫忙",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "尊重值「學習中」",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "actor": [
+            "t"
+          ],
+          "text": "旅人主動問族人：有什麼可以幫忙的？",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "請問有什麼我可以幫忙的嗎？"
+            },
+            {
+              "who": "@npc",
+              "zh": "好啊，謝謝你主動問。先幫忙把田埂上的草拔一拔。"
+            },
+            {
+              "who": "@npc",
+              "zh": "下次跟著家裡的人一起來田裡，再慢慢學。"
+            }
+          ],
+          "gives": {
+            "respect": "learning",
+            "toast": [
+              "尊重值：學習中",
+              "旅人可以跟族人一起體驗潮間帶與水芋田了。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "芋頭田那邊常有長輩在忙，問問看能不能幫忙吧。"
+      },
+      "playable": true
+    },
+    {
+      "id": "V2",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "學習中：跟族人體驗",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "雙人：旅人＋主要帶領的族人（男旅多為族男，女旅多為族女）",
+        "season": "依活動",
+        "pre": "尊重值「學習中」",
+        "unlock": "I2、R5 的旅人版本",
+        "kind": ""
+      },
+      "req": {
+        "respect": "learning"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "V3",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "聽長輩講食物故事",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人（NPC 長輩）",
+        "season": "全年",
+        "pre": "尊重值「受信任」",
+        "unlock": "故事卡",
+        "kind": ""
+      },
+      "req": {
+        "respect": "trusted"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "V4",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "非飛魚季拼板舟體驗",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "m"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "雙人：旅人＋族男",
+        "season": "非飛魚季（當地）",
+        "pre": "尊重值「受信任」且 T2；可提早接，救生衣來自 S3",
+        "unlock": "拼板舟體驗卡",
+        "kind": "提早接、道具卡關＋季節"
+      },
+      "req": {
+        "all": [
+          {
+            "respect": "trusted"
+          },
+          "T2"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "needsItem": {
+        "item": "lifejacket",
+        "from": "S3"
+      }
+    },
+    {
+      "id": "V5",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "學會被邀請吃飯",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 3,
+      "need": [
+        "m",
+        "f",
+        "t"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "三人：全隊在主人家屋",
+        "season": "非祭典時期",
+        "pre": "尊重值「朋友」",
+        "unlock": "「達悟餐桌」圖鑑頁",
+        "kind": ""
+      },
+      "req": {
+        "respect": "friend"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "V6",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "跟族男學結網（男旅版內容較多）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "m"
+      ],
+      "text": {
+        "who": "旅人",
+        "coop": "雙人：旅人＋族男",
+        "season": "全年",
+        "pre": "尊重值「學習中」",
+        "unlock": "結網學習卡",
+        "kind": ""
+      },
+      "req": {
+        "respect": "learning"
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "giver": "m"
+    },
+    {
+      "id": "S3",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "向租車行老闆借救生衣",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q02",
+        "unlock": "救生衣（V4 需要）",
+        "kind": ""
+      },
+      "req": "Q02",
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "rental_owner",
+          "actor": [
+            "t"
+          ],
+          "text": "旅人向租車行老闆借救生衣",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "請問可以借救生衣嗎？"
+            },
+            {
+              "who": "@npc",
+              "zh": "可以啊。下水一定要穿好，安全第一。"
+            }
+          ],
+          "gives": {
+            "items": [
+              "lifejacket"
+            ],
+            "toast": [
+              "取得：救生衣",
+              "母雞岩浮潛（U1）與非飛魚季拼板舟體驗（V4）需要它。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "租車行老闆",
+        "zh": "救生衣可以跟租車行借。"
+      },
+      "playable": true
+    },
+    {
+      "id": "B1",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "聽部落文化工作者說明聖地與距離規矩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "旅人＋任一族人",
+        "coop": "雙人：旅人＋族人（NPC 文化工作者說明）",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "P05、P07、P18 可以遠拍；相簿照片的文化筆記欄；B3",
+        "kind": "聖地說明"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "B3",
+      "line": "side",
+      "arc": "visitor",
+      "village": null,
+      "name": {
+        "zh": "飛魚季前聽海岸限制說明",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人（NPC 文化工作者）",
+        "season": "當地飛魚季開始前",
+        "pre": "B1",
+        "unlock": "飛魚季遠拍規則提示（P13、P21）、尊重值",
+        "kind": ""
+      },
+      "req": "B1",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    }
+  ]
+}

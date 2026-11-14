@@ -1,0 +1,1288 @@
+{
+  "file": "photo",
+  "source": "migrated from public/data/quests.json (scripts/build-quests.mjs, planning Page)",
+  "quests": [
+    {
+      "id": "P01",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍紅頭岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P02",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍鯉魚岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P03",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍坦克岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P04",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "從蘭嶼燈塔遠眺",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P05",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "五孔洞（只在外遠拍）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04 且 B1",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": "禁忌場所：先 B1、遠拍"
+      },
+      "req": {
+        "all": [
+          "Q04",
+          "B1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "distanceOnly": true
+    },
+    {
+      "id": "P06",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍玉女岩",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P07",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "小天池（只遠拍）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04 且 B1",
+        "unlock": "相簿＋1（湖泊與高地）",
+        "kind": "可能是神聖地：先 B1、遠拍"
+      },
+      "req": {
+        "all": [
+          "Q04",
+          "B1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "distanceOnly": true
+    },
+    {
+      "id": "P08",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍母雞岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P09",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "雙獅岩的星空",
+        "en": ""
+      },
+      "time": "night",
+      "seasons": [],
+      "periods": [
+        "night"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "夜間、無月",
+        "pre": "Q04",
+        "unlock": "相簿＋1（北岸奇岩）",
+        "kind": "時段"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "twinlions",
+          "r": 16,
+          "actor": [
+            "t"
+          ],
+          "text": "旅人用相機拍下：雙獅岩的星空"
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "沒有月亮的晚上，雙獅岩那邊的星星很多。"
+      },
+      "playable": true
+    },
+    {
+      "id": "P10",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "從岸上遠拍軍艦岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "battleship",
+          "r": 18,
+          "actor": [
+            "t"
+          ],
+          "text": "旅人用相機拍下：從岸上遠拍軍艦岩"
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "軍艦岩在西北外海，只能從岸上遠遠地拍。"
+      },
+      "playable": true,
+      "distanceOnly": true
+    },
+    {
+      "id": "P11",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍情人洞",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P12",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍一線天",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P13",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "東清灣日出",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "清晨；飛魚季畫面不能有拼板舟",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": "時段"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P14",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍鋼盔岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P15",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍象鼻岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（東岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P16",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍蘭嶼瀑布",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（南岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P17",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍龍頭岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（南岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P18",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "大天池（只遠拍）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04 且 B1",
+        "unlock": "相簿＋1（湖泊與高地）",
+        "kind": "可能是神聖地：先 B1、遠拍"
+      },
+      "req": {
+        "all": [
+          "Q04",
+          "B1"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "distanceOnly": true
+    },
+    {
+      "id": "P19",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍老人岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（南岸）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P20",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "青青草原的黃昏",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dusk"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "黃昏",
+        "pre": "Q04",
+        "unlock": "相簿＋1（南岸）",
+        "kind": "時段"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "qingqing",
+          "r": 10,
+          "actor": [
+            "t"
+          ],
+          "text": "旅人用相機拍下：青青草原的黃昏"
+        }
+      ],
+      "hint": {
+        "tier": "vague",
+        "from": "村民",
+        "zh": "黃昏的時候去青青草原看看。"
+      },
+      "playable": true
+    },
+    {
+      "id": "P21",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "八代灣（飛魚季只能在部落外遠拍）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年；飛魚季只能遠拍",
+        "pre": "Q04",
+        "unlock": "相簿＋1（南岸）",
+        "kind": "季節限制拍法"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P22",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍饅頭岩",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（西岸與港口）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P23",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍開元港",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（西岸與港口）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "harbor",
+          "r": 9,
+          "actor": [
+            "t"
+          ],
+          "text": "旅人用相機拍下：開元港"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "港務人員",
+        "zh": "白天在開元港就能拍。"
+      },
+      "playable": true
+    },
+    {
+      "id": "P24",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "拍蘭嶼航空站（只拍景）",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（西岸與港口）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "photo",
+          "spot": "airport",
+          "r": 9,
+          "actor": [
+            "t"
+          ],
+          "text": "旅人用相機拍下：蘭嶼航空站（只拍景）"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "機場在漁人部落旁，只拍景，不拍旅客。"
+      },
+      "playable": true
+    },
+    {
+      "id": "P25",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "從蘭嶼氣象觀測站俯瞰",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [],
+      "periods": [
+        "dawn",
+        "day"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "旅人",
+        "coop": "單人",
+        "season": "全年（白天）",
+        "pre": "Q04",
+        "unlock": "相簿＋1（湖泊與高地）",
+        "kind": ""
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false,
+      "song": "s03"
+    },
+    {
+      "id": "P26",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "野銀傳統家屋（先問屋主）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "mf"
+      ],
+      "text": {
+        "who": "旅人；族人陪同詢問",
+        "coop": "雙人：旅人＋任一族人",
+        "season": "全年",
+        "pre": "Q04 且 屋主同意",
+        "unlock": "相簿＋1、「請先詢問」學習卡",
+        "kind": "同意"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "P27",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "朗島灣的拼板舟（先問船主）",
+        "en": ""
+      },
+      "time": "any",
+      "seasons": [
+        "winter"
+      ],
+      "roles": [
+        "t"
+      ],
+      "n": 2,
+      "need": [
+        "t",
+        "m"
+      ],
+      "text": {
+        "who": "旅人；族男陪同詢問",
+        "coop": "雙人：旅人＋族男",
+        "season": "非飛魚季（當地）",
+        "pre": "Q04 且 船主同意",
+        "unlock": "相簿＋1",
+        "kind": "季節＋同意"
+      },
+      "req": "Q04",
+      "steps": [
+        {
+          "kind": "placeholder",
+          "text": "這個任務的內容會在後續版本加入。"
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "手札",
+        "zh": "這個任務的內容會在後續版本加入。"
+      },
+      "playable": false
+    },
+    {
+      "id": "U1",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "母雞岩浮潛",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人（目前操控的隊員）",
+        "coop": "單人",
+        "season": "當地非飛魚季；夏季海況穩定的白天",
+        "pre": "Q02 且 S3（救生衣）",
+        "unlock": "水下美景插畫 A（畫面裡是當下操控的隊員）、U2",
+        "kind": "潛點（觀光，誰都能去）＋季節＋道具"
+      },
+      "req": {
+        "all": [
+          "Q02",
+          "S3"
+        ]
+      },
+      "steps": [
+        {
+          "kind": "spot",
+          "spot": "hen_rock_bay",
+          "r": 10,
+          "dive": "A",
+          "text": "到母雞岩下方的海灣浮潛（誰都可以，穿好救生衣）",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "水好清，往下看就是珊瑚，小丑魚在裡面鑽來鑽去。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這裡是現代的觀光浮潛點，誰都能來。飛魚季時部落灘頭不能浮潛，所以只在非飛魚季開放。"
+            }
+          ],
+          "gives": {
+            "toast": [
+              "水下美景",
+              "已收進「相簿與水下」。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "租車行老闆",
+        "zh": "母雞岩下方的海灣很適合浮潛。記得先借救生衣，飛魚季時不能下水。"
+      },
+      "playable": true,
+      "ground": "dive"
+    },
+    {
+      "id": "U2",
+      "line": "photo",
+      "arc": "photo",
+      "village": null,
+      "name": {
+        "zh": "椰油港斷崖：跟潛水教練做淺水氣瓶潛水",
+        "en": ""
+      },
+      "time": "day",
+      "seasons": [
+        "winter"
+      ],
+      "periods": [
+        "day"
+      ],
+      "roles": [
+        "m",
+        "f",
+        "t"
+      ],
+      "n": 1,
+      "text": {
+        "who": "任一人（目前操控的隊員）",
+        "coop": "單人（NPC 潛水教練陪同）",
+        "season": "當地非飛魚季；白天",
+        "pre": "U1 且 第一次見到潛水教練",
+        "unlock": "水下美景插畫 B（畫面裡是當下操控的隊員）",
+        "kind": "潛點（觀光，誰都能去）＋AND＋季節"
+      },
+      "req": {
+        "all": [
+          "U1",
+          {
+            "flag": "met_npc_dive_coach"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "kind": "talk",
+          "npc": "dive_coach",
+          "text": "在開元港旁的潛水店，聽潛水教練說明",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "我是這裡的潛水教練，也是在島上長大的。今天帶你在椰油港外面的平台看看。"
+            },
+            {
+              "who": "@npc",
+              "zh": "我們只停在平台邊緣，不往斷崖下潛。飛魚季的時候椰油斷層也不能潛，要等季節過了。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "yayo_dive",
+          "r": 10,
+          "dive": "B",
+          "text": "跟著教練到椰油港外的平台邊緣做淺水氣瓶潛水",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "平台外面一下子就變成深藍色，一大群魚從外海游過去。"
+            }
+          ],
+          "gives": {
+            "toast": [
+              "水下美景",
+              "已收進「相簿與水下」。"
+            ]
+          }
+        }
+      ],
+      "hint": {
+        "tier": "direct",
+        "from": "族人",
+        "zh": "開元港旁邊的潛水店有位族人教練，先去找他聊聊。"
+      },
+      "playable": true,
+      "ground": "dive"
+    }
+  ]
+}

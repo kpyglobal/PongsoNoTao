@@ -1,3 +1,4 @@
+import { outfitBaseSheet } from '../systems/outfits';
 import * as THREE from 'three';
 import { PLAYER_OUTFITS, type Assets, type PlayerOutfit } from '../core/assets';
 import type { Input } from '../core/input';
@@ -70,9 +71,11 @@ export class Player {
     if (kind === this.outfit) return;
     this.outfit = kind as PlayerOutfit;
     this.sprite.swapSheet(assets.sheetClone(`characters/${kind}_sheet.png`));
-    if ((PLAYER_OUTFITS as readonly string[]).includes(kind)) {
-      this.rideSprite.swapSheet(assets.sheetClone(`characters/ride_${kind}_sheet.png`));
-      this.canoeSprite.swapSheet(assets.sheetClone(`characters/canoe_${kind}_sheet.png`));
+    // outfit variants (`player_trad`, `player_visitor_acc`) ride / paddle with their own sheets when drawn, else the base outfit's
+    const rideKind = assets.textures.has(`characters/ride_${kind}_sheet.png`) ? kind : outfitBaseSheet(kind);
+    if ((PLAYER_OUTFITS as readonly string[]).includes(rideKind) || assets.textures.has(`characters/ride_${rideKind}_sheet.png`)) {
+      this.rideSprite.swapSheet(assets.sheetClone(`characters/ride_${rideKind}_sheet.png`));
+      this.canoeSprite.swapSheet(assets.sheetClone(`characters/${assets.textures.has(`characters/canoe_${kind}_sheet.png`) ? `canoe_${kind}` : `canoe_${rideKind}`}_sheet.png`));
     }
   }
 

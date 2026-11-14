@@ -30,6 +30,8 @@ def RP(c):
 
 
 # front-view walk cycle: (left ankle dy, right ankle dy, left hand dy, right hand dy)
+HAND_ITEMS = ('leaves', 'cloth', 'net', 'rope', 'keys', 'hammer', 'radio', 'pot', 'yams', 'bucket', 'basin')
+CARRY = ('basket', 'clipboard', 'notebook') + HAND_ITEMS  # held low and still in the side walk
 FWALK = [(1.5, -2.0, 1.0, -1.0), (0.0, -1.0, 0.0, 0.0), (-2.0, 1.5, -1.0, 1.0), (-1.0, 0.0, 0.0, 0.0)]
 
 
@@ -40,8 +42,8 @@ class Fig:
         s.rp = RP
         s.skin = RP(SKIN[s.r['skin']])
         s.hair = RP(HAIR[s.r['hair'][1]])
-        H = H0 * (0.95 if s.r.get('elder') else 1.0)
-        s.H, s.hh = H, H / HEADS
+        H = H0 * s.r.get('scale', 0.95 if s.r.get('elder') else 1.0)
+        s.H, s.hh = H, H / s.r.get('heads', HEADS)  # children: smaller figure, bigger head ratio
         s.f = s.r['sex'] == 'f'
         top = s.r['top']
         s.tee = RP(top['tee'])
@@ -102,6 +104,8 @@ class Fig:
             m = cv.rect(cx - d['sw'] - 0.05 * hh, sy - 0.25 * hh, cx + d['sw'] + 0.05 * hh, waist + 0.25 * hh)
             cv.fill(m, darker(pk), ('flat', 0.4))
         s.torso_front(cv, cx, d, back)
+        if legs:
+            s.loin_flap_front(cv, cx, d)
         nk = cv.rect(cx - 0.17 * hh, cy + d['ry'] * 0.5, cx + 0.17 * hh, sy + 1.5)
         cv.fill(nk, s.skin, ('flat', 0.1 if not back else -0.05), contour=False)
         if not back:
@@ -163,6 +167,18 @@ class Fig:
                 return hem if ky - 2.2 < y + 0.5 <= ky - 1.0 else None
             cv.fill(cv.poly(pts), s.bot, ('ell', cx - 0.3 * hh, d['crotch'] - 0.2 * hh, d['hw'] * 1.6, hh * 1.4), pattern=pat)
 
+    def loin_flap_front(s, cv, cx, d):
+        """traditional loincloth: narrow indigo flap hanging below the wrapped waist, thighs bare"""
+        b, hh = s.r['bottom'], s.hh
+        if b['kind'] != 'loincloth':
+            return
+        st = s.rp(b.get('stripe', '#EDE3CE'))
+
+        def pat(x, y):
+            return st if int(x + 0.5 - cx + 40) % 3 == 1 and y > d['crotch'] - 0.1 * hh else None
+        cv.fill(cv.rect(cx - 0.2 * hh, d['crotch'] - 0.3 * hh, cx + 0.2 * hh, d['crotch'] + 0.5 * hh), s.bot,
+                ('ell', cx - 0.2 * hh, d['crotch'], 0.5 * hh, 0.6 * hh), pattern=pat)
+
     def _vest_pat(s, cx, d, gap, side=False, x0=0):
         top = s.r['top']
         s1, s2 = s.rp(top['stripe']), s.rp(top['stripe2'])
@@ -219,8 +235,11 @@ class Fig:
                 return None
         elif top.get('hstripe'):
             hs = s.rp(top['hstripe'])
+            osg = (1 if back else -1) if top.get('oneshoulder') else 0  # bare shoulder on the character's left
 
             def pat(x, y):
+                if osg and (x + 0.5 - cx) * osg > 0 and y + 0.5 < sy + 0.62 * hh - (x + 0.5 - cx) * osg * 0.55:
+                    return s.skin
                 return hs if int(y - sy) % 4 == 2 else None
         cv.fill(body & (cv.Y < tee_bot), s.tee, lit, pattern=pat)
         cv.fill(body & (cv.Y >= tee_bot), s.bot, ('ell', cx - 0.3 * hh, crotch - 0.3 * hh, hw * 1.4, hh * 0.6))
@@ -269,6 +288,20 @@ class Fig:
             for i in range(4):
                 cv.px(x0 + i, y0, cols[i % 3])
                 cv.px(x0 + i, y0 + 1, cols[(i + 2) % 3])
+        if s.r.get('towel'):  # towel round the neck, two ends down the chest
+            tw = s.rp(s.r['towel'])
+            for sg in (-1, 1):
+                cv.fill(cv.rect(cx + sg * 0.28 * hh - 0.9, sy - 0.05 * hh, cx + sg * 0.28 * hh + 0.9, sy + 0.75 * hh), tw, ('flat', 0.4))
+        if s.r.get('pouch'):  # 織草 woven-grass crossbody pouch: strap from the character's left shoulder to the right hip
+            pr = s.rp(s.r['pouch'])
+            x0, y0 = cx + 0.5 * hh, sy + 0.02 * hh
+            x1, y1 = cx - 0.42 * hh, waist + 0.12 * hh
+            for t in np.linspace(0, 1, 24):
+                cv.px(int(x0 + (x1 - x0) * t), int(y0 + (y1 - y0) * t), pr['sh'])
+
+            def wv(x, y):
+                return darker(pr) if (x + y) % 3 == 0 else None
+            cv.fill(cv.rect(x1 - 2.5, y1 - 0.5, x1 + 2.0, y1 + 0.36 * hh), pr, ('flat', 0.5), pattern=wv)
         if s.r.get('camera'):
             x0, y0 = cx - 0.5 * hh, sy + 0.05 * hh
             x1, y1 = cx + 0.35 * hh, waist - 0.05 * hh
@@ -311,7 +344,7 @@ class Fig:
                 e2 = (sh_[0] + (el[0] - sh_[0]) * f_, sh_[1] + (el[1] - sh_[1]) * f_)
                 cv.fill(cv.cap(sh_, e2, d['ra'] + 0.7, d['rf'] + 0.9), sl, ('cyl', sh_, e2, d['ra'] + 0.7),
                         pattern=s._floral_pat() if top.get('floral') and not far else None)
-        else:
+        elif not top.get('sleeveless'):
             sl = darker(s.tee) if far else s.tee
             e2 = (sh_[0] + (el[0] - sh_[0]) * 0.40, sh_[1] + (el[1] - sh_[1]) * 0.40)
             s0 = (sh_[0] + (el[0] - sh_[0]) * -0.05, sh_[1] + (el[1] - sh_[1]) * -0.05)
@@ -323,11 +356,15 @@ class Fig:
         sg = -1 if back else 1           # the character's right hand
         hx_ = cx + sg * (d['sw'] - 0.04 * hh)
         hy = d['crotch'] - 0.12 * hh + (wk[2] if back else wk[3]) + 0.15 * hh
-        if p == 'stick':
+        if p in ('stick', 'paddle'):
             x = cx + sg * (d['sw'] + 0.1 * hh) - (1 if sg < 0 else 0)
-            rp = s.rp(C['stick'])
-            cv.fill(cv.rect(x - 0.2, hy - 0.4 * hh, x + 1.3, GY + 0.5), rp, ('cyl', (x + 0.5, 0), (x + 0.5, 96), 1.0))
-            cv.fill(cv.ell(x + 0.5, hy - 0.4 * hh, 1.6, 1.1), rp, ('flat', 0.9))
+            rp = s.rp(C['stick'] if p == 'stick' else C['paddle'])
+            top_ = hy - (0.4 if p == 'stick' else 1.1) * hh
+            cv.fill(cv.rect(x - 0.2, top_, x + 1.3, GY + 0.5), rp, ('cyl', (x + 0.5, 0), (x + 0.5, 96), 1.0))
+            if p == 'stick':
+                cv.fill(cv.ell(x + 0.5, top_, 1.6, 1.1), rp, ('flat', 0.9))
+            else:  # paddle held upright, blade resting on the ground
+                cv.fill(cv.ell(x + 0.5, GY - 0.55 * hh, 1.9, 0.55 * hh), rp, ('cyl', (x + 0.5, 0), (x + 0.5, 96), 1.9))
             # hand closes over the stick again
             cv.fill(cv.ell(hx_ + sg * 0.6, hy, d['rf'] + 0.45, d['rf'] + 0.6), s.skin, ('ell', hx_ - 2, hy - 2, 4, 4))
         elif p == 'basket':
@@ -352,6 +389,58 @@ class Fig:
                 m = cv.rect(hx_ - 2 + sg * 1.2, hy - 0.4 * hh, hx_ + 2 + sg * 1.2, hy + 0.2 * hh)
                 cv.fill(m, s.rp(C['book']), ('flat', 0.5))
             cv.fill(cv.ell(hx_, hy, d['rf'] + 0.45, d['rf'] + 0.6), s.skin, ('ell', hx_ - 2, hy - 2, 4, 4))
+        elif p in HAND_ITEMS:
+            s._hand_item(cv, hx_ + sg * 1.0, hy, p, back)
+            cv.fill(cv.ell(hx_, hy, d['rf'] + 0.45, d['rf'] + 0.6), s.skin, ('ell', hx_ - 2, hy - 2, 4, 4))
+
+    def _hand_item(s, cv, x, y, p, back=False):
+        """small carried items, drawn just under the closed hand at (x, y)"""
+        hh = s.hh
+        if p == 'leaves':  # bundle of taro leaves
+            g = s.rp('#5E9A48')
+            for dx, dy, r in ((-1.2, -0.5, 0.26), (1.2, -0.42, 0.24), (0, -0.7, 0.28)):
+                cv.fill(cv.ell(x + dx, y + dy * hh, r * hh, r * hh * 0.8), g, ('ell', x - 2, y - hh, 0.5 * hh, 0.5 * hh))
+            cv.fill(cv.rect(x - 0.5, y - 0.2 * hh, x + 0.5, y + 0.3 * hh), s.rp('#8BB060'), ('flat', 0.4), contour=False)
+        elif p == 'cloth':  # folded hand-woven cloth, white / indigo / black stripes
+            w_, b_, k_ = s.rp('#EDE6D6'), s.rp('#3A5A9A'), s.rp('#22202A')
+
+            def cp(px_, py_):
+                k = int(py_) % 4
+                return b_ if k == 1 else (k_ if k == 3 else None)
+            cv.fill(cv.rect(x - 2.5, y - 0.15 * hh, x + 2.5, y + 0.45 * hh), w_, ('flat', 0.5), pattern=cp)
+        elif p == 'net':  # bundled fishing net
+            n_ = s.rp('#B8A578')
+
+            def npat(px_, py_):
+                return darker(n_) if (px_ + py_) % 2 == 0 else None
+            cv.fill(cv.ell(x, y + 0.3 * hh, 0.36 * hh, 0.42 * hh), n_, ('ell', x - 2, y, 0.5 * hh, 0.5 * hh), pattern=npat)
+        elif p == 'rope':  # coil of rope
+            r_ = s.rp('#C9A66B')
+            ring = cv.ell(x, y + 0.3 * hh, 0.36 * hh, 0.3 * hh) & ~cv.ell(x, y + 0.3 * hh, 0.36 * hh - 1.4, 0.3 * hh - 1.4)
+            cv.fill(ring, r_, ('ell', x - 2, y, 0.5 * hh, 0.5 * hh))
+        elif p == 'keys':
+            cv.fill(cv.ell(x, y + 0.25 * hh, 1.2, 1.2), s.rp(C['silver']), ('flat', 0.6))
+        elif p == 'hammer':
+            cv.fill(cv.rect(x - 0.5, y - 0.1 * hh, x + 0.6, y + 0.6 * hh), s.rp(C['stick']), ('flat', 0.4))
+            cv.fill(cv.rect(x - 1.8, y + 0.55 * hh, x + 1.8, y + 0.75 * hh + 0.5), s.rp('#7A7E86'), ('flat', 0.5))
+        elif p == 'pot':  # aluminium cooking pot with a wooden ladle
+            cv.fill(cv.rect(x - 2.6, y + 0.05 * hh, x + 2.6, y + 0.55 * hh), s.rp('#A9ADB2'), ('cyl', (x - 3, 0), (x + 3, 0), 2.6))
+            cv.fill(cv.rect(x - 0.4, y - 0.45 * hh, x + 0.5, y + 0.1 * hh), s.rp(C['stick']), ('flat', 0.4), contour=False)
+        elif p == 'yams':  # long yam tubers in a mesh bag
+            for dx in (-1.2, 0.2, 1.4):
+                cv.fill(cv.ell(x + dx, y + 0.45 * hh, 0.75, 0.42 * hh), s.rp('#9A6A42'), ('flat', 0.4))
+            cv.px(int(x), int(y), hx('#C9A66B')); cv.px(int(x), int(y + 1), hx('#C9A66B'))
+        elif p == 'bucket':  # small bucket of shells and seaweed
+            cv.fill(cv.rect(x - 2.2, y + 0.1 * hh, x + 2.2, y + 0.6 * hh), s.rp('#9AA0A4'), ('flat', 0.4))
+            cv.fill(cv.rect(x - 2.2, y + 0.05 * hh, x + 2.2, y + 0.15 * hh + 0.5), s.rp('#4E7A3A'), ('flat', 0.5), contour=False)
+            cv.px(int(x - 1), int(y + 0.08 * hh), hx('#EDE3CE')); cv.px(int(x + 1), int(y + 0.1 * hh), hx('#EDE3CE'))
+        elif p == 'basin':  # shallow basin of sweet potatoes, held in front with both hands
+            cv.fill(cv.ell(x, y + 0.35 * hh, 0.45 * hh, 0.22 * hh) & (cv.Y > y + 0.25 * hh), s.rp('#E2D8C4'), ('flat', 0.4))
+            for dx, c in ((-1.6, '#8A4A6A'), (0, '#C8703A'), (1.6, '#8A4A6A')):
+                cv.fill(cv.ell(x + dx, y + 0.22 * hh, 1.2, 0.8), s.rp(c), ('flat', 0.4))
+        elif p == 'radio':
+            cv.fill(cv.rect(x - 1.2, y - 0.45 * hh, x + 1.2, y + 0.2 * hh), s.rp('#2E2C30'), ('flat', 0.4))
+            cv.px(int(x), int(y - 0.6 * hh), hx('#2E2C30'))
 
     # ------------------------------------------------------------------ heads (front / back)
     def head_frontal(s, cv, cx, cy, d, back, blink, helmet=None):
@@ -412,6 +501,34 @@ class Fig:
             cv.px(icx - 1, ey - 3, s.skin['sh']); cv.px(icx, ey - 3, s.skin['sh'])
         my = int(round(cy + 0.25 * hh))
         cv.px(icx - 1, my, s.skin['sh']); cv.px(icx, my, s.skin['deep'])
+        s._face_marks_front(cv, icx, ey, my, L, Rr)
+
+    def _face_marks_front(s, cv, icx, ey, my, L, Rr):
+        """per-character face details: glasses (frame line above the eyes) and facial hair"""
+        gl = s.r.get('glasses')
+        if gl:
+            g = hx(gl)
+            for x in range(L - 1, Rr + 2):
+                cv.px(x, ey - 1, g)
+            cv.px(L - 2, ey, g); cv.px(Rr + 2, ey, g)
+            if s.r.get('round_glasses'):  # thin round lenses: close each rim under the eye
+                cv.px(L - 2, ey + 1, g); cv.px(Rr + 2, ey + 1, g)
+                for x in (L - 1, L, Rr, Rr + 1):
+                    cv.px(x, ey + 2, g)
+        bd = s.r.get('beard')
+        if bd:
+            bc = s.hair['sh'] if s.r['hair'][1] in ('grey', 'greyblk') else s.hair['line']
+            if bd in ('moustache', 'goatee'):
+                for x in range(icx - 2, icx + 2):
+                    cv.px(x, my - (1 if bd == 'moustache' else 0), bc)
+            if bd == 'goatee':
+                cv.px(icx - 1, my + 1, bc); cv.px(icx, my + 1, bc); cv.px(icx, my + 2, bc)
+            if bd == 'stubble':
+                for x in range(icx - 3, icx + 3):
+                    for y in (my + 1, my + 2):
+                        if (x + y) % 2 == 0:
+                            cv.px(x, y, s.skin['deep'])
+                cv.px(icx - 2, my - 1, s.skin['deep']); cv.px(icx + 1, my - 1, s.skin['deep'])
 
     def hair_frontal(s, cv, cx, cy, d, kind, back, helmet):
         hh, rx, ry = s.hh, d['rx'], d['ry']
@@ -422,8 +539,14 @@ class Fig:
         if back:
             nape = {'elder': cy + 0.12, 'short': cy + 0.30, 'spiky': cy + 0.32, 'bun': cy + 0.2,
                     'bob': cy + 0.55, 'long': cy + 0.6, 'ponytail': cy + 0.25, 'puff': cy + 0.35,
-                    'wavy': cy + 0.40, 'wavylong': cy + 0.6, 'lowtail': cy + 0.30}[kind]
+                    'wavy': cy + 0.40, 'wavylong': cy + 0.6, 'lowtail': cy + 0.30, 'bald': cy + 0.12,
+                    'pigtails': cy + 0.30}[kind]
             m = (big | cv.ell(cx, cy, rx + 0.06 * hh, ry + 0.02 * hh)) & (Y < cy + (nape - cy) * hh)
+            if kind == 'bald':  # bare crown, a ring of hair round the back
+                m &= Y > cy - 0.26 * hh
+            if kind == 'pigtails' and not helmet:
+                for sg in (-1, 1):
+                    m |= cv.ell(cx + sg * (rx + 0.2 * hh), cy + 0.12 * hh, 0.16 * hh, 0.24 * hh)
             if kind == 'spiky':
                 for k in (-1, 0, 1):
                     tx = cx + k * rx * 0.6
@@ -458,11 +581,17 @@ class Fig:
                 tx = cx + k * rx * 0.6
                 m |= cv.poly([(tx - 2.4, cy - 0.52 * hh), (tx + 0.6 + k * 1.6, cy - 0.74 * hh), (tx + 2.4, cy - 0.50 * hh)])
             cv.fill(m, s.hair, sh)
-        elif kind in ('short', 'ponytail'):
+        elif kind in ('short', 'ponytail', 'pigtails'):
             m = big & (Y < hl + ((X - cx) > 0) * 0.8)
             m |= big & (np.abs(X - cx) > rx * 0.86) & (Y < cy + 0.06 * hh)
             if kind == 'ponytail':
                 m |= big & (Y < hl + 1.6) & (X < cx - 0.5)
+            if kind == 'pigtails' and not helmet:
+                for sg in (-1, 1):
+                    m |= cv.ell(cx + sg * (rx + 0.2 * hh), cy + 0.12 * hh, 0.16 * hh, 0.24 * hh)
+            cv.fill(m, s.hair, sh)
+        elif kind == 'bald':  # bare crown, hair only above the ears
+            m = big & (np.abs(X - cx) > rx * 0.78) & (Y > cy - 0.30 * hh) & (Y < cy + 0.04 * hh)
             cv.fill(m, s.hair, sh)
         elif kind == 'bob':
             m = big & (Y < hl + 0.8)
@@ -711,6 +840,18 @@ class Fig:
             cols = [C['bead1'], C['bead2'], C['bead3']]
             for i in range(5):
                 cv.px(int(neck[0] - 0.30 * hh + i * 0.6), int(neck[1] + 0.1 * hh + i * 0.35), hx(cols[i % 3]))
+        if s.r.get('towel'):
+            for i in range(5):
+                cv.px(int(neck[0] - 0.22 * hh), int(neck[1] + 0.05 * hh + i), hx(s.r['towel']))
+        if s.r.get('pouch'):
+            pr = s.rp(s.r['pouch'])
+            for i in range(9):
+                cv.px(int(neck[0] - 0.24 * hh + i * 0.12), int(neck[1] + 0.1 * hh + i * 1.1), pr['sh'])
+
+            def wv(x, y):
+                return darker(pr) if (x + y) % 3 == 0 else None
+            px0, py0 = tp(-0.18, -0.30)
+            cv.fill(cv.rect(px0 - 2.0, py0, px0 + 2.0, py0 + 0.36 * hh), pr, ('flat', 0.5), pattern=wv)
         if s.r.get('lanyard'):
             for i in range(6):
                 cv.px(int(neck[0] - 0.2 * hh - i * 0.3), int(neck[1] + 0.1 * hh + i * 0.9), hx('#3C6FA8'))
@@ -723,6 +864,9 @@ class Fig:
             s.leg_side(cv, hip, legs[0], d, far=False)
             if s.r['bottom']['kind'] in ('skirt', 'longskirt'):
                 s.skirt_side(cv, hip, legs, d, tp)
+            if s.r['bottom']['kind'] == 'loincloth':  # flap hangs at the front of the hips
+                cv.fill(cv.poly([tp(-0.36, 0.10), tp(-0.12, 0.10), tp(-0.16, 0.62), tp(-0.38, 0.62)]), s.bot,
+                        ('ell', *tp(-0.3, 0.2), 0.5 * hh, 0.6 * hh))
         if k == 'coat' and legs:  # coat tail over the thighs
             k0, _ = s.leg_pts(hip, legs[0], d)
             k1, _ = s.leg_pts(hip, legs[1], d)
@@ -734,7 +878,7 @@ class Fig:
         if P.get('near_arm'):
             el, wr = P['near_arm']
             s.arm(cv, sh_pt, el, wr, d)
-            if P.get('prop', True) and s.r.get('prop') in ('basket', 'clipboard', 'notebook'):
+            if P.get('prop', True) and s.r.get('prop') in CARRY:
                 s.prop_side(cv, wr, d)
         if P.get('post'):
             P['post'](cv)
@@ -757,6 +901,8 @@ class Fig:
         elif p == 'clipboard':
             m = cv.rect(hx_ - 2.5, hy - 0.5 * hh, hx_ + 0.5, hy + 0.3 * hh)
             cv.fill(m, s.rp(C['board']), ('flat', 0.4))
+        elif p in HAND_ITEMS:
+            s._hand_item(cv, hx_ - 0.5, hy, p)
         else:
             cv.fill(cv.rect(hx_ - 2, hy - 0.35 * hh, hx_ + 0.5, hy + 0.2 * hh), s.rp(C['book']), ('flat', 0.5))
         cv.fill(cv.ell(hx_, hy - 0.1 * hh, d['rf'] + 0.45, d['rf'] + 0.6), s.skin, ('ell', hx_ - 2, hy - 2, 4, 4))
@@ -844,7 +990,23 @@ class Fig:
         else:
             cv.px(ex, ey, eye); cv.px(ex, ey + 1, hx(C['iris']) if not s.r.get('elder') else s.skin['deep'])
         cv.px(ex, ey - 2, s.hair['line']); cv.px(ex + 1, ey - 2, s.hair['line'])
-        cv.px(fx + 1, int(round(hy + 0.25 * hh)), s.skin['sh'])
+        my = int(round(hy + 0.25 * hh))
+        cv.px(fx + 1, my, s.skin['sh'])
+        if s.r.get('glasses'):
+            g = hx(s.r['glasses'])
+            for x in range(ex - 1, ex + 4):
+                cv.px(x, ey - 1, g)
+            cv.px(ex - 1, ey, g)
+        bd = s.r.get('beard')
+        if bd:
+            bc = s.hair['sh'] if s.r['hair'][1] in ('grey', 'greyblk') else s.hair['line']
+            if bd in ('moustache', 'goatee'):
+                cv.px(fx + 1, my - (1 if bd == 'moustache' else 0), bc); cv.px(fx + 2, my - (1 if bd == 'moustache' else 0), bc)
+            if bd == 'goatee':
+                cv.px(fx + 1, my + 1, bc); cv.px(fx + 2, my + 2, bc)
+            if bd == 'stubble':
+                for x, y in ((fx + 1, my + 1), (fx + 3, my + 1), (fx + 2, my + 2), (fx + 4, my + 2), (fx + 2, my - 1)):
+                    cv.px(x, y, s.skin['deep'])
         ear = cv.ell(hx_ + 0.10 * hh, hy + 0.10 * hh, 0.12 * hh + 0.3, 0.16 * hh + 0.3)
         big = cv.ell(hx_ + 0.06 * hh, hy - 0.08 * hh, rx + 0.10 * hh, ry * 0.95 + 0.05 * hh)
         shd = ('ell', hx_ - 0.2 * hh, hy - 0.5 * hh, rx * 1.4, ry * 1.2)
@@ -858,9 +1020,16 @@ class Fig:
             m &= ~(ear & (Y > hy - 0.02 * hh))
             cv.fill(m, s.hair, shd)
             cv.fill(ear & ~m, s.skin, ('flat', 0.4))
-        elif kind in ('short', 'ponytail', 'elder', 'bun', 'lowtail'):
-            lim = hy - (0.22 if kind in ('short', 'ponytail', 'lowtail') else 0.28) * hh
+        elif kind == 'bald':
+            m = big & (X > hx_ + 0.04 * hh) & (Y > hy - 0.28 * hh)
+            m &= ~(ear & (Y > hy - 0.02 * hh))
+            cv.fill(m, s.hair, shd)
+            cv.fill(ear & ~m, s.skin, ('flat', 0.4))
+        elif kind in ('short', 'ponytail', 'elder', 'bun', 'lowtail', 'pigtails'):
+            lim = hy - (0.22 if kind in ('short', 'ponytail', 'lowtail', 'pigtails') else 0.28) * hh
             m = big & ((Y < lim) | (X > hx_ + 0.04 * hh))
+            if kind == 'pigtails' and not helmet:
+                m |= cv.ell(hx_ + 0.42 * hh, hy + 0.14 * hh, 0.16 * hh, 0.24 * hh)
             if kind == 'ponytail':
                 m |= big & (Y < lim + 1.6) & (X < hx_ - 0.2 * hh)
             m &= ~(ear & (Y > hy - 0.02 * hh))

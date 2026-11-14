@@ -249,7 +249,8 @@ function naturalRaw(x: number, z: number): { h: number; s: number; cliff: number
     const cliffH = capH + s * 6.5;
     h = lerp(beachH, cliffH, cliff) + Math.max(0, mountain);
     // soft terracing of grassy mid slopes (ridged agricultural / erosion steps)
-    const zone = smoothstep(2, 4, h) * (1 - smoothstep(10, 14, h));
+    // (style v2: kept away from the shore so the beach slope meets the sea without a step)
+    const zone = smoothstep(2, 4, h) * (1 - smoothstep(10, 14, h)) * smoothstep(0.1, 0.25, s);
     const step = 1.35;
     const t = h / step;
     const terr = (Math.floor(t) + smoothstep(0.25, 0.75, fract(t))) * step;
@@ -267,7 +268,8 @@ function naturalRaw(x: number, z: number): { h: number; s: number; cliff: number
     const ledgeH = 0.22 + (n1 - 0.5) * 0.5 - pool * 0.45;
     h = lerp(h, ledgeH, ledge);
     // sandy beach slope into the water elsewhere
-    h = lerp(h, lerp(0.05, h, smoothstep(0, 0.025, -s)), 1 - cliff);
+    // (style v2: continues the land slope under water, then eases onto the reef shelf; no lip at the waterline)
+    h = lerp(h, lerp(s * 5.0, h, smoothstep(0.0, 0.08, -s)), 1 - cliff);
   }
   return { h, s, cliff };
 }
@@ -457,8 +459,10 @@ function raw(x: number, z: number): Raw {
   const rd = distToRing(x, z);
   // 0.1.1: where the road hugs the shore it runs on a low seawall embankment, so the whole
   // network stays walkable (no 1–2 m dips into the shallows at village ends / the airport)
-  if (rd < 2.6 && pit === 0 && h < ROAD_BANK_H && h > -3) {
-    h = lerp(h, ROAD_BANK_H, 1 - smoothstep(1.6, 2.6, rd));
+  // (style v2: wider, gentler sand shoulder instead of a 0.6 m step down to the beach)
+  if (rd < 5.0 && pit === 0 && h < ROAD_BANK_H && h > -3) {
+    const k = 1 - smoothstep(1.5, 5.0, rd);
+    h = lerp(h, ROAD_BANK_H, k * k * (3 - 2 * k));
     land = Math.max(land, 1 - smoothstep(1.9, 2.4, rd));
   }
   let road = 0;

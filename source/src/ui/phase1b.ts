@@ -22,6 +22,12 @@ export interface DiveOpts {
  * Full-screen image popup (dives, album). Tap anywhere or ✕ to close; resolves when closed.
  * `ids` = illustration ids; several (U3) show as a 3×2 set.
  */
+/** closes an open image popup as if tapped (closeAll / fast travel); its promise resolves */
+let closePopup: (() => void) | null = null;
+export function closeImagePopup(): void {
+  closePopup?.();
+}
+
 export async function showImagePopup(ids: string[], title: string, caption: string, keepLabel = '收進相簿'): Promise<void> {
   document.getElementById('dive-scene')?.remove();
   const wrap = el('div', `dive-scene${ids.length > 1 ? ' multi' : ''}`);
@@ -30,8 +36,13 @@ export async function showImagePopup(ids: string[], title: string, caption: stri
   wrap.setAttribute('aria-modal', 'true');
   wrap.setAttribute('aria-label', title);
   const stage = el('div', 'dive-stage');
-  const imgs = await Promise.all(ids.map((id) => loadImage(diveUrl(id))));
+  // a missing image shows a placeholder; the popup (and the quest step after it) still completes
+  const imgs = await Promise.all(ids.map((id) => loadImage(diveUrl(id)).then((i) => (i.naturalWidth ? i : null), () => null)));
   for (const img of imgs) {
+    if (!img) {
+      stage.append(el('div', 'dive-img dive-missing', '（圖片暫時無法顯示）'));
+      continue;
+    }
     img.className = 'dive-img';
     img.alt = title;
     img.draggable = false;
@@ -49,6 +60,7 @@ export async function showImagePopup(ids: string[], title: string, caption: stri
   btn.focus({ preventScroll: true });
   await new Promise<void>((res) => {
     const done = (): void => {
+      closePopup = null;
       wrap.removeEventListener('click', done);
       document.removeEventListener('keydown', key);
       res();
@@ -56,6 +68,7 @@ export async function showImagePopup(ids: string[], title: string, caption: stri
     const key = (e: KeyboardEvent): void => {
       if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') done();
     };
+    closePopup = done;
     wrap.addEventListener('click', done); // tap anywhere (the ✕ button included)
     document.addEventListener('keydown', key);
   });

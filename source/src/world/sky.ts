@@ -1,4 +1,7 @@
 import * as THREE from 'three';
+import { seasonLook, applyMix } from '../render/look';
+import { worldStyle } from '../render/stylize';
+import { PAINT } from '../render/styleConfig';
 import { PRESETS, seasonTint, type Period, type Season, type LightPreset } from '../core/timeSeason';
 import { preferredShadowMapSize } from '../core/device';
 
@@ -153,13 +156,17 @@ export class SkyLighting {
     this.rim.intensity = period === 'night' ? 0.25 : period === 'dusk' ? 0.5 : 0.35;
     this.rim.color.set(period === 'dusk' ? '#8fa0ff' : period === 'night' ? '#6f86c8' : '#a8cbff');
 
-    const fog = p.fog.clone();
-    if (season === 'manoyotoyon') fog.lerp(new THREE.Color('#f0c090'), 0.12);
-    if (season === 'off') fog.lerp(new THREE.Color('#b8c4cc'), 0.25);
+    // season look (src/render/styleConfig.ts SEASON_LOOK); at night the season tint is weaker
+    const look = seasonLook(season);
+    const nightK = period === 'night' ? 0.35 : 1;
+    this.sun.intensity *= look.sunMul;
+    this.hemi.intensity *= look.hemiMul;
+    const fog = applyMix(p.fog.clone(), [look.fog[0], look.fog[1] * nightK]);
     if (scene.fog && scene.fog instanceof THREE.Fog) {
       scene.fog.color.copy(fog);
-      scene.fog.near = p.fogNear;
-      scene.fog.far = p.fogFar;
+      const fs = worldStyle() === 'watercolor' ? PAINT.fogScale : 1; // crisp air in the painted style
+      scene.fog.near = p.fogNear * fs;
+      scene.fog.far = p.fogFar * fs;
     }
     scene.background = fog;
 
@@ -170,8 +177,9 @@ export class SkyLighting {
     (u.uSunDir.value as THREE.Vector3).copy(p.sunDir);
     (u.uSunColor.value as THREE.Color).copy(p.sunColor);
     u.uNight.value = period === 'night' ? 1 : 0;
-    u.uCloud.value = season === 'off' ? 1.0 : season === 'rayon' ? 0.35 : 0.55;
-    if (season === 'off') (u.uZenith.value as THREE.Color).lerp(new THREE.Color('#7f95a8'), 0.35);
+    u.uCloud.value = look.cloud;
+    applyMix(u.uZenith.value as THREE.Color, [look.zenith[0], look.zenith[1] * nightK]);
+    applyMix(u.uHorizon.value as THREE.Color, [look.horizon[0], look.horizon[1] * nightK]);
   }
 
   get preset(): LightPreset {

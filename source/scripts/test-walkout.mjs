@@ -1,7 +1,7 @@
 // 0.1.1 bugfix test: a fresh game spawns the party on the 開元港 dock; walk off it onto the road with
 // real input only (desktop: held arrow keys; mobile: touch drag on the #vpad joystick), then check
 // sprite facing for ←→↑↓ (also after a camera rotation, on the scooter and in the tatala).
-// OUT=screenshots-0.1.1 node scripts/test-walkout.mjs   (needs `npm run build` first)
+// OUT=screenshots-0.1.1 node scripts/test-walkout.mjs   (needs `npm run build` first; LIVE_URL=… for a deployed site)
 import fs from 'node:fs';
 import path from 'node:path';
 import { startStaticServer, launchBrowser, debugUrl } from './lib/harness.mjs';
@@ -9,7 +9,8 @@ import { startStaticServer, launchBrowser, debugUrl } from './lib/harness.mjs';
 const OUT = path.resolve(process.env.OUT || 'screenshots-0.1.1');
 fs.mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const srv = await startStaticServer({ root: path.resolve('dist'), port: Number(process.env.PORT || 8851) });
+// LIVE_URL=https://kpyglobal.github.io/PongsoNoTao/ runs the same test against a deployed site (no local server)
+const srv = process.env.LIVE_URL ? { base: process.env.LIVE_URL, close: async () => {} } : await startStaticServer({ root: path.resolve('dist'), port: Number(process.env.PORT || 8851) });
 const report = { errors: [], http4xx: [], fails: [] };
 const check = (name, ok, info) => {
   if (!ok) report.fails.push(name);
@@ -82,8 +83,11 @@ try {
     const trail = [];
     let reached = 0;
     const t0 = Date.now();
-    while (reached < ROUTE.length && Date.now() - t0 < 90000) {
-      const s = await ev(() => ({ p: window.__TAO_RPG__.playerPos(), c: window.__TAO_RPG__.cam() }));
+    // wall-clock budget: headless swiftshader at 1440×900 runs ~10 fps here (≈80–90 s for the route), so 150 s, not 90
+    while (reached < ROUTE.length && Date.now() - t0 < 150000) {
+      const s = await ev(() => ({ p: window.__TAO_RPG__.playerPos(), c: window.__TAO_RPG__.cam(), m: window.__TAO_RPG__.mode() }));
+      // QA H3: a story line can pop up after the arrival (auto lines on the quest tick); like a player, close it first
+      if (s.m === 'dialogue') { await release(); await drain(); continue; }
       trail.push([+s.p.x.toFixed(2), +s.p.z.toFixed(2)]);
       const tgt = ROUTE[reached];
       const dx = tgt.x - s.p.x, dz = tgt.z - s.p.z;
@@ -109,10 +113,11 @@ try {
         if (Math.hypot(a[0] - b[0], a[1] - b[1]) < 0.3) break; // stuck
       }
     }
+    const diag = await ev(() => ({ mode: window.__TAO_RPG__.mode(), modals: window.__TAO_RPG__.openModals(), focus: document.activeElement?.id || document.activeElement?.tagName }));
     await release();
     const p1 = await ev(() => window.__TAO_RPG__.playerPos());
     const rd = await ev((p) => window.__TAO_RPG__.roadDist(p.x, p.z), p1);
-    check(`${T}: walked off the dock onto the road (${T === 'mobile' ? 'joystick' : 'arrow keys'})`, reached === ROUTE.length && rd < 1.5, { reached, p1, roadDist: +rd.toFixed(2), secs: ((Date.now() - t0) / 1000).toFixed(1), steps: trail.length });
+    check(`${T}: walked off the dock onto the road (${T === 'mobile' ? 'joystick' : 'arrow keys'})`, reached === ROUTE.length && rd < 1.5, { reached, p1, roadDist: +rd.toFixed(2), secs: ((Date.now() - t0) / 1000).toFixed(1), steps: trail.length, diag });
     await ev(() => window.__TAO_RPG__.setCamera({ dist: 26 }));
     await shot('02-harbour-exit-on-road', 1200);
 

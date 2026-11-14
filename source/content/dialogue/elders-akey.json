@@ -1,0 +1,388 @@
+{
+  "note": "男性長輩 a akey：負責漁獵、飛魚季出海、拼板舟的決定。idle 依 when（time / seasons）挑選，沒有符合的就用第一組。",
+  "dialogues": {
+    "dlg_elder_yayo": {
+      "npc": "elder_yayo",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "飛魚季出海、漁網和船組的事，椰油這邊我在看。"
+        },
+        {
+          "zh": "網是一家人的飯碗，破了就要補。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "港口的船來來去去，可是海還是那片海。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "晚上了，早點回家。明天的海，明天再看。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "飛魚季到了，船組天還沒亮就要準備。"
+            },
+            {
+              "zh": "alibangbang 回來了，大家都忙起來。",
+              "tao": "alibangbang"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天浪大，正好在家補網。"
+            }
+          ]
+        }
+      ]
+    },
+    "dlg_elder_iraraley": {
+      "npc": "elder_iraraley",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "造 tatala、上山選木頭，朗島這邊找我。",
+          "tao": "tatala"
+        },
+        {
+          "zh": "一條船要好多人一起做，不是一個人的。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "朗島的潮間帶很大，退潮時去看看。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "晚上山裡很暗，不要自己上山。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "飛魚季的船都下水了，今年的船跑得很好。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天要決定先修哪一條船。"
+            }
+          ]
+        }
+      ]
+    },
+    "dlg_elder_iranmeylek": {
+      "npc": "elder_iranmeylek",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "出海的繩子、槳，東清這邊我在教。"
+        },
+        {
+          "zh": "海上的事要自己看清楚，不要靠別人。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "東清灣的早晨最早亮，遊客也最早來。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "聽，浪聲變大了，明天風會比較強。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "飛魚季時，灘頭的規矩要守好。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天的海不讓人出去，我們就等。"
+            }
+          ]
+        }
+      ]
+    },
+    "dlg_elder_ivalino": {
+      "npc": "elder_ivalino",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "飛魚季的規矩、魚怎麼分，野銀的男人一起商量，我年紀最大，大家會來問我。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "野銀的老房子還在，是祖先留給我們的。想拍，先問屋主。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "老人家晚上就是坐著，聽海、想以前的事。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "分魚的時候，不能忘記行動不方便的長輩。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天的風很冷，老房子比較暖。"
+            }
+          ]
+        }
+      ]
+    },
+    "dlg_elder_imorod": {
+      "npc": "elder_imorod",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "山上的事我比較熟：羊、樹、山路。"
+        },
+        {
+          "zh": "上山要跟大人一起，不要亂走。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "紅頭山上的羊又跑遠了。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "晚上不上山，山有山的規矩。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "紅頭是飛魚的故事開始的地方。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天草長得慢，羊會跑到比較低的地方。"
+            }
+          ]
+        }
+      ]
+    },
+    "dlg_elder_iratay": {
+      "npc": "elder_iratay",
+      "intro": "elder_home",
+      "greet": [
+        {
+          "zh": "akokey！來，坐一下。",
+          "tao": "akokey"
+        }
+      ],
+      "duty": [
+        {
+          "zh": "漁人的船組出海、分魚，問我就對了。"
+        }
+      ],
+      "idle": [
+        {
+          "when": {
+            "time": "day"
+          },
+          "lines": [
+            {
+              "zh": "飛機起起落落，可是我們的船還是用划的。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "time": "night"
+          },
+          "lines": [
+            {
+              "zh": "灘頭晚上很安靜，船都在休息。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "summer"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "飛魚季，族男可以跟我們船組出海。只有男人去。"
+            }
+          ]
+        },
+        {
+          "when": {
+            "seasons": [
+              "winter"
+            ]
+          },
+          "lines": [
+            {
+              "zh": "冬天風大，大家在家整理漁具。"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

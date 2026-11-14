@@ -22,6 +22,7 @@
 | --- | --- | --- |
 | player / player_f | `characters/player_sheet.png`、`player_f_sheet.png` | 族人主角（男生：短刺髮、織紋背心、串珠；女生：長髮、珊瑚色織帶上衣、靛藍裙） |
 | player_visitor / player_visitor_f | `characters/player_visitor_sheet.png`、`player_visitor_f_sheet.png` | 臺灣本島旅人（男生／女生：漁夫帽、橄欖綠襯衫、背包、相機） |
+| 服裝變體 / outfit variants | `characters/player_trad_sheet.png`、`player_f_trad_sheet.png`、`player_visitor_acc_sheet.png`、`player_visitor_f_acc_sheet.png` | 解鎖並換上服裝後的走路表：族男／族女傳統服飾、旅人織草帽與小袋（男／女）。對應 `content/outfits/outfits.json` 的 `sheet` / `sheetByGender`。騎車與划船沒有變體，沿用原本主角的表。缺圖時自動用原本的表 |
 | ride_* | `characters/ride_<outfit>_sheet.png`（384×384） | 上列四種主角的騎機車姿勢（四方向），含安全帽 |
 | canoe_* | `characters/canoe_<outfit>_sheet.png`（512×384） | 上列四種主角坐 tatala 划槳（四方向）；無 outrigger |
 | elder | `characters/elder_sheet.png` | 長輩：灰白髮、織紋背心、手杖 |

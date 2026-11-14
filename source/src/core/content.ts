@@ -1,11 +1,9 @@
 /**
- * Typed shapes of everything under public/data/*.json plus a small runtime shape check,
- * so a malformed edit fails loudly at load instead of as `undefined` deep in the game loop.
+ * Typed shapes of the UI / glossary / milestone / legacy dialogue content (content/*.json) plus a small runtime
+ * shape check, so a malformed edit fails loudly at boot instead of as `undefined` deep in the game loop.
+ * Quests, items, NPCs … are checked by src/content/validate.ts.
  */
 import type { OriginId } from './state';
-import type { PlaceRec } from '../world/populate';
-import type { NpcDef } from '../entities/npcs';
-import type { QuestFile } from '../quests/types';
 
 export type Bilingual = { zh: string; tao: string };
 
@@ -95,20 +93,6 @@ export interface UiContent {
   text: UiText;
 }
 
-/** name → parsed type of public/data/<name>.json */
-export interface DataFiles {
-  places: { places: Record<string, PlaceRec> };
-  glossary: { entries: GlossaryEntry[] };
-  recipes: { ingredients: IngredientEntry[]; recipes: RecipeEntry[] };
-  npcs: { npcs: NpcDef[] };
-  milestones: { milestones: MilestoneEntry[] };
-  dialogues: DialogueFile;
-  ui: UiContent;
-  quests: QuestFile;
-}
-export type DataName = keyof DataFiles;
-export const DATA_FILES: DataName[] = ['places', 'glossary', 'recipes', 'npcs', 'milestones', 'dialogues', 'ui', 'quests'];
-
 /** `{key}` placeholders → values (copy lives in ui.json, numbers / names are filled in at runtime). */
 export function fmt(template: string, vars: Record<string, string | number>): string {
   return template.replace(/\{(\w+)\}/g, (m, k: string) => (k in vars ? String(vars[k]) : m));
@@ -157,20 +141,10 @@ const minigame = obj({
 });
 const dialogueNode = obj({ speaker: opt(bilingual), lines: arr(bilingual) });
 
-const CHECKS: Record<DataName, Check> = {
-  quests: obj({
-    phrases: rec(obj({ tao: str, zh: str })),
-    quests: arr(obj({ id: str, line: str, roles: arr(str), steps: arr(obj({ kind: str, text: str })), hint: obj({ tier: str, zh: str }) })),
-  }),
-  places: obj({ places: rec(obj({ id: str, zh: str, tao: str, x: num, z: num, kind: str })) }),
-  glossary: obj({ entries: arr(obj({ id: str, tao: str, zh: str, detail: str })) }),
-  recipes: obj({
-    ingredients: arr(obj({ id: str, zh: str, tao: str, nutrition: str })),
-    recipes: arr(obj({ id: str, zh: str, tao: str, steps: str, nutrition: str })),
-  }),
-  npcs: obj({ npcs: arr(obj({ id: str, kind: str, name: bilingual, home: str, interact: str, portrait: opt(str), schedule: arr(obj({ seasons: arr(str), times: arr(str), waypoints: arr(str) })) })) }),
-  milestones: obj({ milestones: arr(obj({ id: str, zh: str, tao: str, detail: str })) }),
-  dialogues: (v, at) => {
+const CHECKS = {
+  glossary: arr(obj({ id: str, tao: str, zh: str, detail: str })),
+  milestones: arr(obj({ id: str, zh: str, tao: str, detail: str })),
+  dialogues: (v: unknown, at: string) => {
     obj({ origins: rec(bilingual) })(v, at);
     for (const [k, node] of Object.entries(v as Record<string, unknown>)) {
       if (k === 'notes' || k === 'origins') continue;
@@ -187,7 +161,7 @@ const CHECKS: Record<DataName, Check> = {
       for (const k of TEXT_KEYS) str((v as Record<string, unknown>)[k], `${at}.${k}`);
     },
   }),
-};
+} satisfies Record<string, Check>;
 
 const TEXT_KEYS: (keyof UiText)[] = [
   'startTitle', 'startBody', 'startErrorTitle', 'startErrorBody', 'visitorWho', 'originWho',
@@ -198,7 +172,7 @@ const TEXT_KEYS: (keyof UiText)[] = [
 ];
 
 /** Throws a readable error (`data shape: ui.origins[3].hint should be a string`) on a malformed file. */
-export function checkData<K extends DataName>(name: K, raw: unknown): DataFiles[K] {
+export function checkShape<T>(name: keyof typeof CHECKS, raw: unknown): T {
   CHECKS[name](raw, name);
-  return raw as DataFiles[K];
+  return raw as T;
 }

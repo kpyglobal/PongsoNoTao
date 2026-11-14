@@ -3,6 +3,7 @@
  * Deterministic so screenshots are stable.
  */
 import * as THREE from 'three';
+import { BUILDING_ALBEDO } from '../render/styleConfig';
 
 export function rng(seed: number): () => number {
   let s = seed >>> 0;
@@ -176,14 +177,15 @@ export function stoneTex(): THREE.Texture {
     const S = 64;
     const [c, ctx] = canvas(S, S);
     const r = rng(11);
-    px(ctx, 0, 0, S, S, '#4a4643');
+    px(ctx, 0, 0, S, S, BUILDING_ALBEDO.stoneMortar);
     let y = 0;
     while (y < S) {
       const h = 6 + Math.floor(r() * 5);
       let x = -Math.floor(r() * 8);
       while (x < S) {
         const w = 7 + Math.floor(r() * 9);
-        const base = ['#7d776e', '#6b665f', '#8a8478', '#5f5a55', '#938b7c', '#746c62'][Math.floor(r() * 6)];
+        const B = BUILDING_ALBEDO.stoneBlocks;
+        const base = B[Math.floor(r() * B.length)];
         px(ctx, x + 1, y + 1, w - 1, h - 1, base);
         px(ctx, x + 1, y + 1, w - 2, 1, shade(base, 1.22));
         px(ctx, x + 1, y + h - 1, w - 1, 1, shade(base, 0.7));
@@ -202,7 +204,7 @@ export function thatchTex(dark = false): THREE.Texture {
     const S = 64;
     const [c, ctx] = canvas(S, S);
     const r = rng(dark ? 21 : 23);
-    const base = dark ? '#4b3f30' : '#9b8250';
+    const base = dark ? BUILDING_ALBEDO.thatchDark : BUILDING_ALBEDO.thatchLight;
     px(ctx, 0, 0, S, S, base);
     for (let row = 0; row < S; row += 8) {
       px(ctx, 0, row + 7, S, 1, shade(base, 0.55));
@@ -218,7 +220,7 @@ export function thatchTex(dark = false): THREE.Texture {
 }
 
 /** Weathered timber planks with grain. */
-export function woodTex(tone = '#8a6440'): THREE.Texture {
+export function woodTex(tone = BUILDING_ALBEDO.wood): THREE.Texture {
   return cached(`wood${tone}`, () => {
     const S = 64;
     const [c, ctx] = canvas(S, S);

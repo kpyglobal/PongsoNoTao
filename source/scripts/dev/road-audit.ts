@@ -56,16 +56,18 @@ function obbRoadClear(o: { x: number; z: number; yaw: number; hw: number; hd: nu
   return best;
 }
 
+import { loadContentNode } from './content-node';
+
 export function loadJSON(p: string): any {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
-export function collectTargets(root = 'public/data'): Target[] {
-  const P: Record<string, PlaceLike> = loadJSON(`${root}/places.json`).places;
+export function collectTargets(root = 'content'): Target[] {
+  const db = loadContentNode(root);
+  const P: Record<string, PlaceLike> = JSON.parse(JSON.stringify(db.places));
   addQuestPlaces(P);
   const out: Target[] = [];
-  const quests = loadJSON(`${root}/quests.json`);
-  const npcs = loadJSON(`${root}/npcs.json`).npcs as { id: string; home: string; schedule: { waypoints: string[] }[] }[];
+  const npcs = db.npcs;
   const homes = VILLAGE_DEFS.map((v) => v.id);
   const allP: Record<string, PlaceLike>[] = homes.map((h) => ({ ...P, ...(hostPlaces(P, h) ?? {}) }));
   // places: land ones must be walkable-reachable within 3 m; sea / islet ones are boat-only (skipped)
@@ -80,22 +82,32 @@ export function collectTargets(root = 'public/data'): Target[] {
       out.push({ id: `place:${id}@${homes[k]}`, kind: 'host', x: p.x, z: p.z, r: 3 });
     }
   }
-  // quest spot / photo steps with their trigger radius
-  for (const q of quests.quests) for (const st of q.steps) {
-    if (st.kind !== 'spot' && st.kind !== 'photo') continue;
-    const r = st.r ?? 6;
-    let pts: { x: number; z: number }[] = [];
-    if (st.kind === 'photo') {
-      const ps = quests.photoSpots[st.spot];
-      if (ps?.landmark) { const lm = LANDMARKS.find((l) => l.id === ps.landmark); if (lm) pts = [lm]; }
-      else if (ps?.place && P[ps.place]) pts = [P[ps.place]];
-    } else if (st.spot.startsWith('host_')) pts = allP.map((m) => m[st.spot]);
-    else if (P[st.spot]) pts = [P[st.spot]];
-    if (!pts.length) out.push({ id: `quest:${q.id}:${st.spot}:MISSING`, kind: 'quest', x: NaN, z: NaN, r });
-    pts.forEach((p, i) => out.push({ id: `quest:${q.id}:${st.spot}${pts.length > 1 ? '@' + homes[i] : ''}`, kind: 'quest', x: p.x, z: p.z, r: r - 0.5 }));
+  // quest spot / photo steps (and member parts of split steps) with their trigger radius
+  const resolve = (spot: string): { x: number; z: number }[] => {
+    if (spot.startsWith('host_')) return allP.map((m) => m[spot]).filter(Boolean);
+    if (P[spot]) return [P[spot]];
+    const lm = LANDMARKS.find((l) => l.id === spot);
+    return lm ? [lm] : [];
+  };
+  for (const q of db.quests) for (const step of q.steps) {
+    const parts = [step, ...(step.tasks ?? [])];
+    for (const st of parts) {
+      if ((st.kind !== 'spot' && st.kind !== 'photo') || !st.spot) continue;
+      const r = st.r ?? 6;
+      const pts = resolve(st.spot);
+      if (!pts.length) out.push({ id: `quest:${q.id}:${st.spot}:MISSING`, kind: 'quest', x: NaN, z: NaN, r });
+      pts.forEach((p, i) => out.push({ id: `quest:${q.id}:${st.spot}${pts.length > 1 ? '@' + homes[i] : ''}`, kind: 'quest', x: p.x, z: p.z, r: r - 0.5 }));
+    }
+  }
+  // gather / observe nodes (src/systems/gathering.ts)
+  for (const n of db.gatherNodes) {
+    const p = P[n.place];
+    if (!p) { out.push({ id: `gather:${n.id}:MISSING`, kind: 'gather', x: NaN, z: NaN, r: n.r }); continue; }
+    out.push({ id: `gather:${n.id}`, kind: 'gather', x: p.x + (n.ox ?? 0), z: p.z + (n.oz ?? 0), r: 1.2 }); // QA L6: the node centre (where its 採 marker sits) must be walkable, not just its edge
   }
   // NPCs: every schedule waypoint (where game.ts / npcs.ts stand them), talk range 2.4
   for (const n of npcs) {
+    if (n.talkable === false) continue;
     const wps = new Set<string>([n.home, ...n.schedule.flatMap((s) => s.waypoints)]);
     for (const w of wps) {
       const variants = w.startsWith('host_') ? allP.map((m) => m[w]) : [P[w]];
@@ -127,7 +139,7 @@ export function collectTargets(root = 'public/data'): Target[] {
 }
 
 export function harbourSpawn(): { x: number; z: number } {
-  const P = loadJSON('public/data/places.json').places;
+  const P = loadContentNode().places;
   // game.ts startNew: player.spawn(harbor.x + 1.6, harbor.z + 1.2)
   return findSafeStand(P.harbor.x + 1.6, P.harbor.z + 1.2, PLAYER_RADIUS);
 }

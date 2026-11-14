@@ -22,6 +22,8 @@ export default defineConfig({
         // (addons included: they only change with a three.js upgrade)
         manualChunks(id) {
           if (id.includes('/node_modules/three/')) return 'three';
+          // game content (content/*.json) in its own chunk: a text / quest edit does not re-download the code
+          if (id.includes('/content/') && id.endsWith('.json')) return 'content';
           return undefined;
         },
       },

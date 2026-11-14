@@ -91,7 +91,7 @@ try {
     await ev(() => window.__TAO_RPG__.switchMember('t'));
     await talk('rental_owner');
     check(`${T}: U1 unlocked after Q02 + S3`, (await q('U1')).status === 'active', await q('U1'));
-    check(`${T}: 127 quests`, (await ev(() => window.__TAO_RPG__.questCounts())).total === 127, await ev(() => window.__TAO_RPG__.questCounts()));
+    check(`${T}: 163 quests (content/)`, (await ev(() => window.__TAO_RPG__.questCounts())).total === 163, await ev(() => window.__TAO_RPG__.questCounts()));
 
     // 1) flying-fish season: dive spot closed (❗ still shows the first visit)
     await ev(() => { const g = window.__TAO_RPG__; g.setSeason('rayon'); g.setTime('day'); });
@@ -99,6 +99,8 @@ try {
     await ev(() => window.__TAO_RPG__.useSpot());
     await sleep(1200);
     check(`${T}: U1 closed in 飛魚季`, (await q('U1')).status === 'active' && !(await ev(() => window.__TAO_RPG__.diveOpen())), await q('U1'));
+    // markers refresh on the 0.5 s (game time) quest tick; at headless frame rates that can take seconds (QA L5)
+    await page.waitForFunction(() => window.__TAO_RPG__.markerCount() > 0, { timeout: 15000, polling: 250 }).catch(() => {});
     check(`${T}: ❗ marker at the dive spot`, (await ev(() => window.__TAO_RPG__.markerCount())) > 0);
     await shot('01-u1-first-visit-marker', 1200);
 
@@ -140,47 +142,44 @@ try {
     await goSpot('U2', 4, 0);
     await ev(() => window.__TAO_RPG__.useSpot());
     await shot('05-u2-dropoff-zunan', 1500);
-    await diveKeep(['u2']);
+    // QA M6: closeAll (also used by fast travel) closes the dive popup and still finishes the step; openModals lists it
+    await page.waitForSelector('#dive-keep', { timeout: 8000 });
+    await sleep(500);
+    check(`${T}: openModals() lists the dive popup`, (await ev(() => window.__TAO_RPG__.openModals())).includes('dive'), await ev(() => window.__TAO_RPG__.openModals()));
+    await ev(() => window.__TAO_RPG__.closeAll());
+    await sleep(600);
+    await drain();
+    check(`${T}: closeAll() closes the dive popup`, !(await ev(() => window.__TAO_RPG__.diveOpen())) && !(await ev(() => !!document.getElementById('dive-scene'))));
     check(`${T}: U2 done, picture collected`, (await q('U2')).status === 'done' && (await ev(() => window.__TAO_RPG__.collect())).includes('uw:B'));
 
     // 5) 族人分工: J3 (族女, song card), R1–R3, A3 (族男), J1 / J2 with the weaver (族女, non-fishing season)
     await ev(() => window.__TAO_RPG__.completeQuest('Q03'));
     await sleep(600);
-    await ev(() => window.__TAO_RPG__.switchMember('f'));
-    await goSpot('J3');
-    await ev(() => window.__TAO_RPG__.useSpot());
-    await drain();
+    // since the party split & recipes batch (2026-11-14) each 分工 job starts and ends at its 女／男耆老 (@giver:
+    // the host village's a akes / elder); the real step runner walks the wrapped steps
+    const runQ = (id) => ev((i) => window.__TAO_RPG__.runQuest(i, { fitWhen: true }), id);
+    const j3 = await runQ('J3');
     await sleep(500);
-    check(`${T}: J3 done, kois learned, song card shown`, (await q('J3')).status === 'done' && (await ev(() => !!document.getElementById('song-card'))), await q('J3'));
-    await ev(() => document.querySelector('#song-card .sb-info').click());
+    check(`${T}: J3 done, kois learned, song card shown`, j3.done && (await ev(() => !!document.getElementById('song-card'))), j3.trace.slice(-2));
+    await ev(() => document.querySelector('#song-card .sb-info')?.click());
     await shot('06-song-card-source', 700);
     await ev(() => document.getElementById('song-card')?.remove());
-    await ev(() => window.__TAO_RPG__.switchMember('m'));
-    await goSpot('R1'); await ev(() => window.__TAO_RPG__.useSpot()); await drain();
-    await ev(() => window.__TAO_RPG__.switchMember('f'));
-    await goSpot('R2'); await ev(() => window.__TAO_RPG__.useSpot()); await drain();
-    await goSpot('R3'); await ev(() => window.__TAO_RPG__.useSpot()); await drain();
+    for (const id of ['R1', 'R2', 'R3']) await runQ(id);
     check(`${T}: R1 (族男) → R2 → R3 (族女)`, (await q('R3')).status === 'done', await ev(() => window.__TAO_RPG__.questIds().done));
+    // J1 is a 族女 job: the traveller is turned away at the a akes
+    await ev(() => window.__TAO_RPG__.setSeason('off'));
+    const jt = await ev(() => window.__TAO_RPG__.questTarget('J1'));
     await ev(() => window.__TAO_RPG__.switchMember('t'));
-    await talk('weaver_elder', { keep: true });
-    const refused = await ev(() => document.getElementById('dlg-zh').textContent);
-    check(`${T}: J1 needs 族女`, /族女/.test(refused), refused);
-    await drain();
+    // (the same a akes also gives 族男 jobs, so ask the quest itself why the traveller can't take it)
+    const jb = await q('J1');
+    check(`${T}: J1 needs 族女`, /族女/.test(jb.block || ''), jb);
     await ev(() => window.__TAO_RPG__.switchMember('f'));
-    await talk('weaver_elder', { keep: true });
-    for (let i = 0; i < 6; i++) {
-      const zh = await ev(() => document.getElementById('dlg-zh').textContent);
-      if (zh.includes('文獻')) break;
-      await ev(() => window.__TAO_RPG__.advanceDialogue());
-      await sleep(80);
-    }
-    await shot('07-j1-ramie-narration', 600);
-    await drain();
-    await talk('weaver_elder');
-    check(`${T}: J1 + J2 done`, (await q('J2')).status === 'done', await q('J2'));
+    const j1 = await runQ('J1');
+    const j2 = await runQ('J2');
+    check(`${T}: J1 + J2 done`, j1.done && j2.done && (await q('J2')).status === 'done', { j1: j1.trace.slice(-1), j2: j2.trace.slice(-1) });
     await ev(() => window.__TAO_RPG__.switchMember('m'));
-    await goSpot('A3'); await ev(() => window.__TAO_RPG__.useSpot()); await drain();
-    check(`${T}: A3 done by 族男`, (await q('A3')).status === 'done');
+    const a3 = await runQ('A3');
+    check(`${T}: A3 done by 族男`, a3.done && (await q('A3')).status === 'done', a3.trace.slice(-1));
 
     // 6) quest log (相簿與水下 line, ground chip), album page
     await ev(() => window.__TAO_RPG__.openQuests());

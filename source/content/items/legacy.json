@@ -1,0 +1,228 @@
+{
+  "items": [
+    {
+      "id": "headlamp",
+      "name": {
+        "zh": "頭燈",
+        "tao": ""
+      },
+      "category": "tool",
+      "collectible": true,
+      "description": "晚上走潮間帶或回部落時照路用。",
+      "codex": "頭燈讓雙手空出來。夜晚觀察生物時，請把光壓低、別直射動物的眼睛。",
+      "icon": "icon_headlamp",
+      "illustration": "illus_headlamp",
+      "sources": [
+        {
+          "kind": "shop",
+          "npc": "shop_yayo"
+        }
+      ]
+    },
+    {
+      "id": "sunscreen",
+      "name": {
+        "zh": "防曬",
+        "tao": ""
+      },
+      "category": "tool",
+      "collectible": true,
+      "description": "島上的陽光很強，下水和走潮間帶前先擦。",
+      "codex": "選對珊瑚礁比較友善的防曬，或改穿長袖防曬衣。",
+      "icon": "icon_sunscreen",
+      "illustration": "illus_sunscreen",
+      "sources": [
+        {
+          "kind": "shop",
+          "npc": "shop_yayo"
+        }
+      ]
+    },
+    {
+      "id": "water",
+      "name": {
+        "zh": "飲水",
+        "tao": ""
+      },
+      "category": "tool",
+      "collectible": true,
+      "description": "一瓶飲水，自己喝或帶給忙碌的家人。",
+      "codex": "在田裡、海邊工作時記得補水。島上的水得來不易，喝多少裝多少。",
+      "icon": "icon_water",
+      "illustration": "illus_water",
+      "sources": [
+        {
+          "kind": "shop",
+          "npc": "shop_yayo"
+        }
+      ]
+    },
+    {
+      "id": "lifejacket",
+      "name": {
+        "zh": "救生衣",
+        "tao": ""
+      },
+      "category": "tool",
+      "collectible": true,
+      "description": "向租車行老闆借來的救生衣。",
+      "codex": "下水、上船前都要穿好。海況不好時，族人也會說「今天不要下去」。",
+      "icon": "icon_lifejacket",
+      "illustration": "illus_lifejacket",
+      "sources": [
+        {
+          "kind": "shop",
+          "npc": "rental_owner"
+        }
+      ]
+    },
+    {
+      "id": "alibangbang",
+      "name": {
+        "zh": "飛魚",
+        "tao": "alibangbang"
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "飛魚季從海上帶回來的飛魚。",
+      "codex": "飛魚是 Tao 文化的核心。怎麼捕、怎麼分、怎麼煮、何時停，都有規矩；遊戲只呈現族人同意公開的部分。",
+      "nutrition": "優質蛋白質、Omega-3（EPA/DHA）、維生素 D 與礦物質，是傳統飲食中重要的動物性蛋白來源。",
+      "icon": "icon_alibangbang",
+      "illustration": "illus_alibangbang",
+      "review": true,
+      "sources": [
+        {
+          "kind": "minigame",
+          "id": "fish",
+          "seasons": [
+            "summer"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "soli",
+      "name": {
+        "zh": "水芋",
+        "tao": "soli"
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "水芋田裡採收的水芋。",
+      "codex": "水芋是 Tao 的主食，由女性長輩帶領種植與照顧。田是家族的，要採之前一定要先問。",
+      "nutrition": "複合碳水化合物、膳食纖維、鉀與維生素 B6；冷卻後帶有抗性澱粉。提供田間與海上勞動所需的穩定能量。",
+      "icon": "icon_soli",
+      "illustration": "illus_soli",
+      "sources": [
+        {
+          "kind": "minigame",
+          "id": "taro"
+        }
+      ]
+    },
+    {
+      "id": "wakay",
+      "name": {
+        "zh": "地瓜",
+        "tao": "wakay"
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "地瓜，飽足又耐放。",
+      "codex": "地瓜種在旱田，是水芋之外重要的主食。旅人多半在雜貨店買。族語名暫定，還要請族人確認。",
+      "nutrition": "地瓜提供澱粉、膳食纖維、鉀與 β-胡蘿蔔素（黃肉／橘肉品種較多），是飽足又耐放的主食。族語名 wakay 為暫定，還要請族人確認。",
+      "icon": "icon_wakay",
+      "illustration": "illus_wakay",
+      "sources": [
+        {
+          "kind": "shop",
+          "npc": "shop_yayo"
+        },
+        {
+          "kind": "gather",
+          "node": "gn_wakay_iratay"
+        }
+      ]
+    },
+    {
+      "id": "ovi",
+      "name": {
+        "zh": "山藥",
+        "tao": "ovi"
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "山邊採來的山藥。",
+      "codex": "山藥口感滑順、好消化。採集的地點與時節還要請族人確認；族語名暫定。",
+      "nutrition": "山藥含澱粉、黏質多醣與鉀，口感滑順、好消化。族語名 ovi 為暫定（來源較弱），還要請族人確認。",
+      "icon": "icon_ovi",
+      "illustration": "illus_ovi",
+      "review": true,
+      "sources": [
+        {
+          "kind": "gather",
+          "node": "gn_ovi_peak"
+        }
+      ]
+    },
+    {
+      "id": "shellfish",
+      "name": {
+        "zh": "貝類",
+        "tao": ""
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "退潮時在潮間帶撿的貝類。",
+      "codex": "太小的不撿、只拿需要的量。哪些能撿、什麼時候撿，各部落有自己的規矩。",
+      "nutrition": "蛋白質、鐵、鋅與維生素 B12。族語名還要請族人確認。",
+      "icon": "icon_shellfish",
+      "illustration": "illus_shellfish",
+      "review": true,
+      "sources": [
+        {
+          "kind": "gather",
+          "node": "gn_shellfish_im"
+        },
+        {
+          "kind": "gather",
+          "node": "gn_shellfish_im_night"
+        }
+      ]
+    },
+    {
+      "id": "seaweed",
+      "name": {
+        "zh": "海菜",
+        "tao": ""
+      },
+      "category": "ingredient",
+      "collectible": true,
+      "description": "潮間帶採的海菜。",
+      "codex": "退潮時在礁石上採。海菜含碘與礦物質，常和芋頭、地瓜一起吃。族語名還要請族人確認。",
+      "nutrition": "碘、鈣等礦物質與膳食纖維。族語名還要請族人確認。",
+      "icon": "icon_seaweed",
+      "illustration": "illus_seaweed",
+      "sources": [
+        {
+          "kind": "gather",
+          "node": "gn_seaweed_im"
+        }
+      ]
+    },
+    {
+      "id": "coconut",
+      "name": {
+        "zh": "椰子",
+        "tao": ""
+      },
+      "category": "observe",
+      "collectible": false,
+      "description": "從紅頭望向小蘭嶼時提到的椰子。",
+      "codex": "小蘭嶼一帶的椰子常被族人一併提起。遊戲裡只看不採。",
+      "nutrition": "椰肉提供中鏈脂肪與膳食纖維，椰子水含電解質。小蘭嶼一帶與椰子資源常被一併提及。",
+      "icon": "icon_coconut",
+      "illustration": "illus_coconut"
+    }
+  ]
+}

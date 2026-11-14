@@ -1,0 +1,128 @@
+{
+  "note": "kind gather = 撿拾得到物品；observe = 只看，記進圖鑑。time: day / night / any；seasons 空陣列 = 全年。",
+  "gatherNodes": [
+    {
+      "id": "gn_ovi_peak",
+      "kind": "gather",
+      "item": "ovi",
+      "place": "peak",
+      "r": 8,
+      "ox": -1.5,
+      "oz": 3,
+      "label": "山邊採山藥",
+      "time": "day",
+      "seasons": [],
+      "perDay": 2,
+      "review": true
+    },
+    {
+      "id": "gn_shellfish_im",
+      "kind": "gather",
+      "item": "shellfish",
+      "place": "tide_iranmeylek",
+      "r": 3,
+      "label": "潮間帶撿貝類",
+      "time": "day",
+      "seasons": [],
+      "tide": "low",
+      "perDay": 2,
+      "note": "太小的不撿"
+    },
+    {
+      "id": "gn_seaweed_im",
+      "kind": "gather",
+      "item": "seaweed",
+      "place": "tide_iranmeylek",
+      "r": 3,
+      "oz": -1.6,
+      "label": "潮間帶採海菜",
+      "time": "day",
+      "seasons": [],
+      "tide": "low",
+      "perDay": 2
+    },
+    {
+      "id": "gn_shellfish_im_night",
+      "kind": "gather",
+      "item": "shellfish",
+      "place": "tide_iranmeylek",
+      "r": 3,
+      "ox": 1.4,
+      "label": "黃昏退潮撿貝類（要頭燈）",
+      "time": "night",
+      "seasons": [],
+      "tide": "low",
+      "perDay": 1,
+      "requires": {
+        "item": "headlamp",
+        "min": 1
+      },
+      "review": true,
+      "periods": [
+        "dusk"
+      ],
+      "note": "退潮在黃昏（暫定潮汐：清晨、黃昏退潮），要帶頭燈",
+      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。"
+    },
+    {
+      "id": "gn_wakay_iratay",
+      "kind": "gather",
+      "item": "wakay",
+      "place": "wakay_iratay",
+      "r": 4,
+      "label": "地瓜田挖地瓜（已徵得同意）",
+      "time": "day",
+      "seasons": [],
+      "perDay": 2,
+      "requires": {
+        "flag": "wakay_field_ok"
+      },
+      "requiresHint": "這是漁人人家的田。要先幫漁人的女性長輩採收、問過她，才能來挖。"
+    },
+    {
+      "id": "gn_landcrab_road",
+      "kind": "observe",
+      "observe": "land_crab",
+      "place": "owl_road",
+      "r": 6,
+      "label": "路邊的陸蟹",
+      "time": "night",
+      "seasons": [
+        "summer"
+      ],
+      "sets": "seen_land_crab"
+    },
+    {
+      "id": "gn_hermit_im",
+      "kind": "observe",
+      "observe": "hermit_crab",
+      "place": "tide_iranmeylek",
+      "r": 3,
+      "label": "黃昏的寄居蟹",
+      "time": "night",
+      "seasons": [],
+      "tide": "low",
+      "sets": "seen_hermit_crab",
+      "requires": {
+        "item": "headlamp",
+        "min": 1
+      },
+      "periods": [
+        "dusk"
+      ],
+      "note": "退潮在黃昏（暫定潮汐：清晨、黃昏退潮），要帶頭燈",
+      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。"
+    },
+    {
+      "id": "gn_owl_road",
+      "kind": "observe",
+      "observe": "scops_owl",
+      "place": "owl_road",
+      "r": 6,
+      "label": "聽角鴞的叫聲",
+      "time": "night",
+      "seasons": [],
+      "sets": "saw_scops_owl"
+    }
+  ]
+}

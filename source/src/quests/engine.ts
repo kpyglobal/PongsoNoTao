@@ -4,7 +4,13 @@
  * Pure logic, no DOM / three.js; Game feeds it the world context and runs the dialogue.
  */
 import type { Period, Season } from '../core/timeSeason';
-import type { QuestDef, QuestFile, QuestStep, Req, RespectId, Role, StepGives, When } from './types';
+import type { Windowed } from '../content/types';
+import { PartySplit, type MemberState, type PartySplitJSON } from '../systems/partySplit';
+import { windowOk } from '../systems/timeWindow';
+import type { MemberTask, QuestDef, QuestFile, QuestStep, Req, RespectId, Role, SplitTask, StepGives } from './types';
+
+export { ROLES_ALL, type MemberState } from '../systems/partySplit';
+export { FISHING_SEASONS, tideAt, periodZh } from '../systems/timeWindow';
 
 export type QuestStatus = 'done' | 'active' | 'locked' | 'hidden';
 
@@ -33,15 +39,17 @@ export interface QuestSaveJSON {
   tracked: string | null;
   /** batch 1b (optional so batch 1 saves still load) */
   collect?: string[];
+  /** unlocked outfits (content/outfits) and what each member wears (optional so older saves still load) */
+  outfits?: string[];
+  wear?: Partial<Record<Role, string>>;
+  /** party split (optional so older saves still load): member states, solo member, regroup point, finished member tasks */
+  members?: PartySplitJSON['members'];
+  solo?: Role | null;
+  meet?: string | null;
+  tasksDone?: string[];
 }
 
 const RESPECT: RespectId[] = ['first', 'learning', 'trusted', 'friend'];
-export const FISHING_SEASONS: Season[] = ['meyvanwa', 'rayon', 'manoyotoyon'];
-
-/** Placeholder tide (Phase 3 brings the real tide clock): low tide at dawn and dusk. */
-export function tideAt(period: Period): 'low' | 'high' {
-  return period === 'dawn' || period === 'dusk' ? 'low' : 'high';
-}
 
 export class QuestEngine {
   readonly file: QuestFile;
@@ -62,6 +70,17 @@ export class QuestEngine {
   tracked: string | null = null;
   /** batch 1b collections: underwater pictures (uw:A, uw:B), traveller POV set (pov:1–3), songs (song:s01) */
   collect = new Set<string>();
+  /** unlocked outfit ids and what each member wears (src/systems/outfits.ts) */
+  outfits = new Set<string>();
+  wear: Partial<Record<Role, string>> = {};
+  /** party split state (src/systems/partySplit.ts); the getters below keep the older call sites working */
+  readonly party = new PartySplit();
+  get members(): Record<Role, MemberState> { return this.party.members; }
+  get solo(): Role | null { return this.party.solo; }
+  get meet(): string | null { return this.party.meet; }
+  get tasksDone(): Set<string> { return this.party.tasksDone; }
+  /** fired when member states change (Game moves the followers / HUD) */
+  onParty?: () => void;
   private ctx: QuestCtx = { season: 'rayon', period: 'day', words: 0 };
   /** M5: called for every finished step's rewards (also auto steps finished inside refresh), so Game can apply glossary / toast */
   onGives?: (g: StepGives, q: QuestDef) => void;
@@ -107,6 +126,7 @@ export class QuestEngine {
     }
     if ('stat' in r) return (this.stats[r.stat] ?? 0) >= r.min;
     if ('count' in r) return this.counter(r.count) >= r.min;
+    if ('item' in r) return (this.items[r.item] ?? 0) >= r.min;
     return false; // pending: waits for the community
   }
 
@@ -116,18 +136,17 @@ export class QuestEngine {
     const r = st?.until ?? q.req;
     if (typeof r === 'object' && 'count' in r) return { have: Math.min(this.counter(r.count), r.min), need: r.min };
     if (typeof r === 'object' && 'any' in r && (r.n ?? 1) > 1) return { have: r.any.filter((x) => this.evalReq(x)).length, need: r.n ?? 1 };
+    if (typeof r === 'object' && 'all' in r && r.all.every((x) => typeof x === 'object' && 'item' in x)) {
+      const items = r.all as { item: string; min: number }[];
+      return { have: items.reduce((n, x) => n + Math.min(this.items[x.item] ?? 0, x.min), 0), need: items.reduce((n, x) => n + x.min, 0) };
+    }
+    if (st?.kind === 'tasks' && st.tasks) return { have: st.tasks.filter((_, k) => this.taskDone(q, k)).length, need: st.tasks.length };
     return null;
   }
 
-  /** can the quest be finished right now (season / time / tide)? reason in zh-TW when not */
-  whenOk(w: When | undefined): { ok: boolean; why: string } {
-    if (!w) return { ok: true, why: '' };
-    const fishing = FISHING_SEASONS.includes(this.ctx.season);
-    if (w.season === 'fishing' && !fishing) return { ok: false, why: '要等飛魚季' };
-    if (w.season === 'nonFishing' && fishing) return { ok: false, why: '飛魚季不行，要等非飛魚季' };
-    if (w.period && !w.period.includes(this.ctx.period)) return { ok: false, why: `時段要在${w.period.map(periodZh).join('、')}` };
-    if (w.tide && tideAt(this.ctx.period) !== w.tide) return { ok: false, why: w.tide === 'low' ? '要等退潮（清晨或黃昏）' : '要等漲潮' };
-    return { ok: true, why: '' };
+  /** can the quest / node / spot be done right now (time / season / tide)? reason in zh-TW when not */
+  windowOk(w: Windowed | undefined): { ok: boolean; why: string } {
+    return windowOk(w, this.ctx);
   }
 
   step(q: QuestDef): QuestStep | null {
@@ -146,6 +165,103 @@ export class QuestEngine {
     return (step.actor ?? q.roles).includes(role);
   }
 
+  // ------------------------------------------------------------------ party split
+
+  private taskKey(q: QuestDef, k: number): string {
+    return `${q.id}:${this.active.get(q.id)}:${k}`;
+  }
+
+  taskDone(q: QuestDef, k: number): boolean {
+    return this.tasksDone.has(this.taskKey(q, k));
+  }
+
+  /** the step(s) that can be done now: the current step, or the unfinished member parts of a `tasks` step (sub = part index) */
+  openSteps(q: QuestDef): { st: QuestStep; sub: number }[] {
+    const st = this.step(q);
+    if (!st) return [];
+    if (st.kind !== 'tasks' || !st.tasks) return [{ st, sub: -1 }];
+    return st.tasks.map((t, k) => ({ t, k })).filter(({ k }) => !this.taskDone(q, k)).map(({ t, k }) => ({ st: taskStep(t), sub: k }));
+  }
+
+  /** zh-TW reason a member cannot be switched to / act right now (null = fine) */
+  memberBlock(r: Role): string | null {
+    return this.party.block(r);
+  }
+
+  /** members that are not with the party (away or waiting somewhere) */
+  awayRoles(): Role[] {
+    return this.party.awayRoles();
+  }
+
+  isSplit(): boolean {
+    return this.party.isSplit();
+  }
+
+  /** a member part of a `tasks` step is done: rewards, the member waits at the regroup point; all parts → the step finishes */
+  completeTask(q: QuestDef, k: number): QuestEvent[] {
+    const st = this.step(q);
+    const t = st?.tasks?.[k];
+    if (!st || !t || this.taskDone(q, k)) return [];
+    this.tasksDone.add(this.taskKey(q, k));
+    if (t.gives) this.applyGives(t.gives, q);
+    this.party.partDone(t.role);
+    this.onParty?.();
+    if (st.tasks!.every((_, j) => this.taskDone(q, j))) return this.advance(q);
+    return [];
+  }
+
+  private applyParty(st: QuestStep, q: QuestDef, idx: number): void {
+    if (st.split) this.party.split(st.split as Partial<Record<Role, SplitTask>>, q.id, st.meet);
+    if (st.solo) this.party.startSolo(st.solo, q.id, idx);
+    if (st.regroup) this.party.regroup();
+    if (st.split || st.solo || st.regroup) this.onParty?.();
+  }
+
+  regroupAll(): void {
+    this.party.regroup();
+  }
+
+  /** lines for 放棄出海 (from the solo step), shown by Game */
+  soloGiveUpLines(): QuestStep['lines'] {
+    return this.party.soloGiveUp ?? undefined;
+  }
+
+  /** 放棄出海: the solo member gives up; the quest goes back to its abortTo step and everyone regroups */
+  abortSolo(): QuestDef | null {
+    if (!this.solo) return null;
+    const qid = this.members[this.solo].quest ?? this.party.soloFrom?.quest;
+    const q = qid ? this.byId.get(qid) : undefined;
+    if (q && this.active.has(q.id)) this.active.set(q.id, q.abortTo ?? 0);
+    this.regroupAll();
+    this.onParty?.();
+    return q ?? null;
+  }
+
+  /** debug: send members away (ctrl = switchable) / make one member solo */
+  forceSplit(spec: Partial<Record<Role, SplitTask>>, meet?: string): void {
+    this.applyParty({ kind: 'auto', text: '', split: spec, meet }, { id: 'debug' } as QuestDef, 0);
+  }
+
+  forceSolo(role: Role, at = 'harbor', waitAt = 'harbor', task = '出海'): void {
+    this.applyParty({ kind: 'auto', text: '', solo: { role, at, task, waitAt } }, { id: 'debug' } as QuestDef, 0);
+  }
+
+  forceRegroup(): void {
+    this.regroupAll();
+    this.onParty?.();
+  }
+
+  private applyGives(g: StepGives, q: QuestDef): void {
+    g.flags?.forEach((f) => this.flags.add(f));
+    g.items?.forEach((it) => (this.items[it] = (this.items[it] ?? 0) + 1));
+    g.outfits?.forEach((o) => this.outfits.add(o));
+    if (g.consume) for (const [it, n] of Object.entries(g.consume)) this.items[it] = Math.max(0, (this.items[it] ?? 0) - n);
+    if (g.respect) this.respect = Math.max(this.respect, RESPECT.indexOf(g.respect));
+    this.onGives?.(g, q);
+    if (g.relation) this.stats.relation = (this.stats.relation ?? 0) + g.relation;
+    if (g.counter) for (const [k, v] of Object.entries(g.counter)) this.counters[k] = (this.counters[k] ?? 0) + v;
+  }
+
   /** unlock everything whose prerequisites are now met, run auto steps; returns what changed */
   refresh(): QuestEvent[] {
     const ev: QuestEvent[] = [];
@@ -162,7 +278,7 @@ export class QuestEngine {
       for (const [id] of this.active) {
         const q = this.byId.get(id)!;
         const st = this.step(q);
-        if (st?.kind === 'auto' && !st.lines?.length && this.whenOk(q.when).ok && (!st.until || this.evalReq(st.until))) {
+        if (st?.kind === 'auto' && !st.lines?.length && this.windowOk(q).ok && (!st.until || this.evalReq(st.until))) {
           ev.push(...this.advance(q));
           changed = true;
         }
@@ -178,15 +294,11 @@ export class QuestEngine {
     const i = this.active.get(q.id);
     if (i === undefined) return [];
     const st = q.steps[i];
-    const g = st?.gives;
-    if (g) {
-      g.flags?.forEach((f) => this.flags.add(f));
-      g.items?.forEach((it) => (this.items[it] = (this.items[it] ?? 0) + 1));
-      if (g.respect) this.respect = Math.max(this.respect, RESPECT.indexOf(g.respect));
-      this.onGives?.(g, q);
-      if (g.relation) this.stats.relation = (this.stats.relation ?? 0) + g.relation;
-      if (g.counter) for (const [k, v] of Object.entries(g.counter)) this.counters[k] = (this.counters[k] ?? 0) + v;
-    }
+    // a tasks step finished early (debug / forceDone): the parts not done yet still give their rewards
+    if (st?.kind === 'tasks' && st.tasks) st.tasks.forEach((t, k) => { if (!this.taskDone(q, k) && t.gives) this.applyGives(t.gives, q); });
+    for (const k of [...this.tasksDone]) if (k.startsWith(`${q.id}:${i}:`)) this.tasksDone.delete(k);
+    if (st?.gives) this.applyGives(st.gives, q);
+    if (st) this.applyParty(st, q, i);
     if (i + 1 < q.steps.length) {
       this.active.set(q.id, i + 1);
       return [];
@@ -226,6 +338,9 @@ export class QuestEngine {
       translated: [...this.translated],
       tracked: this.tracked,
       collect: [...this.collect],
+      outfits: [...this.outfits],
+      wear: { ...this.wear },
+      ...this.party.toJSON(),
     };
   }
 
@@ -260,6 +375,14 @@ export class QuestEngine {
         .map((k) => (/^uw:[AB]:/.test(k) ? k.slice(0, 4) : k))
         .filter((k) => !/^pov:[4-9]$/.test(k)),
     );
+    this.outfits = new Set(strs(j.outfits));
+    this.wear = {};
+    if (j.wear && typeof j.wear === 'object') for (const r of ['m', 'f', 't'] as Role[]) { const id = (j.wear as Record<string, unknown>)[r]; if (typeof id === 'string' && this.outfits.has(id)) this.wear[r] = id; }
+    // party split: unknown / broken member entries fall back to "in the party"
+    this.party.load(j);
+    // a split whose quest is gone / finished cannot be finished any more → regroup
+    const owner = this.party.ownerQuest();
+    if (owner && !this.active.has(owner)) this.regroupAll();
   }
 
   reset(): void {
@@ -267,6 +390,13 @@ export class QuestEngine {
   }
 }
 
-export function periodZh(p: string): string {
-  return p === 'dawn' ? '清晨' : p === 'day' ? '白天' : p === 'dusk' ? '黃昏' : p === 'night' ? '夜晚' : p;
+const taskCache = new WeakMap<MemberTask, QuestStep>();
+/** a member part as a step (talk / spot) for the shared talk / spot / marker code */
+export function taskStep(t: MemberTask): QuestStep {
+  let s = taskCache.get(t);
+  if (!s) {
+    s = { kind: t.kind, npc: t.npc, spot: t.spot, r: t.r, actor: [t.role], need: [], text: t.text, lines: t.lines, gives: t.gives };
+    taskCache.set(t, s);
+  }
+  return s;
 }
