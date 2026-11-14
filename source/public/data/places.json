@@ -1,0 +1,177 @@
+{
+  "world": {
+    "xMin": -80,
+    "xMax": 80,
+    "zMin": -70,
+    "zMax": 90,
+    "seaLevel": 0,
+    "notes": "x+ = East, z+ = South. Heights in meters-ish game units."
+  },
+  "places": {
+    "yayo": {
+      "id": "yayo",
+      "zh": "椰油",
+      "tao": "Yayo",
+      "x": -26.6,
+      "z": -6,
+      "kind": "tribe",
+      "flavor": "熱鬧的西岸部落，開元港與店家所在。Yayo 意指食物豐盛之地。"
+    },
+    "iraraley": {
+      "id": "iraraley",
+      "zh": "朗島",
+      "tao": "Iraraley",
+      "x": -2,
+      "z": -38,
+      "kind": "tribe",
+      "flavor": "北岸領域最廣的部落，有上、下聚落與寬闊潮間帶。Iraraley 有「有禮貌」之意。"
+    },
+    "iranmeylek": {
+      "id": "iranmeylek",
+      "zh": "東清",
+      "tao": "Iranmeylek",
+      "x": 20.4,
+      "z": -18.2,
+      "kind": "tribe",
+      "flavor": "東北岸東清灣，島上迎接第一道曙光的地方。"
+    },
+    "ivalino": {
+      "id": "ivalino",
+      "zh": "野銀",
+      "tao": "Ivalino",
+      "x": 26.8,
+      "z": 9.6,
+      "kind": "tribe",
+      "flavor": "東南岸，保存最完整的傳統地下屋聚落。Ivalino 與馬鞍藤有關。"
+    },
+    "imorod": {
+      "id": "imorod",
+      "zh": "紅頭",
+      "tao": "Imorod",
+      "aka": [
+        "Imowrod"
+      ],
+      "x": 6,
+      "z": 32,
+      "kind": "tribe",
+      "flavor": "南岸／西南，飛魚傳說起源地；衛生所、郵局與八代灣在此一帶。"
+    },
+    "iratay": {
+      "id": "iratay",
+      "zh": "漁人",
+      "tao": "Iratay",
+      "x": -20,
+      "z": 22,
+      "kind": "tribe",
+      "flavor": "西南岸平坦寬敞之地，蘭嶼機場所在。腹地最小。"
+    },
+    "harbor": {
+      "id": "harbor",
+      "zh": "開元港",
+      "tao": "Kaiyuan",
+      "x": -37,
+      "z": -6.5,
+      "kind": "facility",
+      "flavor": "位於椰油部落的主要客貨港，往來臺東富岡、後壁湖的船舶在此靠泊。"
+    },
+    "clinic": {
+      "id": "clinic",
+      "zh": "蘭嶼衛生所",
+      "tao": "",
+      "x": -7.8,
+      "z": 32.8,
+      "kind": "facility",
+      "flavor": "全島唯一衛生所，位於紅頭部落。遊戲中作為傳統食材與現代營養學對話的據點。"
+    },
+    "airport": {
+      "id": "airport",
+      "zh": "蘭嶼機場",
+      "tao": "",
+      "x": -25.4,
+      "z": 9,
+      "kind": "facility",
+      "flavor": "位於漁人部落的島上航空站。"
+    },
+    "jimagaod": {
+      "id": "jimagaod",
+      "zh": "小蘭嶼",
+      "tao": "Jimagaod",
+      "x": 8,
+      "z": 66,
+      "kind": "island",
+      "flavor": "主島南方的小島，傳統上與紅頭海域、漁獵及椰子等資源相關。原型階段以眺望為主。"
+    },
+    "taro_yayo": {
+      "id": "taro_yayo",
+      "zh": "椰油水芋田",
+      "tao": "soli",
+      "x": -19.1,
+      "z": -4.3,
+      "kind": "taro"
+    },
+    "taro_iraraley": {
+      "id": "taro_iraraley",
+      "zh": "朗島水芋田",
+      "tao": "soli",
+      "x": -5.5,
+      "z": -30.4,
+      "kind": "taro"
+    },
+    "taro_iranmeylek": {
+      "id": "taro_iranmeylek",
+      "zh": "東清水芋田",
+      "tao": "soli",
+      "x": 16.8,
+      "z": -11.3,
+      "kind": "taro"
+    },
+    "taro_ivalino": {
+      "id": "taro_ivalino",
+      "zh": "野銀水芋田",
+      "tao": "soli",
+      "x": 20.2,
+      "z": 4.6,
+      "kind": "taro"
+    },
+    "taro_imorod": {
+      "id": "taro_imorod",
+      "zh": "紅頭水芋田",
+      "tao": "soli",
+      "x": 9.7,
+      "z": 23.7,
+      "kind": "taro"
+    },
+    "taro_iratay": {
+      "id": "taro_iratay",
+      "zh": "漁人水芋田",
+      "tao": "soli",
+      "x": -19.6,
+      "z": 12.3,
+      "kind": "taro"
+    },
+    "fishzone_west": {
+      "id": "fishzone_west",
+      "zh": "西岸飛魚海域",
+      "tao": "rayon",
+      "x": -46,
+      "z": -8,
+      "kind": "sea"
+    },
+    "fishzone_east": {
+      "id": "fishzone_east",
+      "zh": "東清灣外海",
+      "tao": "rayon",
+      "x": 38,
+      "z": -22,
+      "kind": "sea"
+    },
+    "peak": {
+      "id": "peak",
+      "zh": "紅頭山一帶",
+      "tao": "",
+      "x": 3,
+      "z": 14,
+      "kind": "landmark"
+    }
+  }
+}

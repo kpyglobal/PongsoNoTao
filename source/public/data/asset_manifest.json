@@ -1,0 +1,277 @@
+{
+  "version": "0.1.0",
+  "filter": "nearest",
+  "assets": {
+    "player": {
+      "type": "character_sheet",
+      "path": "characters/player_sheet.png",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "directions": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "framesPerDir": 4,
+      "individualsDir": "characters/player/",
+      "cols": 4,
+      "rows": 4,
+      "dirs": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "frames": 4,
+      "kind": "player",
+      "individuals": [
+        "characters/player/player_s_0.png",
+        "characters/player/player_s_1.png",
+        "characters/player/player_s_2.png",
+        "characters/player/player_s_3.png",
+        "characters/player/player_w_0.png",
+        "characters/player/player_w_1.png",
+        "characters/player/player_w_2.png",
+        "characters/player/player_w_3.png",
+        "characters/player/player_n_0.png",
+        "characters/player/player_n_1.png",
+        "characters/player/player_n_2.png",
+        "characters/player/player_n_3.png",
+        "characters/player/player_e_0.png",
+        "characters/player/player_e_1.png",
+        "characters/player/player_e_2.png",
+        "characters/player/player_e_3.png"
+      ]
+    },
+    "elder": {
+      "type": "character_sheet",
+      "path": "characters/elder_sheet.png",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "directions": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "framesPerDir": 4,
+      "individualsDir": "characters/elder/",
+      "cols": 4,
+      "rows": 4,
+      "dirs": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "frames": 4,
+      "kind": "elder",
+      "individuals": [
+        "characters/elder/elder_s_0.png",
+        "characters/elder/elder_s_1.png",
+        "characters/elder/elder_s_2.png",
+        "characters/elder/elder_s_3.png",
+        "characters/elder/elder_w_0.png",
+        "characters/elder/elder_w_1.png",
+        "characters/elder/elder_w_2.png",
+        "characters/elder/elder_w_3.png",
+        "characters/elder/elder_n_0.png",
+        "characters/elder/elder_n_1.png",
+        "characters/elder/elder_n_2.png",
+        "characters/elder/elder_n_3.png",
+        "characters/elder/elder_e_0.png",
+        "characters/elder/elder_e_1.png",
+        "characters/elder/elder_e_2.png",
+        "characters/elder/elder_e_3.png"
+      ]
+    },
+    "villager": {
+      "type": "character_sheet",
+      "path": "characters/villager_sheet.png",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "directions": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "framesPerDir": 4,
+      "individualsDir": "characters/villager/",
+      "cols": 4,
+      "rows": 4,
+      "dirs": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "frames": 4,
+      "kind": "villager",
+      "individuals": [
+        "characters/villager/villager_s_0.png",
+        "characters/villager/villager_s_1.png",
+        "characters/villager/villager_s_2.png",
+        "characters/villager/villager_s_3.png",
+        "characters/villager/villager_w_0.png",
+        "characters/villager/villager_w_1.png",
+        "characters/villager/villager_w_2.png",
+        "characters/villager/villager_w_3.png",
+        "characters/villager/villager_n_0.png",
+        "characters/villager/villager_n_1.png",
+        "characters/villager/villager_n_2.png",
+        "characters/villager/villager_n_3.png",
+        "characters/villager/villager_e_0.png",
+        "characters/villager/villager_e_1.png",
+        "characters/villager/villager_e_2.png",
+        "characters/villager/villager_e_3.png"
+      ]
+    },
+    "clinic": {
+      "type": "building_billboard",
+      "path": "buildings/clinic.png",
+      "width": 96,
+      "height": 128
+    },
+    "tourist": {
+      "type": "character_sheet",
+      "path": "characters/tourist_sheet.png",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "directions": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "framesPerDir": 4,
+      "individualsDir": "characters/tourist/",
+      "cols": 4,
+      "rows": 4,
+      "dirs": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "frames": 4,
+      "kind": "tourist",
+      "individuals": [
+        "characters/tourist/tourist_s_0.png",
+        "characters/tourist/tourist_s_1.png",
+        "characters/tourist/tourist_s_2.png",
+        "characters/tourist/tourist_s_3.png",
+        "characters/tourist/tourist_w_0.png",
+        "characters/tourist/tourist_w_1.png",
+        "characters/tourist/tourist_w_2.png",
+        "characters/tourist/tourist_w_3.png",
+        "characters/tourist/tourist_n_0.png",
+        "characters/tourist/tourist_n_1.png",
+        "characters/tourist/tourist_n_2.png",
+        "characters/tourist/tourist_n_3.png",
+        "characters/tourist/tourist_e_0.png",
+        "characters/tourist/tourist_e_1.png",
+        "characters/tourist/tourist_e_2.png",
+        "characters/tourist/tourist_e_3.png"
+      ]
+    },
+    "tatala": {
+      "type": "prop_directional",
+      "path": "props/tatala_sheet.png",
+      "frameWidth": 128,
+      "frameHeight": 64,
+      "notes": "Single-hull double-ended Tao plank canoe. NO outrigger / 無舷外浮木.",
+      "dirs": [
+        "s",
+        "w",
+        "n",
+        "e"
+      ],
+      "individuals": [
+        "props/tatala/tatala_s.png",
+        "props/tatala/tatala_w.png",
+        "props/tatala/tatala_n.png",
+        "props/tatala/tatala_e.png"
+      ]
+    },
+    "house_traditional": {
+      "type": "building_billboard",
+      "path": "buildings/house_traditional.png",
+      "width": 128,
+      "height": 128
+    },
+    "tagakal": {
+      "type": "building_billboard",
+      "path": "buildings/tagakal.png",
+      "width": 128,
+      "height": 128
+    },
+    "shop": {
+      "type": "building_billboard",
+      "path": "buildings/shop.png",
+      "width": 96,
+      "height": 112
+    },
+    "church": {
+      "type": "building_billboard",
+      "path": "buildings/church.png",
+      "width": 96,
+      "height": 144
+    },
+    "airport": {
+      "type": "building_billboard",
+      "path": "buildings/airport.png",
+      "width": 128,
+      "height": 96
+    },
+    "taro": {
+      "type": "prop_variants",
+      "paths": [
+        "props/taro_0.png",
+        "props/taro_1.png",
+        "props/taro_2.png"
+      ],
+      "width": 48,
+      "height": 48
+    },
+    "coconut_palm": {
+      "type": "prop_variants",
+      "paths": [
+        "props/palm_0.png",
+        "props/palm_1.png",
+        "props/palm_2.png"
+      ],
+      "width": 64,
+      "height": 128
+    },
+    "flying_fish": {
+      "type": "fx_sheet",
+      "path": "props/flying_fish_sheet.png",
+      "frameWidth": 48,
+      "frameHeight": 24,
+      "frames": 4
+    },
+    "coconut": {
+      "type": "item",
+      "path": "props/coconut.png",
+      "width": 16,
+      "height": 16
+    },
+    "ui_motifs": {
+      "wave": "ui/motif_wave.png",
+      "eye": "ui/motif_eye.png",
+      "paper": "ui/paper_tile.png"
+    },
+    "textures": {
+      "grass": "textures/grass.png",
+      "sand": "textures/sand.png",
+      "rock": "textures/rock.png",
+      "road": "textures/road.png",
+      "terrace": "textures/terrace.png",
+      "stone": "textures/stone.png",
+      "wood": "textures/wood.png",
+      "thatch": "textures/thatch.png"
+    }
+  }
+}

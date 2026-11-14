@@ -1,0 +1,139 @@
+{
+  "notes": "達悟語（ciriciring no Tao）詞卡。原型階段以公開文獻常見羅馬拼音為準，完整語句與構詞需與族語協作者校訂。拼寫可見文獻變體。 族語拼寫依《原住民族語言書寫系統》雅美（達悟）語：喉塞音字母一律寫作 ’（U+2019），ng／n-g 以連字號區分，非末音節重音標 í á é ó。",
+  "entries": [
+    {
+      "id": "pongso-no-tao",
+      "tao": "Pongso no Tao",
+      "zh": "人之島（蘭嶼）",
+      "category": "地方",
+      "detail": "達悟族人對蘭嶼的自稱地名，意為「人之島」。遊戲世界以此為正式名。"
+    },
+    {
+      "id": "meyvanwa",
+      "tao": "meyvanwa",
+      "aka": [
+        "mivanwa"
+      ],
+      "zh": "招魚祭",
+      "category": "祭典",
+      "detail": "飛魚季的開端（約陽曆 2–3 月）。各船組在灘頭舉行儀式，召喚飛魚到來。文獻亦作 mivanwa。"
+    },
+    {
+      "id": "rayon",
+      "tao": "rayon",
+      "zh": "飛魚季／飛魚汛期",
+      "category": "歲時",
+      "detail": "約陽曆 2–6 月，隨黑潮而來的飛魚汛期。是歲時與漁獵生活的核心季節，而不只是單一「祭典」。"
+    },
+    {
+      "id": "manoyotoyon",
+      "tao": "manoyotoyon",
+      "aka": [
+        "panoyotoyon",
+        "manoytoyon"
+      ],
+      "zh": "飛魚終食祭",
+      "category": "祭典",
+      "detail": "約中秋前後，飛魚相關祭儀的終章。此後不再食用飛魚乾，表達對飛魚的尊重。"
+    },
+    {
+      "id": "alibangbang",
+      "tao": "alibangbang",
+      "zh": "飛魚",
+      "category": "自然",
+      "detail": "達悟族對飛魚的稱呼。飛魚被視為神聖的儀式性魚類，捕撈與食用都有嚴謹規範。"
+    },
+    {
+      "id": "tatala",
+      "tao": "tatala",
+      "zh": "拼板小船（1–3 人）",
+      "category": "器物",
+      "detail": "家庭或個人使用的拼板舟，約二十一塊板拼合，單體雙尖、無舷外浮木。請勿擅自觸碰。"
+    },
+    {
+      "id": "cinedkeran",
+      "tao": "cinedkeran",
+      "aka": [
+        "cinedkaran",
+        "cinedkuran"
+      ],
+      "zh": "拼板大船（6–10 人）",
+      "category": "器物",
+      "detail": "漁團共同使用的大船，通常 6–10 人、三至五對槳。飛魚季夜間火把招魚多由大船漁團進行。"
+    },
+    {
+      "id": "soli",
+      "tao": "soli",
+      "zh": "水芋",
+      "category": "食材",
+      "detail": "蘭嶼梯田栽培的水芋，是日常主食與祭儀共享中極重要的作物，常與飛魚乾搭配。"
+    },
+    {
+      "id": "alibaong",
+      "tao": "alibaong",
+      "zh": "芋頭田（待校訂）",
+      "category": "地方",
+      "detail": "部分文化資料以此指芋頭田。詞義與拼寫須在 Phase C 與族語協作者確認後鎖定。"
+    },
+    {
+      "id": "tagakal",
+      "tao": "tagakal",
+      "zh": "涼亭",
+      "category": "建築",
+      "detail": "部落中休息、作工與聚會的高架涼亭。上涼亭請脫鞋。"
+    },
+    {
+      "id": "jimagaod",
+      "tao": "Jimagaod",
+      "zh": "小蘭嶼",
+      "category": "地方",
+      "detail": "主島南方的小島，與紅頭海域的漁獵範圍相關。"
+    },
+    {
+      "id": "ciriciring",
+      "tao": "ciriciring no Tao",
+      "zh": "達悟語",
+      "category": "語言",
+      "detail": "達悟族的語言。本遊戲以臺灣傳統漢字＋羅馬拼音呈現，不用簡體中文。"
+    },
+    {
+      "id": "orthography",
+      "tao": "’ · ng / n-g · í á é ó",
+      "zh": "族語書寫筆記（原住民族語言書寫系統）",
+      "category": "書寫",
+      "detail": "依教育部／原民會《原住民族語言書寫系統》雅美（達悟）語：「’」是喉塞音字母（不是重音符號），遊戲一律用彎引號 ’（U+2019），不用直撇號 '。ng 連寫是一個鼻音，如 mangay「去」；n 與 g 分開念時加連字號，如 man-gamo「開人玩笑」。重音多在最後一個音節，不在最後時教材會標 í、á、é、ó。常用字：vahay 家、among 魚、ili 部落、tao 人。（參考：《雅美（達悟）語語法概論》第二章，何德華、董瑪女，原民會 2018；書寫系統 113 年修正對照表）"
+    },
+    {
+      "id": "akokey",
+      "tao": "akokey",
+      "zh": "你好",
+      "detail": "打招呼的話。見到長輩先說一聲 akokey。",
+      "category": "phrase",
+      "source": "族語 E 樂園「生活常用語」雅美語（暫定）"
+    },
+    {
+      "id": "wawa",
+      "tao": "wawa",
+      "zh": "海",
+      "detail": "長輩那句「ikongo yamyan do wawa?」裡的 wawa，就是海。",
+      "category": "nature",
+      "source": "族語 E 樂園第 5 階第 9 課（暫定）"
+    },
+    {
+      "id": "kalang",
+      "tao": "kalang",
+      "zh": "螃蟹",
+      "detail": "螃蟹的通稱。陸蟹的專名還要請族人告訴我們。",
+      "category": "food",
+      "source": "族語 E 樂園第 5 階第 9 課（暫定）"
+    },
+    {
+      "id": "kois",
+      "tao": "kois",
+      "zh": "豬",
+      "detail": "家屋旁養的豬。",
+      "category": "自然",
+      "source": "何德華、董瑪女《達悟語：語料、參考語法、及詞彙》（暫定）"
+    }
+  ]
+}

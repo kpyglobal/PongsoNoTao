@@ -1,0 +1,12 @@
+{
+  "milestones": [
+    { "id": "arrive", "zh": "踏上 Pongso no Tao", "tao": "Pongso no Tao", "detail": "選定出身並走進蘭嶼。", "hidden": false },
+    { "id": "hear-words", "zh": "把島的名字放進手札", "tao": "ciriciring no Tao", "detail": "向長輩請教，解鎖第一批族語詞卡。", "hidden": false },
+    { "id": "clinic-notes", "zh": "衛生所筆記", "tao": "soli · alibangbang", "detail": "在紅頭衛生所記下飛魚與水芋的營養搭配。", "hidden": false },
+    { "id": "harvest-taro", "zh": "初收水芋", "tao": "soli", "detail": "在教學田裡完成一次水芋採收。", "hidden": false },
+    { "id": "catch-fish", "zh": "飛魚季的海", "tao": "rayon", "detail": "於飛魚季在體驗點完成一次時機互動。", "hidden": false },
+    { "id": "look-jimagaod", "zh": "望見小蘭嶼", "tao": "Jimagaod", "detail": "在南岸眺望 Jimagaod，並收入椰子筆記。", "hidden": false },
+    { "id": "all-times", "zh": "島的四種光", "tao": "", "detail": "親身切換清晨、白天、黃昏與夜晚。", "hidden": true },
+    { "id": "all-seasons", "zh": "歲時走一輪", "tao": "rayon", "detail": "體驗招魚祭、飛魚季、終食祭與休漁期。", "hidden": true }
+  ]
+}

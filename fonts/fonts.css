@@ -1,0 +1,14 @@
+/* Self-hosted Traditional Chinese fonts — Noto Sans TC / Noto Serif TC (SIL OFL 1.1, notofonts/noto-cjk).
+   Subset to the glyphs this game uses by scripts/build-fonts.py. Relative URLs so the game works offline
+   and from any sub-path (e.g. /Tao-rpg/). */
+@font-face { font-family: "Noto Sans TC"; font-style: normal; font-weight: 400; font-display: swap; src: url("./noto-sans-tc-400.woff2") format("woff2"); }
+@font-face { font-family: "Noto Sans TC"; font-style: normal; font-weight: 500; font-display: swap; src: url("./noto-sans-tc-500.woff2") format("woff2"); }
+@font-face { font-family: "Noto Sans TC"; font-style: normal; font-weight: 700; font-display: swap; src: url("./noto-sans-tc-700.woff2") format("woff2"); }
+@font-face { font-family: "Noto Serif TC"; font-style: normal; font-weight: 600; font-display: swap; src: url("./noto-serif-tc-600.woff2") format("woff2"); }
+@font-face { font-family: "Noto Serif TC"; font-style: normal; font-weight: 700; font-display: swap; src: url("./noto-serif-tc-700.woff2") format("woff2"); }
+/* 圖鑑手札 notebook: 芫荽 Iansui (ButTaiwan/iansui v1.020, SIL OFL 1.1) for handwritten content;
+   Literata (TypeTogether / google/fonts, SIL OFL 1.1) for Tao and Latin text. Loaded only when the notebook is open. */
+@font-face { font-family: "Iansui"; font-style: normal; font-weight: 400; font-display: swap; src: url("./iansui-400.woff2") format("woff2"); }
+@font-face { font-family: "Literata"; font-style: normal; font-weight: 400; font-display: swap; src: url("./literata-400.woff2") format("woff2"); }
+@font-face { font-family: "Literata"; font-style: normal; font-weight: 600; font-display: swap; src: url("./literata-600.woff2") format("woff2"); }
+@font-face { font-family: "Literata"; font-style: italic; font-weight: 400; font-display: swap; src: url("./literata-400i.woff2") format("woff2"); }

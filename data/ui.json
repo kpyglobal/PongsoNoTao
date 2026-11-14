@@ -1,0 +1,273 @@
+{
+  "notes": "介面與玩法文字（出身、環島傳送、操作說明、小遊戲、提示）。由 src/core/content.ts 在載入時檢查格式。{name}、{n} 為代入欄位。",
+  "origins": [
+    {
+      "id": "yayo",
+      "zh": "椰油",
+      "tao": "Yayo",
+      "hint": "西岸返鄉／尋根，開元港就在家門口。",
+      "spawn": {
+        "place": "yayo",
+        "ox": -1.2,
+        "oz": 2.8
+      }
+    },
+    {
+      "id": "iraraley",
+      "zh": "朗島",
+      "tao": "Iraraley",
+      "hint": "北岸開闊海岸，分上、下部落與潮間帶。",
+      "spawn": {
+        "place": "iraraley",
+        "ox": 0,
+        "oz": 2.6
+      }
+    },
+    {
+      "id": "iranmeylek",
+      "zh": "東清",
+      "tao": "Iranmeylek",
+      "hint": "東北岸東清灣，迎接島上第一道曙光。",
+      "spawn": {
+        "place": "iranmeylek",
+        "ox": -2.4,
+        "oz": 1.8
+      }
+    },
+    {
+      "id": "ivalino",
+      "zh": "野銀",
+      "tao": "Ivalino",
+      "hint": "東南岸，最完整的傳統地下屋聚落。",
+      "spawn": {
+        "place": "ivalino",
+        "ox": -2.2,
+        "oz": 2.4
+      }
+    },
+    {
+      "id": "imorod",
+      "zh": "紅頭",
+      "tao": "Imorod",
+      "hint": "南岸，飛魚傳說起源；衛生所在此。",
+      "spawn": {
+        "place": "imorod",
+        "ox": -2,
+        "oz": 2.6
+      }
+    },
+    {
+      "id": "iratay",
+      "zh": "漁人",
+      "tao": "Iratay",
+      "hint": "西南平坦之地，蘭嶼機場就在部落旁。",
+      "spawn": {
+        "place": "iratay",
+        "ox": 2.2,
+        "oz": 2.4
+      }
+    },
+    {
+      "id": "visitor",
+      "zh": "外來訪客",
+      "tao": "開元港登島",
+      "hint": "自開元港上岸。先看、先聽、先問，再走近舟與屋。",
+      "spawn": {
+        "place": "harbor",
+        "ox": 0.8,
+        "oz": 1.4
+      }
+    },
+    {
+      "id": "random",
+      "zh": "隨機",
+      "tao": "Surprise",
+      "hint": "交給海風決定這趟旅程的起點。"
+    }
+  ],
+  "travel": [
+    {
+      "id": "yayo",
+      "zh": "椰油",
+      "tao": "Yayo"
+    },
+    {
+      "id": "iraraley",
+      "zh": "朗島",
+      "tao": "Iraraley"
+    },
+    {
+      "id": "iranmeylek",
+      "zh": "東清",
+      "tao": "Iranmeylek"
+    },
+    {
+      "id": "ivalino",
+      "zh": "野銀",
+      "tao": "Ivalino"
+    },
+    {
+      "id": "imorod",
+      "zh": "紅頭",
+      "tao": "Imorod"
+    },
+    {
+      "id": "iratay",
+      "zh": "漁人",
+      "tao": "Iratay"
+    },
+    {
+      "id": "harbor",
+      "zh": "開元港",
+      "tao": "Kaiyuan"
+    },
+    {
+      "id": "clinic",
+      "zh": "蘭嶼衛生所",
+      "tao": "南岸 · 紅頭旁"
+    },
+    {
+      "id": "airport",
+      "zh": "蘭嶼機場",
+      "tao": "西南 · 漁人旁"
+    },
+    {
+      "id": "qingqing",
+      "zh": "青青草原",
+      "tao": "南端草原",
+      "landmark": true
+    }
+  ],
+  "help": {
+    "toastTouch": [
+      "左下方滑動移動",
+      "單指轉視角",
+      "雙指縮放"
+    ],
+    "toastDesktop": [
+      "WASD 移動",
+      "拖曳轉視角",
+      "滾輪縮放",
+      "E 互動"
+    ],
+    "touch": [
+      {
+        "title": "移動與機車",
+        "body": "左下方滑動即可移動。點「步行｜機車」可騎上電動機車；環島公路較快，田埂與碼頭會自動放慢。"
+      },
+      {
+        "title": "視角縮放",
+        "body": "單指拖曳轉視角，雙指開合縮放。點「視角」可重置或微調遠近。"
+      },
+      {
+        "title": "互動與手札",
+        "body": "靠近人物或地點後，點畫面提示或右下「互動」。右上角打開圖鑑手札；點小地圖可環島傳送。"
+      },
+      {
+        "title": "隊伍與任務",
+        "body": "左上角三個頭像是族男、族女和旅人，點一下就換人操控，其他人會跟在後面。點任務條或右上角手札的「任務」頁，查看進行中、已完成和還沒解鎖的任務。"
+      }
+    ],
+    "desktop": [
+      {
+        "title": "移動與機車",
+        "body": "WASD 或方向鍵移動，方向跟著畫面。按 M 或點「步行｜機車」切換電動機車；環島公路較快，田埂與碼頭會自動放慢。"
+      },
+      {
+        "title": "視角縮放",
+        "body": "拖曳畫面或按 Q／R 旋轉視角，滾輪縮放。點「視角」可重置或微調遠近。"
+      },
+      {
+        "title": "互動與手札",
+        "body": "靠近後按 E（或 F、空白鍵），或點畫面提示。按 J 或右上角打開圖鑑手札；點小地圖可環島傳送。"
+      },
+      {
+        "title": "隊伍與任務",
+        "body": "按 1／2／3 或點左上角頭像切換族男、族女、旅人；按 C 輪流切換。按 L 打開任務頁。進度會自動存在這台裝置的瀏覽器裡。"
+      }
+    ]
+  },
+  "minigames": {
+    "taro": {
+      "title": "採收水芋  soli",
+      "desc": "看準綠色區間按下「把握時機」。這是教學田，請不要走進別人的田埂。",
+      "unlocks": {
+        "ingredients": [
+          "soli"
+        ],
+        "glossary": [
+          "soli",
+          "alibaong"
+        ]
+      },
+      "milestone": {
+        "id": "harvest-taro",
+        "title": "初收水芋",
+        "body": "soli 已寫入手札。"
+      },
+      "success": {
+        "title": "採收成功",
+        "body": "水芋 soli 收入傳統食材。"
+      },
+      "fail": {
+        "title": "再試一次",
+        "body": "節奏偏了，水還很涼，再靠近田埂看看。"
+      }
+    },
+    "fish": {
+      "title": "飛魚躍出  alibangbang",
+      "desc": "看準飛魚躍出的時機。這只是港口體驗點，不是漁團的火把招魚。",
+      "unlocks": {
+        "ingredients": [
+          "alibangbang"
+        ],
+        "glossary": [
+          "alibangbang",
+          "rayon",
+          "tatala"
+        ]
+      },
+      "milestone": {
+        "id": "catch-fish",
+        "title": "飛魚季的海",
+        "body": "alibangbang 已寫入手札。"
+      },
+      "success": {
+        "title": "時機剛好",
+        "body": "飛魚 alibangbang 收入傳統食材。"
+      },
+      "fail": {
+        "title": "再試一次",
+        "body": "飛魚已經落下水面，等下一躍。"
+      }
+    }
+  },
+  "text": {
+    "startTitle": "踏上 Pongso no Tao",
+    "startBody": "里程碑已寫入手札。按 J 或右上角打開圖鑑。",
+    "startErrorTitle": "無法開始",
+    "startErrorBody": "開場時發生錯誤，請重新整理再試一次。",
+    "visitorWho": "開元港",
+    "originWho": "{name}的風",
+    "allTimesTitle": "島的四種光",
+    "allTimesBody": "你看過清晨、白天、黃昏與夜晚。",
+    "allSeasonsTitle": "歲時走一輪",
+    "allSeasonsBody": "招魚祭、飛魚季、終食祭與休漁期都走過了。",
+    "journalUpdateTitle": "手札更新",
+    "journalGlossary": "族語詞卡 ×{n}",
+    "journalRecipes": "食譜／衛生所筆記",
+    "journalIngredients": "食材",
+    "talkPrompt": "與{name}交談",
+    "placeHint": "在部落廣場走走，找長輩或涼亭旁的人談談。",
+    "clinicWho": "蘭嶼衛生所護理師",
+    "lookWho": "南岸眺望",
+    "fisherWho": "灘頭的漁人",
+    "fallbackLine": "（他們微笑點頭，暫時沒有要多說。）",
+    "scooterOnTitle": "騎上電動機車",
+    "scooterOnBody": "環島公路上會跑得更快；水芋田埂與碼頭會自動放慢。按 M 或點「步行｜機車」可切換。",
+    "scooterOffTitle": "下車步行",
+    "scooterOffBody": "改為步行。按 M 或再點「步行｜機車」可出發。",
+    "travelTitle": "抵達{name}",
+    "travelBody": "已傳送。可用機車沿環島公路繼續走訪。"
+  }
+}
