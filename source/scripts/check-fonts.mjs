@@ -9,7 +9,7 @@ import zlib from 'node:zlib';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const FONT_DIR = path.join(ROOT, 'public/fonts');
-const SCAN = [path.join(ROOT, 'src'), path.join(ROOT, 'content')];
+const SCAN = [path.join(ROOT, 'src'), path.join(ROOT, 'content'), path.join(ROOT, 'content-pending')].filter((d) => fs.existsSync(d));
 const TEXT_EXT = new Set(['.ts', '.tsx', '.js', '.mjs', '.css', '.json', '.html']);
 
 // CJK radicals / symbols & punctuation / bopomofo / Han (BMP + ext.) / compatibility / vertical & fullwidth forms

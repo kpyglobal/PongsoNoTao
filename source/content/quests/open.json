@@ -8,7 +8,7 @@
       "arc": "open",
       "village": null,
       "name": {
-        "zh": "入島：搭飛機或搭船",
+        "zh": "抵達蘭嶼",
         "en": ""
       },
       "time": "any",
@@ -28,9 +28,9 @@
         "who": "全隊",
         "coop": "三人：全隊一起入島",
         "season": "遊戲開始",
-        "pre": "建立旅人角色",
+        "pre": "建立隊伍、選好怎麼前往蘭嶼",
         "unlock": "文化聲明、Q02、Q03、Q04",
-        "kind": ""
+        "kind": "開場紀錄：抵達動畫之後自動完成，顯示在任務清單，不是可再接的任務"
       },
       "req": {
         "flag": "party_created"
@@ -38,7 +38,7 @@
       "steps": [
         {
           "kind": "auto",
-          "text": "全隊一起搭船抵達開元港",
+          "text": "全隊一起抵達蘭嶼",
           "lines": [
             {
               "who": "文化聲明",
@@ -50,11 +50,31 @@
             },
             {
               "who": "@m",
-              "zh": "到了！船靠岸了。這裡就是開元港。"
+              "zh": "到了！船靠岸了。這裡就是開元港。",
+              "if": "arrived_boat"
+            },
+            {
+              "who": "@m",
+              "zh": "到了！飛機平安落地，這裡就是蘭嶼機場。",
+              "if": "arrived_plane"
             },
             {
               "who": "@f",
-              "zh": "先去港口旁的租車行租機車，再回家跟家人報到吧。"
+              "zh": "好久沒回來了。小時候放暑假才回來，後來在台灣念書、工作，一年回不了一次。"
+            },
+            {
+              "who": "@m",
+              "zh": "這次要待久一點。長輩說，家裡的事、海上的事，要回來才學得到。"
+            },
+            {
+              "who": "@f",
+              "zh": "先去港口旁的租車行租機車，再回家跟家人報到吧。",
+              "if": "arrived_boat"
+            },
+            {
+              "who": "@f",
+              "zh": "開元港旁邊有租車行，我們沿著環島公路走過去，租好機車再回家跟家人報到吧。",
+              "if": "arrived_plane"
             },
             {
               "who": "@t",
@@ -68,7 +88,8 @@
         "from": "族人",
         "zh": "全隊已經一起上島了。"
       },
-      "playable": true
+      "playable": false,
+      "silent": false
     },
     {
       "id": "Q02",
@@ -181,6 +202,43 @@
             "toast": [
               "回家報到",
               "主人家庭與糧倉已加入手札。"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "host_tagakal",
+          "r": 5,
+          "text": "長輩帶大家到家旁的涼亭坐一坐",
+          "lines": [
+            {
+              "who": "@host",
+              "zh": "來，上涼亭坐，鞋子脫在下面。這裡涼，看得到海。"
+            },
+            {
+              "who": "@host",
+              "zh": "你們小時候，就是在這裡聽我們說話長大的。"
+            },
+            {
+              "who": "@me",
+              "zh": "在台灣的時候，常常想起這個涼亭。這次回來，想把家裡的事好好學起來。"
+            },
+            {
+              "who": "@host",
+              "zh": "好。回家不是只回來看看，是回來記得。慢慢來，有事就到涼亭找我。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "glossary": [
+              "tagakal"
+            ],
+            "toast": [
+              "主人家的涼亭",
+              "主人家的涼亭是大家的家。以後在這裡聊天、聽故事。"
             ]
           }
         }
@@ -340,20 +398,61 @@
         "kind": ""
       },
       "req": {
-        "flag": "injured"
+        "any": [
+          {
+            "flag": "injured"
+          },
+          "I2"
+        ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "clinic_nurse",
+          "text": "族女在潮間帶被礁石劃了一下，到紅頭的衛生所處理",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "剛剛在礁岩上滑了一下，腳被劃到了。"
+            },
+            {
+              "who": "@npc",
+              "zh": "先沖乾淨，我幫妳消毒。傷口不深，別擔心。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "clinic_doctor",
+          "text": "衛生所醫師看看傷口",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這幾天保持乾燥，不要再下水。下次去礁岩，穿防滑鞋。"
+            },
+            {
+              "who": "@npc",
+              "zh": "有空來聽我們的安全課，營養師也在這裡。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_doctor",
+              "health_card"
+            ],
+            "toast": [
+              "營養與健康卡",
+              "醫師與營養師的人物頁已加入手札。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "紅頭",
+        "zh": "在礁岩上受了傷，就去紅頭的衛生所。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "Q07",
@@ -412,7 +511,7 @@
             },
             {
               "who": "@npc",
-              "zh": "辦完就回主人家集合，三個人到齊了我再說。"
+              "zh": "辦完就回家旁的涼亭集合，三個人到齊了我再說。"
             },
             {
               "who": "旁白",
@@ -436,7 +535,7 @@
               "ctrl": true
             }
           },
-          "meet": "host_home"
+          "meet": "host_tagakal"
         },
         {
           "kind": "tasks",
@@ -499,54 +598,55 @@
         },
         {
           "kind": "spot",
-          "spot": "host_home",
-          "r": 7,
+          "spot": "host_tagakal",
+          "r": 6,
           "need": [
             "m",
             "f",
             "t"
           ],
           "regroup": true,
-          "text": "三人回到主人家集合",
+          "text": "三人回到主人家的涼亭集合",
           "lines": [
             {
               "who": "@f",
-              "zh": "大家都回來了，進去找長輩吧。"
+              "zh": "大家都回來了，上涼亭坐吧。"
             }
           ]
         },
         {
-          "kind": "talk",
-          "npc": "@host",
+          "kind": "spot",
+          "spot": "host_tagakal",
+          "r": 6,
           "need": [
             "m",
             "f",
             "t"
           ],
-          "text": "全隊到主人家，聽長輩說明島上的規矩",
+          "text": "全隊坐在主人家的涼亭上，聽長輩說明島上的規矩",
           "lines": [
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "大家都到了，我說說島上的規矩。"
             },
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "飛魚季的時候，灘頭和拼板舟有很多規矩。旅人不要進灘頭，也不要碰船。"
             },
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "女孩子在飛魚季不碰拼板舟、不上船。"
             },
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "部落的祭儀不要靠近，也不要拍。想拍人或家屋，先問一聲。"
             },
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "曬魚架上的魚，是一家人一整年的糧食，不要隨便碰。"
             },
             {
-              "who": "@npc",
+              "who": "@host",
               "zh": "每個家庭、每個部落做法不太一樣，不懂就問。"
             }
           ],
@@ -565,7 +665,7 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "回報到、導覽都完成後，三個人一起到主人家找長輩。"
+        "zh": "回報到、導覽都完成後，三個人一起到主人家旁的涼亭找長輩。"
       },
       "playable": true,
       "song": "s08"
@@ -619,7 +719,10 @@
             "flags": [
               "met_K1"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_imorod"
+            ]
           }
         }
       ],
@@ -679,7 +782,10 @@
             "flags": [
               "met_K2"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_iratay"
+            ]
           }
         }
       ],
@@ -739,7 +845,10 @@
             "flags": [
               "met_K3"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_yayo"
+            ]
           }
         }
       ],
@@ -799,7 +908,10 @@
             "flags": [
               "met_K4"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_iraraley"
+            ]
           }
         }
       ],
@@ -859,7 +971,10 @@
             "flags": [
               "met_K5"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_iranmeylek"
+            ]
           }
         }
       ],
@@ -919,7 +1034,10 @@
             "flags": [
               "met_K6"
             ],
-            "relation": 1
+            "relation": 1,
+            "glossary": [
+              "v_ivalino"
+            ]
           }
         }
       ],

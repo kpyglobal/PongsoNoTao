@@ -1,0 +1,140 @@
+{
+  "notes": "Background music list (0.1.4 v5). Original compositions rendered with FluidSynth + the GeneralUser GS soundfont (free licence; see docs/AUDIO_CREDITS.md), a synthesized convolution room, 44.1 kHz stereo; no Tao traditional song is quoted or imitated. Files: public/assets/audio/bgm/, made by scripts/audio/make_bgm.py, which writes 'loop' (loop length, s) and 'loopStart' (s: the title's one-time intro, or a 35 ms guard of wrapped loop audio on the others) back here. Pick order: start screens (title / party / 搭飛機・搭船) -> menu (0.1.4: a short loop in the title's key and tempo; on the arrival it segues into the title's epic intro on the next bar line); arrival cut-scene -> title from its intro; cultural event (see 'culture'; disabled in 0.1.4) -> festival; at sea -> sea; night -> night; up on the hills (ground height >= mountainHeight) -> mountain; the starting modern area ('startZone': within radius m of 開元港 or the 蘭嶼機場 runway) -> the title's loop (it flows straight on from the arrival; started elsewhere it begins at loopStart); near a village with a theme -> that theme; elsewhere -> default. New village theme: add a track and map the village id in 'villages' (no code change). Every loop quotes the title hook (HOOK in the generator).",
+  "version": 1,
+  "fadeSeconds": 2.5,
+  "villageRadius": 16,
+  "mountainHeight": 5.5,
+  "default": "harbour_day",
+  "title": "title",
+  "night": "night",
+  "sea": "sea",
+  "mountain": "mountain",
+  "culture": {
+    "track": "festival",
+    "arcs": [
+      "tatala",
+      "outfit"
+    ],
+    "quests": [
+      "M4",
+      "F2",
+      "T3"
+    ],
+    "requiresOutfit": true,
+    "song": false,
+    "notes": "DISABLED in 0.1.4 (Larry): no festival track ships; cultural scenes play the normal location music. The festival / culture loop returns in 0.1.5 (redone with an AI music model or real recordings; parked in /workspace/audio-015/). The rules below stay for then: Festival / culture music plays while a dialogue or mini-game scene of a cultural quest is open: arc in 'arcs' (tatala = boat building and launching, outfit = 尋根 / weaving), id in 'quests' (M4 catch sharing, F2 sharing with kin, T3 boat trees), or the quest needs a traditional outfit (requiresOutfit: boat fishing, M3, T5-T8, IT-M1 …). 'song': true would also add every quest with an activity song. Add quest ids or arcs here; no code change. Cultural consultant to confirm which scenes should get it.",
+    "enabled": false
+  },
+  "villages": {
+    "imorod": "imorod",
+    "ivalino": "ivalino",
+    "iranmeylek": "iranmeylek"
+  },
+  "tracks": {
+    "menu": {
+      "file": "menu.mp3",
+      "loop": 17.1429,
+      "gain": 0.7,
+      "zh": "選單・出發前",
+      "mood": "112 BPM, D (the title's key and tempo), quieter (gain 0.7), no melody: lo-fi atmosphere with a light forward groove. Rhodes maj7 / add9 chord comping (fixed voice-led voicings, top note F#4-F#4-F#4-E4) + soft piano dyads, soft string pad, warm pulsing 8th-note bass, light kit on 1 / 3 + backbeat, hats 8ths -> 16ths in bars 5-8, a small fill in bar 8, pad swell + soft noise riser in bars 7-8; quiet room tone and soft vinyl ticks. Imaj9-IVmaj9-vi9-Vadd9 x2, every pass ends on V",
+      "loopStart": 0.0348,
+      "bpm": 112,
+      "loopEnd": 17.1777,
+      "transition": "Menu -> title: the title's intro opens on I, the menu's bars alternate Imaj9 / IVmaj9 / vi9 / Vadd9 and every pass ends on V. Wait for the menu's next bar line (bar = 4 beats = 2.1429 s at 112 BPM, counted from loopStart; best at loopEnd, i.e. after the V bar), start title.mp3 at t = 0 on that line and fade the menu out over ~0.35 s from it (bgm.ts segueToTitle() does exactly this). Without bar sync a 0.5-1 s crossfade into title t = 0 also works."
+    },
+    "title": {
+      "file": "title.mp3",
+      "loop": 34.2857,
+      "gain": 0.9,
+      "zh": "標題曲・Pongso no Tao",
+      "mood": "112 BPM; epic strings / choir / taiko intro (kept exactly, spliced from the approved master), then a fresh, open 'new world' bed with no melody: bright piano chords (top note held on A5) over Rhodes maj7 / add9 voicings, airy high strings, soft choir in the lift, sparse glockenspiel sparkle inside the chords, warm pulsing 8th-note bass, light forward kit, room tone + vinyl ticks; I-IV-vi-V x2 | IV-V-vi-I | IV-I-IV-V, bars 9-16 lift, bar 16 swell + soft riser back to bar 1",
+      "loopStart": 11.0714,
+      "bpm": 112,
+      "loopEnd": 45.3571,
+      "loopNote": "the second part (after the 8.6 s intro + 2.5 s equal-power crossfade) loops: [loopStart, loopEnd) is seamless (checked click-free) and is the music of the modern zones (startZone: 開元港, 蘭嶼機場, 衛生所, scooter shop, hotel) and the loading-phase loop"
+    },
+    "harbour_day": {
+      "file": "harbour_day.mp3",
+      "loop": 32.0,
+      "gain": 0.9,
+      "zh": "開元港・島嶼主題（白天）",
+      "mood": "120 BPM; the same modern cozy groove: syncopated ukulele, acoustic arpeggios, string pad, moving bass, light kit; pizzicato strings lead + glockenspiel",
+      "loopStart": 0.0348,
+      "bpm": 120,
+      "loopEnd": 32.0348
+    },
+    "night": {
+      "file": "night.mp3",
+      "loop": 40.0,
+      "gain": 0.85,
+      "zh": "夜晚",
+      "mood": "96 BPM; nylon + harp picking, warm pad, soft congas",
+      "loopStart": 0.0348,
+      "loopEnd": 40.0348
+    },
+    "sea": {
+      "file": "sea.mp3",
+      "loop": 31.0345,
+      "gain": 0.9,
+      "zh": "外海・拼板舟",
+      "mood": "116 BPM 6/8; steel guitar + flute, strings, log-drum feel, a taiko hit",
+      "loopStart": 0.0348,
+      "loopEnd": 31.0693
+    },
+    "imorod": {
+      "file": "imorod.mp3",
+      "loop": 35.5556,
+      "gain": 0.9,
+      "zh": "紅頭部落",
+      "mood": "108 BPM; nylon guitar lead, marimba, slack-key thumb bass",
+      "loopStart": 0.0348,
+      "loopEnd": 35.5904
+    },
+    "ivalino": {
+      "file": "ivalino.mp3",
+      "loop": 36.9231,
+      "gain": 0.9,
+      "zh": "野銀部落",
+      "mood": "104 BPM; soft flute + harp, light strings",
+      "loopStart": 0.0348,
+      "loopEnd": 36.9579
+    },
+    "iranmeylek": {
+      "file": "iranmeylek.mp3",
+      "loop": 32.0,
+      "gain": 0.9,
+      "zh": "東清部落",
+      "mood": "120 BPM; marimba + steel guitar, the bounciest",
+      "loopStart": 0.0348,
+      "loopEnd": 32.0348
+    },
+    "mountain": {
+      "file": "mountain.mp3",
+      "loop": 31.4754,
+      "gain": 0.9,
+      "zh": "山上・島內",
+      "mood": "122 BPM; pan flute + steel guitar, driving strum, taiko",
+      "loopStart": 0.0348,
+      "loopEnd": 31.5102
+    }
+  },
+  "menu": "menu",
+  "startZone": {
+    "track": "title",
+    "radius": 16,
+    "facilities": [
+      "harbor",
+      "runway",
+      "terminal",
+      "clinic",
+      "scooterShop",
+      "hotel"
+    ],
+    "radii": {
+      "clinic": 12,
+      "scooterShop": 10,
+      "hotel": 12
+    },
+    "note": "Modern zones -> the title's loop (loopStart..loopEnd): 開元港 harbor, 蘭嶼機場 runway + terminal, 衛生所 clinic, scooter shop, hotel. Keys are FACILITIES in src/world/layout.ts; scooterShop and hotel do not exist there yet and are skipped until the world adds them (no audio change needed then). harbour_day stays the default island theme elsewhere."
+  }
+}

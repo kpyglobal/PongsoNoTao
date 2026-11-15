@@ -7,8 +7,9 @@ import fs from 'node:fs';
 import zlib from 'node:zlib';
 import { TERRAIN_BOX, roadPolylines, getHeight, WATER_LEVEL, inTaroBasin } from '../../src/world/height';
 import { canStand, findSafeStand, staticColliders, PLAYER_RADIUS, NPC_RADIUS } from '../../src/world/collision';
-import { DROPPED, FACILITIES, LANDMARKS, TARO_FIELDS, VILLAGE_DEFS, vlocal } from '../../src/world/layout';
-import { addQuestPlaces, hostPlaces, type PlaceLike } from '../../src/world/places';
+import { DROPPED, FACILITIES, LANDMARKS, TARO_FIELDS, VILLAGE_DEFS, vlocal, remapSavePos } from '../../src/world/layout';
+import { arrivalSpawn } from '../../src/world/arrival';
+import { addQuestPlaces, hostPlaces, HOST_PLACE_IDS, type PlaceLike } from '../../src/world/places';
 
 export const ROAD_CLEAR = 1.5; // m each side of the centreline that must be free of colliders
 const STEP = 0.25;
@@ -77,7 +78,7 @@ export function collectTargets(root = 'content'): Target[] {
     out.push({ id: `place:${id}`, kind: p.kind, x: p.x, z: p.z, r: 3 });
   }
   for (const [k, hp] of allP.entries()) {
-    for (const id of ['host_home', 'host_taro', 'host_weave']) {
+    for (const id of HOST_PLACE_IDS) {
       const p = hp[id];
       out.push({ id: `place:${id}@${homes[k]}`, kind: 'host', x: p.x, z: p.z, r: 3 });
     }
@@ -99,6 +100,11 @@ export function collectTargets(root = 'content'): Target[] {
       pts.forEach((p, i) => out.push({ id: `quest:${q.id}:${st.spot}${pts.length > 1 ? '@' + homes[i] : ''}`, kind: 'quest', x: p.x, z: p.z, r: r - 0.5 }));
     }
   }
+  // 0.1.4: every landmark you visit on foot (the ring-road rocks, 燈塔, 氣象站, the waterfall), quest radius 6
+  for (const l of LANDMARKS) {
+    if (l.id === 'battleship' || l.id === 'hongtoushan' || l.id === 'dasenshan') continue; // seen from afar / hilltops
+    out.push({ id: `landmark:${l.id}`, kind: 'landmark', x: l.x, z: l.z, r: 4 });
+  }
   // gather / observe nodes (src/systems/gathering.ts)
   for (const n of db.gatherNodes) {
     const p = P[n.place];
@@ -110,7 +116,7 @@ export function collectTargets(root = 'content'): Target[] {
     if (n.talkable === false) continue;
     const wps = new Set<string>([n.home, ...n.schedule.flatMap((s) => s.waypoints)]);
     for (const w of wps) {
-      const variants = w.startsWith('host_') ? allP.map((m) => m[w]) : [P[w]];
+      const variants = w.startsWith('host_') ? allP.map((m) => m[w]) : [P[w] ?? LANDMARKS.find((l) => l.id === w)];
       variants.forEach((p, i) => {
         if (!p) { out.push({ id: `npc:${n.id}@${w}:MISSING`, kind: 'npc', x: NaN, z: NaN, r: 2.4 }); return; }
         let x = p.x, z = p.z;
@@ -140,8 +146,9 @@ export function collectTargets(root = 'content'): Target[] {
 
 export function harbourSpawn(): { x: number; z: number } {
   const P = loadContentNode().places;
-  // game.ts startNew: player.spawn(harbor.x + 1.6, harbor.z + 1.2)
-  return findSafeStand(P.harbor.x + 1.6, P.harbor.z + 1.2, PLAYER_RADIUS);
+  // game.ts begin(): arrivalSpawn('boat', places.harbor) = findSafeStand(harbor.x + 1.6, harbor.z + 1.2)
+  const s = arrivalSpawn('boat', P.harbor);
+  return { x: s.x, z: s.z };
 }
 
 export function runAudit(opts: { png?: string } = {}): Report {
@@ -194,6 +201,9 @@ export function runAudit(opts: { png?: string } = {}): Report {
     return false;
   };
   const targets = collectTargets();
+  // 0.1.4 arrival opening: the 搭飛機 start (ring road beside the runway) must join the same network
+  const ap = arrivalSpawn('plane');
+  targets.push({ id: 'arrival:plane', kind: 'poi', x: ap.x, z: ap.z, r: 0.6 });
   const unreachable = targets.filter((t) => !reachableNear(t.x, t.z, t.r));
 
   // colliders on road corridors
@@ -254,7 +264,9 @@ export function runAudit(opts: { png?: string } = {}): Report {
   // land on ground connected to the rest of the island (not a pocket, like the 0.1.0 harbour).
   const strandings: Report['strandings'] = [];
   const oldSpots = loadJSON('scripts/dev/fixtures/v010-spots.json') as [number, number][];
-  for (const [x, z] of oldSpots) {
+  for (const [ox, oz] of oldSpots) {
+    // 0.1.4: resume() first carries an old-island position to the same village on the new map
+    const { x, z } = remapSavePos(ox, oz);
     for (const r of [PLAYER_RADIUS, NPC_RADIUS]) {
       const to = findSafeStand(x, z, r);
       if (!canStand(to.x, to.z, r) || !reachableNear(to.x, to.z, 0.5)) { strandings.push({ x, z, to }); break; }

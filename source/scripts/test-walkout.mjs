@@ -17,11 +17,8 @@ const check = (name, ok, info) => {
   console.log(ok ? 'ok  ' : 'FAIL', name, info !== undefined ? JSON.stringify(info).slice(0, 240) : '');
 };
 // quay → spur → 椰油 seafront road (layout.ts HARBOUR_SPUR + ring)
-const ROUTE = [
-  { x: -33.5, z: -3.8 },
-  { x: -28.9, z: -1.3 },
-  { x: -25.6, z: -7.5 },
-];
+// 0.1.4: the island layout changed, so the route is found in the game (nearest ring-road point, then a bit along the road)
+let ROUTE = [];
 let browser = null;
 try {
   browser = await launchBrowser();
@@ -60,7 +57,22 @@ try {
     await drain();
     await ev(() => window.__TAO_RPG__.setCamera({ dist: 22 }));
     const p0 = await ev(() => window.__TAO_RPG__.playerPos());
-    check(`${T}: spawn on the harbour`, Math.hypot(p0.x + 35.8, p0.z + 5.4) < 2.5, p0);
+    const hb = await ev(() => window.__TAO_RPG__.places.harbor);
+    check(`${T}: spawn on the harbour`, Math.hypot(p0.x - hb.x, p0.z - hb.z) < 4, { p0, harbor: hb });
+    ROUTE = await ev((p) => {
+      const g = window.__TAO_RPG__;
+      const r1 = g.roadPointNear(p.x, p.z, 10);
+      if (!r1) return [];
+      // a second road point 3–5 m on, away from the dock
+      let r2 = null;
+      for (let a = 0; a < 16 && !r2; a++) {
+        const t = (a / 16) * Math.PI * 2;
+        const c = g.roadPointNear(r1.x + Math.cos(t) * 4, r1.z + Math.sin(t) * 4, 1);
+        if (c && Math.hypot(c.x - p.x, c.z - p.z) > Math.hypot(r1.x - p.x, r1.z - p.z) + 2) r2 = c;
+      }
+      return r2 ? [r1, r2] : [r1];
+    }, p0);
+    check(`${T}: found a road route off the dock`, ROUTE.length >= 1, ROUTE);
     await shot('01-harbour-spawn', 1400);
 
     // steer with real input toward each route point
@@ -88,7 +100,7 @@ try {
       const s = await ev(() => ({ p: window.__TAO_RPG__.playerPos(), c: window.__TAO_RPG__.cam(), m: window.__TAO_RPG__.mode() }));
       // QA H3: a story line can pop up after the arrival (auto lines on the quest tick); like a player, close it first
       if (s.m === 'dialogue') { await release(); await drain(); continue; }
-      trail.push([+s.p.x.toFixed(2), +s.p.z.toFixed(2)]);
+      trail.push([+s.p.x.toFixed(2), +s.p.z.toFixed(2), Date.now()]);
       const tgt = ROUTE[reached];
       const dx = tgt.x - s.p.x, dz = tgt.z - s.p.z;
       const d = Math.hypot(dx, dz);
@@ -108,10 +120,10 @@ try {
         await setKeys(want);
       }
       await sleep(90);
-      if (trail.length > 60) {
-        const a = trail[trail.length - 60], b = trail[trail.length - 1];
-        if (Math.hypot(a[0] - b[0], a[1] - b[1]) < 0.3) break; // stuck
-      }
+      // stuck = under 0.3 m in the last 12 s of wall clock (software GL under load can drop to a few frames a second)
+      const now = Date.now();
+      const old = trail.findLast?.((e) => e[2] <= now - 12000);
+      if (old && Math.hypot(old[0] - s.p.x, old[1] - s.p.z) < 0.3) break;
     }
     const diag = await ev(() => ({ mode: window.__TAO_RPG__.mode(), modals: window.__TAO_RPG__.openModals(), focus: document.activeElement?.id || document.activeElement?.tagName }));
     await release();
@@ -173,7 +185,7 @@ try {
       await page.screenshot({ path: path.join(OUT, `${T}-05-scooter-facing-right.png`) });
       await page.keyboard.up('ArrowRight');
       await ev(() => window.__TAO_RPG__.setScooter(false));
-      const boarded = await ev(() => window.__TAO_RPG__.setCanoe(true, -40, -9));
+      const boarded = await ev((p) => window.__TAO_RPG__.setCanoe(true, p.x, p.z), hb);
       await sleep(300);
       if (boarded !== false) {
         await run('tatala');

@@ -14,6 +14,14 @@ The following fonts are included as subsetted WOFF2 files and remain under the S
 - **Literata** — The Literata Project Authors (TypeTogether / [googlefonts/literata](https://github.com/googlefonts/literata)). Used for Tao and Latin text in the notebook. The OFL text is at [`guide/fonts/OFL-Literata.txt`](./guide/fonts/OFL-Literata.txt) (also `source/fonts-src/Literata-OFL.txt` and `source/public/guide/fonts/OFL-Literata.txt`).
 - **Noto Sans TC** and **Noto Serif TC** — [notofonts/noto-cjk](https://github.com/notofonts/noto-cjk), SIL OFL 1.1. Used for Traditional Chinese interface and body text, as noted in `source/public/fonts/fonts.css` and `source/ASSET_MANIFEST.md`. An OFL text for Noto is not bundled in this repository.
 
+## Map data (OpenStreetMap, ODbL 1.0)
+
+Since 0.1.4 the island's coastline and the real positions of villages and landmarks are based on [OpenStreetMap](https://www.openstreetmap.org/copyright) data (the Lanyu island polygon, relation 10730513, and place names and positions looked up through Nominatim). Data © OpenStreetMap contributors, available under the [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/). Only a heavily simplified coastline and a list of positions are used (`source/src/world/outline.ts`, made by `source/scripts/dev/make-outline.py`, and `source/src/world/layout.ts`); no map images are included.
+
+## Music and sound effects
+
+The background music and the short UI sounds (since 0.1.4) are original compositions made for this project and rendered with the **GeneralUser GS 2.0.3** soundfont (© S. Christian Collins, free licence that allows use in software projects) using **FluidSynth** as an offline tool. The **FluidR3_GM** soundfont (MIT License) is a fallback used only by the generator. Neither soundfont nor FluidSynth is shipped in this repository; only the rendered audio is. No Tao traditional song is quoted, sampled or imitated. Full credits and licence texts: [`source/docs/AUDIO_CREDITS.md`](./source/docs/AUDIO_CREDITS.md) and [`assets/audio/CREDITS.txt`](./assets/audio/CREDITS.txt).
+
 ## Language and song sources (provisional / 暫定)
 
 Tao-language phrases, glossary items, and short song-text snippets in the game data are marked **暫定** (provisional) and are attributed in the data files themselves. They are not authorized for reuse without the relevant community's consent. Sources noted in the data include:

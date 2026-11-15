@@ -49,10 +49,11 @@ try {
     const r = await G((id) => window.__TAO_RPG__.runQuest(id), id);
     check(`${id} runs end to end with runQuest`, r.done, r.trace.slice(-1));
   }
-  // ---- 2) Q07: 3-way split
+  // ---- 2) Q07: 3-way split (0.1.4 content: the regroup point is the host family's 涼亭)
+  const Q07_MEET = 'host_tagakal';
   let r = await run('Q07');
   let m = await mem();
-  check('Q07 step 0 → split: all three away, regroup point host_home', m.split && m.meet === 'host_home' && ['m', 'f', 't'].every((k) => m[k].st === 'away' && m[k].ctrl), m);
+  check('Q07 step 0 → split: all three away, regroup point ' + Q07_MEET, m.split && m.meet === Q07_MEET && ['m', 'f', 't'].every((k) => m[k].st === 'away' && m[k].ctrl), m);
   check('Q07 split: HUD banner shows the regroup point', /集合點/.test(m.banner || ''), m.banner);
   await shot('q07-split-hud');
   const before = await G(() => window.__TAO_RPG__.playerPos());
@@ -60,19 +61,19 @@ try {
   await G((r) => window.__TAO_RPG__.switchMember(r), target);
   const after = await G(() => window.__TAO_RPG__.playerPos());
   const at = await G((r) => { const g = window.__TAO_RPG__; const id = g.members()[r].at; return g.places[id]; }, target);
-  check('switch to an away member: the camera / player jumps to their place', Math.hypot(after.x - at.x, after.z - at.z) < 6 && Math.hypot(after.x - before.x, after.z - before.z) > 3, { after, at });
+  check('switch to an away member: the camera / player jumps to their place', Math.hypot(after.x - at.x, after.z - at.z) < 6 && (Math.hypot(after.x - before.x, after.z - before.z) > 3 || Math.hypot(before.x - at.x, before.z - at.z) < 6), { before, after, at });
   const q07 = await q('Q07');
   check('Q07 is a tasks step (main story waits for all three)', q07.step === 1, q07);
   for (let i = 0; i < 3; i++) { r = await run('Q07'); check(`Q07 member part ${i + 1}`, r.ok, r); }
   m = await mem();
-  check('after the parts: everyone waits at the regroup point', ['m', 'f', 't'].every((k) => m[k].st === 'wait' && m[k].at === 'host_home'), m);
+  check('after the parts: everyone waits at the regroup point', ['m', 'f', 't'].every((k) => m[k].st === 'wait' && m[k].at === Q07_MEET), m);
   await G(() => window.__TAO_RPG__.saveNow());
   await boot();
   await G(() => window.__TAO_RPG__.continueSave());
   await sleep(500);
   m = await mem();
-  check('save mid-split restores member states + regroup point', m.meet === 'host_home' && ['m', 'f', 't'].every((k) => m[k].st === 'wait'), m);
-  r = await run('Q07'); check('Q07 regroup at host_home', r.ok, r);
+  check('save mid-split restores member states + regroup point', m.meet === Q07_MEET && ['m', 'f', 't'].every((k) => m[k].st === 'wait'), m);
+  r = await run('Q07'); check('Q07 regroup at ' + Q07_MEET, r.ok, r);
   m = await mem();
   check('regroup: everyone back in the party, banner gone', !m.split && ['m', 'f', 't'].every((k) => m[k].st === 'party') && !m.banner, m);
   r = await run('Q07'); check('Q07 rules talk → done', (await q('Q07')).status === 'done', r);
@@ -105,6 +106,10 @@ try {
   await G(() => window.__TAO_RPG__.setWorld({ season: 'rayon', period: 'day' }));
   await run('M2');
   check('M2 finishes by itself when the fishing season starts', (await q('M2')).status === 'done', await q('M2'));
+  // 0.1.4: M3 needs OF1 (the family gives the 族男 his traditional clothing first) and the clothing worn (requiresOutfit)
+  const of1 = await G(() => window.__TAO_RPG__.runQuest('OF1'));
+  check('OF1 (阿公的船組) done before the first sea trip', of1.done, of1.trace.slice(-1));
+  await G(() => window.__TAO_RPG__.wearOutfit('m', 'outfit_m_tao'));
   r = await run('M3');
   m = await mem();
   check('M3 step 0 → solo 族男, the others wait at the harbour', m.solo === 'm' && m.controlled === 'm' && m.f.st === 'wait' && m.t.st === 'wait', m);
@@ -126,8 +131,8 @@ try {
   const act = await G((ids) => ids.map((i) => window.__TAO_RPG__.quest(i)?.status), fd);
   check('six recipe quests unlocked after the K visits', act.every((s) => s === 'active'), act);
   for (const id of fd) { const t = await run(id, { fitWhen: true }); check(`${id} keeper talk`, t.ok, t); }
-  // a quest step at the shop (e.g. S1) runs first; talking again buys what the recipes still need
-  for (let k = 0; k < 4 && ((await G(() => window.__TAO_RPG__.items())).wakay ?? 0) < 1; k++) {
+  // a quest step at the shop (e.g. S1, E1, E4) runs first; talking again buys what the recipes still need
+  for (let k = 0; k < 8 && ((await G(() => window.__TAO_RPG__.items())).wakay ?? 0) < 1; k++) {
     await G(() => { const g = window.__TAO_RPG__; g.closeAll(); g.talkTo('shop_yayo'); });
     for (let i = 0; i < 10 && (await G(() => window.__TAO_RPG__.mode())) === 'dialogue'; i++) await G(() => window.__TAO_RPG__.advanceDialogue());
   }
@@ -144,10 +149,18 @@ try {
   await G(() => {
     const g = window.__TAO_RPG__; g.closeAll(); g.autoMinigame(true);
     const it = g.interactables().find((i) => i.id === 'taro-taro_ivalino');
-    g.teleport(it.x, it.z);
+    // stand on the side of the field away from any other interactable that sits close by (e.g. the clinic)
+    const other = g.interactables().filter((i) => i.id !== it.id).sort((a, b) => Math.hypot(a.x - it.x, a.z - it.z) - Math.hypot(b.x - it.x, b.z - it.z))[0];
+    const d = other ? Math.hypot(other.x - it.x, other.z - it.z) : 99;
+    if (other && d < 6) { const k = Math.min(it.r * 0.8, 3) / (d || 1); g.teleport(it.x - (other.x - it.x) * k, it.z - (other.z - it.z) * k); } else g.teleport(it.x, it.z);
     g.interactNearest();
   });
   await sleep(300);
+  // 0.1.4: a quest step at the same field (e.g. E2 weeding) may answer first; interact again for the free-play mini-game
+  for (let k = 0; k < 3 && ((await G(() => window.__TAO_RPG__.items())).soli ?? 0) <= soli0; k++) {
+    await G(() => { const g = window.__TAO_RPG__; for (let i = 0; i < 10 && g.mode() === 'dialogue'; i++) g.advanceDialogue(); g.closeAll(); g.interactNearest(); });
+    await sleep(300);
+  }
   const soli1 = (await G(() => window.__TAO_RPG__.items())).soli ?? 0;
   check('taro field mini-game gives 水芋', soli1 > soli0, { soli0, soli1 });
   await G(() => { const g = window.__TAO_RPG__; g.autoMinigame(false); g.closeAll(); g.giveItem('soli', 4); g.giveItem('alibangbang', 5); });

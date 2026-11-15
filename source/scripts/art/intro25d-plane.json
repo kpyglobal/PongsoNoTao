@@ -1,0 +1,100 @@
+{
+ "_note": "Digital Painter's plane set (art-ref/arrival/layers25d/plane, README.md there): 3072x1440 world layers = a 2560 frame + 256 px overscan each side; camera-locked layers are 2560 wide at x 256. parallax = the README's factors. target = 蘭嶼機場 / 漁人 shore (right of the island), focus = the main peaks for the shared pre-choice vista. Island: 03_lanyu.png at 1.5× vertical exaggeration (Larry; Digital Painter promoted 03_lanyu_x1.5.png to canonical 03_lanyu.png, top y≈492; never the keyframe alt). build-intro25d.py still accepts the _x1.5 name if it reappears.. 08_window_frame.png is included so the camera can pull back to reveal the cabin window and wing.",
+ "size": [
+  3072,
+  1440
+ ],
+ "frame": [
+  256,
+  2560
+ ],
+ "target": [
+  0.637,
+  0.475
+ ],
+ "focus": [
+  0.43,
+  0.45
+ ],
+ "horizon": 0.317,
+ "sun": [
+  0.208,
+  0.242
+ ],
+ "layers": [
+  {
+   "file": "00_sky.png",
+   "kind": "plate",
+   "parallax": 0.0
+  },
+  {
+   "file": "01_sea.png",
+   "kind": "sea",
+   "parallax": 0.3
+  },
+  {
+   "file": "02_clouds_far.png",
+   "kind": "cloud",
+   "parallax": 0.25,
+   "drift": 0.0012,
+   "far": true
+  },
+  {
+   "file": "03_lanyu.png",
+   "kind": "island",
+   "parallax": 0.35
+  },
+  {
+   "file": "04_mist_island.png",
+   "kind": "mist",
+   "parallax": 0.45,
+   "drift": 0.0028
+  },
+  {
+   "file": "05_clouds_mid.png",
+   "kind": "cloud",
+   "parallax": 0.65,
+   "drift": 0.002
+  },
+  {
+   "file": "06_clouds_near.png",
+   "kind": "cloud",
+   "parallax": 1.0,
+   "drift": 0.0032
+  },
+  {
+   "file": "07_wing.png",
+   "kind": "overlay",
+   "offset": [
+    256,
+    0
+   ],
+   "anchor": [
+    1.0,
+    0.0
+   ],
+   "screen": [
+    1.0,
+    0.0
+   ],
+   "role": "wing"
+  },
+  {
+   "file": "08_window_frame.png",
+   "kind": "overlay",
+   "offset": [
+    256,
+    0
+   ],
+   "anchor": [
+    0.5,
+    0.5
+   ],
+   "screen": [
+    0.5,
+    0.5
+   ],
+   "role": "frame"
+  }
+ ]
+}

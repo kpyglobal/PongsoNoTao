@@ -112,7 +112,11 @@ try {
     await drain();
     await ev(() => window.__TAO_RPG__.switchMember('m'));
     await talk('elder_ivalino');
-    check(`${T}: Q03 done by 族男`, (await q('Q03')).status === 'done');
+    // 0.1.4: Q03 has a second step: the elder takes everyone to the host family's 涼亭 (host_tagakal)
+    check(`${T}: Q03 step 1 → host_tagakal`, (await q('Q03')).status === 'active' && (await q('Q03')).step === 1 && (await ev(() => { const g = window.__TAO_RPG__; const t = g.questTarget('Q03'); const h = g.places.host_tagakal; return !!(t && h && t.kind === 'spot' && Math.hypot(t.x - h.x, t.z - h.z) < 0.5); })), [await q('Q03'), await ev(() => window.__TAO_RPG__.questTarget('Q03'))]);
+    await ev(() => { const g = window.__TAO_RPG__; const t = g.questTarget('Q03'); g.teleport(t.x, t.z); g.gatherParty(); g.useSpot(); });
+    await drain();
+    check(`${T}: Q03 done by 族男 (report home, then the 涼亭)`, (await q('Q03')).status === 'done', await q('Q03'));
 
     // 5) K visits; 紅頭 elder gives the Tao-only hint for Q05
     await talk('elder_imorod', { keep: true });
@@ -156,7 +160,7 @@ try {
     check(`${T}: Q04 done (respect 初訪)`, (await q('Q04')).status === 'done' && (await ev(() => window.__TAO_RPG__.questState().respect)) === 0);
     // Q07 is a 3-way split since the party split & recipes batch (PARTY_SPLIT.md): split → three parts → regroup → rules
     const q07 = await ev(() => window.__TAO_RPG__.runQuest('Q07'));
-    check(`${T}: Q07 done (3-way split + regroup at the host)`, q07.done && (await q('Q07')).status === 'done', q07.trace.slice(-1));
+    check(`${T}: Q07 done (3-way split + regroup at the host's 涼亭)`, q07.done && (await q('Q07')).status === 'done', q07.trace.slice(-1));
 
     if (T === 'desktop') {
       // 8) tide clock, intertidal (族女, low tide), photo (traveller only), item gate (headlamp)
@@ -250,6 +254,7 @@ try {
   report.ok = report.fails.length === 0 && report.errors.length === 0 && report.http4xx.length === 0;
   fs.writeFileSync(path.join(OUT, 'report-phase1.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ ok: report.ok, fails: report.fails, errors: report.errors, http4xx: report.http4xx }, null, 1));
+  process.exitCode = report.ok ? 0 : 1; // 0.1.4: a FAIL line (or a console error / 4xx) fails the run
 } finally {
   if (browser) await browser.close().catch(() => {});
   await srv.close();

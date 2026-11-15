@@ -93,6 +93,12 @@ export class Outfits {
         this.probed.set(u, p);
       }
       jobs.push(this.probed.get(u)!);
+      // 0.1.4: the outfit's own scooter / tatala sheets (optional; missing ones fall back to the base outfit's)
+      for (const pre of ['ride_', 'canoe_']) {
+        const rel = `characters/${pre}${s}_sheet.png`;
+        if (!this.probed.has(rel)) this.probed.set(rel, loadSheet(rel).then(() => true, () => false));
+        jobs.push(this.probed.get(rel)!);
+      }
     }
     for (const p of new Set([d.portrait, d.portraitByGender?.m, d.portraitByGender?.f])) if (p) jobs.push(this.probe(portraitUrl(p)));
     await Promise.all(jobs);

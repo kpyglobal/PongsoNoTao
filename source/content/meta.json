@@ -15,6 +15,10 @@
       "icon": "旅"
     }
   },
+  "tatalaRolesNote": "0.1.4 (Larry 2026-11-14): only Tao men (族男) paddle a tatala. 族女 / 旅人 take a modern canoe (quest step canoeKind \"modern\"). Add a role here to open the tatala to it later.",
+  "tatalaRoles": [
+    "m"
+  ],
   "respect": [
     {
       "id": "first",

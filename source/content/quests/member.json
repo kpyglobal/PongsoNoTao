@@ -317,22 +317,83 @@
         "kind": "隱藏：第一次見面"
       },
       "req": {
-        "flag": "met_thatch_elder"
+        "any": [
+          {
+            "flag": "met_thatch_elder"
+          },
+          "J2"
+        ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "女性長輩約族女下午去割茅草",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "涼亭的屋頂要補了。下午跟我去山坡上割茅草。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "thatch_field",
+          "r": 8,
+          "text": "族女跟女性長輩在茅草地割茅草，一把一把綁好",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "手套戴好，葉子邊很利。"
+            },
+            {
+              "who": "@hostf",
+              "zh": "割下來的，綁成一樣大的一把，背回去才好算。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "回家後，長輩看著族女綁的茅草",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "綁得很整齊，跟妳外婆以前一樣。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "thatch_card"
+            ],
+            "relation": 1,
+            "toast": [
+              "茅草圖鑑",
+              "主人家的長輩稱讚了族女。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "主人家",
+        "zh": "冬天的下午，主人家的女性長輩好像要上山坡做什麼。"
       },
-      "playable": false,
+      "playable": true,
       "hidden": true,
-      "giver": "f"
+      "giver": "f",
+      "review": [
+        "割茅草由誰做（男性或女性）、茅草用在哪裡，請族人確認"
+      ]
     },
     {
       "id": "A2",
@@ -362,18 +423,73 @@
       "req": "M4",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "villager_harbor",
+          "text": "族男在灘頭問船組，小一點的飛魚怎麼處理",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "小的放外圍，留給走不動、不能出海的長輩。他們會自己來拿，或請孩子來。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男把小一點的飛魚放在外圍",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這幾條放這裡。長輩來的時候，一眼就看得到。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "能出海的人，要想到不能出海的人。這就是分享。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "story_share"
+            ],
+            "toast": [
+              "「分享」故事卡",
+              "小一點的飛魚留給了行動不便的長輩。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "開元港",
+        "zh": "分魚的時候，船組會把小一點的飛魚放在外圍，留給長輩。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s01",
-      "giver": "m"
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      },
+      "review": [
+        "把較小的飛魚留給行動不便長輩的分享做法請族人確認"
+      ]
     },
     {
       "id": "A3",
@@ -500,18 +616,95 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "elder_imorod",
+          "text": "紅頭的長輩說：一隻羊沒回來",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "耳朵缺一角的那隻羊，昨天沒回來。山上找過了，你再去找找。"
+            },
+            {
+              "who": "@npc",
+              "zh": "看到別人家的羊，不要碰。只找我們家的記號。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "hongtoushan",
+          "r": 10,
+          "text": "族男先上紅頭山找",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這裡的羊耳朵都是完整的……不是我們家的。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "hutou_slope",
+          "r": 10,
+          "text": "族男沿著路找到虎頭坡",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "找到了！耳朵缺一角，就是牠。跑得真遠。"
+            },
+            {
+              "who": "@m",
+              "zh": "走吧，kagling，回家了。",
+              "tao": "kagling"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_imorod",
+          "text": "把羊帶回紅頭",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "回來就好。羊認得路，人也要認得路。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "glossary": [
+              "kagling"
+            ],
+            "relation": 1,
+            "toast": [
+              "羊的圖鑑",
+              "族語詞卡加上 kagling（羊）。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "紅頭",
+        "zh": "紅頭的長輩好像在數羊，數來數去少了一隻。"
       },
-      "playable": false,
+      "playable": true,
       "hidden": true,
-      "giver": "m"
+      "giver": "m",
+      "review": [
+        "kagling（羊）為既有內容中的詞，詞卡寫法請族人確認",
+        "羊耳記號的說法請族人確認"
+      ]
     }
   ],
   "note": "A1 moved to quests/split.json (now a playable leave-and-return quest)."

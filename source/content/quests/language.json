@@ -261,16 +261,41 @@
       "req": "X04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "auto",
+          "text": "族語詞卡收集 20 個詞",
+          "until": {
+            "count": "words",
+            "min": 20
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "把 20 個詞的詞卡拿給族語老師看",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "二十個詞了！你們會的，已經比很多孩子多了。"
+            },
+            {
+              "who": "@npc",
+              "zh": "接下來，最好的老師是部落裡的長輩。"
+            }
+          ],
+          "gives": {
+            "toast": [
+              "族語詞卡",
+              "收集了 20 個族語詞。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "族語老師",
+        "zh": "多跟長輩、族人說話，拜訪各部落，學到的詞會自動寫進族語詞卡。"
       },
-      "playable": false
+      "playable": true
     }
   ]
 }

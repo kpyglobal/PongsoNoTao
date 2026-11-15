@@ -8,6 +8,10 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const C = path.join(ROOT, 'content');
 const args = new Set(process.argv.slice(2));
+const OVERLAY = process.env.CONTENT_OVERLAY ? path.resolve(ROOT, process.env.CONTENT_OVERLAY) : null;
+const PENDING_DIR = path.join(ROOT, 'content-pending');
+/** place ids the world worker still has to add (docs/phase1/WORLD_NEEDS.md, first table column) */
+const WORLD_NEEDS = (() => { try { return new Set([...fs.readFileSync(path.join(ROOT, 'docs/phase1/WORLD_NEEDS.md'), 'utf8').matchAll(/^\| `([a-z0-9_]+)` \|/gm)].map((m) => m[1])); } catch { return new Set(); } })();
 const errors = [];
 const warns = [];
 const err = (m) => errors.push(m);
@@ -33,6 +37,13 @@ function loadDir(dir, key) {
     }
   };
   walk(path.join(C, dir));
+  // CONTENT_OVERLAY=content-pending: entries there replace the same id (quests waiting for WORLD_NEEDS places)
+  if (OVERLAY) {
+    const over = [];
+    const walkO = (d) => { if (!fs.existsSync(d)) return; for (const f of fs.readdirSync(d).sort()) { const p = path.join(d, f); if (fs.statSync(p).isDirectory()) walkO(p); else if (f.endsWith('.json')) { const v = readJson(p)[key]; for (const x of (Array.isArray(v) ? v : Object.entries(v ?? {}).map(([id, y]) => ({ id, ...y })))) over.push({ ...x, __file: path.relative(OVERLAY, p) }); } } };
+    walkO(path.join(OVERLAY, dir));
+    for (const x of over) { const i = out.findIndex((y) => y.id === x.id); if (i >= 0) out[i] = x; else out.push(x); }
+  }
   return out;
 }
 function index(list, kind) {
@@ -82,6 +93,7 @@ const PLACES = new Set([
   ...(placesF.derived?.ids ?? []),
   ...(placesF.landmarks ?? []),
   ...Object.keys(placesF.proposed?.places ?? {}),
+  ...(OVERLAY ? WORLD_NEEDS : []),
 ]);
 const EXTERNAL_FLAGS = new Set(Object.keys(meta.externalFlags ?? {}));
 
@@ -274,6 +286,31 @@ for (const o of outfits.values()) {
   if (!unlockedBy) err(`${L}: no quest unlocks it`);
 }
 
+// ------------------------------------------------------------- requiresOutfit (Larry 2026-11-14: festivals, boat fishing, tribal events need Tao clothing)
+{
+  const reqQuestIds = (r, out = new Set()) => { if (!r) return out; if (typeof r === 'string') out.add(r); else for (const k of ['all', 'any']) (r[k] ?? []).forEach((x) => reqQuestIds(x, out)); return out; };
+  const closure = (id, seen = new Set()) => { for (const d of reqQuestIds(quests.get(id)?.req)) if (!seen.has(d)) { seen.add(d); closure(d, seen); } return seen; };
+  for (const q of quests.values()) {
+    if (!q.requiresOutfit) continue;
+    const L = where(q);
+    const before = closure(q.id);
+    for (const [r, o] of Object.entries(q.requiresOutfit)) {
+      if (!['m', 'f'].includes(r)) err(`${L}: requiresOutfit role "${r}" (only 族男 m / 族女 f wear Tao clothing)`);
+      const od = outfits.get(o);
+      if (!od) { err(`${L}: requiresOutfit unknown outfit "${o}"`); continue; }
+      if (!od.who.includes(r)) err(`${L}: outfit ${o} is not for role ${r}`);
+      if (od.unlockQuest && !before.has(od.unlockQuest)) err(`${L}: requiresOutfit ${o}, but its unlock quest ${od.unlockQuest} is not among the prerequisites`);
+    }
+  }
+}
+// only Tao men paddle a tatala (Larry 2026-11-14): a canoe step done by 族女 / 旅人 must be a modern canoe
+for (const q of quests.values()) q.steps?.forEach((s, i) => {
+  if (!s.canoe) return;
+  const who = s.actor ?? q.roles ?? [];
+  if (s.canoeKind === 'modern') return;
+  if (who.some((r) => r !== 'm')) err(`${where(q, i)}: canoe step that 族女 / 旅人 may do must be a modern canoe (canoeKind: "modern"); only 族男 paddle a tatala`);
+});
+
 // ------------------------------------------------------------- village coverage (分工 + recipe keepers)
 for (const v of VILLAGES) {
   const vn = [...npcs.values()].filter((n) => n.village === v);
@@ -331,8 +368,12 @@ const reqOk = (r) => {
   return false;
 };
 const blockedReason = new Map();
+/** auto-completed log entry (Q01 抵達蘭嶼): not playable, but done as soon as its req is met */
+function isAutoLog(q) {
+  return !q.playable && (q.steps ?? []).length > 0 && (q.steps ?? []).every((s) => s.kind === 'auto');
+}
 function questDoable(q) {
-  if (!q.playable) return 'not playable yet (placeholder)';
+  if (!q.playable) return isAutoLog(q) ? null : 'not playable yet (placeholder)';
   const local = new Set(have);
   for (const [i, s] of q.steps.entries()) {
     if (s.kind === 'placeholder') return `step ${i} is a placeholder`;
@@ -378,7 +419,7 @@ while (changed) {
 let placeholderCount = 0;
 for (const q of quests.values()) {
   if (done.has(q.id)) continue;
-  if (!q.playable) { placeholderCount++; continue; }
+  if (!q.playable) { if (!isAutoLog(q)) placeholderCount++; continue; }
   const why = blockedReason.get(q.id) ?? (reqOk(q.req) ? 'unknown' : `prerequisites never met (${JSON.stringify(q.req)})`);
   err(`${where(q)}: playable but not completable — ${why}`);
 }
@@ -389,7 +430,7 @@ for (const q of quests.values()) {
   const reach = new Set();
   const addG = (g) => (g?.glossary ?? []).forEach((w) => reach.add(w));
   for (const q of quests.values()) {
-    if (!q.playable) continue;
+    if (!q.playable && !isAutoLog(q)) continue;
     for (const s of q.steps) { addG(s.gives); for (const t of s.tasks ?? []) addG(t.gives); }
   }
   // NPC dialogue: legacy nodes, a set's intro node; code-driven nodes (fish_* at the harbour, jimagaod_look)
@@ -423,4 +464,12 @@ if (args.has('--review')) {
 for (const w of warns) console.log('warn:', w);
 for (const e of errors) console.log('ERROR:', e);
 console.log(errors.length ? `\n${errors.length} error(s)` : '\nOK');
-process.exit(errors.length ? 1 : 0);
+let pendingFail = false;
+if (!OVERLAY && fs.existsSync(PENDING_DIR) && !args.has('--no-pending')) {
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, [new URL(import.meta.url).pathname, '--quiet', ...[...args].filter((a) => a !== '--quiet')], { env: { ...process.env, CONTENT_OVERLAY: 'content-pending' }, encoding: 'utf8' });
+  const n = fs.readdirSync(PENDING_DIR, { recursive: true }).filter((f) => String(f).endsWith('.json')).length;
+  console.log(`\ncontent-pending/ (${n} files, checked with the WORLD_NEEDS places): ${r.status === 0 ? 'OK' : 'FAILED'}`);
+  if (r.status !== 0) { pendingFail = true; console.log(r.stdout.split('\n').filter((l) => /ERROR|warn/.test(l)).join('\n')); }
+}
+process.exit(errors.length || pendingFail ? 1 : 0);

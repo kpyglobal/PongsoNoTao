@@ -29,16 +29,60 @@
       "req": "Q05",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "shop_yayo",
+          "text": "到椰油的雜貨店，聽老闆說泡麵",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "泡麵最好賣了。方便、放得久，船一來就補貨。"
+            },
+            {
+              "who": "@npc",
+              "zh": "可是風浪大、船停開的時候，架子一下就空了。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "回家問女性長輩怎麼看",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "忙的時候吃泡麵，大家都吃過，不是壞事。"
+            },
+            {
+              "who": "@npc",
+              "zh": "可是芋頭和魚，要有人種、有人捕，才不會斷掉。你們自己想想。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "modern_noodles"
+            ],
+            "relation": 1,
+            "toast": [
+              "糧倉",
+              "泡麵和田裡的芋頭，都在現在的餐桌上。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "椰油",
+        "zh": "椰油的雜貨店老闆說，泡麵是店裡賣最好的東西。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "E2",
@@ -71,17 +115,80 @@
       "req": "R3",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "野銀的水芋田長輩說起一塊荒掉的田",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這塊田的主人去台灣工作了，好幾年沒人照顧，草比人還高。"
+            },
+            {
+              "who": "@npc",
+              "zh": "你們兩個要不要試試看接手？我會先問過田主人家。"
+            }
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "taro_ivalino",
+          "r": 6,
+          "text": "族男清掉田埂上的雜草，族女把水路通開",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "草根好深，一點一點拔。"
+            },
+            {
+              "who": "@f",
+              "zh": "水路通了！水又流進田裡了。"
+            }
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "向水芋田長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "田要有人走進去，才不會荒掉。明年就可以種了。"
+            }
+          ],
+          "need": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "field_takeover"
+            ],
+            "toast": [
+              "接手耕作",
+              "明年可以在這塊田重新種下水芋。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "野銀",
+        "zh": "野銀的水芋田長輩說，有一塊田荒了好幾年。"
       },
-      "playable": false,
-      "giver": "f"
+      "playable": true,
+      "giver": "f",
+      "labourNote": "整地、引水本來是族男的工作（R1），廢耕田的接手由族男、族女一起做",
+      "review": [
+        "廢耕水芋田的接手是否需要田主人家同意、由誰來談，請族人確認"
+      ]
     },
     {
       "id": "E3",
@@ -114,16 +221,83 @@
       "req": "Q05",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "villager_iranmeylek",
+          "text": "東清的族人說起暑假的觀光旺季",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "暑假的東清，晚上夜市好熱鬧，機車停滿路邊。"
+            },
+            {
+              "who": "@npc",
+              "zh": "遊客多，部落的收入多一點；可是灘頭、家門口，也常有人亂走、亂拍。"
+            }
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "iranmeylek_beach",
+          "r": 8,
+          "text": "族人和旅人一起站在東清灣，看同一片海灘",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "對我們來說，這裡是出海的地方，也是家門口。"
+            },
+            {
+              "who": "@t",
+              "zh": "對遊客來說，這裡是假期。我是客人，好玩也要記得這裡是別人的家。"
+            }
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "pb_couple_f",
+          "text": "旅人提醒想坐上拼板舟拍照的情侶遊客",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "不好意思，拼板舟是族人的，不能坐上去拍。在路邊拍海就很漂亮。"
+            },
+            {
+              "who": "@npc",
+              "zh": "啊，我們不知道。謝謝你告訴我們！"
+            }
+          ],
+          "need": [
+            "t",
+            "mf"
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "respect_tourism"
+            ],
+            "toast": [
+              "尊重事件",
+              "從兩邊看同一件事：觀光旺季。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "東清",
+        "zh": "暑假的東清好熱鬧，東清的族人好像有話想說。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "觀光旺季對部落的影響（收入與打擾並存）的說法請族人確認"
+      ]
     },
     {
       "id": "E4",
@@ -153,16 +327,54 @@
       "req": "Q05",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "shop_yayo",
+          "text": "雜貨店老闆說起店裡的東西從哪裡來",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "米、麵、罐頭、飲料，都是船從台灣載來的。"
+            },
+            {
+              "who": "@npc",
+              "zh": "風浪一大，船停開，架子就空了。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "回家聽女性長輩說",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "以前島上吃的，都是島上長的。現在不一樣了，有方便，也有擔心。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這一段的觀點，還要請族人提供。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "imported_food"
+            ],
+            "toast": [
+              "進口食材",
+              "店裡的東西大多坐船來。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "椰油",
+        "zh": "雜貨店的貨，好像要看船有沒有來。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "進口食材的觀點待族人提供；目前只呈現運補與存糧的事實"
+      ]
     },
     {
       "id": "E5",
@@ -190,20 +402,94 @@
         "kind": ""
       },
       "req": {
-        "pending": true
+        "all": [
+          "E1",
+          "E4"
+        ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "culture_worker",
+          "text": "問部落文化工作者：族人覺得最重要的現代挑戰是什麼",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "最重要的挑戰？每個人的答案都不一樣。"
+            },
+            {
+              "who": "@npc",
+              "zh": "你們去問問看，不要只聽一個人的。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_iratay",
+          "text": "問漁人的長輩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "年輕人去台灣工作，部落裡常常只剩老人和小孩。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "問族語老師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "孩子會說族語的越來越少。語言沒了，很多故事也跟著沒了。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iranmeylek",
+          "text": "問東清的女性長輩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "海裡的東西，好像沒有以前多了。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "culture_worker",
+          "text": "回去告訴部落文化工作者",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們聽到的，都是真的，也都只是一部分。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這一頁，要留給族人自己來寫。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "modern_challenges"
+            ],
+            "toast": [
+              "現代的挑戰",
+              "這一頁留給族人自己來寫。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "朗島",
+        "zh": "部落文化工作者說，現代的挑戰要多聽幾個人說。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "「族人認為最重要的現代挑戰」必須由族人提供；目前三種說法只是常聽到的個人看法（人口外移、族語、漁獲），請族人改寫或替換"
+      ]
     },
     {
       "id": "N1",
@@ -234,16 +520,54 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "host_tagakal",
+          "r": 5,
+          "text": "在涼亭上，聽長輩說島上的名字",
+          "lines": [
+            {
+              "who": "@host",
+              "zh": "在島上，有了第一個孩子，大人的名字就跟著孩子改。"
+            },
+            {
+              "who": "@host",
+              "zh": "爸爸叫 Syaman，媽媽叫 Sinan，後面接孩子的名字。",
+              "tao": "Syaman · Sinan"
+            },
+            {
+              "who": "@host",
+              "zh": "等你們有一天有了孩子，大家就會用孩子的名字叫你們。名字，是跟著家一起長大的。"
+            },
+            {
+              "who": "@me",
+              "zh": "那時候，我們再帶孩子回來，教他認魚。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "teknonymy_card",
+              "teach_fish"
+            ],
+            "toast": [
+              "尾聲：親從子名",
+              "解鎖「教導孩子辨認魚類」。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "主人家",
+        "zh": "一年過去了，主人家的長輩在涼亭上，好像想說說名字的事。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "親從子名（Syaman-、Sinan-）的說明方式請族人確認；遊戲不會真的改隊員的名字"
+      ]
     },
     {
       "id": "Y1",
@@ -273,16 +597,40 @@
       "req": "Q06",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "clinic_doctor",
+          "text": "聽衛生所醫師說安全下水與工作的提醒",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "下水前先看浪、看天氣，不要一個人下水。"
+            },
+            {
+              "who": "@npc",
+              "zh": "救生衣穿好，扣子扣緊。礁岩很利，穿防滑鞋。"
+            },
+            {
+              "who": "@npc",
+              "zh": "曬魚、搬木頭的時候多喝水，中午最熱的時候休息一下。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "first_aid_card"
+            ],
+            "toast": [
+              "急救卡",
+              "記下醫師的安全提醒。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "衛生所",
+        "zh": "衛生所醫師說，下水和工作之前有幾件事要注意。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "Y2",
@@ -317,16 +665,37 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "nutritionist",
+          "text": "聽營養師的島嶼飲食課",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "芋頭和地瓜給力氣，魚給蛋白質，海菜和野菜給礦物質。"
+            },
+            {
+              "who": "@npc",
+              "zh": "島上傳統的餐桌，本來就很均衡。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "met_dietitian",
+              "nutrition_class"
+            ],
+            "toast": [
+              "營養卡",
+              "學到島嶼食物的營養。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "衛生所",
+        "zh": "衛生所的營養師在講島上的食物。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "Y3",
@@ -364,16 +733,52 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "nutritionist",
+          "text": "族女和旅人一起，和營養師比較傳統食物與進口食物",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "家裡的芋頭、飛魚、地瓜，都是自己種、自己捕的。"
+            },
+            {
+              "who": "@npc",
+              "zh": "進口的麵和罐頭很方便，可是船一停就沒有了。"
+            },
+            {
+              "who": "@npc",
+              "zh": "自己種的、自己捕的，是島上的人自己能決定的食物。這就叫食物主權。"
+            },
+            {
+              "who": "@t",
+              "zh": "原來吃什麼，也是一種可以自己決定的事。"
+            }
+          ],
+          "need": [
+            "f",
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "food_sovereignty_card",
+              "granary_note"
+            ],
+            "toast": [
+              "食物主權卡",
+              "糧倉說明加上「自己能決定的食物」。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "衛生所",
+        "zh": "採過芋頭之後，族女可以帶旅人去和營養師聊聊傳統食物。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "食物主權的說法請族人確認"
+      ]
     }
   ]
 }

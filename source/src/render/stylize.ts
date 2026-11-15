@@ -14,6 +14,9 @@
  * debug hook window.__TAO_STYLE__ = { get, set(style), params }.
  */
 import * as THREE from 'three';
+import { reflectHooks } from './reflectHooks';
+
+const MIRROR_RANGE2 = 40 * 40;
 import { Pass, FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
 import { quality } from '../core/quality';
 import type { Period, Season } from '../core/timeSeason';
@@ -349,18 +352,39 @@ export class StylizePass extends Pass {
     const target = this.renderToScreen ? null : read;
     setPaintMaterials(current === 'watercolor');
     if (current !== 'watercolor') {
+      // sprites are part of this render, so the mirror already shows them; only underwater views take them out
+      if (!reflectHooks.sprites) {
+        this.scanSprites();
+        const masks = this.sprites.map((o) => o.layers.mask);
+        reflectHooks.before = () => { for (const o of this.sprites) o.layers.disable(0); };
+        reflectHooks.after = () => { for (let i = 0; i < this.sprites.length; i++) this.sprites[i].layers.mask = masks[i]; };
+      }
       renderer.setRenderTarget(target);
       renderer.clear();
       renderer.render(this.scene, this.camera);
+      reflectHooks.before = reflectHooks.after = null;
       return;
     }
     const t0 = performance.now();
     this.scanSprites();
     paintScene(this.scene, high(), this.mat.uniforms.tPaper.value as THREE.Texture);
     const rt = this.ensureTarget(read);
-    // 1. world without the character sprites
-    const vis = this.sprites.map((s) => s.visible);
-    for (const s of this.sprites) s.visible = false;
+    // 1. world without the character sprites. 0.1.5: they leave the camera's layer 0 instead of going invisible, so
+    // their shadow-caster children still fill the shadow map, and they come back for the water's mirror render only
+    const masks = this.sprites.map((s) => s.layers.mask);
+    for (const s of this.sprites) s.layers.disable(0);
+    if (reflectHooks.sprites) {
+      // perf: only sprites near the camera go into the mirror (far reflections are sub-pixel)
+      const cp = this.camera.position;
+      reflectHooks.before = () => {
+        for (let i = 0; i < this.sprites.length; i++) {
+          const o = this.sprites[i], e = o.matrixWorld.elements, dx = e[12] - cp.x, dz = e[14] - cp.z;
+          const seen = o.userData.fresh !== false;
+          if (seen && dx * dx + dz * dz < MIRROR_RANGE2) o.layers.mask = masks[i];
+        }
+      };
+      reflectHooks.after = () => { for (const s of this.sprites) s.layers.disable(0); };
+    }
     // the sea writes depth here so the sea floor under it gets no ink and the shoreline gets a contour
     const sea = this.water?.material as THREE.Material | undefined;
     const seaDW = sea?.depthWrite ?? false;
@@ -369,7 +393,8 @@ export class StylizePass extends Pass {
     renderer.clear();
     renderer.render(this.scene, this.camera);
     if (sea) sea.depthWrite = seaDW;
-    for (let i = 0; i < this.sprites.length; i++) this.sprites[i].visible = vis[i];
+    reflectHooks.before = reflectHooks.after = null;
+    for (let i = 0; i < this.sprites.length; i++) this.sprites[i].layers.mask = masks[i];
     // 2. paint pass into the composer target, world depth written back
     const u = this.mat.uniforms;
     u.tColor.value = rt.texture; u.tDepth.value = rt.depthTexture;

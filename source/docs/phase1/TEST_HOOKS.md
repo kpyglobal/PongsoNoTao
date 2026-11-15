@@ -67,3 +67,20 @@ call `clearSave()` + reload at start. All hooks are synchronous unless noted.
 scripts/perf-mobile.mjs adds WebGL byte accounting (`window.__gpu`) + frame sampling; `node scripts/perf-mobile.mjs <label>` → perf-<label>.json.
 
 `node scripts/test-content.mjs` exercises the Phase B hooks above (content, places, windows, gathering, 圖鑑, outfits).
+
+
+## Quest runner (0.1.4)
+
+`node scripts/test-quests.mjs` (needs `dist/`, PORT optional): plays every playable quest in prerequisite order with `runQuest(id, { fitWhen: true })`, wearing the `requiresOutfit` clothing (`unlockOutfit` + `wearOutfit`), giving consumed items with `giveItem`, switching to the traveller (`switchMember('t')`) for photo steps, and using `completeStep` only for dive steps, external flags and counter waits. Prints one line per quest and `ALL OK`.
+
+
+## Arrival opening (0.1.4)
+The painted intro (title → party → 搭飛機／搭船 → ride) is off under automation unless the URL has `?intro=1`.
+
+| hook | does |
+|---|---|
+| `arrival()` | `{ phase ('intro' / 'approach'), tA, logoAt, minEnd, logoOut, skip, worldReady, load (0–1), loadLabel, introScene, introMode ('title' / 'plane' / 'boat'), introPose, duration, pose }`, or null when no arrival is playing. `introPose` (2.5D intro): `{ mode, zoom, push (0–1), mist, layers, roll, pitch, source ('placeholder' / 'final') }`; `pose`: the in-world approach camera |
+| `introMemory()` | renderer counts and JS heap `{ before, after, now }` around the intro's disposal (`after` is taken right after disposal; `now` is the current reading) |
+| `seekIntro(t)` | jump the painted ride to `t` seconds (for screenshots) |
+
+`node scripts/test-intro.mjs` (needs `dist/`): title, party, arrival choice, loading bar, both rides, logo held until the world has loaded, intro disposal (geometries / textures drop to ~0, forced GC through CDP), the approach, the start spot near a road, skip, menu music / SFX toggles, desktop and iPhone. `scripts/dev/intro-frames.mjs` takes dev screenshots (`WAY`, `TIMES`, `OUT`, `W`/`H`, `TAG`, `PUSH=0.3,0.65` for push frames); `scripts/dev/prop-shots.mjs` shoots the parked plane / moored yacht.

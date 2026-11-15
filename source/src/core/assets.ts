@@ -22,6 +22,21 @@ export interface NpcSheetRef {
   group: string | null;
 }
 
+/**
+ * 0.1.4: the playable characters have 8-direction sheets (docs/phase1/ASSET_MANIFEST.md): `<sheet>_8dir_sheet.png`
+ * holds the base sheet as its top half plus the diagonal rows. They are loaded in place of the base sheet
+ * (same texture key), and SpriteBillboard sees the double height and shows 8 facings. NPCs stay 4-way.
+ */
+export const EIGHT_DIR_KEYS = new Set(['player', 'player_f', 'player_visitor', 'player_visitor_f', 'player_trad', 'player_f_trad', 'player_visitor_acc', 'player_visitor_f_acc']);
+/** `characters/(ride_|canoe_|canoe_modern_)?<key>_sheet.png` → its 8dir file, or null */
+export function eightDirRel(rel: string): string | null {
+  const m = /^characters\/(ride_|canoe_modern_|canoe_)?([a-z_]+?)_sheet\.png$/.exec(rel);
+  if (!m || !EIGHT_DIR_KEYS.has(m[2])) return null;
+  return `characters/${m[1] ?? ''}${m[2]}_8dir_sheet.png`;
+}
+/** `?dir8=0` keeps the 4-direction sheets (A/B check) */
+const USE_8DIR = typeof location === 'undefined' || new URLSearchParams(location.search).get('dir8') !== '0';
+
 export class Assets {
   textures = new Map<string, THREE.Texture>();
   private loader = new THREE.TextureLoader();
@@ -54,8 +69,7 @@ export class Assets {
 
     await Promise.all([
       ...spriteFiles.map(async (rel) => {
-        const url = assetUrl(`assets/sprites/${rel}`);
-        const tex = await this.loadTex(url, true);
+        const tex = await this.loadSheetTex(rel);
         this.textures.set(rel, tex);
         this.pinned.add(rel);
         tick(rel);
@@ -109,7 +123,7 @@ export class Assets {
     if (t) return Promise.resolve(t);
     let p = this.pending.get(rel);
     if (!p) {
-      p = this.loadTex(assetUrl(`assets/sprites/${rel}`), true).then((tex) => {
+      p = this.loadSheetTex(rel).then((tex) => {
         this.pending.delete(rel);
         // released while loading → drop it again
         if ((this.refs.get(rel) ?? 0) <= 0 && !this.pinned.has(rel)) {
@@ -146,6 +160,13 @@ export class Assets {
   /** streaming stats (debug / perf scripts) */
   streamStats(): { sheets: number; held: Record<string, number> } {
     return { sheets: [...this.textures.keys()].filter((k) => !this.pinned.has(k)).length, held: Object.fromEntries(this.refs) };
+  }
+
+  /** a sprite sheet: the 8dir version first for the playable characters, the base sheet otherwise / as fallback */
+  private loadSheetTex(rel: string): Promise<THREE.Texture> {
+    const base = (): Promise<THREE.Texture> => this.loadTex(assetUrl(`assets/sprites/${rel}`), true);
+    const e8 = USE_8DIR ? eightDirRel(rel) : null;
+    return e8 ? this.loadTex(assetUrl(`assets/sprites/${e8}`), true).catch(base) : base();
   }
 
   private loadTex(url: string, nearest: boolean): Promise<THREE.Texture> {

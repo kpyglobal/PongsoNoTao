@@ -66,6 +66,24 @@ export class Player {
     return this.mode === 'scooter' ? this.rideSprite : this.mode === 'canoe' ? this.canoeSprite : this.sprite;
   }
 
+  /** 0.1.4: a plain modern canoe instead of the tatala (族女 / 旅人; only Tao men paddle a tatala) */
+  canoeModern = false;
+
+  /** the canoe sheet for an outfit: `canoe_modern_<kind>` when on a modern canoe, else the tatala `canoe_<kind>` */
+  private canoeSheet(assets: Assets, kind: string, rideKind: string): string {
+    const pre = this.canoeModern ? 'canoe_modern_' : 'canoe_';
+    return `characters/${assets.textures.has(`characters/${pre}${kind}_sheet.png`) ? `${pre}${kind}` : `${pre}${rideKind}`}_sheet.png`;
+  }
+
+  /** switch the hull (load `canoe_modern_*` first: Assets.acquire); keeps the tatala when the sheet is missing */
+  setCanoeHull(assets: Assets, modern: boolean): void {
+    this.canoeModern = modern;
+    const kind = this.outfit;
+    const rideKind = assets.textures.has(`characters/ride_${kind}_sheet.png`) ? kind : outfitBaseSheet(kind);
+    const rel = this.canoeSheet(assets, kind, rideKind);
+    if (assets.textures.has(rel)) this.canoeSprite.swapSheet(assets.sheetClone(rel));
+  }
+
   /** origin x gender → outfit; swaps all three sheets so every pose matches */
   setOutfit(assets: Assets, kind: string): void {
     if (kind === this.outfit) return;
@@ -75,7 +93,8 @@ export class Player {
     const rideKind = assets.textures.has(`characters/ride_${kind}_sheet.png`) ? kind : outfitBaseSheet(kind);
     if ((PLAYER_OUTFITS as readonly string[]).includes(rideKind) || assets.textures.has(`characters/ride_${rideKind}_sheet.png`)) {
       this.rideSprite.swapSheet(assets.sheetClone(`characters/ride_${rideKind}_sheet.png`));
-      this.canoeSprite.swapSheet(assets.sheetClone(`characters/${assets.textures.has(`characters/canoe_${kind}_sheet.png`) ? `canoe_${kind}` : `canoe_${rideKind}`}_sheet.png`));
+      const rel = this.canoeSheet(assets, kind, rideKind);
+      if (assets.textures.has(rel)) this.canoeSprite.swapSheet(assets.sheetClone(rel));
     }
   }
 
@@ -164,8 +183,15 @@ export class Player {
     const rightZ = -Math.sin(camYaw);
     // input.moveZ: -1 = W / stick-up, +1 = S / stick-down
     // input.moveX: +1 = D / stick-right
-    const ix = input.moveX;
-    const iz = input.moveZ;
+    let ix = input.moveX;
+    let iz = input.moveZ;
+    // 0.1.4: with 8-direction art the stick snaps to 45° so the walk matches the facing shown
+    if (this.active.eight && (ix || iz)) {
+      const m = Math.min(1, Math.hypot(ix, iz));
+      const a = Math.round(Math.atan2(ix, iz) / (Math.PI / 4)) * (Math.PI / 4);
+      ix = Math.sin(a) * m;
+      iz = Math.cos(a) * m;
+    }
     return {
       mx: fwdX * -iz + rightX * ix,
       mz: fwdZ * -iz + rightZ * ix,

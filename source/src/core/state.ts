@@ -3,6 +3,8 @@ import { PERIODS, SEASONS, type Period, type Season } from './timeSeason';
 export type LangMode = 'both' | 'zh' | 'tao';
 /** Player character: 男生 (m) or 女生 (f). Chosen on the origin screen, saved with the journal. */
 export type Gender = 'm' | 'f';
+/** 0.1.4: how the party reached the island (arrival screen). Older saves have none and skip the intro. */
+export type ArrivalWay = 'plane' | 'boat';
 export type OriginId = 'yayo' | 'iraraley' | 'iranmeylek' | 'ivalino' | 'imorod' | 'iratay' | 'visitor' | 'random';
 
 /** Plain-JSON snapshot of the journal / settings (groundwork for a versioned save, see audit P3-1). */
@@ -23,6 +25,8 @@ export interface GameStateJSON {
   ingredients: string[];
   milestones: string[];
   started: boolean;
+  /** 0.1.4: 搭飛機 / 搭船 (missing in older saves) */
+  arrival?: ArrivalWay;
 }
 
 export class GameState {
@@ -38,6 +42,8 @@ export class GameState {
   ingredients = new Set<string>();
   milestones = new Set<string>();
   started = false;
+  /** 0.1.4: 搭飛機 / 搭船; null for saves made before the arrival screen */
+  arrival: ArrivalWay | null = null;
 
   /** Add ids to one of the journal sets; returns only the ids that were new. */
   unlock(set: Set<string>, ids: readonly string[] | undefined): string[] {
@@ -70,6 +76,7 @@ export class GameState {
       ingredients: [...this.ingredients],
       milestones: [...this.milestones],
       started: this.started,
+      ...(this.arrival ? { arrival: this.arrival } : {}),
     };
   }
 
@@ -91,6 +98,7 @@ export class GameState {
     if (Array.isArray(j.ingredients)) s.ingredients = new Set(j.ingredients);
     if (Array.isArray(j.milestones)) s.milestones = new Set(j.milestones);
     if (typeof j.started === 'boolean') s.started = j.started;
+    if (j.arrival === 'plane' || j.arrival === 'boat') s.arrival = j.arrival;
     return s;
   }
 }

@@ -3,7 +3,7 @@
 import path from 'node:path';
 import { startStaticServer, launchBrowser, debugUrl } from './lib/harness.mjs';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const srv = await startStaticServer({ root: path.resolve('dist'), port: 8841 });
+const srv = await startStaticServer({ root: path.resolve('dist'), port: Number(process.env.PORT || 8841) });
 const fails = [];
 const errors = [];
 const check = (n, ok, info) => { if (!ok) fails.push(n); console.log(ok ? 'ok  ' : 'FAIL', n, info !== undefined ? JSON.stringify(info).slice(0, 200) : ''); };

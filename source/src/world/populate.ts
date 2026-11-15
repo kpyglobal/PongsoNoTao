@@ -1,15 +1,17 @@
 import * as THREE from 'three';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import type { Assets } from '../core/assets';
-import { getHeight, PIT_DEPTH, ALL_STRUCTURES } from './height';
+import { getHeight, PIT_DEPTH, ALL_STRUCTURES, lakeSurface } from './height';
+import { freeEdgeU, fishRacks } from './racks';
 import {
   VILLAGE_DEFS,
   TARO_FIELDS,
   FACILITIES,
   LANDMARKS,
+  LAKES,
+  fromOld,
   HARBOUR_LANTERN_DZ,
   ROAD_W,
-  FOOTPRINT,
   vlocal,
   villageYaw,
   villageExtent,
@@ -27,6 +29,8 @@ import {
   addAirport,
   addHarbor,
   addLighthouse,
+  addWeatherStation,
+  addFalls,
   addLanternPost,
   addFishRack,
   makeTatala,
@@ -66,28 +70,6 @@ interface Boat {
   nightOnly?: boolean;
 }
 
-/**
- * 0.1.1: slide a road-edge prop (lantern post, fish rack) along the road until it is `margin` clear of
- * every building footprint and on dry ground; null = no room within 3.2 m (the prop is left out).
- */
-function freeEdgeU(v: VillageDef, u: number, w: number, margin: number): number | null {
-  for (let i = 0; i <= 16; i++) {
-    const du = (i % 2 ? 1 : -1) * Math.ceil(i / 2) * 0.4;
-    const p = vlocal(v, u + du, w);
-    if (getHeight(p.x, p.z) < 0.1) continue;
-    const hit = ALL_STRUCTURES.some((st) => {
-      const f = FOOTPRINT[st.kind];
-      const dx = p.x - st.x;
-      const dz = p.z - st.z;
-      const c = Math.cos(st.yaw);
-      const sn = Math.sin(st.yaw);
-      return Math.abs(dx * c - dz * sn) < f.hw + margin && Math.abs(dx * sn + dz * c) < f.hd + margin;
-    });
-    if (!hit) return u + du;
-  }
-  return null;
-}
-
 export class WorldDecor {
   group = new THREE.Group();
   fish: ReturnType<typeof makeProp>[] = [];
@@ -122,6 +104,7 @@ export class WorldDecor {
     this.glows = new GlowBatch(this.lanterns);
     this.group.add(this.glows.mesh);
     this.buildTetrapods();
+    this.buildCountryside(places);
     this.buildFish(places);
     this.buildLabels(places);
     this.buildInteractables(places);
@@ -189,16 +172,56 @@ export class WorldDecor {
   }
 
   private buildRacks(b: ArchBuilder): void {
-    for (const v of VILLAGE_DEFS) {
-      b.bucket(v.id);
-      for (const u0 of [-5.5, 6.2]) {
-        const u = freeEdgeU(v, u0, ROAD_W + 1.75, 1.0); // seaward road edge, clear of the corridor (0.1.1)
-        if (u === null) continue;
-        const p = vlocal(v, u, ROAD_W + 1.75);
-        b.frame(p.x, getHeight(p.x, p.z) - 0.03, p.z, villageYaw(v));
-        addFishRack(b);
+    for (const r of fishRacks()) {
+      b.bucket(r.village);
+      b.frame(r.x, getHeight(r.x, r.z) - 0.03, r.z, r.yaw);
+      addFishRack(b);
+    }
+  }
+
+  // ------------------------------------------------------------- countryside
+  /** 0.1.4 (WORLD_NEEDS.md): goats on 虎頭坡 and 紅頭山, the thatch patch on its hillside */
+  private buildCountryside(places: Record<string, PlaceRec>): void {
+    const b = new ArchBuilder();
+    b.bucket('countryside');
+    const r = rng(4242);
+    const goat = (x: number, z: number, yaw: number, dark: boolean, notched: boolean): void => {
+      b.frame(x, getHeight(x, z), z, yaw, 0.9);
+      const coat = dark ? 'woodDark' : 'white';
+      b.box(coat, 0.22, 0.24, 0.56, 0, 0.42, 0, 0, 1);
+      for (const [lx, lz] of [[-0.08, 0.2], [0.08, 0.2], [-0.08, -0.2], [0.08, -0.2]]) b.box(coat, 0.05, 0.3, 0.05, lx, 0.15, lz, 0, 1);
+      b.box(coat, 0.14, 0.16, 0.22, 0, 0.6, 0.34, 0, 1); // head, grazing low
+      b.box('black', 0.03, 0.12, 0.03, -0.04, 0.72, 0.3, 0, 1); // horns
+      b.box('black', 0.03, 0.12, 0.03, 0.04, 0.72, 0.3, 0, 1);
+      b.box(coat, notched ? 0.06 : 0.1, 0.03, 0.05, -0.11, 0.64, 0.3, 0, 1); // ears (one notched)
+      b.box(coat, 0.1, 0.03, 0.05, 0.11, 0.64, 0.3, 0, 1);
+    };
+    const herd = (cx: number, cz: number, n: number, notchFirst: boolean): void => {
+      for (let i = 0; i < n; i++) {
+        const a = r() * Math.PI * 2;
+        const d = 1.2 + r() * 2.4;
+        const x = cx + Math.cos(a) * d, z = cz + Math.sin(a) * d;
+        if (getHeight(x, z) < 0.4) continue;
+        goat(x, z, r() * Math.PI * 2, r() < 0.35, notchFirst && i === 0);
+      }
+    };
+    const hs = places.hutou_slope;
+    if (hs) herd(hs.x, hs.z, 4, true);
+    const ht = LANDMARKS.find((l) => l.id === 'hongtoushan');
+    if (ht) herd(ht.x + 2, ht.z + 2, 3, false);
+    // 茅草: a patch of tall gold grass
+    const tf = places.thatch_field;
+    if (tf) {
+      for (let i = 0; i < 70; i++) {
+        const a = r() * Math.PI * 2;
+        const d = Math.sqrt(r()) * 3.2;
+        const x = tf.x + Math.cos(a) * d, z = tf.z + Math.sin(a) * d;
+        const hgt = 0.7 + r() * 0.5;
+        b.frame(x, getHeight(x, z), z, r() * Math.PI, 1);
+        b.add('thatchGold', new THREE.ConeGeometry(0.07, hgt, 4), 0, hgt / 2, 0, 0, (r() - 0.5) * 0.3, (r() - 0.5) * 0.3);
       }
     }
+    this.group.add(b.build());
   }
 
   // ---------------------------------------------------------------- facilities
@@ -223,6 +246,8 @@ export class WorldDecor {
     b.bucket('harbor');
     b.frame(h.x + 1.5, 0.25, h.z, 0);
     addHarbor(b);
+    // 0.1.4: the 搭船 arrival's yacht is its own object now (src/world/arrival.ts buildArrivalProps)
+    b.frame(h.x + 1.5, 0.25, h.z, 0);
     this.addLantern(h.x + 1.5 - 15.4, 3.3, h.z - 7.2, 'beacon', 1.8);
     this.addLantern(h.x + 1.5 - 11.0, 2.1, h.z - 0.6, 'beacon', 1.3);
     for (const dz of HARBOUR_LANTERN_DZ) {
@@ -234,6 +259,30 @@ export class WorldDecor {
     hl.position.set(h.x - 2, 3, h.z);
     this.lights.push(hl);
     this.group.add(hl);
+
+    // 0.1.4: built landmarks on the ring road (蘭嶼燈塔, 氣象站, the roadside waterfall)
+    for (const l of LANDMARKS) {
+      if (!l.build || !l.at) continue;
+      const g = Math.max(0.1, getHeight(l.at.x, l.at.z));
+      const face = Math.atan2(l.x - l.at.x, l.z - l.at.z); // toward the player's spot
+      b.bucket(l.id);
+      b.frame(l.at.x, g - 0.05, l.at.z, face);
+      if (l.build === 'lighthouse') {
+        addLighthouse(b, 3.8);
+        this.addLantern(l.at.x, g + 4.1, l.at.z, 'beacon', 1.4);
+      } else if (l.build === 'station') addWeatherStation(b);
+      else addFalls(b);
+    }
+
+    // 0.1.4: crater lake water (小天池 / 大天池), a still disc between the sea's shallow and deep tones
+    const lakeMat = new THREE.MeshStandardMaterial({ color: '#468fbe', roughness: 0.3, metalness: 0 });
+    for (const lk of LAKES) {
+      const m = new THREE.Mesh(new THREE.CircleGeometry(lk.r + 0.25, 28), lakeMat);
+      m.rotation.x = -Math.PI / 2;
+      m.position.set(lk.x, lakeSurface(lk), lk.z);
+      m.receiveShadow = true;
+      this.group.add(m);
+    }
 
     // 小蘭嶼燈塔 on Jimagaod + rotating beam
     const jl = FACILITIES.jimagaodLight;
@@ -309,7 +358,8 @@ export class WorldDecor {
       this.boats.push({ g, floating: true, baseY: -0.02, seasons: null });
     }
     // flying-fish season: night torch-fishing boats offshore (with torch glow)
-    for (const [x, z] of [[-45, -10], [-48, -4], [37, -24], [40, -18], [36, 18]] as [number, number][]) {
+    // 0.1.4: the 0.1.3 spots (off 椰油, 東清 and 野銀), carried over relative to their village
+    for (const { x, z } of ([[-45, -10], [-48, -4], [37, -24], [40, -18], [36, 18]] as [number, number][]).map(([ox, oz]) => fromOld(ox, oz))) {
       const g = mergeBoatGroups([makeTatala(2.8, seed++)], false);
       g.position.set(x, -0.02, z);
       g.rotation.y = r() * Math.PI;

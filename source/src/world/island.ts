@@ -16,7 +16,11 @@ import {
   HARBOUR_QUAY,
 } from './height';
 import { terrainDetail, terrainFine, rng } from './textures';
-import { FACILITIES } from './layout';
+import { FACILITIES, JIMAGAOD, LANDMARKS, MANTOU_ROCK, runwayLocal } from './layout';
+import { ISLAND_BOX as IB } from './coast';
+
+/** 0.1.4: the scatter area grew with the island; trial counts scale with it so densities stay the same */
+const AREA_K = ((IB.xMax - IB.xMin) * (IB.zMax - IB.zMin)) / (90 * 100);
 import type { Assets } from '../core/assets';
 import { yieldToUi } from '../core/frame';
 import type { Season } from '../core/timeSeason';
@@ -213,8 +217,9 @@ async function paintTerrain(width: number, height: number, onProgress?: (p: numb
 
         // --- settlements: packed earth with stone pavers; sunken pits paved
         if (vil > 0.02) {
-          const tile = ((Math.floor(x * 2.2) + Math.floor(z * 2.2)) & 1) === 0 ? 1.04 : 0.95;
-          const ground = mul(mix(C.earth, C.paver, smoothstep(0.4, 0.7, n3)), tile);
+          // 0.1.4: packed earth with soft, irregular paver patches (the old 0.45 m light/dark checker read as a grid, Larry)
+          const patch = smoothstep(0.2, 0.85, n3 * 0.6 + n2 * 0.4);
+          const ground = mul(mix(C.earth, C.paver, 0.25 + patch * 0.45), 0.97 + n2 * 0.06);
           col = mix(col, ground, smoothstep(0.28, 0.9, vil) * 0.9 * (1 - smoothstep(0.45, 0.9, slope)));
         }
         if (pit > 0.02) col = mix(col, mul(C.pitFloor, 0.9 + 0.2 * n1), pit);
@@ -229,11 +234,12 @@ async function paintTerrain(width: number, height: number, onProgress?: (p: numb
         if (runway > 0.05) {
           let rc = C.asphalt;
           const R = FACILITIES.runway;
-          const across = Math.abs(x - R.x);
-          const along = Math.abs(z - R.z);
+          const rl = runwayLocal(x, z); // 0.1.4: the runway follows the shore
+          const across = Math.abs(rl.across);
+          const along = Math.abs(rl.along);
           if (across < 0.07 && along % 1.6 < 0.9 && along < R.hz - 1.2) rc = C.runwayPaint;
           if (across > R.hx - 0.22 && across < R.hx - 0.1) rc = C.runwayEdge;
-          if (along > R.hz - 0.9 && along < R.hz - 0.3 && Math.floor(x * 3.2) % 2 === 0) rc = C.runwayPaint;
+          if (along > R.hz - 0.9 && along < R.hz - 0.3 && Math.floor(rl.across * 3.2) % 2 === 0) rc = C.runwayPaint;
           col = mix(col, rc, smoothstep(0.2, 0.75, runway));
         }
         // 水芋田 stone bunds — pale masonry rims so walkable paths read clearly
@@ -381,7 +387,7 @@ function terrainMaterial(albedo: THREE.Texture, mask: THREE.Texture): { mat: THR
          float rockTri = texture2D(uDetail, vWPos.xy * 0.7).g * an.z + texture2D(uDetail, vWPos.zy * 0.7).g * an.x + dTop.g * an.y;
          float det = dTop.r;
          det = mix(det, dTop.b, msk.g);
-         det = mix(det, 0.5 + (dTop.b - 0.5) * 0.6, msk.b);
+         det = mix(det, 0.5 + (dTop.b - 0.5) * 0.3, msk.b); // roads / plazas: only a light grain
          det = mix(det, rockTri, msk.r);
          diffuseColor.rgb *= 0.62 + det * 0.76;
          // close zoom: crisper ground — painted-map local contrast (unsharp vs. a coarser mip) + fine micro detail
@@ -399,7 +405,7 @@ function terrainMaterial(albedo: THREE.Texture, mask: THREE.Texture): { mat: THR
            #endif
            float fd = dF.r;
            fd = mix(fd, dF.b, msk.g);
-           fd = mix(fd, 0.5 + (dF.b - 0.5) * 0.7, msk.b);
+           fd = mix(fd, 0.5 + (dF.b - 0.5) * 0.35, msk.b);
            fd = mix(fd, fRock, msk.r);
            diffuseColor.rgb *= mix(1.0, 0.66 + fd * 0.68, nearK);
          }
@@ -411,7 +417,7 @@ function terrainMaterial(albedo: THREE.Texture, mask: THREE.Texture): { mat: THR
       );
   };
   if (quality().tier === 'mobile') mat.defines = { ...(mat.defines ?? {}), TAO_LITE: '' };
-  mat.customProgramCacheKey = () => `tao-terrain-v3-${quality().tier}`;
+  mat.customProgramCacheKey = () => `tao-terrain-v4-${quality().tier}`;
   return { mat, uniforms };
 }
 
@@ -542,9 +548,9 @@ export class Island {
   private buildPalms(): void {
     const r = rng(99);
     let tries = 0;
-    while (tries++ < 9000) {
-      const x = -45 + r() * 90;
-      const z = -50 + r() * 100;
+    while (tries++ < Math.round(9000 * AREA_K)) {
+      const x = IB.xMin + r() * (IB.xMax - IB.xMin);
+      const z = IB.zMin + r() * (IB.zMax - IB.zMin);
       const s = sample(x, z);
       if (s.mask < 0.8 || s.height < 0.35 || s.height > 2.6 || s.slope > 0.6 || s.road > 0.2 || s.cliff > 0.6) continue;
       if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
@@ -554,8 +560,8 @@ export class Island {
     }
     // Jimagaod grove
     for (let i = 0; i < 6; i++) {
-      const x = 8 + (r() - 0.5) * 9;
-      const z = 66 + (r() - 0.5) * 7;
+      const x = JIMAGAOD.x + (r() - 0.5) * 9;
+      const z = JIMAGAOD.z + (r() - 0.5) * 7;
       const h = getHeight(x, z);
       if (h < 0.4 || h > 5) continue;
       this.flora.add(i % 2 ? 'palm' : 'pandanus', x, z, i % 2 ? 3.8 : 1.9);
@@ -566,9 +572,10 @@ export class Island {
     // 馬鞍藤 beach morning glory on the sand line, 文殊蘭 crinum lilies at the scrub edge
     const r = rng(2026);
     let n = 0;
-    for (let i = 0; i < 40000 && n < 900; i++) {
-      const x = -48 + r() * 96;
-      const z = -52 + r() * 124;
+    for (let i = 0; i < Math.round(40000 * AREA_K); i++) {
+      if (n >= 1050) break;
+      const x = IB.xMin + r() * (IB.xMax - IB.xMin);
+      const z = IB.zMin + r() * (JIMAGAOD.z + 8 - IB.zMin);
       const s = sample(x, z);
       if (s.mask < 0.6 || s.height < 0.25 || s.height > 2.2 || s.road > 0.1 || s.village > 0.4 || s.cliff > 0.5) continue;
       if (Math.abs(x - HARBOUR_QUAY.x) < HARBOUR_QUAY.hx * 0.62 && Math.abs(z - HARBOUR_QUAY.z) < HARBOUR_QUAY.hz * 0.62) continue; // paved quay
@@ -592,9 +599,9 @@ export class Island {
       lists[Math.floor(r() * 3)].push(m.clone());
     };
     // shoreline boulders & reef ledges on cliffy coasts
-    for (let i = 0; i < 26000; i++) {
-      const x = -50 + r() * 100;
-      const z = -54 + r() * 130;
+    for (let i = 0; i < Math.round(26000 * AREA_K); i++) {
+      const x = IB.xMin - 2 + r() * (IB.xMax - IB.xMin + 4);
+      const z = IB.zMin - 2 + r() * (JIMAGAOD.z + 8 - IB.zMin);
       const s = sample(x, z);
       if (s.height < -0.9 || s.height > 1.2) continue;
       if (s.cliff < 0.35 || r() > s.cliff * 0.5) continue;
@@ -602,16 +609,16 @@ export class Island {
       add(x, s.height + 0.05, z, 0.35 + r() * 0.9 * s.cliff, 0.8);
     }
     // talus & outcrops on steep slopes
-    for (let i = 0; i < 9000; i++) {
-      const x = -45 + r() * 90;
-      const z = -50 + r() * 100;
+    for (let i = 0; i < Math.round(9000 * AREA_K); i++) {
+      const x = IB.xMin + r() * (IB.xMax - IB.xMin);
+      const z = IB.zMin + r() * (IB.zMax - IB.zMin);
       const s = sample(x, z);
       if (s.mask < 0.9 || s.slope < 1.0 || s.height < 2) continue;
       if (r() > 0.25) continue;
       if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
       add(x, s.height, z, 0.3 + r() * 0.5, 0.7);
     }
-    // iconic sea stacks: 軍艦岩 (Battleship Rock) off the NW coast, 雙獅岩 (Twin Lions) on the N coast
+    // iconic sea stacks: 軍艦岩 (Battleship Rock) and 雙獅岩 (Twin Lions)
     const stack = (cx: number, cz: number, len: number, hgt: number, yaw: number) => {
       for (let i = 0; i < 18; i++) {
         const t = (i / 17 - 0.5) * len;
@@ -621,9 +628,27 @@ export class Island {
         add(x, -0.6 + hh * 0.45, z, 1.4 + r() * 0.8 + hh * 0.35, 1.3);
       }
     };
-    stack(-45.5, -19, 7, 4.2, 0.5); // 軍艦岩
-    stack(-17.5, -34.8, 3, 3.6, 0.2); // 雙獅岩 (two humps)
-    stack(-14.8, -35.6, 2.6, 3.2, 0.2);
+    // 0.1.4: at their real spots (layout.ts LANDMARKS): 軍艦岩 ~300 m off the north-east shore, 雙獅岩 on the north-east corner
+    const bs = LANDMARKS.find((l) => l.id === 'battleship')!;
+    const tl = LANDMARKS.find((l) => l.id === 'twinlions')!;
+    stack(bs.x, bs.z, 7, 4.2, 0.3); // 軍艦岩
+    stack(tl.x - 1.4, tl.z + 0.6, 3, 3.6, -0.6); // 雙獅岩 (two humps)
+    stack(tl.x + 1.2, tl.z - 0.6, 2.6, 3.2, -0.6);
+    // 0.1.4: the ring-road rocks (WORLD_NEEDS.md) and 饅頭岩 out at sea
+    for (const l of LANDMARKS) {
+      const k = l.rock;
+      if (!k) continue;
+      if (k.arch) {
+        // an arch / cave: two legs and a lintel, open in the middle
+        const c = Math.cos(k.yaw), sn = Math.sin(k.yaw);
+        for (const side of [-1, 1]) stack(k.x + c * side * k.len * 0.36, k.z + sn * side * k.len * 0.36, k.len * 0.34, k.h, k.yaw);
+        for (let i = 0; i < 5; i++) {
+          const t = (i / 4 - 0.5) * k.len * 0.8;
+          add(k.x + c * t, -0.6 + k.h * 0.82, k.z + sn * t, 0.9 + r() * 0.4, 1.2);
+        }
+      } else stack(k.x, k.z, k.len, k.h, k.yaw);
+    }
+    stack(MANTOU_ROCK.x, MANTOU_ROCK.z, MANTOU_ROCK.len, MANTOU_ROCK.h, MANTOU_ROCK.yaw);
     lists.forEach((l, i) => {
       if (!l.length) return;
       const im = new THREE.InstancedMesh(geos[i], mat, l.length);
@@ -638,9 +663,10 @@ export class Island {
   private buildTufts(): void {
     const r = rng(808);
     let n = 0;
-    for (let i = 0; i < 60000 && n < 5200; i++) {
-      const x = -45 + r() * 90;
-      const z = -50 + r() * 100;
+    for (let i = 0; i < Math.round(60000 * AREA_K); i++) {
+      if (n >= 6200) break;
+      const x = IB.xMin + r() * (IB.xMax - IB.xMin);
+      const z = IB.zMin + r() * (IB.zMax - IB.zMin);
       const s = sample(x, z);
       if (s.mask < 0.9 || s.height < 0.6 || s.slope > 1.0 || s.road > 0.1 || s.village > 0.3 || s.terrace > 0.05 || s.forest > 0.5) continue;
       if (s.beach > 0.5) continue;

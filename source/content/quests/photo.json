@@ -32,16 +32,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "hongtou_rock",
+          "r": 12,
+          "text": "旅人用相機拍下：拍紅頭岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "環島公路從岩洞中間穿過去，洞口外面就是海。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "開元港往北一點，路會穿過一個岩洞，黃昏時岩壁會變紅。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P02",
@@ -73,16 +85,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "carp_rock",
+          "r": 14,
+          "text": "旅人用相機拍下：拍鯉魚岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "從這個角度看，真的有點像一條躍起來的魚。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "有一塊岩石的形狀像魚，騎車經過時往海邊看。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P03",
@@ -114,16 +138,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "tank_rock",
+          "r": 14,
+          "text": "旅人用相機拍下：拍坦克岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "像一台剛開上岸的坦克……族人應該不是這樣叫它的吧？"
+            },
+            {
+              "who": "旁白",
+              "zh": "這幾年，部落的年輕人正一塊石頭一塊石頭地把族語地名和故事找回來。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "西北岸有塊大岩石，遊客說它像坦克。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P04",
@@ -151,16 +187,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "lighthouse",
+          "r": 10,
+          "text": "旅人用相機拍下：從蘭嶼燈塔遠眺",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "從燈塔往下看，開元港和整片西岸都在眼前。"
+            },
+            {
+              "who": "旁白",
+              "zh": "燈塔一帶是開放的觀景點，走步道上去就好，不要翻越圍欄。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "開元港旁邊的山坡上有燈塔，從那裡可以看到整個港口。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P05",
@@ -171,7 +219,7 @@
         "zh": "五孔洞（只在外遠拍）",
         "en": ""
       },
-      "time": "any",
+      "time": "day",
       "seasons": [],
       "roles": [
         "t"
@@ -193,17 +241,63 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "five_caves_view",
+          "r": 6,
+          "text": "到五孔洞的觀景點，停在外面",
+          "lines": [
+            {
+              "who": "旁白",
+              "zh": "五孔洞可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+            },
+            {
+              "who": "@t",
+              "zh": "我在這裡看就好，不再往前走。"
+            }
+          ],
+          "actor": [
+            "t"
+          ]
+        },
+        {
+          "kind": "photo",
+          "spot": "five_caves_view",
+          "r": 6,
+          "text": "旅人在觀景點遠拍五孔洞（不靠近）",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "洞口一個接一個，我只在路邊拍。"
+            },
+            {
+              "who": "旁白",
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "far_p05"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "部落文化工作者",
+        "zh": "聽過聖地的距離規矩之後，可以在五孔洞外的路邊遠拍。不要走進洞裡。"
       },
-      "playable": false,
-      "distanceOnly": true
+      "playable": true,
+      "distanceOnly": true,
+      "review": [
+        "五孔洞是禁忌之地（與惡靈、過去婦女孩童不宜久留的說法有關）：遊戲只讓旅人在路邊遠拍，不呈現洞內；說明文字與距離是否恰當，請族人確認"
+      ],
+      "periods": [
+        "dawn",
+        "day"
+      ]
     },
     {
       "id": "P06",
@@ -231,16 +325,31 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "jade_rock",
+          "r": 12,
+          "text": "旅人用相機拍下：拍玉女岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "岩石中間是空的，還夾著一塊小石頭。"
+            },
+            {
+              "who": "旁白",
+              "zh": "觀光地圖上叫玉女岩。部落裡也有人說，早年族人夜裡去潮間帶時，會把火把放在這塊岩石上；名字和故事還要請族人確認。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "朗島往西的路邊，有一塊中間空空的大岩石。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "玉女岩的部落說法（火把岩）與族語名稱，取自公開資料，請族人確認可否呈現"
+      ]
     },
     {
       "id": "P07",
@@ -277,17 +386,59 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "small_lake_view",
+          "r": 8,
+          "text": "到小天池的觀景點，停在外面",
+          "lines": [
+            {
+              "who": "旁白",
+              "zh": "小天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+            },
+            {
+              "who": "@t",
+              "zh": "我在這裡看就好，不再往前走。"
+            }
+          ],
+          "actor": [
+            "t"
+          ]
+        },
+        {
+          "kind": "photo",
+          "spot": "small_lake_view",
+          "r": 8,
+          "text": "旅人在觀景點遠拍小天池（不靠近）",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "樹林中間一小片水，好安靜。"
+            },
+            {
+              "who": "旁白",
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "far_p07"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "部落文化工作者",
+        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍小天池。"
       },
-      "playable": false,
-      "distanceOnly": true
+      "playable": true,
+      "distanceOnly": true,
+      "review": [
+        "小天池是否為神聖或禁忌之地、可否拍攝，請族人確認"
+      ]
     },
     {
       "id": "P08",
@@ -319,16 +470,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "hen_rock_bay",
+          "r": 14,
+          "text": "旅人用相機拍下：拍母雞岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "母雞岩真的像一隻蹲在海邊的母雞。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "朗島附近的海邊，有一塊岩石像蹲著的母雞。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P09",
@@ -448,16 +611,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "lovers_cave",
+          "r": 12,
+          "text": "旅人用相機拍下：拍情人洞",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "海浪從石拱門底下衝進來，聲音好大。"
+            },
+            {
+              "who": "旁白",
+              "zh": "岩邊濕滑、浪大，不要爬到崖邊拍照。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "東清灣北邊的岬角，有一個很大的海蝕拱門。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P12",
@@ -489,16 +664,24 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "skyline_gap",
+          "r": 10,
+          "text": "旅人用相機拍下：拍一線天",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "兩邊的岩壁好高，中間只剩一條天空。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "東岸有個地方，兩片岩壁中間只看得到一線天空。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P13",
@@ -529,16 +712,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "iranmeylek_beach",
+          "r": 12,
+          "text": "旅人在東清灣拍日出",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "太陽從海面升起來了，整個海灣都是金色的。"
+            },
+            {
+              "who": "旁白",
+              "zh": "飛魚季的清晨，灘頭的船和準備出海的人不入鏡；只拍海和天空。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "東清",
+        "zh": "東清灣是島上最早看到日出的地方之一。天剛亮的時候去。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P14",
@@ -570,16 +765,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "helmet_rock",
+          "r": 12,
+          "text": "旅人用相機拍下：拍鋼盔岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "圓圓的頂，真的像一頂鋼盔。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "野銀往南的路邊，有一塊圓頂的大岩石。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P15",
@@ -611,16 +818,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "elephant_rock",
+          "r": 12,
+          "text": "旅人用相機拍下：拍象鼻岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "一節一節的岩柱，像大象把鼻子伸進海裡喝水。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "東南岸有一塊岩石，像大象在海邊喝水。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P16",
@@ -652,16 +871,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "lanyu_falls",
+          "r": 8,
+          "text": "旅人用相機拍下：拍蘭嶼瀑布",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "水從岩壁上細細地流下來，好涼快。"
+            },
+            {
+              "who": "旁白",
+              "zh": "水邊的石頭很滑，站在路邊拍就好。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "南邊的路旁有一道小瀑布，雨後水比較多。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P17",
@@ -693,16 +924,34 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "dragonhead_rock",
+          "r": 14,
+          "text": "旅人拍下龍頭岩和外海的小蘭嶼",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "從這裡可以看到外海的小蘭嶼。"
+            },
+            {
+              "who": "旁白",
+              "zh": "小蘭嶼（Jimagaod）是族人重要的漁場，男人去那裡捕魚是辛苦又慎重的事。遊戲裡只遠望。",
+              "tao": "Jimagaod"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "jimagaod"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "南岸的龍頭岩旁邊，天氣好時看得到小蘭嶼。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P18",
@@ -739,17 +988,59 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "big_lake_view",
+          "r": 8,
+          "text": "到大天池的觀景點，停在外面",
+          "lines": [
+            {
+              "who": "旁白",
+              "zh": "大天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+            },
+            {
+              "who": "@t",
+              "zh": "我在這裡看就好，不再往前走。"
+            }
+          ],
+          "actor": [
+            "t"
+          ]
+        },
+        {
+          "kind": "photo",
+          "spot": "big_lake_view",
+          "r": 8,
+          "text": "旅人在觀景點遠拍大天池（不靠近）",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "山裡的火山口湖，水面像一面鏡子。"
+            },
+            {
+              "who": "旁白",
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "far_p18"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "部落文化工作者",
+        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍大天池。"
       },
-      "playable": false,
-      "distanceOnly": true
+      "playable": true,
+      "distanceOnly": true,
+      "review": [
+        "大天池是否為神聖或禁忌之地、可否拍攝、步道是否開放，請族人確認"
+      ]
     },
     {
       "id": "P19",
@@ -781,16 +1072,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "old_man_rock",
+          "r": 12,
+          "text": "旅人用相機拍下：拍老人岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "像一位坐在海邊、靜靜看海的老人。"
+            },
+            {
+              "who": "旁白",
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "南岸有塊岩石，遠看像一位老人坐著看海。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "P20",
@@ -863,16 +1166,29 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "badai_view",
+          "r": 12,
+          "text": "旅人在部落外的路邊遠拍八代灣",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "海灣從漁人一路彎到紅頭，好長的一片海灘。"
+            },
+            {
+              "who": "旁白",
+              "zh": "飛魚季時，灘頭屬於出海的人。只在部落外的路邊遠拍，不拍灘頭上的人和船。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "漁人",
+        "zh": "漁人到紅頭之間的路上，可以遠遠看到整個八代灣。"
       },
-      "playable": false
+      "playable": true,
+      "distanceOnly": true
     },
     {
       "id": "P22",
@@ -904,16 +1220,36 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "hutou_slope",
+          "r": 12,
+          "text": "旅人在虎頭坡遠拍饅頭岩",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "從虎頭坡往北看，圓圓的那座就是饅頭岩。"
+            },
+            {
+              "who": "旁白",
+              "zh": "饅頭岩一帶是族人敬而遠之的地方。站在虎頭坡遠看就好，不要往那邊走。"
+            },
+            {
+              "who": "@t",
+              "zh": "旁邊好多山羊，牠們一點都不怕人。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "椰油",
+        "zh": "開元港往南的虎頭坡上有個大涼亭，從那裡看得到饅頭岩。"
       },
-      "playable": false
+      "playable": true,
+      "distanceOnly": true,
+      "review": [
+        "饅頭岩一帶相傳與過去的海葬、惡靈有關：遊戲只在虎頭坡遠看，旁白的說法請族人確認"
+      ]
     },
     {
       "id": "P23",
@@ -1037,16 +1373,28 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "photo",
+          "spot": "weather_station",
+          "r": 10,
+          "text": "旅人用相機拍下：從蘭嶼氣象觀測站俯瞰",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "整個島的山和海都在腳下，雲從山頭慢慢飄過去。"
+            },
+            {
+              "who": "旁白",
+              "zh": "山上天氣變得快，起霧或下雨就早點下山。"
+            }
+          ]
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "紅頭",
+        "zh": "從紅頭往山上的路一直騎，盡頭是氣象站。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s03"
     },
     {
@@ -1079,16 +1427,77 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "elder_ivalino",
+          "text": "旅人和族人一起，先問野銀的長輩可不可以拍家屋",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "請問可以拍您家的房子嗎？只拍屋頂和石牆，不拍人。"
+            },
+            {
+              "who": "@npc",
+              "zh": "你們有先問，很好。從路上拍就好，不要走進屋子，也不要拍在休息的人。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "photo",
+          "spot": "ivalino",
+          "r": 12,
+          "text": "旅人從路上遠拍野銀的傳統家屋",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "屋頂低低的，貼著地面，好像在躲海風。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_ivalino",
+          "text": "向野銀的長輩道謝",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "謝謝你們先問。房子是一家人住的地方，不是給人參觀的。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "ask_first_card"
+            ],
+            "toast": [
+              "學習卡「請先詢問」",
+              "拍人、拍家屋之前，先問一聲。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "想拍野銀的傳統家屋，先請族人陪你去問屋主。"
       },
-      "playable": false
+      "playable": true,
+      "distanceOnly": true
     },
     {
       "id": "P27",
@@ -1122,16 +1531,71 @@
       "req": "Q04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "elder_iraraley",
+          "text": "族男陪旅人，先問朗島的長輩可不可以拍船",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "長輩，我的朋友想拍您的船，可以嗎？"
+            },
+            {
+              "who": "@npc",
+              "zh": "現在不是飛魚季，可以拍。不要碰船、不要坐上去，站遠一點拍。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "m"
+          ]
+        },
+        {
+          "kind": "photo",
+          "spot": "iraraley",
+          "r": 12,
+          "text": "旅人在朗島灣遠拍拼板舟",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "紅、白、黑三種顏色，船頭翹得好高。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_iraraley",
+          "text": "向朗島的長輩道謝",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "船是一家人的，也是船組的。你們懂得先問，很好。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "relation": 1
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "朗島",
+        "zh": "非飛魚季時，請族男陪你去問船主，才能拍朗島灣的拼板舟。"
       },
-      "playable": false
+      "playable": true,
+      "distanceOnly": true
     },
     {
       "id": "U1",

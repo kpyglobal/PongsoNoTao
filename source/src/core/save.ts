@@ -15,6 +15,8 @@ export interface SaveJSON {
   savedAt: number;
   /** quests.json revision the save was written against (informational) */
   contentRev?: string;
+  /** world layout revision (src/world/legacy.ts WORLD_REV); missing = 1, the 0.1.0–0.1.3 island */
+  world?: number;
   state: GameStateJSON;
   party: { controlled: Role; pos: Record<Role, { x: number; z: number }>; scooter: boolean };
   quests: QuestSaveJSON;

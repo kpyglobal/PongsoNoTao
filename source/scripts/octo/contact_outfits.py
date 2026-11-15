@@ -18,9 +18,9 @@ def ctext(d, cx, y, t, f, col):
     d.text((cx - d.textlength(t, font=f) / 2, y), t, fill=col, font=f)
 
 
-pad, cw, chh = 12, 1240, 250
+pad, cw, chh = 12, 1340, 420
 img = Image.new('RGBA', (pad * 2 + cw, 54 + len(OUTFIT_SHEETS) * (chh + pad)), BG + (255,)); d = ImageDraw.Draw(img)
-d.text((pad, 12), '換裝行走圖・族人傳統服／旅人織草配件（旅人只配戴配件，不穿達悟傳統服飾）', fill=(240, 240, 235), font=Fh)
+d.text((pad, 12), '換裝行走／騎車／划船圖・族人傳統服／旅人織草配件（旅人只配戴配件，不穿達悟傳統服飾）', fill=(240, 240, 235), font=Fh)
 for i, (k, portrait) in enumerate(OUTFIT_SHEETS.items()):
     base = k.rsplit('_', 1)[0]
     x, y = pad, 54 + i * (chh + pad)
@@ -38,6 +38,20 @@ for i, (k, portrait) in enumerate(OUTFIT_SHEETS.items()):
     ctext(d, cx + 1.5 * 104 + 64, y + 204, '待機 南・西・北・東', Fs, SUB)
     ctext(d, cx + 5.5 * 104 + 64, y + 204, '行走 南・西', Fs, SUB)
     ctext(d, cx + 3.5 * 104 + 64, y + 224, f"{CAST[k]['name']}　{k}_sheet.png", Fm, INK)
+
+def frame2(name, fw, col, row, z=1.25):
+    sh = Image.open(f'{SP}/{name}_sheet.png').convert('RGBA')
+    return sh.crop((col * fw, row * 96, col * fw + fw, row * 96 + 96)).resize((round(fw * z), round(96 * z)), Image.NEAREST)
+
+
+for i, k in enumerate(OUTFIT_SHEETS):
+    x, y = pad, 54 + i * (chh + pad) + 250
+    d.line((x + 12, y - 4, x + cw - 12, y - 4), fill=(220, 212, 196), width=1)
+    for j in range(4):
+        img.alpha_composite(frame2(f'ride_{k}', 96, 0, j), (x + 190 + j * 124, y + 4))
+        img.alpha_composite(frame2(f'canoe_{k}', 128, 0, j), (x + 190 + 4 * 124 + 20 + j * 158, y + 4))
+    ctext(d, x + 190 + 2 * 124, y + 132, f'騎車 南・西・北・東　ride_{k}_sheet.png', Fs, SUB)
+    ctext(d, x + 190 + 4 * 124 + 20 + 2 * 158, y + 132, f'划船 南・西・北・東　canoe_{k}_sheet.png', Fs, SUB)
 os.makedirs('screenshots-cast', exist_ok=True)
 img.convert('RGB').save('screenshots-cast/outfit-sprites.png', optimize=True)
 print(img.size, os.path.getsize('screenshots-cast/outfit-sprites.png'))

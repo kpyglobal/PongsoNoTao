@@ -145,14 +145,15 @@
         "who": "族男",
         "coop": "單人（NPC 船組陪同）",
         "season": "飛魚季（以當地部落為準）",
-        "pre": "M1、M2（MS1 三人分頭準備為選做）",
+        "pre": "M1、M2、OF1（傳統服飾；MS1 三人分頭準備為選做）",
         "unlock": "M4",
         "kind": "季節＋漁場（族男）"
       },
       "req": {
         "all": [
           "M1",
-          "M2"
+          "M2",
+          "OF1"
         ]
       },
       "steps": [
@@ -167,6 +168,10 @@
             {
               "who": "@npc",
               "zh": "飛魚季到了，跟船組出海。這趟只有你去，其他人在岸邊等。"
+            },
+            {
+              "who": "@npc",
+              "zh": "穿上家裡織的衣服再來。上船出海，是很重要的事。"
             },
             {
               "who": "@npc",
@@ -258,7 +263,10 @@
       "playable": true,
       "ground": "fishing",
       "giver": "m",
-      "abortTo": 0
+      "abortTo": 0,
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      }
     },
     {
       "id": "M4",
@@ -288,18 +296,83 @@
       "req": "M3",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "族男向男性長輩報到，回灘頭處理漁獲",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "魚帶回來了，要先在灘頭處理好，再一起分。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男跟船組在灘頭把漁獲平均分好",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "船組每個人一份，一條一條數清楚。"
+            },
+            {
+              "who": "旁白",
+              "zh": "飛魚季的漁獲，按船組的人數分。誰多拿、誰少拿，大家都看得到。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "items": [
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報：漁獲分好了",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "分得公平，船組才會長久。把魚帶回家，交給家裡的女人。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "relation": 1,
+            "toast": [
+              "部落關係",
+              "漁獲在灘頭分好了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "族男出海回來後，要回灘頭跟船組處理、分配漁獲。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s01",
-      "giver": "m"
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      },
+      "review": [
+        "漁獲在灘頭依船組人數平均分配的做法請族人確認"
+      ]
     },
     {
       "id": "M5",
@@ -334,17 +407,65 @@
       "req": "M4",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族男把分到的飛魚帶回家，交給族女",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這是今天船組分到的魚。"
+            },
+            {
+              "who": "@f",
+              "zh": "交給我。我跟長輩一起處理。"
+            }
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "族女跟女性長輩把飛魚依種類分開",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "飛魚有好幾種，不同的分開放。怎麼分、誰可以吃，聽長輩的，不要自己決定。"
+            },
+            {
+              "who": "@f",
+              "zh": "好，我照您說的放。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "need": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "toast": [
+              "飛魚分類",
+              "漁獲交接完成，接下來要曬魚。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "族男把漁獲帶回家，交給族女和女性長輩分類。"
       },
-      "playable": false,
-      "giver": "m"
+      "playable": true,
+      "giver": "m",
+      "labourNote": "族男把魚帶回家交給族女，是 M4 之後的交接：男性長輩交辦，女性長輩接手",
+      "review": [
+        "飛魚種類的分法與哪些人可以吃，請族人確認"
+      ]
     },
     {
       "id": "M6",
@@ -374,16 +495,68 @@
       "req": "M5",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩交代族女曬魚",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "天氣好，把魚剖開、抹鹽，掛到曬魚架上。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_fishrack",
+          "r": 5,
+          "text": "族女把飛魚一條條掛上曬魚架",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "剖開、洗乾淨、抹鹽，一條一條掛好。"
+            },
+            {
+              "who": "旁白",
+              "zh": "曬魚架上的魚，是一家人一整年的糧食。外人不要隨便碰。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "曬好了就收進糧倉。今年的飛魚乾，就從這裡開始。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "granary_fish"
+            ],
+            "toast": [
+              "飛魚乾卡",
+              "飛魚乾收進糧倉了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚分好之後，族女要把魚曬在主人家的曬魚架上。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -414,16 +587,68 @@
       "req": "M6",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩請族女準備家裡的晚餐",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今天煮飛魚。用清水煮就好，不要加別的東西。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族女在主人家煮一鍋水煮飛魚",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "水滾了，魚放下去，再煮一下就好。"
+            },
+            {
+              "who": "旁白",
+              "zh": "飛魚季的餐點，鍋子和做法都有規矩；各家的做法不同，還要請族人確認。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "請女性長輩嚐嚐",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "煮得剛好。叫大家回來吃飯吧。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "dish_boiled_fish"
+            ],
+            "toast": [
+              "水煮飛魚料理卡",
+              "家庭餐點準備好了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "女性長輩會請族女在飛魚季煮家裡的餐點。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -458,16 +683,77 @@
       "req": "M4",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@host",
+          "text": "長輩請旅人今天到部落外走走",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今天灘頭在處理漁獲，外面的人不要靠近。你們去部落外面走走，傍晚再回來。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "qingqing",
+          "r": 10,
+          "text": "旅人和族人到南邊的青青草原",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "從這裡看海，就不會打擾到灘頭的人。"
+            },
+            {
+              "who": "@me",
+              "zh": "小時候放暑假回來，我們也常被叫到這裡玩，不要去灘頭搗蛋。"
+            }
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "text": "傍晚回到主人家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "回來啦。你們懂得讓開，大家都看在眼裡。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "respect_fishseason"
+            ],
+            "toast": [
+              "尊重事件",
+              "飛魚季時懂得讓開，部落的人都看到了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚季灘頭最忙的日子，長輩會請旅人到部落外面走走。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "飛魚季時訪客避開灘頭、到部落外走走的安排請族人確認"
+      ]
     },
     {
       "id": "M9",
@@ -509,16 +795,62 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "全隊回到主人家，一起吃飯",
+          "lines": [
+            {
+              "who": "@hostf",
+              "zh": "大家都回來了，坐下來吃飯。"
+            },
+            {
+              "who": "@host",
+              "zh": "海上的、田裡的、外面學到的，今天都在這張桌上了。"
+            },
+            {
+              "who": "@t",
+              "zh": "一整天都在忙，原來一頓飯是這樣來的。"
+            }
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "text": "飯後聽主人家長輩說話",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "一家人一起吃飯，就是飛魚季最重要的事。"
+            }
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "family_meal"
+            ],
+            "toast": [
+              "全家一起吃飯",
+              "飛魚季的一天圓滿結束。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "魚煮好了，旅人也回來了，全隊回主人家一起吃飯。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "M10",
@@ -546,17 +878,68 @@
       "req": "M9",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩交代把曬好的飛魚乾收起來",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "曬好的飛魚乾要收起來，一種一種放好，算一算夠吃多久。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_fishrack",
+          "r": 5,
+          "text": "族女把飛魚乾從曬魚架收進來",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "乾了，硬硬的。一串一串收好。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "收好了。等飛魚終食那天，再看看剩多少。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "granary_stock"
+            ],
+            "toast": [
+              "飛魚收藏",
+              "糧倉裡的飛魚乾整理好了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚乾曬好之後，女性長輩會請族女收藏起來。"
       },
-      "playable": false,
-      "giver": "f"
+      "playable": true,
+      "giver": "f",
+      "review": [
+        "飛魚乾的收藏方式與名稱請族人確認"
+      ]
     },
     {
       "id": "M11",
@@ -586,16 +969,42 @@
       "req": "M10",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "auto",
+          "text": "飛魚季結束（只顯示季節，不需到場）",
+          "lines": [
+            {
+              "who": "旁白",
+              "zh": "飛魚季到了尾聲。各部落依長輩的決定，迎來飛魚終食的日子。",
+              "tao": "manoyotoyon"
+            },
+            {
+              "who": "旁白",
+              "zh": "這一天之後，今年的飛魚就告一段落，大家等明年飛魚再來。確切的日子和做法，各部落不同。"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "manoyotoyon"
+            ],
+            "flags": [
+              "season_end"
+            ],
+            "toast": [
+              "飛魚終食",
+              "今年的飛魚季結束了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "族人",
+        "zh": "飛魚季結束時，這一步會自己完成。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "飛魚終食的時間、意義與之後是否還能吃飛魚乾，各部落說法不同，請族人確認"
+      ]
     },
     {
       "id": "F1",
@@ -628,18 +1037,84 @@
       "req": "Q05",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "男性長輩說明魚的分類",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "魚有分：女人可以吃的、男人吃的，還有只有老人吃的。"
+            },
+            {
+              "who": "@npc",
+              "zh": "捕的時候就要分清楚，拿回家才不會放錯鍋子。"
+            }
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男在港邊的礁岩釣魚",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "釣到了！這條顏色好亮。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "minigame": "fish"
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "族女跟女性長輩把魚分類",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這條是女人魚，給我們煮；那條是男人魚，另外放。"
+            },
+            {
+              "who": "@f",
+              "zh": "我記住了，看顏色和形狀分。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "need": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "fish_codex"
+            ],
+            "toast": [
+              "魚類圖鑑",
+              "學會分辨女人魚、男人魚、老人魚。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "男性長輩要教族男和族女分辨魚的種類。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s10",
-      "giver": "m"
+      "giver": "m",
+      "labourNote": "族男捕魚、族女處理，F1 本來就是雙人分工",
+      "review": [
+        "女人魚、男人魚、老人魚的分類與飲食禁忌請族人確認；族語名稱暫不列出"
+      ]
     },
     {
       "id": "F2",
@@ -667,16 +1142,62 @@
       "req": "F1",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "villager_harbor",
+          "text": "族男到開元港，問拼板舟漁人怎麼分這次的魚",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "船組每個人一份，親戚家也送一點。魚是大家的。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族男把魚分送到親族家",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這是我們家的一點心意。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "分出去的魚，以後會回到你身上。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "relation": 1,
+            "toast": [
+              "部落關係",
+              "漁獲分享給船組與親族。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "釣到的魚要分給船組和親族，族男去問問怎麼分。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s05",
       "giver": "m"
     },
@@ -708,16 +1229,83 @@
       "req": "M6",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩交代：家裡分到的飛魚，一起曬",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "船組分到的魚，加上親戚送來的，一共十條。都交給妳曬。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "items": [
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang",
+              "alibangbang"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "host_fishrack",
+          "r": 5,
+          "text": "族女把十條飛魚剖開、抹鹽、掛上曬魚架",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "……八、九、十。全部掛好了。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "alibangbang": 10
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "十條都曬好了。今年的糧倉會很安心。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "granary_fish10"
+            ],
+            "toast": [
+              "糧倉",
+              "十條飛魚乾收進糧倉。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "家裡分到的飛魚，族女要一條條曬成飛魚乾。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -752,19 +1340,93 @@
       "req": "F1",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "男性長輩要族男去釣幾條魚",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "冬天浪大，不出遠海。在港邊礁岩釣幾條就好，拿回家給族女分。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男在港邊的礁岩釣魚",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "……四、五、六。夠了，回家。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "minigame": "fish"
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族女把六條魚分成女人魚和男人魚",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "這三條給我們煮，那三條另外放。"
+            },
+            {
+              "who": "@m",
+              "zh": "分得好快！"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "捕的人和分的人都做對了，這就是一家人。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "fish_codex2"
+            ],
+            "toast": [
+              "魚類圖鑑",
+              "六條魚都分好了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "非飛魚季時，族男可以在港邊釣魚，帶回家給族女分類。"
       },
-      "playable": false,
+      "playable": true,
       "ground": "fishing",
       "song": "s10",
-      "giver": "m"
+      "giver": "m",
+      "labourNote": "族男捕、族女處理，G4 本來就是雙人分工"
     },
     {
       "id": "Z1",
@@ -804,16 +1466,61 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "host_tagakal",
+          "r": 5,
+          "text": "全隊回到主人家的涼亭，一年結束",
+          "lines": [
+            {
+              "who": "@host",
+              "zh": "一年過去了。來，坐上來，每個人用族語說一句今年學到的話。"
+            },
+            {
+              "who": "@m",
+              "zh": "akokey！以前回來只敢點頭，現在敢用族語跟長輩打招呼了。",
+              "tao": "akokey"
+            },
+            {
+              "who": "@f",
+              "zh": "soli、alibangbang……田裡和海上的東西，我都記得它們的名字了。",
+              "tao": "soli · alibangbang"
+            },
+            {
+              "who": "@t",
+              "zh": "Pongso no Tao，人之島。謝謝你們讓我一起回家。",
+              "tao": "Pongso no Tao"
+            },
+            {
+              "who": "@host",
+              "zh": "你們回來，不是只為了看看。你們記得這裡，這裡就一直是你們的家。"
+            },
+            {
+              "who": "旁白",
+              "zh": "一個遊戲年結束了。"
+            }
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "year_done"
+            ],
+            "toast": [
+              "一年",
+              "回家的這一年結束了。島上的日子，還會繼續。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚季結束了，全隊回主人家的涼亭，跟長輩說說這一年。"
       },
-      "playable": false
+      "playable": true
     }
   ]
 }

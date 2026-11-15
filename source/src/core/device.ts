@@ -31,8 +31,9 @@ export function preferredReflectorSize(): number {
 
 /** Terrain albedo resolution. Mobile paints at half res and relies on the detail map to stay crisp. */
 export function preferredTerrainPaintSize(): { width: number; height: number } {
-  if (typeof window === 'undefined') return { width: 1024, height: 1323 };
-  if (isIOS() || isCoarsePointer()) return { width: 768, height: 992 };
-  return { width: 1024, height: 1323 };
+  // 0.1.4: follows the terrain box's shape (138 × 146 m); about the same pixel count as 0.1.3
+  if (typeof window === 'undefined') return { width: 1120, height: 1184 };
+  if (isIOS() || isCoarsePointer()) return { width: 832, height: 880 };
+  return { width: 1120, height: 1184 };
 }
 
