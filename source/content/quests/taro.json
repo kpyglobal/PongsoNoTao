@@ -273,16 +273,72 @@
       "req": "R3",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩說：水芋可以採收了",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "葉子長得夠大了，可以採了。挑大的，小的留著。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 6,
+          "text": "族女到家裡的水芋田採收",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "腳踩穩，手順著莖往下摸，整顆拔起來。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "minigame": "taro",
+          "gives": {
+            "items": [
+              "soli",
+              "soli",
+              "soli"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "採得好。一部分收進糧倉，一部分今天煮。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "granary_taro"
+            ],
+            "toast": [
+              "糧倉",
+              "水芋收成了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "水芋長大了，女性長輩會叫族女去採收。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -322,17 +378,85 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "女性長輩讓旅人一起去採水芋",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今天採水芋，你也來。先看族女怎麼做，再試試看。"
+            }
+          ],
+          "need": [
+            "f",
+            "t"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 6,
+          "text": "旅人跟著族女，在水芋田裡試著採收",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "腳慢慢踩，不要把田埂踩壞。"
+            },
+            {
+              "who": "@t",
+              "zh": "拔起來了！比想像中重好多。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "f",
+            "t"
+          ],
+          "minigame": "taro",
+          "gives": {
+            "items": [
+              "soli"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "回家學煮水芋",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "水芋洗乾淨，整顆下鍋煮。不加什麼，就很好吃。"
+            }
+          ],
+          "need": [
+            "f",
+            "t"
+          ],
+          "gives": {
+            "relation": 1,
+            "flags": [
+              "taro_card"
+            ],
+            "toast": [
+              "水芋卡",
+              "旅人跟著族女採收、學煮水芋。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "旅人可以跟族女一起去採水芋，回來學怎麼煮。"
       },
-      "playable": false,
-      "giver": "f"
+      "playable": true,
+      "giver": "f",
+      "review": [
+        "旅人進水芋田協助採收的程度請族人確認"
+      ]
     },
     {
       "id": "R6",
@@ -360,16 +484,69 @@
       "req": "R4",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩請族女煮水芋",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今天的水芋，整顆水煮就好。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族女把水芋洗淨，整顆下鍋煮",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "煮到筷子插得進去，就好了。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "soli": 1
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "請女性長輩嚐嚐",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "鬆鬆的，很香。妳會煮了。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "flags": [
+              "dish_boiled_taro"
+            ],
+            "toast": [
+              "水煮芋頭料理卡",
+              "族女學會水煮芋頭。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "採收之後，族女可以學煮水芋。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -398,16 +575,77 @@
       "req": "R4",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩要族女採五顆芋頭給主人家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "家裡要五顆芋頭，挑大的。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 6,
+          "text": "族女到家裡的水芋田採五顆芋頭",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "一、二、三、四、五。夠了。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "minigame": "taro",
+          "gives": {
+            "items": [
+              "soli",
+              "soli",
+              "soli",
+              "soli",
+              "soli"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "把芋頭交給女性長輩",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "五顆都很大。收進糧倉吧。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "soli": 5
+            },
+            "flags": [
+              "granary_taro5"
+            ],
+            "toast": [
+              "糧倉",
+              "五顆芋頭收進糧倉。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "主人家需要五顆芋頭，族女去田裡採。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     }
   ]

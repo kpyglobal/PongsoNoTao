@@ -6,15 +6,16 @@
       "name": {
         "zh": "紅頭岩"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "hongtou_rock"
     },
     {
       "id": "ps_p02",
@@ -22,15 +23,16 @@
       "name": {
         "zh": "鯉魚岩"
       },
-      "r": null,
+      "r": 14,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "carp_rock"
     },
     {
       "id": "ps_p03",
@@ -38,15 +40,16 @@
       "name": {
         "zh": "坦克岩"
       },
-      "r": null,
+      "r": 14,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "tank_rock"
     },
     {
       "id": "ps_p04",
@@ -54,11 +57,12 @@
       "name": {
         "zh": "從蘭嶼燈塔遠眺"
       },
-      "r": null,
+      "r": 10,
       "time": "any",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "lighthouse"
     },
     {
       "id": "ps_p05",
@@ -66,11 +70,16 @@
       "name": {
         "zh": "五孔洞（只在外遠拍）"
       },
-      "r": null,
-      "time": "any",
+      "r": 6,
+      "time": "day",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "five_caves_view",
+      "periods": [
+        "dawn",
+        "day"
+      ]
     },
     {
       "id": "ps_p06",
@@ -78,11 +87,12 @@
       "name": {
         "zh": "玉女岩"
       },
-      "r": null,
+      "r": 12,
       "time": "any",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "jade_rock"
     },
     {
       "id": "ps_p07",
@@ -90,15 +100,16 @@
       "name": {
         "zh": "小天池（只遠拍）"
       },
-      "r": null,
+      "r": 8,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "small_lake_view"
     },
     {
       "id": "ps_p08",
@@ -106,15 +117,16 @@
       "name": {
         "zh": "母雞岩"
       },
-      "r": null,
+      "r": 14,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "hen_rock_bay"
     },
     {
       "id": "ps_p09",
@@ -155,11 +167,12 @@
       "name": {
         "zh": "情人洞"
       },
-      "r": null,
+      "r": 12,
       "time": "any",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "lovers_cave"
     },
     {
       "id": "ps_p12",
@@ -167,15 +180,16 @@
       "name": {
         "zh": "一線天"
       },
-      "r": null,
+      "r": 10,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "skyline_gap"
     },
     {
       "id": "ps_p13",
@@ -183,14 +197,15 @@
       "name": {
         "zh": "東清灣日出"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "iranmeylek_beach"
     },
     {
       "id": "ps_p14",
@@ -198,15 +213,16 @@
       "name": {
         "zh": "鋼盔岩"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "helmet_rock"
     },
     {
       "id": "ps_p15",
@@ -214,15 +230,16 @@
       "name": {
         "zh": "象鼻岩"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "elephant_rock"
     },
     {
       "id": "ps_p16",
@@ -230,15 +247,16 @@
       "name": {
         "zh": "蘭嶼瀑布"
       },
-      "r": null,
+      "r": 8,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "lanyu_falls"
     },
     {
       "id": "ps_p17",
@@ -246,15 +264,16 @@
       "name": {
         "zh": "龍頭岩"
       },
-      "r": null,
+      "r": 14,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "dragonhead_rock"
     },
     {
       "id": "ps_p18",
@@ -262,15 +281,16 @@
       "name": {
         "zh": "大天池（只遠拍）"
       },
-      "r": null,
+      "r": 8,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "big_lake_view"
     },
     {
       "id": "ps_p19",
@@ -278,15 +298,16 @@
       "name": {
         "zh": "老人岩"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "old_man_rock"
     },
     {
       "id": "ps_p20",
@@ -310,11 +331,12 @@
       "name": {
         "zh": "八代灣（飛魚季只能在部落外遠拍）"
       },
-      "r": null,
+      "r": 12,
       "time": "any",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "badai_view"
     },
     {
       "id": "ps_p22",
@@ -322,15 +344,16 @@
       "name": {
         "zh": "饅頭岩"
       },
-      "r": null,
+      "r": 12,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "hutou_slope"
     },
     {
       "id": "ps_p23",
@@ -372,15 +395,16 @@
       "name": {
         "zh": "從蘭嶼氣象觀測站俯瞰"
       },
-      "r": null,
+      "r": 10,
       "time": "day",
       "seasons": [],
       "periods": [
         "dawn",
         "day"
       ],
-      "status": "placeholder",
-      "distanceOnly": false
+      "status": "placed",
+      "distanceOnly": false,
+      "place": "weather_station"
     },
     {
       "id": "ps_p26",
@@ -388,11 +412,12 @@
       "name": {
         "zh": "野銀傳統家屋（先問屋主）"
       },
-      "r": null,
+      "r": 12,
       "time": "any",
       "seasons": [],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "ivalino"
     },
     {
       "id": "ps_p27",
@@ -400,13 +425,14 @@
       "name": {
         "zh": "朗島灣的拼板舟（先問船主）"
       },
-      "r": null,
+      "r": 12,
       "time": "any",
       "seasons": [
         "winter"
       ],
-      "status": "placeholder",
-      "distanceOnly": true
+      "status": "placed",
+      "distanceOnly": true,
+      "place": "iraraley"
     },
     {
       "id": "ps_u1",

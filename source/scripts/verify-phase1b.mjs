@@ -265,6 +265,7 @@ try {
   report.ok = report.fails.length === 0 && report.errors.length === 0 && report.http4xx.length === 0;
   fs.writeFileSync(path.join(OUT, 'report-phase1b.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ ok: report.ok, fails: report.fails, errors: report.errors, http4xx: report.http4xx }, null, 1));
+  process.exitCode = report.ok ? 0 : 1; // 0.1.4: a FAIL line (or a console error / 4xx) fails the run
 } finally {
   if (browser) await browser.close().catch(() => {});
   await srv.close();

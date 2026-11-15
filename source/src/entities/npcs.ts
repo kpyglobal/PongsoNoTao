@@ -9,6 +9,7 @@ import {
   NPC_RADIUS,
 } from '../world/collision';
 import type { Period, Season } from '../core/timeSeason';
+import { LANDMARKS } from '../world/layout';
 
 import type { NpcDef } from '../content/types';
 export type { NpcDef } from '../content/types';
@@ -240,7 +241,8 @@ export class NpcSystem {
         a.def.schedule[a.def.schedule.length - 1];
       const pts = (rule?.waypoints ?? [a.def.home]).map((id) => {
         // defensive: a missing waypoint *and* home falls back to where the actor stands now
-        const p = this.places[id] ?? this.places[a.def.home] ?? { x: a.x, z: a.z };
+        // 0.1.4: a landmark id works as a waypoint too (the geologist's rocks)
+        const p = this.places[id] ?? LANDMARKS.find((l) => l.id === id) ?? this.places[a.def.home] ?? { x: a.x, z: a.z };
         const jitter = a.def.kind === 'clinic' ? 0.2 : 1.2;
         let x = p.x;
         let z = p.z;
@@ -255,7 +257,9 @@ export class NpcSystem {
       });
       a.setRoute(pts);
       const start = pts[0];
-      if (start && !canStand(a.x, a.z, NPC_RADIUS)) {
+      // 0.1.4: a schedule across the island (e.g. the geologist's day) moves him there between periods
+      // instead of walking cross-country
+      if (start && (!canStand(a.x, a.z, NPC_RADIUS) || Math.hypot(a.x - start.x, a.z - start.z) > 24)) {
         a.x = start.x;
         a.z = start.z;
         a.sync();

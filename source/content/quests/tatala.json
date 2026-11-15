@@ -36,17 +36,47 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "族男請男性長輩教他造船",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "我想學造船。可以跟著您學嗎？"
+            },
+            {
+              "who": "@npc",
+              "zh": "造船不是一天的事，要從認識樹開始，要有耐心。"
+            },
+            {
+              "who": "@npc",
+              "zh": "先跟我在近海練習划船，把手練穩。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "flags": [
+              "apprentice"
+            ],
+            "toast": [
+              "拜師",
+              "男性長輩答應教族男造船。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "部落的人都認識族男了，他可以請男性長輩教他造船。"
       },
-      "playable": false,
-      "giver": "m"
+      "playable": true,
+      "giver": "m",
+      "review": [
+        "拜師學造船的說法（向誰拜師、怎麼開口）請族人確認"
+      ]
     },
     {
       "id": "T2",
@@ -74,16 +104,52 @@
       "req": "T1",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男跟長輩在港邊近海練習划拼板舟",
+          "lines": [
+            {
+              "who": "@giver",
+              "zh": "槳要一起下水，船才不會晃。眼睛看浪，不要看槳。"
+            },
+            {
+              "who": "@m",
+              "zh": "好像比較穩了。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "canoe": true
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "回岸上聽長輩說",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "手穩多了。下次帶你上山看樹。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "toast": [
+              "划船練習",
+              "族男可以在近海划拼板舟了。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "拜師之後，男性長輩會帶族男在近海練習。"
       },
-      "playable": false,
+      "playable": true,
       "ground": "fishing",
       "giver": "m"
     },
@@ -97,7 +163,9 @@
         "en": ""
       },
       "time": "day",
-      "seasons": [],
+      "seasons": [
+        "winter"
+      ],
       "roles": [
         "m"
       ],
@@ -113,18 +181,63 @@
       "req": "T2",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "dasenshan",
+          "r": 10,
+          "text": "族男跟長輩上山認識造舟的樹",
+          "lines": [
+            {
+              "who": "@giver",
+              "zh": "做船的樹，要長在對的地方，也要問過樹的主人家。"
+            },
+            {
+              "who": "@giver",
+              "zh": "每一種木頭放在船的不同位置。樹的名字，以後族人會教你。"
+            },
+            {
+              "who": "@m",
+              "zh": "我記下樹皮和葉子的樣子了。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "下山後向長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "認得樹，船才造得好。等木材乾了，就可以拼板。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "flags": [
+              "know_trees"
+            ],
+            "toast": [
+              "造舟的樹",
+              "族男認識了造船用的樹。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "不是飛魚季的時候，男性長輩會帶族男上大森山看樹。"
       },
-      "playable": false,
+      "playable": true,
       "song": "s09",
-      "giver": "m"
+      "giver": "m",
+      "review": [
+        "造舟樹種、上山砍樹的規矩（樹的主人、時間）請族人確認；樹的族語名稱暫不列出"
+      ]
     },
     {
       "id": "T4",
@@ -136,7 +249,9 @@
         "en": ""
       },
       "time": "day",
-      "seasons": [],
+      "seasons": [
+        "winter"
+      ],
       "roles": [
         "m"
       ],
@@ -152,17 +267,90 @@
       "req": "T3",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "男性長輩說：可以開始拼板了",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "木材乾了，可以開始了。拼板要慢，一塊錯了整條船都會漏水。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族男在家旁一塊一塊拼起船板，用木釘固定",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "這塊對齊了……再下一塊。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_home",
+          "r": 7,
+          "text": "族男在船身塗上紅、白、黑三色",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "顏色跟家裡長輩教的一樣。"
+            },
+            {
+              "who": "旁白",
+              "zh": "船身的紋樣屬於每一個家族，遊戲只呈現簡單的顏色。"
+            }
+          ],
+          "actor": [
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "請男性長輩看看新船",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這是你的船了。照顧它，就像照顧家人。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "flags": [
+              "own_boat"
+            ],
+            "glossary": [
+              "tatala"
+            ],
+            "toast": [
+              "自己的船",
+              "族男完成了自己的拼板舟。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "認識造舟的樹之後，族男可以開始拼板造船。"
       },
-      "playable": false,
-      "giver": "m"
+      "playable": true,
+      "giver": "m",
+      "review": [
+        "拼板造船的過程（多人合作、需時多久）在遊戲中大幅簡化；船身紋樣屬於家族，請族人確認可呈現的程度"
+      ]
     },
     {
       "id": "T5",
@@ -196,22 +384,93 @@
       "req": {
         "all": [
           "T4",
-          "R4"
+          "R4",
+          "OF1",
+          "OF2"
         ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "女性長輩和族女準備新船下水要用的芋頭",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "新船下水，家裡要準備芋頭。這幾顆挑好了，妳拿著。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "need": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "text": "主人家長輩邀請旅人一起去",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "新船下水，你也是我們家的朋友，一起來。站在後面看就好，不要拍照。"
+            },
+            {
+              "who": "@t",
+              "zh": "謝謝您邀請我。我會站遠一點，不拍照。"
+            }
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "全隊在岸邊，看新船下水",
+          "lines": [
+            {
+              "who": "旁白",
+              "zh": "新船下水的儀式由家族和船組進行，遊戲不呈現儀式本身。"
+            },
+            {
+              "who": "@t",
+              "zh": "（小聲）船好漂亮。"
+            }
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "gives": {
+            "relation": 2,
+            "toast": [
+              "新船下水",
+              "全家和朋友一起，迎接新的拼板舟。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "族男的新船完成了，下水前家裡要準備芋頭，也會邀請旅人。"
       },
-      "playable": false,
-      "giver": "m"
+      "playable": true,
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao",
+        "f": "outfit_f_tao"
+      },
+      "review": [
+        "新船下水時的芋頭與邀請（整段待確認）：遊戲只呈現準備芋頭與受邀觀禮，不呈現儀式本身"
+      ]
     },
     {
       "id": "T6",
@@ -241,23 +500,126 @@
       "req": {
         "all": [
           "T4",
-          "M2"
+          "M2",
+          "OF1"
         ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "族男向男性長輩報告：要駕自己的船出海",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "第一次駕自己的船，不要逞強。看不準就回來。"
+            },
+            {
+              "who": "旁白",
+              "zh": "出海期間只能操控族男。捕到魚，或按「放棄出海」，才會回岸邊和大家會合。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "solo": {
+            "role": "m",
+            "at": "harbor",
+            "task": "駕自己的船捕飛魚",
+            "waitAt": "harbor",
+            "giveUp": [
+              {
+                "who": "@m",
+                "zh": "今天浪太大，先回岸上。"
+              },
+              {
+                "who": "@npc",
+                "zh": "平安最重要，下次再去。"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男划自己的拼板舟出海捕飛魚",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "捕到了！自己的船，自己的魚。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "canoe": true,
+          "minigame": "fish",
+          "gives": {
+            "items": [
+              "alibangbang",
+              "alibangbang"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 10,
+          "text": "族男回到岸邊，和族女、旅人會合",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "回來了！自己的船划得好穩。"
+            },
+            {
+              "who": "@t",
+              "zh": "我們在岸邊一直看著。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "regroup": true
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你的船，第一次帶魚回家。好。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "toast": [
+              "自己的船",
+              "族男駕自己的船捕到飛魚。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚季時，族男可以駕自己的拼板舟出海。"
       },
-      "playable": false,
+      "playable": true,
       "ground": "fishing",
-      "giver": "m"
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      },
+      "abortTo": 0
     },
     {
       "id": "T7",
@@ -287,21 +649,137 @@
         "unlock": "成長技能",
         "kind": "季節＋時段＋漁場（族男）"
       },
-      "req": "T6",
+      "req": {
+        "all": [
+          "T6",
+          "OF1"
+        ]
+      },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "晚上，男性長輩找族男加入大船船組",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今晚大船（cinedkeran）出海，用火把招飛魚。你跟著船組，聽船長的話。",
+              "tao": "cinedkeran"
+            },
+            {
+              "who": "旁白",
+              "zh": "出海期間只能操控族男。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "solo": {
+            "role": "m",
+            "at": "harbor",
+            "task": "跟大船船組夜間出海",
+            "waitAt": "harbor",
+            "giveUp": [
+              {
+                "who": "@m",
+                "zh": "今天浪太大，先回岸上。"
+              },
+              {
+                "who": "@npc",
+                "zh": "平安最重要，下次再去。"
+              }
+            ]
+          },
+          "gives": {
+            "glossary": [
+              "cinedkeran"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男跟大船船組在夜裡出海，火光下撈飛魚",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "火把一亮，飛魚就跳過來了！"
+            },
+            {
+              "who": "@m",
+              "zh": "大家一起划，一起撈。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "canoe": true,
+          "minigame": "fish",
+          "gives": {
+            "items": [
+              "alibangbang",
+              "alibangbang"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 10,
+          "text": "天快亮時回到岸邊，和大家會合",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "回來了，平安就好。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "regroup": true
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "跟大船出過海，你就是船組的人了。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "toast": [
+              "成長",
+              "族男學會在大船上合作。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚季的晚上，大船會用火把出海，男性長輩可能會找族男。"
       },
-      "playable": false,
+      "playable": true,
       "ground": "fishing",
-      "giver": "m"
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      },
+      "abortTo": 0,
+      "review": [
+        "夜間大船火炬捕飛魚：時間（飛魚季初期）、船組組成與禁忌請族人確認"
+      ]
     },
     {
       "id": "T8",
@@ -326,20 +804,134 @@
         "unlock": "隱藏故事",
         "kind": ""
       },
-      "req": "T4",
+      "req": {
+        "all": [
+          "T4",
+          "OF1"
+        ]
+      },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "男性長輩說起小蘭嶼",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "Jimagaod 是我們很重要的漁場。海流急，要很慎重，只有男人去。",
+              "tao": "Jimagaod"
+            },
+            {
+              "who": "@npc",
+              "zh": "今天跟著我，划到附近看看。不上岸，看完就回來。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "solo": {
+            "role": "m",
+            "at": "harbor",
+            "task": "跟長輩划向小蘭嶼",
+            "waitAt": "harbor",
+            "giveUp": [
+              {
+                "who": "@m",
+                "zh": "今天浪太大，先回岸上。"
+              },
+              {
+                "who": "@npc",
+                "zh": "平安最重要，下次再去。"
+              }
+            ]
+          },
+          "gives": {
+            "glossary": [
+              "jimagaod"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "族男跟長輩划拼板舟，遠遠看著小蘭嶼",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "島越來越近了……浪也越來越大。"
+            },
+            {
+              "who": "@giver",
+              "zh": "就到這裡。記住它的樣子，我們回去。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "canoe": true
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 10,
+          "text": "回到岸邊，和大家會合",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "你們去好久！海上怎麼樣？"
+            },
+            {
+              "who": "@m",
+              "zh": "……下次再慢慢說。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "need": [
+            "m",
+            "f",
+            "t"
+          ],
+          "regroup": true
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向男性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "那邊的故事，等你再大一點，我再告訴你。"
+            }
+          ],
+          "actor": [
+            "m"
+          ],
+          "gives": {
+            "toast": [
+              "隱藏故事",
+              "族男遠遠看過了小蘭嶼。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "主人家",
+        "zh": "有了自己的船之後，男性長輩望著南邊的海，好像想起什麼。"
       },
-      "playable": false,
-      "giver": "m"
+      "playable": true,
+      "giver": "m",
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
+      },
+      "abortTo": 0,
+      "hidden": true,
+      "review": [
+        "小蘭嶼（Jimagaod）的整段內容待族人同意：目前只呈現族男跟長輩划到附近的漁場、不登島"
+      ]
     }
   ]
 }

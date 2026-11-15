@@ -22,6 +22,8 @@ export interface StepLine {
   who: string;
   zh: string;
   tao?: string;
+  /** 0.1.4: only said when this quest flag is set (e.g. arrived_plane / arrived_boat from the arrival screen) */
+  if?: string;
 }
 
 export interface StepGives {
@@ -94,6 +96,11 @@ export interface QuestStep {
   minigame?: 'fish' | 'taro';
   /** board the tatala for the mini-game (sea trip) */
   canoe?: boolean;
+  /**
+   * 0.1.4 (Larry): only Tao men paddle a tatala. A canoe step that 族女 / 旅人 may do is a modern canoe
+   * (rented by the harbour); validate-content checks it
+   */
+  canoeKind?: 'tatala' | 'modern';
 }
 
 export interface QuestHint {
@@ -122,10 +129,20 @@ export interface QuestDef extends Windowed {
   hint: QuestHint;
   playable: boolean;
   hidden?: boolean;
+  /**
+   * A story beat that runs like a quest (lines, flags, unlocks) but never shows in the quest log, the tracker,
+   * or a 任務完成 / 新任務 toast. (Q01 抵達蘭嶼 is no longer silent: it is an auto-completed log entry.)
+   */
+  silent?: boolean;
   /** points a Tao cultural consultant still has to confirm (shown nowhere in game) */
   review?: string[];
   labourNote?: string;
   needsItem?: { item: string; from: string };
+  /**
+   * 0.1.4 (Larry: 祭典、上船捕魚、部落活動，沒有換部落衣服無法開始): the quest cannot start (its first step
+   * cannot run) until each listed member wears that outfit. Later steps don't re-check (taking it off is fine).
+   */
+  requiresOutfit?: Partial<Record<'m' | 'f', string>>;
   distanceOnly?: boolean;
   /** fishing ground (族男, tradition) vs. dive spot (modern recreation, anyone) */
   ground?: 'fishing' | 'dive';

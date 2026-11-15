@@ -4,6 +4,8 @@ import numpy as np
 from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import poses
+import diag
+import kayak
 from cast import PLAYERS, NPCS, OUTFIT_SHEETS
 
 OUT = os.environ.get('OCTO_OUT') or os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'public', 'assets', 'sprites', 'characters')
@@ -45,11 +47,29 @@ def main(jobs):
         for k in keep(PLAYERS + NPCS + list(OUTFIT_SHEETS)):
             save(poses.walk_sheet(k), f'{k}_sheet.png')
     if 'ride' in jobs:
-        for k in keep(PLAYERS):
+        for k in keep(PLAYERS + list(OUTFIT_SHEETS)):
             save(poses.ride_sheet(k), f'ride_{k}_sheet.png')
     if 'canoe' in jobs:
-        for k in keep(PLAYERS):
+        for k in keep(PLAYERS + list(OUTFIT_SHEETS)):
             save(poses.canoe_sheet(k), f'canoe_{k}_sheet.png')
+    # 8-direction sheets for the playable characters (base + outfit looks); base sheets are left as they are
+    eight = keep(PLAYERS + list(OUTFIT_SHEETS))
+    if 'walk8' in jobs:
+        for k in eight:
+            save(diag.walk8_sheet(k), f'{k}_8dir_sheet.png')
+    if 'ride8' in jobs:
+        for k in eight:
+            save(diag.ride8_sheet(k), f'ride_{k}_8dir_sheet.png')
+    if 'canoe8' in jobs:
+        for k in eight:
+            save(diag.canoe8_sheet(k), f'canoe_{k}_8dir_sheet.png')
+    # modern sea kayak (canoe_modern_*: 族女 / 旅人; only Tao men paddle a tatala)
+    if 'kayak' in jobs:
+        for k in eight:
+            save(kayak.kayak_sheet(k), f'canoe_modern_{k}_sheet.png')
+    if 'kayak8' in jobs:
+        for k in eight:
+            save(kayak.kayak8_sheet(k), f'canoe_modern_{k}_8dir_sheet.png')
 
 
 if __name__ == '__main__':

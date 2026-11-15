@@ -35,16 +35,40 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "請主人家的女性長輩看看糧倉",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "飛魚乾、芋頭都收進來了，我們數一數。"
+            },
+            {
+              "who": "@npc",
+              "zh": "夠吃到飛魚終食之前，不多也不少。剛好，就是最好的。"
+            },
+            {
+              "who": "旁白",
+              "zh": "「剛好」：不浪費，也不缺。多的分給親族，少的大家一起補。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "granary_just_right"
+            ],
+            "toast": [
+              "里程碑「剛好」",
+              "糧倉在飛魚終食前達到「剛好」。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "飛魚乾和芋頭都收好了，請主人家的女性長輩看看糧倉。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "W2",
@@ -78,17 +102,143 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "主人家的女性長輩交代：把芋頭分給三戶親族",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今年田裡收得好。採三顆水芋，送去椰油、朗島和野銀的親戚家。"
+            },
+            {
+              "who": "@npc",
+              "zh": "送的時候說是我們家給的，他們就知道了。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "host_taro",
+          "r": 6,
+          "text": "到家裡的水芋田採三顆水芋",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "挑大顆的，一家一顆。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "minigame": "taro",
+          "gives": {
+            "items": [
+              "soli",
+              "soli",
+              "soli"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_yayo",
+          "text": "送一顆水芋到椰油的親戚家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "主人家給的啊？替我謝謝她。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "soli": 1
+            },
+            "relation": 1
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "elder_f_iraraley",
+          "text": "送一顆水芋到朗島的親戚家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "今年的芋頭真好。下次換我們送過去。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "soli": 1
+            },
+            "relation": 1
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_taro",
+          "text": "送一顆水芋到野銀的親戚家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "收到了。田裡的東西，要大家一起吃才香。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "consume": {
+              "soli": 1
+            },
+            "relation": 1
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "回主人家回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "都送到了？好。親戚之間就是這樣，你來我往。"
+            }
+          ],
+          "actor": [
+            "m",
+            "f"
+          ],
+          "gives": {
+            "toast": [
+              "部落關係",
+              "三戶親族都收到了主人家的芋頭。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "收成之後，主人家的女性長輩會請族人把芋頭分給親族。"
       },
-      "playable": false,
-      "giver": "f"
+      "playable": true,
+      "giver": "f",
+      "review": [
+        "分送芋頭給親族的習慣（送給哪些人家、一次送多少）請族人確認"
+      ]
     },
     {
       "id": "W3",
@@ -120,16 +270,75 @@
       "req": "V6",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "villager_harbor",
+          "text": "旅人和族男一起到開元港，問拼板舟漁人有沒有網要補",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這張網破了好幾個洞，你們來得剛好。"
+            },
+            {
+              "who": "@npc",
+              "zh": "族男補大洞，旅人補小的。照你學過的結打。"
+            }
+          ],
+          "need": [
+            "t",
+            "m"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "harbor",
+          "r": 8,
+          "text": "在港邊一起補網",
+          "lines": [
+            {
+              "who": "@m",
+              "zh": "先把破掉的線頭修齊，再一格一格補回去。"
+            },
+            {
+              "who": "@t",
+              "zh": "這次的結比上次緊多了！"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "need": [
+            "t",
+            "m"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "villager_harbor",
+          "text": "把補好的網交還",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "補得不錯。網補好了，船組下次出海就用得上。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "net_adv_card"
+            ],
+            "relation": 1,
+            "toast": [
+              "結網進階卡",
+              "旅人和族男一起補好一張漁網。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "開元港",
+        "zh": "學過結網之後，可以和族男去開元港，幫拼板舟漁人補網。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "m"
     },
     {
@@ -160,16 +369,64 @@
       "req": "X04",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "把圖鑑卡帶給族語老師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們的圖鑑卡帶來了？我們一起看，哪些東西有族語的名字。"
+            },
+            {
+              "who": "@npc",
+              "zh": "族語名字不確定的，先空著，等族人告訴我們，不要自己猜。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "yayo_school",
+          "r": 6,
+          "text": "在學校把十張圖鑑卡排在桌上，一張一張對",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "水芋是 soli，飛魚是 alibangbang，螃蟹是 kalang。",
+              "tao": "soli · alibangbang · kalang"
+            }
+          ],
+          "gives": {
+            "glossary": [
+              "soli",
+              "alibangbang",
+              "kalang"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "聽老師說明食物詞",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "會叫食物的名字，就會想知道它是怎麼來的。下次帶長輩說的話來。"
+            }
+          ],
+          "gives": {
+            "toast": [
+              "族語詞卡",
+              "族語詞卡加上了食物詞。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "族語老師",
+        "zh": "族語老師想看看你們收集的圖鑑卡，帶去椰油的學校。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "W5",
@@ -202,16 +459,53 @@
       "req": "C2",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "owl_road",
+          "r": 8,
+          "text": "晚上在路邊數陸蟹（只看、不抓、不用強光照）",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "一、二、三……這段路上有七隻。"
+            },
+            {
+              "who": "旁白",
+              "zh": "用紅光或微弱的光看就好，不要抓，也不要擋住牠們的路。"
+            }
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@host",
+          "text": "回家告訴長輩數到的數量",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "七隻啊。牠們每年都走同一條路，我們讓一讓就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "crab_card"
+            ],
+            "toast": [
+              "陸蟹保育卡",
+              "生態值增加。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "陸蟹季的晚上，西岸路邊常有陸蟹經過，數一數就好。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "H1",
@@ -245,17 +539,72 @@
       "req": "X05",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "host_tagakal",
+          "r": 5,
+          "text": "在涼亭上，旅人和族人一起先問長輩能不能錄音",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "可以幫族語老師錄一段您說的話嗎？只給學校教族語用。"
+            },
+            {
+              "who": "@host",
+              "zh": "要錄什麼？"
+            },
+            {
+              "who": "@me",
+              "zh": "一句問候就好。您不想錄，我們就不錄。"
+            },
+            {
+              "who": "@host",
+              "zh": "問候可以。故事等我想一想，有些不是每個人都能聽的。"
+            },
+            {
+              "who": "@host",
+              "zh": "akokey。",
+              "tao": "akokey"
+            }
+          ],
+          "need": [
+            "t",
+            "mf"
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "把錄音交給族語老師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "謝謝你們先問過長輩。錄音我會好好保存，只在課堂上用。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "elder_voice_card"
+            ],
+            "toast": [
+              "長輩故事卡",
+              "長輩同意錄下一句問候。故事，等長輩願意說的時候。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "族語老師",
+        "zh": "族語老師說，要是能聽到長輩親口說的族語就好了……但一定要先問過。"
       },
-      "playable": false,
-      "hidden": true
+      "playable": true,
+      "hidden": true,
+      "review": [
+        "替族語老師錄長輩說話的情節：先問同意、只錄問候、故事不是每個人都能聽；請族人確認是否恰當"
+      ]
     },
     {
       "id": "H2",
@@ -287,16 +636,47 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@hostf",
+          "text": "營養師請大家記一週吃了什麼，先問主人家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這一週吃什麼？芋頭、地瓜、魚，還有一些麵。忙的時候就吃快一點的。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "nutritionist",
+          "text": "把一週的飲食交給營養師",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "芋頭、地瓜、魚和海菜，加上一些麵和米，這就是現在島上很多家的餐桌。"
+            },
+            {
+              "who": "@npc",
+              "zh": "傳統的食物本來就很均衡。少一點泡麵，多一點田裡和海裡的東西就好。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "nutrition_card"
+            ],
+            "toast": [
+              "營養與健康卡",
+              "營養師的飲食小調查完成。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "衛生所",
+        "zh": "營養師好像在找人幫忙做飲食調查。"
       },
-      "playable": false,
+      "playable": true,
       "hidden": true
     },
     {
@@ -334,16 +714,44 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "退潮時，族女帶旅人觀察潮池（只看不採）",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "蹲低一點看。石頭翻過來看完，要放回原來的地方。"
+            },
+            {
+              "who": "@t",
+              "zh": "有海星、小魚，還有寄居蟹。我只拍，不拿。"
+            }
+          ],
+          "need": [
+            "f",
+            "t"
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            },
+            "flags": [
+              "tidepool_card"
+            ],
+            "toast": [
+              "潮池觀察卡",
+              "只看不採，生態值增加。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "東清",
+        "zh": "常常準時在退潮時到海邊的人，會發現潮池裡有好多東西。"
       },
-      "playable": false,
+      "playable": true,
       "hidden": true
     },
     {
@@ -375,16 +783,75 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "族語老師想在學校辦一個小照片展",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你拍了好多島上的照片。可以借學校辦個小展覽嗎？"
+            },
+            {
+              "who": "@npc",
+              "zh": "每張照片寫上地方的名字，還有你拍照時守的規矩。"
+            }
+          ],
+          "actor": [
+            "t"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "yayo_school",
+          "r": 6,
+          "text": "在學校把照片一張張貼好",
+          "lines": [
+            {
+              "who": "@t",
+              "zh": "這張只在路邊遠拍；這張先問過屋主。"
+            },
+            {
+              "who": "旁白",
+              "zh": "孩子們圍過來，指著照片說出部落的名字。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "glossary": [
+              "pongso-no-tao"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "teacher_yayo",
+          "text": "展覽完成",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "孩子們說，原來外面的人也會這樣看我們的島。謝謝你。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "relation": 1,
+            "toast": [
+              "島嶼照片小展",
+              "族語詞卡加上地名。部落關係提升。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "族語老師",
+        "zh": "族語老師聽說旅人拍了很多照片。"
       },
-      "playable": false,
+      "playable": true,
       "hidden": true
     },
     {
@@ -425,16 +892,54 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "culture_worker",
+          "text": "旅人帶著照片，聽部落文化工作者說海岸地名",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你拍的這些，什麼岩、什麼洞，很多是外面的人看形狀取的名字。"
+            },
+            {
+              "who": "@npc",
+              "zh": "族人對每個海角、每塊礁石都有自己的名字，有的記著誰在那裡上岸，誰在那裡曬過衣服。"
+            },
+            {
+              "who": "@npc",
+              "zh": "這幾年，部落的年輕人一塊石頭一塊石頭地，把名字和故事找回來。"
+            },
+            {
+              "who": "@npc",
+              "zh": "名字和故事，要由部落自己說。等族人同意，我再一個一個告訴你。"
+            },
+            {
+              "who": "@t",
+              "zh": "我會在相簿裡先留一欄，等族人來寫。"
+            }
+          ],
+          "actor": [
+            "t"
+          ],
+          "gives": {
+            "flags": [
+              "place_names_card"
+            ],
+            "toast": [
+              "故事卡（待族人提供）",
+              "相簿照片加上「族語地名」欄，等族人提供。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "朗島",
+        "zh": "拍過北岸的奇岩之後，部落文化工作者想跟旅人聊聊這些地方的名字。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "海岸地名的說法（觀光名多為外人依形狀取名；部落青年的地景正名）取自公開資料；族語地名與故事要由族人提供，遊戲目前不列出"
+      ]
     },
     {
       "id": "D1",
@@ -468,16 +973,36 @@
       "req": "Q02",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "geologist",
+          "text": "找到正在野外調查的地質學家",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "你們找到我了！我在調查海岸的岩石，每天都換地方。"
+            },
+            {
+              "who": "@npc",
+              "zh": "想一起看嗎？我可以教你們怎麼看石頭。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "geo_notes"
+            ],
+            "toast": [
+              "地質筆記",
+              "相簿照片加上地質筆記欄。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "有個拿著放大鏡的地質學家在島上到處跑，今天不知道在哪。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "D2",
@@ -511,16 +1036,48 @@
       "req": "D1",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "geologist",
+          "text": "跟地質學家約好去看火山岩海岸",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "我們去西北岸那塊大岩石，那裡最好看。"
+            }
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "tank_rock",
+          "r": 10,
+          "text": "跟地質學家看火山岩海岸",
+          "lines": [
+            {
+              "who": "geologist",
+              "zh": "這些岩塊是火山噴發的碎屑堆起來的。硬的留下來，軟的被海浪帶走。"
+            },
+            {
+              "who": "geologist",
+              "zh": "這是地質的看法。族人對這塊岩石有自己的名字和故事，兩種都值得聽。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "rock_card"
+            ],
+            "toast": [
+              "火山與岩石卡",
+              "蘭嶼是海底火山噴發形成的島。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "地質學家",
+        "zh": "地質學家要帶大家去看火山岩海岸。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "D3",
@@ -564,16 +1121,48 @@
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "lovers_cave",
+          "r": 10,
+          "text": "從路邊觀察海蝕拱門",
+          "lines": [
+            {
+              "who": "geologist",
+              "zh": "海浪一年一年打進岩縫，縫越來越大，最後就穿成一個拱門。"
+            },
+            {
+              "who": "geologist",
+              "zh": "你們拍過的那些岩石，都是這樣被海慢慢雕出來的。站在路邊看就好，崖邊很危險。"
+            }
+          ]
+        },
+        {
+          "kind": "talk",
+          "npc": "geologist",
+          "text": "地質學家拿出他的調查筆記",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "這本是我的調查紀錄，送你們抄一份。記得，名字還是要問族人。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "geo_secret_notes"
+            ],
+            "toast": [
+              "海蝕地質卡",
+              "得到地質學家的隱藏調查紀錄。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "地質學家",
+        "zh": "拍過東岸的奇岩之後，地質學家想帶大家看海蝕地形。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "U3",

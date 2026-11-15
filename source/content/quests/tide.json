@@ -153,16 +153,57 @@
       "req": "I2",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "退潮時，族女在潮間帶只拿需要的量（旅人可以跟著看）",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "這個太小了，放回去。夠煮一餐就好。"
+            },
+            {
+              "who": "@t",
+              "zh": "原來不是看到就撿。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "counter": {
+              "lowTideOnTime": 1,
+              "ecology": 1
+            }
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "只拿需要的，海才會一直有。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "toast": [
+              "生態值",
+              "只取需要的量。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "退潮時去潮間帶，女性長輩說：只拿需要的。"
       },
-      "playable": false,
+      "playable": true,
       "giver": "f"
     },
     {
@@ -241,7 +282,9 @@
         "en": ""
       },
       "time": "night",
-      "seasons": [],
+      "seasons": [
+        "summer"
+      ],
       "periods": [
         "night"
       ],
@@ -263,22 +306,54 @@
         "all": [
           "Q02",
           {
-            "flag": "crab_season"
+            "any": [
+              {
+                "flag": "crab_season"
+              },
+              "C1"
+            ]
           }
         ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "spot",
+          "spot": "owl_road",
+          "r": 8,
+          "text": "陸蟹季的晚上，騎車慢慢經過，停車護送陸蟹過馬路",
+          "lines": [
+            {
+              "who": "@me",
+              "zh": "停車！前面有陸蟹。慢慢走，不要用手抓。"
+            },
+            {
+              "who": "旁白",
+              "zh": "陸蟹季的夜晚，母蟹要穿過馬路到海邊釋放幼蟲。騎慢一點，就能少壓到一隻。"
+            }
+          ],
+          "gives": {
+            "counter": {
+              "ecology": 1
+            },
+            "flags": [
+              "crab_escort"
+            ],
+            "toast": [
+              "生態值",
+              "護送陸蟹安全過馬路。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "村民",
+        "zh": "夏天的晚上，西岸路邊常有陸蟹過馬路，騎車要慢。"
       },
-      "playable": false
+      "playable": true,
+      "review": [
+        "陸蟹季（夏季夜間母蟹過馬路釋幼）的時間請族人或保育單位確認"
+      ]
     },
     {
       "id": "C3",
@@ -306,20 +381,45 @@
         "kind": ""
       },
       "req": {
-        "flag": "met_coconut_crab"
+        "any": [
+          {
+            "flag": "met_coconut_crab"
+          },
+          "C1"
+        ]
       },
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@host",
+          "text": "問長輩：晚上看到的椰子蟹能不能吃",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "以前椰子蟹是會吃的。現在牠們少了，是保育動物，看到了也不能抓。"
+            },
+            {
+              "who": "@npc",
+              "zh": "等牠們多回來，再說。"
+            }
+          ],
+          "gives": {
+            "flags": [
+              "conservation_card"
+            ],
+            "toast": [
+              "保育教育卡",
+              "椰子蟹現在是保育動物，不能抓。"
+            ]
+          }
         }
       ],
       "hint": {
-        "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "tier": "vague",
+        "from": "主人家",
+        "zh": "晚上在路邊好像看到一隻好大的蟹……問問長輩。"
       },
-      "playable": false
+      "playable": true
     },
     {
       "id": "S1",
@@ -459,16 +559,98 @@
       "req": "I3",
       "steps": [
         {
-          "kind": "placeholder",
-          "text": "這個任務的內容會在後續版本加入。"
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "女性長輩帶族女退潮去撿貝類",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "退潮了，帶上防曬和水。太小的不撿，夠吃就好。"
+            }
+          ],
+          "actor": [
+            "f"
+          ]
+        },
+        {
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "族女在潮間帶撿貝類（太小的放回去）",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "這四個夠大。小的放回石縫裡。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "items": [
+              "shellfish",
+              "shellfish",
+              "shellfish",
+              "shellfish"
+            ]
+          }
+        },
+        {
+          "kind": "spot",
+          "spot": "tide_iranmeylek",
+          "r": 4,
+          "text": "趁潮水回來之前，再撿幾個",
+          "lines": [
+            {
+              "who": "@f",
+              "zh": "……七、八。潮水要回來了，上岸。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "items": [
+              "shellfish",
+              "shellfish",
+              "shellfish",
+              "shellfish"
+            ]
+          }
+        },
+        {
+          "kind": "talk",
+          "npc": "@giver",
+          "text": "向女性長輩回報",
+          "lines": [
+            {
+              "who": "@npc",
+              "zh": "八個，大小都剛好。妳記得放小的回去，很好。"
+            }
+          ],
+          "actor": [
+            "f"
+          ],
+          "gives": {
+            "counter": {
+              "lowTideOnTime": 1
+            },
+            "flags": [
+              "granary_shell"
+            ],
+            "toast": [
+              "糧倉",
+              "一次退潮撿了八個貝類。"
+            ]
+          }
         }
       ],
       "hint": {
         "tier": "direct",
-        "from": "手札",
-        "zh": "這個任務的內容會在後續版本加入。"
+        "from": "主人家",
+        "zh": "退潮時，女性長輩會帶族女去撿貝類。記得先買防曬。"
       },
-      "playable": false,
+      "playable": true,
       "needsItem": {
         "item": "sunscreen",
         "from": "S2"

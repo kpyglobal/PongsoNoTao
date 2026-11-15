@@ -12,8 +12,11 @@ import type { LightPreset, Period, Season } from '../core/timeSeason';
 import { yieldIfBusy } from '../core/frame';
 import { preferredReflectorSize } from '../core/device';
 import { quality } from '../core/quality';
+import { reflectHooks } from '../render/reflectHooks';
 
 const vert = /* glsl */ `
+  #include <common>
+  #include <shadowmap_pars_vertex>
   uniform mat4 textureMatrix;
   varying vec4 vReflectUv;
   varying vec3 vWorld;
@@ -22,11 +25,22 @@ const vert = /* glsl */ `
     vWorld = wp.xyz;
     vReflectUv = textureMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * viewMatrix * wp;
+    // 0.1.5: the sea receives the sun's shadow map (tatala, rocks, piers, character / boat sprites)
+    vec3 transformedNormal = normalMatrix * normal;
+    vec4 worldPosition = wp;
+    #include <shadowmap_vertex>
   }
 `;
 
 const frag = /* glsl */ `
   precision highp float;
+  #include <common>
+  #include <packing>
+  #include <lights_pars_begin>
+  #include <shadowmap_pars_fragment>
+  #include <shadowmask_pars_fragment>
+  uniform float uShadowK;
+  uniform vec3 uShadowTint;
   uniform sampler2D tDiffuse;
   uniform vec3 color;
   uniform float uTime;
@@ -109,6 +123,12 @@ const frag = /* glsl */ `
       col *= 1.0 - dark*uStreak*0.25*(1.0-shallow*0.5);
     }
     float shimmer = pow(max(0.0,sin(p.x*7.0 + p.y*1.4 + uTime*1.1)),18.0);
+    // sun shadow on the water surface: same shadow map (direction, length, PCF softness) as on land; the
+    // shadowed sea loses the direct sun (glints) and darkens toward the scene's cool shade tone
+    float lit = getShadowMask();
+    float shade = (1.0 - lit) * uShadowK;
+    spec *= lit;
+    col *= (1.0 - shade) * (vec3(1.0) - shade * uShadowTint);
     col += uSunColor*shimmer*spec*0.9;
 
     // thin breathing shore foam with a broken, natural edge
@@ -162,6 +182,9 @@ export class Ocean {
         uFogColor: { value: new THREE.Color('#cfe6ef') },
         uFogNear: { value: 60 },
         uFogFar: { value: 220 },
+        uShadowK: { value: 0.5 },
+        uShadowTint: { value: new THREE.Vector3(0.06, 0.03, -0.03) }, // a touch cooler, like the shade on sand
+        ...THREE.UniformsLib.lights,
       },
       vertexShader: vert,
       fragmentShader: frag,
@@ -179,15 +202,21 @@ export class Ocean {
     this.mesh.renderOrder = 2;
     this.mesh.name = 'reef-ocean-reflector';
     this.mat = this.mesh.material as THREE.ShaderMaterial;
+    this.mat.lights = true;
+    this.mesh.receiveShadow = true;
     this.mat.transparent = true;
     this.mat.depthWrite = false;
     this.mat.uniforms.uLand.value = landTex;
-    if (this.reflectEvery > 1) {
-      const renderReflection = this.mesh.onBeforeRender;
-      this.mesh.onBeforeRender = (...args) => {
-        if (this.frame % this.reflectEvery === 0) renderReflection.apply(this.mesh, args);
-      };
-    }
+    const renderReflection = this.mesh.onBeforeRender;
+    this.mesh.onBeforeRender = (...args) => {
+      if (this.reflectEvery > 1 && this.frame % this.reflectEvery !== 0) return;
+      reflectHooks.before?.();
+      try {
+        renderReflection.apply(this.mesh, args);
+      } finally {
+        reflectHooks.after?.();
+      }
+    };
   }
 
   apply(preset: LightPreset, period: Period, season: Season): void {
@@ -203,6 +232,11 @@ export class Ocean {
     u.uWave.value = look.wave;
     applyMix(u.uDeep.value as THREE.Color, [look.waterDeep[0], look.waterDeep[1] * k]);
     applyMix(u.uShallow.value as THREE.Color, [look.waterShallow[0], look.waterShallow[1] * k]);
+    // shadow strength from the light rig (share of the direct sun in a lit surface's light), calibrated so that by day
+    // shade on the water is as dark as shade on the sand (≈ 0.6× lit in the 0.1.4 shots); weaker at dawn / dusk / night
+    const sun = preset.sunIntensity * look.sunMul * Math.max(0.2, preset.sunDir.clone().normalize().y);
+    const sky = preset.hemiIntensity + preset.ambientExtra;
+    u.uShadowK.value = Math.min(0.45, (sun / (sun + sky)) * 0.58);
   }
 
   update(t: number, fog?: THREE.Fog | null): void {

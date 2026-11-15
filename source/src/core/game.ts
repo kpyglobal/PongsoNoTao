@@ -5,11 +5,16 @@ import { PAINT } from '../render/styleConfig';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Assets } from './assets';
 import { Input, type InputAction } from './input';
-import { GameState, type Gender, type LangMode } from './state';
+import { GameState, type ArrivalWay, type Gender, type LangMode } from './state';
+import { arrivalSpawn, buildArrivalProps } from '../world/arrival';
+import { IntroScene } from '../intro/introScene';
+import { mountMenuSound, installMenuSounds, menuSfx } from '../ui/menuSound';
 import { PRESETS, type Period, type Season } from './timeSeason';
 import { PostFX } from './post';
 import { SkyLighting } from '../world/sky';
 import { Ocean, bakeLandFieldAsync } from '../world/water';
+import { reflectHooks } from '../render/reflectHooks';
+import { setSpriteSunYaw } from '../entities/billboard';
 import { WorldDecor, type PlaceRec } from '../world/populate';
 import { addQuestPlaces, hostPlaces } from '../world/places';
 import { TaroTerraces } from '../world/paddies';
@@ -34,7 +39,8 @@ import { lastPaintMs, Island, WORLD_BOX } from '../world/island';
 import { initCollision, canStand, PLAYER_RADIUS } from '../world/collision';
 import { buildShade, shadeAt, shadeStats } from '../world/shade';
 import type { SpriteBillboard } from '../entities/billboard';
-import { LANDMARKS } from '../world/layout';
+import { LANDMARKS, facilityBoxes, remapSavePos } from '../world/layout';
+import { WORLD_REV } from '../world/legacy';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Party, ROLES } from '../entities/party';
 import { QuestEngine, tideAt, type QuestEvent } from '../quests/engine';
@@ -42,6 +48,8 @@ import type { QuestDef, QuestStep, Role, StepLine } from '../quests/types';
 import { readSave, writeSave, clearSave, validateSave, type SaveJSON } from './save';
 import { CHAR_WORLD_H } from '../entities/billboard';
 import type { QuestCardVM } from '../ui/dom';
+import { startBgm, isCultureQuest, segueToTitle, titleIntroSeconds } from '../systems/audio/bgm';
+import { sfxSting } from '../systems/audio/sfx';
 import { closeImagePopup, showDive, showSongCard, renderAlbum, renderSaveTab, type AlbumVM, type SongVM } from '../ui/phase1b';
 
 const ROLE_ZH: Record<Role, string> = { m: '族男', f: '族女', t: '旅人' };
@@ -57,6 +65,19 @@ const DEBUG_API = import.meta.env.DEV || (typeof location !== 'undefined' && new
 
 /** default view ~1.3x the old 17; the old default is now the closest zoom; max frames a whole village */
 const CAM_DEFAULT = { yaw: 0.7, pitch: 0.58, dist: 22 };
+
+/**
+ * 0.1.4 arrival opening: title screen → party → 搭飛機／搭船 → arrival cut-scene. `?intro=0` turns it off,
+ * `?intro=1` forces it on; automated browsers (navigator.webdriver) skip it unless `?intro=1`, so the older
+ * test scripts keep starting straight at 開元港 (scripts/test-intro.mjs covers the opening itself).
+ */
+function introEnabled(): boolean {
+  if (typeof location === 'undefined') return false;
+  const v = new URLSearchParams(location.search).get('intro');
+  if (v === '1') return true;
+  if (v === '0') return false;
+  return !(typeof navigator !== 'undefined' && navigator.webdriver);
+}
 const CAM_MIN_DIST = 16;
 const CAM_MAX_DIST = 46;
 /** gentle sprite size compensation vs zoom: ~0.93x at the closest, 1x at default, ~1.25x at the farthest */
@@ -84,6 +105,37 @@ export class Game {
   private post!: PostFX;
   private focus: { x: number; z: number } | null = null;
   private coverHold = false;
+  /** 0.1.4 arrival cut-scene in progress (title music keeps playing; begin() runs when it ends or is skipped) */
+  private arrival: {
+    /** 'intro': the painted ride while the island loads; 'notebook': the quest-log stamp for 抵達蘭嶼 */
+    phase: 'intro' | 'notebook';
+    t0: number;
+    id: PlayableOrigin;
+    gender: Gender;
+    way: ArrivalWay;
+    last: number;
+    /** title music (and the logo) start; the logo may leave once loading is done and the epic part is over */
+    logoAt: number;
+    minEnd: number;
+    logoOutAt: number | null;
+    skip: boolean;
+    tA: number;
+    stamped?: boolean;
+  } | null = null;
+  /** 0.1.4 the painted intro scene (title backdrop + the ride in); disposed when the game starts */
+  private intro: IntroScene | null = null;
+  /** the island, assets and systems are built (with the intro on, this happens in the background) */
+  private worldReady = false;
+  private worldLoading: Promise<void> | null = null;
+  private loadP = 0;
+  private loadLabel = '';
+  /** intro memory report (tests): renderer + heap before and after the intro scene is disposed */
+  private introMem: { before?: Record<string, number>; after?: Record<string, number> } = {};
+  /** party picked on the origin screen, waiting for the 搭飛機／搭船 choice */
+  private pendingStart: { id: PlayableOrigin; gender: Gender } | null = null;
+  /** cut-scene camera height override (the plane is in the air) */
+  private camFy: number | null = null;
+  private arrivalPeriod: Period | null = null;
   private activity: Activity = 'cover';
   private overlay: Overlay | null = null;
   private content!: UiContent;
@@ -108,6 +160,8 @@ export class Game {
   private camDist = 22;
   private camBtn = 0;
   private dlgQueue: DlgLine[] = [];
+  /** 0.1.4 audio: the quest whose scene is open (cleared on return to exploration by the probe's mode check) */
+  private audioSceneQuest: string | null = null;
   private mg: { kind: 'taro' | 'fish'; t: number; dir: number; s0: number; s1: number } | null = null;
   /** quest mini-game (sea trip): called with the result instead of the free-play rewards */
   private mgDone: ((ok: boolean) => void) | null = null;
@@ -151,6 +205,8 @@ export class Game {
   constructor() {
     const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
     this.ui = new UI(document.getElementById('ui-root')!);
+    mountMenuSound(); // 0.1.4: 音樂／音效 toggles on the start screens + menu sounds everywhere
+    installMenuSounds();
     this.ui.setOverlayOpen(true);
     try {
       this.renderer = new THREE.WebGLRenderer({
@@ -215,8 +271,23 @@ export class Game {
         // S2: one save slot — ask before a new journey replaces it
         const meta = this.saveMeta(readSave());
         if (meta && !window.confirm(`開始新旅程會覆蓋現有存檔：\n${meta}\n\n確定要重新開始嗎？（想保留可以先到手札「存檔」匯出）`)) return;
-        this.begin(id, gender, 't');
+        // 0.1.4: next, how the party reaches the island (off: straight to 開元港, as before)
+        if (introEnabled()) {
+          this.pendingStart = { id, gender };
+          this.ui.showArrival();
+        } else this.begin(id, gender, 't');
       },
+      onArrival: (way) => {
+        const p = this.pendingStart;
+        if (!p) return;
+        this.pendingStart = null;
+        this.playArrival(p.id, p.gender, way);
+      },
+      onArrivalBack: () => {
+        this.pendingStart = null;
+        this.ui.showOrigin();
+      },
+      onArrivalSkip: () => this.endArrival(),
       onPeriod: (p) => this.setPeriod(p),
       onSeason: (s) => this.setSeason(s),
       onLang: (m) => this.setLang(m),
@@ -239,10 +310,7 @@ export class Game {
       onFastTravel: (id) => this.fastTravel(id),
       onSwitch: (r) => this.switchMember(r),
       onSoloAbort: () => this.abortSolo(),
-      onContinue: () => {
-        const sv = readSave();
-        if (sv) this.resume(sv);
-      },
+      onContinue: () => void this.continueSaved(),
     };
     this.ui.onTrack = (id) => {
       this.quests.tracked = id;
@@ -271,8 +339,9 @@ export class Game {
 
   /** Keyboard actions from Input, mapped per mode. */
   private onAction(a: InputAction): void {
-    if (!this.ready) return;
+    if (!this.ready || !this.worldReady) return;
     if (a === 'escape') {
+      if (this.overlay) menuSfx('menu_cancel');
       if (this.overlay) this.setOverlay(this.overlay, false);
       else if (this.activity === 'minigame') this.cancelMinigame();
     } else if (a === 'journal') {
@@ -304,23 +373,97 @@ export class Game {
   async boot(): Promise<void> {
     const boot0 = performance.now();
     try {
+      this.loadContent();
+      if (introEnabled()) {
+        // 0.1.4: the title, party and arrival screens run over the light painted intro scene; the island itself
+        // loads in the background once the ride in starts (or at once for 繼續旅程)
+        this.ui.setLoad(0.3, '準備開場……');
+        this.intro = new IntroScene(window.innerWidth / window.innerHeight);
+        await this.intro.load();
+        this.ui.setLoad(1, '完成');
+        this.ui.showTitle();
+        this.afterBoot(boot0);
+        return;
+      }
+      await this.loadWorld((p, label) => this.ui.setLoad(p, label));
+      // cover: slow orbit over the whole island behind the title card
+      this.focus = { x: 0, z: 2 }; // 0.1.4: centre of the real-outline island
+      this.camYaw = 0.75;
+      this.camPitch = 0.66;
+      this.camDist = 92;
+      this.snapCam = true;
+      this.ui.showOrigin();
+      this.afterBoot(boot0);
+    } catch (err) {
+      console.error(err);
+      this.ui.setLoad(1, '載入失敗，請重新整理頁面再試一次。');
+      this.ui.setOverlayOpen(true);
+      this.ui.el('#boot-screen').style.display = 'flex';
+      throw err;
+    }
+  }
+
+  private afterBoot(boot0: number): void {
+    try {
+      this.ui.showContinue(this.saveMeta(readSave()));
+    } catch (e) {
+      console.warn('save unreadable', e);
+      this.ui.showContinue(null);
+    }
+    this.ready = true;
+    this.timings.boot = performance.now() - boot0;
+    this.expose();
+    // 0.1.4 background music: picks a loop by place / night / sea (src/systems/audio/bgm.ts)
+    startBgm(() => {
+      const w = this.worldReady;
+      return {
+        menu: !this.state.started && !this.arrival,
+        title: !!this.arrival,
+        culture: w && this.mode !== 'explore' && !!this.audioSceneQuest && isCultureQuest(this.quests.defs.find((q) => q.id === this.audioSceneQuest)),
+        x: w ? this.player.x : 0,
+        z: w ? this.player.z : 0,
+        h: w ? this.island.heightAt(this.player.x, this.player.z) : 0,
+        night: this.state.period === 'night',
+        sea: w && (this.player.mode === 'canoe' || this.diveOpen),
+      };
+    });
+    this.loop();
+  }
+
+  /** content tables (sync; the screens before the island need places / ui text) */
+  private loadContent(): void {
+    if (this.db) return;
+    this.db = content();
+    this.places = JSON.parse(JSON.stringify(this.db.places)) as Record<string, PlaceRec>;
+    this.dlg = new Dialogue(this.db.dialogues);
+    this.content = checkShape<UiContent>('ui', this.db.ui);
+    checkShape('glossary', this.db.glossary);
+    checkShape('milestones', this.db.milestones);
+    this.ui.setContent(this.content);
+  }
+
+  /** assets, heightfield, island, systems, shader warm-up (once; the intro runs it in the background) */
+  private loadWorld(progress: (p: number, label: string) => void): Promise<void> {
+    if (this.worldLoading) return this.worldLoading;
+    this.progress = progress;
+    this.worldLoading = (async () => {
       const a0 = performance.now();
-      await this.assets.load((p, label) => this.ui.setLoad(p * 0.62, label));
+      await this.assets.load((p, label) => this.progress(p * 0.62, label));
       this.timings.assets = performance.now() - a0;
-      this.ui.setLoad(0.64, '雕塑火山稜線與海灣……');
+      this.progress(0.64, '雕塑火山稜線與海灣……');
       await yieldToUi(true);
       const g0 = performance.now();
-      await gridAsync((p) => this.ui.setLoad(0.64 + p * 0.12, '雕塑火山稜線與海灣……'));
+      await gridAsync((p) => this.progress(0.64 + p * 0.12, '雕塑火山稜線與海灣……'));
       this.timings.grid = performance.now() - g0;
       initCollision();
       this.ui.bakeMinimap(drawMinimap);
-      this.ui.setLoad(0.77, '為島嶼上色……');
+      this.progress(0.77, '為島嶼上色……');
       await yieldToUi(true);
       const w0 = performance.now();
       await this.buildWorld();
       this.timings.world = performance.now() - w0;
       this.timings.paint = lastPaintMs;
-      this.ui.setLoad(0.97, '烘上島嶼的光……');
+      this.progress(0.97, '烘上島嶼的光……');
       await yieldToUi(true);
       // compile shaders now, so the first cover frame is not a multi-second iOS stall
       const compile = (this.renderer as THREE.WebGLRenderer & { compileAsync?: (s: THREE.Scene, c: THREE.Camera) => Promise<void> }).compileAsync;
@@ -331,45 +474,19 @@ export class Game {
         else this.renderer.compile(this.scene, this.camera);
       }
       this.decor.applyTime(this.state.period, this.state.season);
-      this.post.render(0);
-      this.ui.setLoad(1, '完成');
-      // cover: slow orbit over the whole island behind the title card
-      this.focus = { x: -2, z: 6 };
-      this.camYaw = 0.75;
-      this.camPitch = 0.66;
-      this.camDist = 92;
-      this.snapCam = true;
-      this.ui.showOrigin();
-      try {
-        this.ui.showContinue(this.saveMeta(readSave()));
-      } catch (e) {
-        console.warn('save unreadable', e);
-        this.ui.showContinue(null);
-      }
-      this.ready = true;
-      this.timings.boot = performance.now() - boot0;
-      this.expose();
-      this.loop();
-    } catch (err) {
-      console.error(err);
-      this.ui.setLoad(1, '載入失敗，請重新整理頁面再試一次。');
-      this.ui.setOverlayOpen(true);
-      this.ui.el('#boot-screen').style.display = 'flex';
-      throw err;
-    }
+      this.progress(1, '完成');
+      this.worldReady = true;
+    })();
+    return this.worldLoading;
   }
 
+  private progress: (p: number, label: string) => void = () => {};
+
   private async buildWorld(): Promise<void> {
-    this.db = content();
-    this.places = JSON.parse(JSON.stringify(this.db.places)) as Record<string, PlaceRec>;
-    this.dlg = new Dialogue(this.db.dialogues);
-    this.content = checkShape<UiContent>('ui', this.db.ui);
-    checkShape('glossary', this.db.glossary);
-    checkShape('milestones', this.db.milestones);
-    this.ui.setContent(this.content);
+    this.loadContent();
 
     this.island = new Island(this.assets);
-    await this.island.build((p) => this.ui.setLoad(0.77 + p * 0.12, '為島嶼上色……'));
+    await this.island.build((p) => this.progress(0.77 + p * 0.12, '為島嶼上色……'));
     // close-zoom ground crispness; `?groundfx=0` restores the old look for A/B screenshots
     this.groundFx = new URLSearchParams(location.search).get('groundfx') !== '0';
     if (this.groundFx) {
@@ -382,18 +499,18 @@ export class Game {
 
     this.sky = new SkyLighting(this.scene);
 
-    this.ui.setLoad(0.90, '描上海岸與礁棚……');
+    this.progress(0.90, '描上海岸與礁棚……');
     await yieldToUi(true);
     const landTex = await bakeLandFieldAsync(
       WORLD_BOX.xMin, WORLD_BOX.zMin, WORLD_BOX.xMax, WORLD_BOX.zMax,
       (x, z) => sampleHM(x, z),
       512,
-      (p) => this.ui.setLoad(0.90 + p * 0.03, '描上海岸與礁棚……'),
+      (p) => this.progress(0.90 + p * 0.03, '描上海岸與礁棚……'),
     );
     this.ocean = new Ocean(landTex, WORLD_BOX);
     this.scene.add(this.ocean.mesh);
 
-    this.ui.setLoad(0.94, '砌石田埂、地下屋與拼板舟……');
+    this.progress(0.94, '砌石田埂、地下屋與拼板舟……');
     await yieldToUi(true);
     this.terraces = new TaroTerraces(this.island.flora);
     this.scene.add(this.terraces.group);
@@ -402,6 +519,8 @@ export class Game {
 
     this.decor = new WorldDecor(this.assets, this.places);
     this.scene.add(this.decor.group);
+    // 0.1.4: the parked plane and the moored yacht (own objects, static for now)
+    this.scene.add(buildArrivalProps());
 
     this.post = new PostFX(this.renderer, this.scene, this.camera);
     this.applyAtmosphere();
@@ -436,6 +555,7 @@ export class Game {
     );
     // M5: every finished step's glossary / toast, also auto steps finished inside refresh()
     this.quests.onGives = (g) => {
+      if (g.items?.length) sfxSting('item'); // 0.1.4 sound: item collection
       if (g.glossary?.length) {
         const fresh = this.state.unlock(this.state.glossary, g.glossary);
         if (fresh.length) this.ui.toast('族語詞卡', `學會 ${fresh.length} 個新詞，已寫進手札。`);
@@ -462,11 +582,157 @@ export class Game {
   }
 
   /**
+   * 0.1.4: the 搭飛機／搭船 ride in. The painted intro plays (title music + logo) while the island loads
+   * (loading bar, lower left). The logo fades first; then the plane banks toward the island or the yacht drives
+   * out of frame, the shot fades, the notebook opens on 抵達蘭嶼 and stamps it complete, and the game starts.
+   */
+  private playArrival(id: PlayableOrigin, gender: Gender, way: ArrivalWay): void {
+    if (this.arrival) return;
+    // the menu loop hands over to the title's epic opening on its next bar line; the logo comes in with it
+    const logoAt = segueToTitle();
+    const minEnd = logoAt + Math.max(6, titleIntroSeconds());
+    this.arrival = { phase: 'intro', t0: performance.now(), id, gender, way, last: 0, logoAt, minEnd, logoOutAt: null, skip: false, tA: 0 };
+    if (!this.intro) {
+      // (only when the opening is re-run without its backdrop, e.g. a test after a game start)
+      this.intro = new IntroScene(window.innerWidth / window.innerHeight);
+      void this.intro.load().then(() => this.intro?.setMode(way));
+    } else this.intro.setMode(way);
+    this.ui.showArrivalIntro(way);
+    this.ui.setArrivalLoad(this.loadP, this.worldReady);
+    void this.loadWorld((p, label) => {
+      this.loadP = p;
+      this.loadLabel = label;
+    });
+  }
+
+  /** one frame of the painted ride (wall-clock time, so it lasts the same on a slow phone) */
+  private introFrame(): void {
+    const a = this.arrival;
+    if (a && a.phase === 'intro') {
+      const t = (performance.now() - a.t0) / 1000;
+      a.last = t;
+      if (this.worldReady && a.skip) {
+        this.endArrival();
+        return;
+      }
+      if (this.worldReady && t >= a.minEnd && a.logoOutAt === null) a.logoOutAt = t;
+      // (the plane's cloud burst is painted in the intro scene itself: no DOM wash)
+      this.ui.setArrivalProgress(0, t >= a.logoAt && a.logoOutAt === null, 0);
+      this.ui.setArrivalLoad(this.worldReady ? 1 : this.loadP, this.worldReady, a.skip);
+      // logo fading → the plane banks / the yacht drives off → fade → notebook
+      if (a.logoOutAt !== null && t >= a.logoOutAt + 0.6 && this.intro && !this.intro.pushing) this.intro.startFinale();
+      if (a.logoOutAt !== null && (this.intro ? this.intro.finished : t >= a.logoOutAt + 1.1)) {
+        this.startNotebook();
+        return;
+      }
+    }
+    this.intro?.render(this.renderer);
+  }
+
+  private memSnapshot(): Record<string, number> {
+    const m = this.renderer.info.memory;
+    const pm = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory;
+    return { geometries: m.geometries, textures: m.textures, programs: this.renderer.info.programs?.length ?? 0, heapMB: pm ? +(pm.usedJSHeapSize / 1048576).toFixed(1) : -1 };
+  }
+
+  /** drop the painted intro scene completely (geometry, materials, textures; it renders straight to the canvas,
+   * so there is no render target of its own) */
+  private disposeIntro(): void {
+    if (!this.intro) return;
+    this.introMem.before = this.memSnapshot();
+    this.intro.dispose();
+    this.intro = null;
+    this.renderer.renderLists.dispose();
+    this.introMem.after = this.memSnapshot();
+  }
+
+  /** the painted ride has faded: spawn at the start, open the quest log, stamp 抵達蘭嶼 */
+  private startNotebook(): void {
+    const a = this.arrival;
+    if (!a || a.phase === 'notebook') return;
+    this.ui.arrivalCut();
+    this.disposeIntro();
+    if (this.arrivalPeriod === null) this.arrivalPeriod = this.state.period;
+    this.begin(a.id, a.gender, 't', a.way, true);
+    this.coverHold = true;
+    a.phase = 'notebook';
+    a.tA = performance.now();
+    a.stamped = false;
+    this.ui.openJournalTab('quests');
+    this.ui.hideArrivalIntro();
+  }
+
+  /** one frame of the arrival notebook beat */
+  private notebookFrame(): void {
+    const a = this.arrival;
+    if (!a || a.phase !== 'notebook') return;
+    const t = (performance.now() - a.tA) / 1000;
+    if (!a.stamped && t >= 0.45) {
+      a.stamped = true;
+      this.ui.stampQuestDone('Q01');
+    }
+    if (a.skip && t >= 0.2) {
+      this.finishNotebook();
+      return;
+    }
+    if (t >= 2.5) this.finishNotebook();
+  }
+
+  /** close the notebook and play Q01's arrival lines (culture statement + scooter-rental guidance) */
+  private finishNotebook(): void {
+    const a = this.arrival;
+    if (!a) return;
+    this.setOverlay('journal', false);
+    this.arrival = null;
+    if (this.arrivalPeriod !== null) {
+      this.state.period = this.arrivalPeriod;
+      this.arrivalPeriod = null;
+      this.applyAtmosphere();
+    }
+    this.camFy = null;
+    this.coverHold = false;
+    this.ui.hideArrivalIntro();
+    const q1 = this.quests.get('Q01');
+    const st = q1 ? this.quests.step(q1) : null;
+    if (q1 && st) this.runStep(q1, st, null);
+    this.questDirty = true;
+    this.saveNow();
+    this.input.consumeInteract();
+  }
+
+  /** skip: while loading, wait; during the painted ride, jump to the notebook; during the notebook, start the game */
+  private endArrival(): void {
+    const a = this.arrival;
+    if (!a) return;
+    if (a.phase === 'notebook') {
+      this.finishNotebook();
+      return;
+    }
+    if (!this.worldReady) {
+      a.skip = true;
+      return;
+    }
+    this.startNotebook();
+  }
+
+    /** 繼續旅程 with the intro on: the island may not be loaded yet */
+  private async continueSaved(): Promise<void> {
+    const sv = readSave();
+    if (!sv) return;
+    if (!this.worldReady) {
+      this.ui.showBootLoading();
+      await this.loadWorld((p, label) => this.ui.setLoad(p, label));
+    }
+    this.disposeIntro();
+    this.resume(sv);
+  }
+
+  /**
    * New game. The party is fixed (族男 + 族女 + traveller); `id` is the 族人 home village (主人家).
    * `lead` = who is controlled first (the UI starts with the traveller). Debug / older scripts:
    * selectOrigin('visitor', g) → traveller lead; selectOrigin(village, g) → 族男 / 族女 lead by g.
    */
-  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, lead?: Role): void {
+  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, lead?: Role, way: ArrivalWay = 'boat', holdTalk = false): void {
     const T = this.content.text;
     try {
       const home = id === 'visitor' ? 'yayo' : id;
@@ -477,14 +743,16 @@ export class Game {
       Object.assign(this.state, new GameState(), { lang: this.state.lang, period: this.state.period, season: this.state.season });
       this.state.gender = gender === 'f' ? 'f' : 'm';
       this.state.origin = home;
+      this.state.arrival = way === 'plane' ? 'plane' : 'boat';
       this.state.started = true;
       this.setHostPlaces(home);
-      this.state.unlockMilestone('arrive');
-      // the whole party lands together at 開元港 (Q01; plane / boat cut-scenes come in Phase 3)
-      const hp = this.places.harbor;
+      if (this.state.unlockMilestone('arrive')) sfxSting('milestone');
+      // 0.1.4: the whole party starts where it arrived: 開元港 (boat) or beside the 蘭嶼機場 runway (plane)
+      const sp = arrivalSpawn(this.state.arrival, this.places.harbor);
+      this.player.group.visible = true;
       this.player.setScooter(false);
-      this.player.spawn(hp.x + 1.6, hp.z + 1.2);
-      this.player.yaw = Math.PI * 0.5;
+      this.player.spawn(sp.x, sp.z);
+      this.player.yaw = sp.yaw;
       this.party.setup(this.assets, this.partyOutfits(), controlled, this.player);
       this.party.group.visible = true;
       this.player.setOutfit(this.assets, this.roleOutfit(controlled));
@@ -498,14 +766,17 @@ export class Game {
       this.ui.hideOverlaysStart();
       this.quests.reset();
       this.quests.flags.add('party_created');
+      this.quests.flags.add(`arrived_${this.state.arrival}`); // Q01's lines (StepLine.if) follow the choice
       this.memberKey = {};
       this.syncStay(false);
       this.syncQuestCtx();
       this.quests.refresh();
       this.refreshPartyUi();
-      const q1 = this.quests.get('Q01');
-      const st = q1 ? this.quests.step(q1) : null;
-      if (q1 && st) this.runStep(q1, st, null);
+      if (!holdTalk) {
+        const q1 = this.quests.get('Q01');
+        const st = q1 ? this.quests.step(q1) : null;
+        if (q1 && st) this.runStep(q1, st, null);
+      }
       this.questDirty = true;
       this.saveNow();
     } catch (err) {
@@ -527,8 +798,13 @@ export class Game {
       this.quests.load(sv.quests);
       this.setHostPlaces(this.state.origin && this.places[this.state.origin] ? this.state.origin : 'yayo');
       const c: Role = ROLES.includes(sv.party.controlled) ? sv.party.controlled : 't';
-      const pos = sv.party.pos ?? ({} as SaveJSON['party']['pos']);
+      const pos0 = sv.party.pos ?? ({} as SaveJSON['party']['pos']);
+      // 0.1.4: a save from the old oval island keeps each member near the same village on the new map
+      const pos = (sv.world ?? 1) < WORLD_REV
+        ? (Object.fromEntries(Object.entries(pos0).map(([r, p]) => [r, p ? remapSavePos(p.x, p.z) : p])) as SaveJSON['party']['pos'])
+        : pos0;
       const me = pos[c] ?? { x: this.places.harbor.x, z: this.places.harbor.z };
+      this.player.group.visible = true;
       this.player.setScooter(false);
       this.player.spawn(me.x, me.z);
       this.party.setup(this.assets, this.partyOutfits(), c, this.player, pos);
@@ -605,6 +881,8 @@ export class Game {
     this.sky.apply(p, s, this.scene);
     const pre = PRESETS[p];
     this.ocean.apply(pre, p, s);
+    // 0.1.5: character / boat sprite shadows face the same sun as the rest of the scene
+    setSpriteSunYaw(Math.atan2(pre.sunDir.x, pre.sunDir.z));
     this.island.setSeason(s);
     this.decor.applyTime(p, s);
     this.terraces.apply({ zenith: pre.zenith, horizon: pre.horizon, sunDir: pre.sunDir, sunColor: pre.sunColor, night: p === 'night' ? 1 : p === 'dusk' ? 0.5 : 0 });
@@ -634,7 +912,10 @@ export class Game {
   }
 
   private maybeMilestone(id: string, title: string, body: string): void {
-    if (this.state.unlockMilestone(id)) this.ui.toast(title, body);
+    if (this.state.unlockMilestone(id)) {
+      sfxSting('milestone');
+      this.ui.toast(title, body);
+    }
   }
 
   private applyUnlocks(u?: DialogueUnlocks): void {
@@ -680,6 +961,7 @@ export class Game {
     if (this.dlgQueue.length) this.showCurrentLine();
     else {
       this.ui.closeDialogue();
+      this.audioSceneQuest = null; // audio scene ends with its dialogue
       if (this.activity === 'dialogue') this.activity = 'explore';
       const cb = this.afterDialogue;
       this.afterDialogue = null;
@@ -1182,7 +1464,7 @@ export class Game {
   }
 
   private toDlg(lines: StepLine[], npc: NpcActor | null): DlgLine[] {
-    return lines.map((l) => ({ ...this.speaker(l.who, npc), zh: l.zh, tao: l.tao ?? '' }));
+    return lines.filter((l) => !l.if || this.quests.flags.has(l.if)).map((l) => ({ ...this.speaker(l.who, npc), zh: l.zh, tao: l.tao ?? '' }));
   }
 
   private openQueue(lines: DlgLine[], after?: () => void): void {
@@ -1193,6 +1475,7 @@ export class Game {
 
   /** run a step's dialogue, then complete it (extra lines: Tao hints / translations said in the same talk) */
   private runStep(q: QuestDef, st: QuestStep, npc: NpcActor | null, extra: DlgLine[] = [], onDone?: () => void, sub = -1): void {
+    this.audioSceneQuest = q.id; // 0.1.4 audio: manifest decides whether this scene is cultural
     const lines = [...this.toDlg(st.lines ?? [], npc), ...extra];
     const idx = this.quests.active.get(q.id);
     const finish = (): void => {
@@ -1225,8 +1508,11 @@ export class Game {
     if (!ev.length) return;
     this.questDirty = true;
     if (silent) return;
-    for (const e of ev) if (e.type === 'done') this.ui.toast('任務完成', `${e.q.id}｜${e.q.name.zh}`);
-    const fresh = ev.filter((e) => e.type === 'unlock').map((e) => e.q);
+    for (const e of ev) if (e.type === 'done' && !e.q.silent && e.q.playable) {
+      sfxSting('quest');
+      this.ui.toast('任務完成', `${e.q.id}｜${e.q.name.zh}`);
+    }
+    const fresh = ev.filter((e) => e.type === 'unlock' && !e.q.silent).map((e) => e.q);
     const hidden = fresh.filter((q) => q.hidden);
     for (const q of hidden) this.ui.toast('發現隱藏任務', `${q.id}｜${q.name.zh}`);
     const open = fresh.filter((q) => !q.hidden);
@@ -1250,6 +1536,8 @@ export class Game {
       if (away.length && away.length === roles.length) return `${away.map((r) => `${ROLE_ZH[r]}${this.memberStatus(r)}`).join('；')}，暫時不能做這件事。`;
     }
     for (const r of st.requires ?? []) if (E.members[r].st !== 'party') return `${ROLE_ZH[r]}還沒回隊（${this.memberStatus(r)}）。`;
+    const dress = this.outfitHint(q);
+    if (dress) return dress;
     if (!this.quests.canAct(st, q, role)) return `這件事要請${(st.actor ?? q.roles).map((r) => ROLE_ZH[r]).join('或')}來做。`;
     const w = this.questWindow(q);
     if (!w.ok) return `${w.why}再來吧。`;
@@ -1266,6 +1554,17 @@ export class Game {
     }
     if (st.translate && !this.untranslated().length) return '還沒有聽到只說族語的提示。';
     return null;
+  }
+
+  /**
+   * 0.1.4: festivals, boat fishing and tribal events start only in Tao clothing (quest requiresOutfit);
+   * a friendly zh-TW hint naming who changes into what, or null
+   */
+  private outfitHint(q: QuestDef): string | null {
+    const miss = this.quests.outfitMissing(q);
+    if (!miss.length) return null;
+    const who = miss.map((m) => `${ROLE_ZH[m.role]}換上${this.outfits.defs.find((d) => d.id === m.outfit)?.name.zh ?? '傳統服飾'}`).join('、');
+    return `這是族人的活動，要穿傳統服飾參加：請先讓${who}（手札 → 背包），再來開始。`;
   }
 
   /** members of `need` (role sets, e.g. ['t', 'mf']) that are not within reach of the controlled member */
@@ -1451,6 +1750,7 @@ export class Game {
   }
 
   private useQuestSpot(q: QuestDef, st: QuestStep, sub = -1): void {
+    this.audioSceneQuest = q.id; // 0.1.4 audio: also cover a mini-game before its dialogue
     if (st.kind === 'photo' && this.party.controlled !== 't') {
       this.ui.toast('只有旅人能拍照', '點左上角的旅人頭像（或按 3）再來拍。');
       return;
@@ -1474,15 +1774,62 @@ export class Game {
     }
     if (st.minigame) {
       // sea trip: board the tatala, play the timing game; success finishes the step, a miss can be retried (or given up)
-      if (st.canoe) this.setCanoe(true);
-      this.startMinigame(st.minigame, (ok) => {
-        if (st.canoe && this.player.mode === 'canoe') this.setCanoe(false);
-        if (ok) this.runStep(q, st, null, [], undefined, sub);
-        else this.ui.toast(q.name.zh, this.quests.solo ? '沒抓到時機。再試一次，或按「放棄出海」回岸邊和大家會合。' : '沒抓到時機，再試一次。');
-      });
+      if (st.canoe) {
+        // 0.1.4 (Larry): only Tao men paddle a tatala; 族女 / 旅人 take a modern canoe (canoeKind "modern")
+        const modern = st.canoeKind === 'modern';
+        if (!modern && !this.tatalaRoles().includes(this.party.controlled)) {
+          this.ui.toast(q.name.zh, `拼板舟（tatala）由族裡的男人划。${ROLE_ZH[this.party.controlled]}可以在港邊租一艘現代獨木舟，在岸邊附近划划看。`);
+          return;
+        }
+        // a tatala (or an already-loaded modern sheet) boards at once, so the step runs in the same tick as before
+        if (!modern || this.modernHullReady()) {
+          this.player.setCanoeHull(this.assets, modern);
+          this.setCanoe(true);
+          this.startSeaGame(q, st, sub);
+        } else void this.boardCanoe(modern).then(() => this.startSeaGame(q, st, sub));
+        return;
+      }
+      this.startSeaGame(q, st, sub);
       return;
     }
     this.runStep(q, st, null, [], undefined, sub);
+  }
+
+  /** 0.1.4: who may paddle a tatala (content/meta.json tatalaRoles, default 族男 only; open it later in data) */
+  private tatalaRoles(): Role[] {
+    const r = (this.db.meta as { tatalaRoles?: Role[] }).tatalaRoles;
+    return Array.isArray(r) && r.length ? r : ['m'];
+  }
+
+  /** board a tatala, or a plain modern canoe (its sheet is loaded on demand) */
+  private async boardCanoe(modern: boolean): Promise<void> {
+    await this.loadCanoeHull(modern);
+    this.setCanoe(true);
+  }
+
+  /** the modern canoe sheet for the current outfit (or its base) is already in memory */
+  private modernHullReady(): boolean {
+    const kind = this.player.outfit;
+    return this.assets.textures.has(`characters/canoe_modern_${kind}_sheet.png`) || this.assets.textures.has(`characters/canoe_modern_${Outfits.base(kind)}_sheet.png`);
+  }
+
+  private async loadCanoeHull(modern: boolean): Promise<void> {
+    if (modern) {
+      const kind = this.player.outfit;
+      for (const rel of [`characters/canoe_modern_${kind}_sheet.png`, `characters/canoe_modern_${Outfits.base(kind)}_sheet.png`]) {
+        if (this.assets.textures.has(rel)) break;
+        try { await this.assets.acquire(rel); break; } catch { /* try the base outfit's */ }
+      }
+    }
+    this.player.setCanoeHull(this.assets, modern);
+  }
+
+  private startSeaGame(q: QuestDef, st: QuestStep, sub: number): void {
+    this.startMinigame(st.minigame!, (ok) => {
+      if (st.canoe && this.player.mode === 'canoe') this.setCanoe(false);
+      if (ok) this.runStep(q, st, null, [], undefined, sub);
+      else this.ui.toast(q.name.zh, this.quests.solo ? '沒抓到時機。再試一次，或按「放棄出海」回岸邊和大家會合。' : '沒抓到時機，再試一次。');
+    });
   }
 
   // ------------------------------------------------------------------ recipes: ingredients from gathering / shop / mini-games
@@ -1531,6 +1878,7 @@ export class Game {
 
   private addIngredient(id: string, n = 1, how = ''): void {
     this.inv.add(id, n);
+    if (n > 0) sfxSting('item');
     if (this.db.items.get(id)?.category === 'ingredient') this.state.unlock(this.state.ingredients, [id]);
     const cat = this.db.items.get(id)?.category === 'ingredient' ? '食材' : '物品';
     this.ui.toast(`${cat}＋${n}`, `${this.inv.name(id)}${how ? `（${how}）` : ''}｜背包裡有 ${this.inv.count(id)} 份`);
@@ -1612,7 +1960,7 @@ export class Game {
     const cur = this.quests.current();
     for (const q of this.quests.defs) {
       const status = this.quests.status(q);
-      if (status === 'hidden') continue;
+      if (status === 'hidden' || q.silent) continue;
       const st = this.quests.step(q);
       const blocks: string[] = [];
       if (status === 'active' && st && q.playable) {
@@ -1620,6 +1968,8 @@ export class Game {
         if (!w.ok) blocks.push(`現在不行：${w.why}`);
         const mi = this.quests.missingItem(q);
         if (mi) blocks.push(`需要道具：${mi.zh}（${mi.from} 可以取得）`);
+        const dress = this.quests.outfitMissing(q);
+        if (dress.length) blocks.push(`要穿傳統服飾：${dress.map((m) => `${ROLE_ZH[m.role]}換上${this.outfits.defs.find((d) => d.id === m.outfit)?.name.zh ?? '傳統服飾'}`).join('、')}（手札 → 背包）`);
         const roles = st.actor ?? q.roles;
         const away = roles.filter((r) => this.quests.memberBlock(r));
         if (away.length && away.length === roles.length) blocks.push(`成員離隊：${away.map((r) => `${ROLE_ZH[r]}${this.memberStatus(r)}`).join('；')}`);
@@ -1653,7 +2003,7 @@ export class Game {
         progress: prog ? `${prog.have}/${prog.need}` : '',
         blocks,
         hint,
-        placeholder: !q.playable,
+        placeholder: !q.playable && q.id !== 'Q01',
         tracked: cur?.id === q.id,
         ground: q.ground === 'fishing' ? '漁場（依傳統由族男出海）' : q.ground === 'dive' ? '潛點（觀光休閒，誰都能去）' : undefined,
         giver: q.giver ? `${this.db.meta.giverLabels?.[q.giver] ?? (q.giver === 'f' ? '女性長輩交辦、驗收' : '男性長輩交辦、驗收')}（${this.npcs.byId(this.giverId(q))?.def.name.zh ?? ''}）` : undefined,
@@ -1829,6 +2179,7 @@ export class Game {
       v: 1,
       savedAt: Date.now(),
       contentRev: this.questRev(),
+      world: WORLD_REV,
       state: this.state.toJSON(),
       party: { controlled: this.party.controlled, pos: this.party.positions(this.player), scooter: this.player.scooter },
       quests: this.quests.toJSON(),
@@ -1938,14 +2289,23 @@ export class Game {
     const dt = Math.min(this.clock.getDelta(), 0.05);
     const t = this.clock.elapsedTime;
     this.input.beginFrame();
+    // 0.1.4: title / party / arrival screens and the painted ride run on the light intro scene
+    if (this.intro && !this.state.started && (!this.arrival || this.arrival.phase === 'intro')) {
+      this.input.consumeInteract();
+      this.input.consumeDrag();
+      this.renderer.setRenderTarget(null);
+      this.introFrame();
+      return;
+    }
 
     // one interact edge per frame, routed by mode
     const pressed = this.input.consumeInteract();
     const mode = this.mode;
     if (pressed) {
       if (mode === 'explore') this.tryInteract();
-      else if (mode === 'dialogue') this.advanceDialogue();
-      else if (mode === 'minigame') this.hitMinigame();
+      else if (mode === 'dialogue') {
+        if (!this.ui.finishTyping()) this.advanceDialogue(); // 0.1.4: first press shows the rest of a typing line
+      } else if (mode === 'minigame') this.hitMinigame();
     }
 
     const blocked = !this.state.started || this.isModalOpen();
@@ -1956,11 +2316,13 @@ export class Game {
     this.updateCharacterTint(dt);
     this.decor.update(dt, this.camera, t, this.state.season === 'rayon' || this.state.season === 'meyvanwa');
     this.ocean.update(t, this.scene.fog as THREE.Fog);
+    reflectHooks.sprites = !this.diveOpen; // no sprite reflections while the underwater view is up
     this.terraces.update(t, this.scene.fog as THREE.Fog);
     this.island.flora.update(t);
     this.sky.update(t);
 
-    if (!this.state.started && !this.coverHold) this.camYaw += dt * 0.035;
+    if (this.arrival?.phase === 'notebook') this.notebookFrame();
+    else if (!this.state.started && !this.coverHold) this.camYaw += dt * 0.035;
     const drag = this.input.consumeDrag();
     this.camYaw -= drag.dx * 0.005;
     this.camPitch = clamp(this.camPitch - drag.dy * 0.004, 0.2, 1.35);
@@ -1973,7 +2335,7 @@ export class Game {
 
     const fx = this.focus ? this.focus.x : this.player.x;
     const fz = this.focus ? this.focus.z : this.player.z;
-    const fy = Math.max(0, this.island.heightAt(fx, fz)) + 1.1;
+    const fy = this.camFy ?? Math.max(0, this.island.heightAt(fx, fz)) + 1.1;
     // smooth, slightly springy Octopath-style orbit
     const k = this.snapCam ? 1 : 1 - Math.exp(-dt * 6);
     this.snapCam = false;
@@ -2002,7 +2364,8 @@ export class Game {
     // tilt-shift: stronger when close (diorama feel), lighter on wide shots
     // closest zoom is for looking at detail: widen the sharp band and soften the blur so the ground near the party stays crisp
     const near = this.groundFx ? 1 - THREE.MathUtils.smoothstep(c.dist, 17, 26) : 0;
-    this.post.setTilt(((c.dist < 30 ? 2.4 : c.dist < 60 ? 1.6 : 1.0) - near * 0.9) * (worldStyle() === 'watercolor' ? PAINT.tiltShift : 1), 0.5, (c.dist < 30 ? 0.2 : 0.26) + near * 0.08);
+    if (this.arrival) this.post.setTilt(0.5, 0.5, 0.34); // the arrival shot is a POV, not a diorama
+    else this.post.setTilt(((c.dist < 30 ? 2.4 : c.dist < 60 ? 1.6 : 1.0) - near * 0.9) * (worldStyle() === 'watercolor' ? PAINT.tiltShift : 1), 0.5, (c.dist < 30 ? 0.2 : 0.26) + near * 0.08);
 
     this.ui.setPrompt(this.nearestPrompt());
     if (this.state.started) this.questFrame(dt);
@@ -2043,6 +2406,7 @@ export class Game {
     this.renderer.setPixelRatio(preferredPixelRatio());
     this.renderer.setSize(w, h);
     this.post?.setSize(w, h);
+    this.intro?.resize(w / h);
     this.labelRenderer.setSize(w, h);
   }
 
@@ -2125,7 +2489,37 @@ export class Game {
       ready: true,
       state: this.state,
       timings: this.timings,
-      selectOrigin: (id: PlayableOrigin, gender?: Gender) => this.begin(id, gender),
+      selectOrigin: (id: PlayableOrigin, gender?: Gender, way?: ArrivalWay) => this.begin(id, gender, undefined, way),
+      /** 0.1.4 arrival opening: state of the cut-scene, and skip / play hooks */
+      arrival: () => ({
+        playing: !!this.arrival,
+        way: this.arrival?.way ?? null,
+        phase: this.arrival?.phase ?? null,
+        t: this.arrival ? (performance.now() - this.arrival.t0) / 1000 : 0,
+        tA: this.arrival ? (performance.now() - this.arrival.tA) / 1000 : 0,
+        logoAt: this.arrival?.logoAt ?? 0,
+        minEnd: this.arrival?.minEnd ?? 0,
+        logoOut: this.arrival?.logoOutAt ?? null,
+        skip: this.arrival?.skip ?? false,
+        worldReady: this.worldReady,
+        load: this.loadP,
+        loadLabel: this.loadLabel,
+        introScene: !!this.intro,
+        introMode: this.intro?.mode ?? null,
+        introPose: this.intro ? { ...this.intro.pose } : null,
+        saved: this.state.arrival,
+        screen: (['title', 'origin', 'arrival', 'intro'] as const).find((k) => this.ui.screenShown(k)) ?? null,
+        introEnabled: introEnabled(),
+      }),
+      playArrival: (id: PlayableOrigin, gender: Gender, way: ArrivalWay) => this.playArrival(id, gender, way),
+      skipArrival: () => this.endArrival(),
+      /** 0.1.4 intro scene memory: renderer geometries / textures / programs and JS heap, before and after dispose */
+      introMemory: () => ({ ...this.introMem, now: this.memSnapshot() }),
+      /** jump the painted ride to t seconds (screenshots) */
+      seekIntro: (t: number) => this.intro?.seek(t),
+      seekFinale: (t: number) => this.intro?.seekFinale(t),
+      /** 0.1.4: where the parked plane and the moored yacht stand (their collision boxes) */
+      arrivalProps: () => { const f = facilityBoxes(); return { plane: f[2], yacht: f[3] }; },
       outfit: () => this.playerOutfit(),
       /** shade-zone coverage (0 sun … 1 shade) and the current sprite tint, for verify scripts */
       shadeAt: (x: number, z: number) => shadeAt(x, z),
@@ -2153,7 +2547,14 @@ export class Game {
         if (this.state.started) this.player.setOutfit(this.assets, this.playerOutfit());
       },
       /** tatala pose: board at the nearest water to (x, z) / the player, or step ashore */
-      setCanoe: (on: boolean, x?: number, z?: number) => this.setCanoe(on, x !== undefined && z !== undefined ? { x, z } : undefined),
+      /** board / leave; 族女 / 旅人 (or `modern: true`) get the modern canoe, like the quest steps (0.1.4) */
+      setCanoe: async (on: boolean, x?: number, z?: number, modern?: boolean) => {
+        const at = x !== undefined && z !== undefined ? { x, z } : undefined;
+        if (on) await this.loadCanoeHull(modern ?? !this.tatalaRoles().includes(this.party.controlled));
+        return this.setCanoe(on, at);
+      },
+      /** 0.1.4: what the controlled member's canoe sprite shows (8-way check, tatala rule) */
+      canoeLook: () => ({ modern: this.player.canoeModern, eight: this.player.canoeSprite.eight, rows: this.player.canoeSprite.rows, dir: this.player.canoeSprite.dir }),
       playerMode: (): PlayerMode => this.player.mode,
       portrait: () => this.protagonistPortrait(),
       mode: () => this.mode,
@@ -2181,7 +2582,7 @@ export class Game {
       },
       places: this.places,
       /** sheet row the controlled character shows (0.1.1 facing check) */
-      facing: () => ({ dir: this.player.active.dir, yaw: this.player.yaw, mode: this.player.mode, walking: this.player.active.walking }),
+      facing: () => ({ dir: this.player.active.dir, yaw: this.player.yaw, mode: this.player.mode, walking: this.player.active.walking, eight: this.player.active.eight, rows: this.player.active.rows }),
       /** flora billboards within r of a road centreline (0.1.1 road audit; grass / flowers listed separately) */
       roadFlora: (r = 1.5) => {
         const out: Record<string, number> = {};
@@ -2256,6 +2657,10 @@ export class Game {
       fishTalk: () => this.handleFish(),
       frame: () => this.frameNo,
       dialogueLeft: () => this.dlgQueue.length,
+      /** 0.1.4: the open dialogue (speaker + zh), the quest-log ids and the tracked quest (arrival test) */
+      dialogueQueue: () => this.dlgQueue.map((l) => ({ who: l.who, zh: l.zh })),
+      questLogIds: () => this.questCards().map((c) => c.id),
+      trackedQuest: () => this.quests.current()?.id ?? null,
       resetInput: () => this.input.resetHeld(),
       lightsVisible: () => this.decor.lightsVisibleCount(),
       showHelp: (auto = false) => this.ui.showHelp(auto),

@@ -1,0 +1,90 @@
+{
+ "_note": "Digital Painter's yacht set (art-ref/arrival/layers25d/yacht, README.md there): 3072x1440 world layers = a 2560 frame + 256 px overscan; spray and bow deck are 2560 wide, camera-locked at x 256. parallax = the README's factors; 05_sea_mist is drawn between sea_far and sea_mid as the README asks. Island: real terrain at 1.5× vertical exaggeration (Larry; Digital Painter promoted 01_lanyu_x1.5.png to canonical 01_lanyu.png, top y≈436). build-intro25d.py still accepts the _x1.5 name if it reappears. target = 開元港 / 椰油 on the shoreline right of centre (x 2430-2600), focus = what phones centre on, sun and horizon (y 675) from the composite. The three spray files are frames of one spray layer (cross-faded).",
+ "size": [
+  3072,
+  1440
+ ],
+ "frame": [
+  256,
+  2560
+ ],
+ "target": [
+  0.819,
+  0.466
+ ],
+ "focus": [
+  0.7,
+  0.45
+ ],
+ "horizon": 0.469,
+ "sun": [
+  0.193,
+  0.321
+ ],
+ "layers": [
+  {
+   "file": "00_sky.png",
+   "kind": "plate",
+   "parallax": 0.0
+  },
+  {
+   "file": "01_lanyu.png",
+   "kind": "island",
+   "parallax": 0.03
+  },
+  {
+   "file": "02_sea_far.png",
+   "kind": "sea",
+   "parallax": 0.1
+  },
+  {
+   "file": "05_sea_mist.png",
+   "kind": "mist",
+   "parallax": 0.1,
+   "drift": 0.0016,
+   "far": true,
+   "painted": true
+  },
+  {
+   "file": "03_sea_mid.png",
+   "kind": "sea",
+   "parallax": 0.4
+  },
+  {
+   "file": "04_sea_near.png",
+   "kind": "sea",
+   "parallax": 1.0,
+   "swell": 6
+  },
+  {
+   "file": "06_spray_a.png",
+   "kind": "spray",
+   "offset": [
+    256,
+    0
+   ],
+   "frames": [
+    "06_spray_a.png",
+    "07_spray_b.png",
+    "08_spray_c.png"
+   ]
+  },
+  {
+   "file": "09_bow_deck.png",
+   "kind": "overlay",
+   "offset": [
+    256,
+    0
+   ],
+   "anchor": [
+    0.33,
+    1.0
+   ],
+   "screen": [
+    0.5,
+    1.0
+   ],
+   "still": true
+  }
+ ]
+}

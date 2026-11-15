@@ -240,6 +240,9 @@
         "tier": "direct",
         "from": "漁人",
         "zh": "飛魚季時，漁人的長輩會邀族男跟漁人的船組出海；只有族男能去。"
+      },
+      "requiresOutfit": {
+        "m": "outfit_m_tao"
       }
     },
     {

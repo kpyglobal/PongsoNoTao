@@ -135,6 +135,56 @@
       "detail": "家屋旁養的豬。",
       "category": "自然",
       "source": "何德華、董瑪女《達悟語：語料、參考語法、及詞彙》（暫定）"
+    },
+    {
+      "id": "v_yayo",
+      "tao": "Yayo",
+      "zh": "椰油（部落）",
+      "category": "地方",
+      "detail": "島的西岸，開元港旁的部落。"
+    },
+    {
+      "id": "v_iraraley",
+      "tao": "Iraraley",
+      "zh": "朗島（部落）",
+      "category": "地方",
+      "detail": "島的北岸的部落。"
+    },
+    {
+      "id": "v_iranmeylek",
+      "tao": "Iranmeylek",
+      "zh": "東清（部落）",
+      "category": "地方",
+      "detail": "島的東岸，面向東清灣的部落。"
+    },
+    {
+      "id": "v_ivalino",
+      "tao": "Ivalino",
+      "zh": "野銀（部落）",
+      "category": "地方",
+      "detail": "島的東南岸的部落，傳統家屋保留得很完整。"
+    },
+    {
+      "id": "v_imorod",
+      "tao": "Imorod",
+      "zh": "紅頭（部落）",
+      "category": "地方",
+      "detail": "島的西南岸的部落，衛生所在這一帶。"
+    },
+    {
+      "id": "v_iratay",
+      "tao": "Iratay",
+      "zh": "漁人（部落）",
+      "category": "地方",
+      "detail": "島的西岸，機場旁的部落。"
+    },
+    {
+      "id": "kagling",
+      "tao": "kagling",
+      "zh": "羊",
+      "category": "自然",
+      "detail": "山上和路邊常見的羊。每家的羊，耳朵上有自己家的記號。",
+      "review": "待族人確認：寫法與是否只指山羊"
     }
   ]
 }

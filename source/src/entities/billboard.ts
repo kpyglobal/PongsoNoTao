@@ -20,6 +20,27 @@ export function dirFromRelative(rel: number): Dir {
   return 'n';
 }
 
+/** 0.1.4: eight facings for the playable characters (sw = down-left … se = down-right, screen space) */
+export type Dir8 = Dir | 'sw' | 'nw' | 'ne' | 'se';
+
+export function dir8FromRelative(rel: number): Dir8 {
+  // same convention as dirFromRelative: 0 = toward the camera (s), +90° = screen-right (e), -90° = screen-left (w)
+  const a = ((rel + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
+  const k = Math.round((a * 180) / Math.PI / 45); // -4 … 4
+  return (['n', 'nw', 'w', 'sw', 's', 'se', 'e', 'ne', 'n'] as const)[k + 4];
+}
+
+/** sheet row of a facing: walk 8dir sheets put the diagonals in rows 8-11 (idle 12-15), ride / canoe in rows 4-7 */
+export function rowOf(dir: Dir8, pose: boolean, idle = false): number {
+  const c = DIRS.indexOf(dir as Dir);
+  if (c >= 0) return c + (idle ? 4 : 0);
+  const d = ['sw', 'nw', 'ne', 'se'].indexOf(dir);
+  return pose ? 4 + d : 8 + d + (idle ? 4 : 0);
+}
+
+/** character frames are 96 px tall: an `*_8dir` sheet is exactly twice the base sheet's height */
+const FRAME_PX = 96;
+
 /** Unlit sprites: cap luminance just under the bloom threshold (0.82) so white coats / rim pixels never glow like a specular hit. */
 const NO_SHINE_CAP = 0.78;
 function noShine(mat: THREE.MeshBasicMaterial): void {
@@ -65,6 +86,18 @@ export const OVERLAP_TINT = 0.85;
 export const OVERLAP_OPACITY = 0.6;
 const ALPHA_TEST = 0.55;
 
+/**
+ * 0.1.5 sun shadows for character sprites: every character billboard carries an invisible caster plane (same texture,
+ * same frame) turned to face the sun, so it drops a shadow into the scene's own shadow map: same direction, length,
+ * softness and colour as the shadows of buildings, palms and tatala, and it follows the time of day.
+ */
+let sunYaw = 0;
+const CASTER_RANGE2 = 34 * 34;
+/** horizontal sun azimuth (atan2(dx, dz) of the light direction); set once per frame by the game */
+export function setSpriteSunYaw(yaw: number): void {
+  sunYaw = yaw;
+}
+
 const IDLE_BREATH_PERIOD = 1.9; // s: ~0.95 s at rest, ~0.95 s inhaled
 const IDLE_BLINK_MIN = 2.5; // s between blinks
 const IDLE_BLINK_MAX = 6.0;
@@ -81,8 +114,14 @@ export class SpriteBillboard {
   facing = 0; // yaw, 0 = toward +Z (south)
   walking = false;
   frame = 0;
-  /** direction row last shown (s / w / n / e; debug + tests) */
-  dir: Dir = 's';
+  /** direction row last shown (s / w / n / e, plus sw / nw / ne / se on an 8dir sheet; debug + tests) */
+  dir: Dir8 = 's';
+  /** 0.1.4: the sheet carries the diagonal rows (`*_8dir_sheet.png`, player characters only) */
+  eight = false;
+  /** a pose sheet (scooter / canoe: no idle rows) */
+  private pose: boolean;
+  /** rows of the base (4-direction) sheet */
+  private baseRows: number;
   private acc = 0;
   kind: string;
   /** walk sheets with 8 rows carry idle rows 4-7 (s, w, n, e): [rest, inhale, blink, rest] */
@@ -109,15 +148,18 @@ export class SpriteBillboard {
     this.tex = tex;
     this.cols = opts.cols;
     this.rows = opts.rows;
+    this.baseRows = opts.rows;
+    this.pose = opts.rows < 8;
     this.worldH = opts.worldH;
     const r = opts.region;
+    if (!r) this.detectEight(tex);
     // UV window of the sheet (flipY texture: v grows upward, so the sheet's bottom edge is 1 - (y + h) / H)
     this.uv = r ? { u0: r.x / r.atlasW, v0: 1 - (r.y + r.h) / r.atlasH, uw: r.w / r.atlasW, vh: r.h / r.atlasH } : { u0: 0, v0: 0, uw: 1, vh: 1 };
     const sw = r ? r.w : tex.image?.width ?? 64;
     const sh = r ? r.h : tex.image?.height ?? 64;
-    this.worldW = opts.worldH * (sw / opts.cols) / (sh / opts.rows);
+    this.worldW = opts.worldH * (sw / opts.cols) / (sh / this.rows);
     this.kind = opts.kind ?? 'sprite';
-    this.hasIdle = opts.rows >= 8;
+    this.hasIdle = !this.pose;
     this.tex.repeat.set(this.uv.uw / this.cols, this.uv.vh / this.rows);
     this.setFrame(0, 0);
     this.tex.wrapS = this.tex.wrapT = THREE.ClampToEdgeWrapping;
@@ -138,29 +180,74 @@ export class SpriteBillboard {
     // sits on docks / plazas / slopes instead of sinking at its geometric center.
     if (feet) geo.translate(0, this.worldH * 0.5, 0);
     this.mesh = new THREE.Mesh(geo, mat);
+    // last time a camera pass actually drew this sprite: shadow / mirror passes only take sprites already on screen,
+    // so they never force texture uploads of lazily-shown NPC sheets (perf + memory)
+    // counted in this billboard's own updates (not wall time) so slow frames don't drop it
+    this.mesh.userData.fresh = false;
+    this.mesh.onBeforeRender = () => { this.seenTick = this.ticks; };
     this.mesh.castShadow = false;
     this.mesh.frustumCulled = true;
     if (feet) this.mesh.renderOrder = 2;
+    if (feet && opts.rows >= 4) this.addCaster(geo);
+  }
+
+  /** shadow-only plane: writes no colour / depth in the camera passes, only its alpha-tested silhouette into the shadow map */
+  private caster: THREE.Mesh | null = null;
+  private ticks = 0;
+  private seenTick = -1e9;
+  private addCaster(geo: THREE.BufferGeometry): void {
+    const m = new THREE.MeshBasicMaterial({ map: this.tex, alphaTest: ALPHA_TEST, colorWrite: false, depthWrite: false, side: THREE.DoubleSide });
+    // own geometry so the camera passes can draw it with an empty range (the shadow pass never calls onBeforeRender)
+    const g = geo.clone();
+    const c = new THREE.Mesh(g, m);
+    c.onBeforeRender = () => { g.drawRange.count = 0; };
+    c.onAfterRender = () => { g.drawRange.count = Infinity; };
+    c.castShadow = true;
+    c.receiveShadow = false;
+    c.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: this.tex, alphaTest: ALPHA_TEST, side: THREE.DoubleSide });
+    c.name = 'sprite-shadow-caster';
+    this.caster = c;
+    this.mesh.add(c);
   }
 
   /** free the GPU side: texture clone, plane geometry, material (NPC streaming) */
   dispose(): void {
     this.mesh.removeFromParent();
+    if (this.caster) {
+      (this.caster.material as THREE.Material).dispose();
+      this.caster.geometry.dispose();
+      this.caster.customDepthMaterial?.dispose();
+    }
     this.tex.dispose();
     this.mesh.geometry.dispose();
     (this.mesh.material as THREE.Material).dispose();
   }
 
-  /** swap to another sheet with the same grid (e.g. protagonist outfit) */
+  /** an `*_8dir` sheet (twice the base height) doubles the rows and turns on the diagonals */
+  private detectEight(tex: THREE.Texture): void {
+    const ih = (tex.image as { height?: number } | undefined)?.height;
+    this.eight = this.baseRows >= 4 && ih === this.baseRows * FRAME_PX * 2;
+    this.rows = this.eight ? this.baseRows * 2 : this.baseRows;
+  }
+
+  /** swap to another sheet with the same grid (e.g. protagonist outfit); 4- or 8-direction */
   swapSheet(tex: THREE.Texture): void {
     // swapped sheets are always whole single sheets (player outfits)
     this.uv = { u0: 0, v0: 0, uw: 1, vh: 1 };
+    this.detectEight(tex);
     tex.repeat.set(1 / this.cols, 1 / this.rows);
     tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
     tex.offset.copy(this.tex.offset);
     const mat = this.mesh.material as THREE.MeshBasicMaterial;
     mat.map = tex;
     mat.needsUpdate = true;
+    if (this.caster) {
+      const cm = this.caster.material as THREE.MeshBasicMaterial;
+      cm.map = tex;
+      cm.needsUpdate = true;
+      const dm = this.caster.customDepthMaterial as THREE.MeshDepthMaterial | undefined;
+      if (dm) { dm.map = tex; dm.needsUpdate = true; }
+    }
     this.tex.dispose();
     this.tex = tex;
   }
@@ -204,10 +291,14 @@ export class SpriteBillboard {
     this.tex.offset.set(u.u0 + (col / this.cols) * u.uw, u.v0 + (1 - (row + 1) / this.rows) * u.vh);
   }
 
-  setCell(dir: Dir, frame: number): void {
+  setCell(dir: Dir8, frame: number): void {
     this.dir = dir;
-    const row = DIRS.indexOf(dir);
-    this.setFrame(frame % this.cols, row);
+    this.setFrame(frame % this.cols, rowOf(dir, this.pose));
+  }
+
+  /** the facing to show: 8 ways on an 8dir sheet, else 4 (never mirrored: every facing has its own row) */
+  private facingDir(camYaw: number): Dir8 {
+    return this.eight ? dir8FromRelative(this.facing - camYaw) : dirFromRelative(this.facing - camYaw);
   }
 
   /** Returns the ground height it sampled so callers (blob shadows) can reuse it. */
@@ -223,6 +314,15 @@ export class SpriteBillboard {
     const cam = camera.position;
     const camYaw = Math.atan2(cam.x - p.x, cam.z - p.z);
     this.mesh.rotation.y = camYaw;
+    this.ticks++;
+    const fresh = this.ticks - this.seenTick < 45;
+    this.mesh.userData.fresh = fresh;
+    if (this.caster) {
+      this.caster.rotation.y = sunYaw - camYaw;
+      // perf: far sprites' shadows are a pixel or two; skip them in the shadow pass
+      const dx = cam.x - p.x, dz = cam.z - p.z;
+      this.caster.visible = dx * dx + dz * dz < CASTER_RANGE2 && fresh;
+    }
     if (animate && this.rows >= 4) {
       if (this.walking) {
         this.acc += dt * 7;
@@ -230,19 +330,19 @@ export class SpriteBillboard {
           this.acc -= 1;
           this.frame = (this.frame + 1) % this.cols;
         }
-        const dir = dirFromRelative(this.facing - camYaw);
+        const dir = this.facingDir(camYaw);
         this.setCell(dir, this.frame);
         return;
       }
       this.frame = 0;
       this.acc = 0;
-      const dir = dirFromRelative(this.facing - camYaw);
+      const dir = this.facingDir(camYaw);
       if (!this.hasIdle) {
         this.setCell(dir, 0);
         return;
       }
       this.dir = dir;
-      this.setFrame(this.idleFrame(dt), 4 + DIRS.indexOf(dir));
+      this.setFrame(this.idleFrame(dt), rowOf(dir, false, true));
     }
   }
 
@@ -302,7 +402,7 @@ export class BlobShadow {
     const mat = new THREE.MeshBasicMaterial({
       color: 0x000000,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0.18, // 0.1.5: contact shade only; the directional shadow comes from the sun (shadow-caster plane)
       depthWrite: false,
     });
     this.mesh = new THREE.Mesh(new THREE.CircleGeometry(1, 16), mat);

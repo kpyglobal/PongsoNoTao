@@ -1,3 +1,6 @@
+import { Typewriter } from './typewriter';
+import { sfxShutter } from '../systems/audio/sfx';
+import { menuSfx } from './menuSound';
 import { assetUrl } from '../core/paths';
 import type { Gender, GameState, LangMode } from '../core/state';
 import { PERIODS, SEASONS, type Period, type Season } from '../core/timeSeason';
@@ -47,6 +50,12 @@ export interface UiHooks {
   onSoloAbort?: () => void;
   /** origin screen: resume the autosave */
   onContinue: () => void;
+  /** 0.1.4 arrival screen: 搭飛機 or 搭船 picked */
+  onArrival: (way: 'plane' | 'boat') => void;
+  /** 0.1.4 arrival screen: back to the party screen */
+  onArrivalBack: () => void;
+  /** 0.1.4 arrival cut-scene: skip (tap / key) */
+  onArrivalSkip: () => void;
 }
 
 /** One party member button (HUD, top-left). */
@@ -93,6 +102,9 @@ export interface TrackerVM {
 }
 
 
+/** last button activated by a pointer (ghost-click guard in bindActivate) */
+let lastPointerActivate: { at: number; el: HTMLElement | null } = { at: 0, el: null };
+
 export class UI {
   root: HTMLElement;
   hooks!: UiHooks;
@@ -133,6 +145,52 @@ export class UI {
           <div class="loading-bar"><i id="load-fill"></i></div>
           <p class="load-label" id="load-label"></p>
         </div>
+      </div>
+      <div class="overlay-screen is-cover is-title" id="title-screen" style="display:none">
+        <div class="title-block">
+          <div class="masthead">
+            <div class="kicker">蘭嶼達悟 · 島嶼文化探索 RPG</div>
+            <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
+          </div>
+          <button type="button" class="btn-primary title-start" id="btn-title-start">點一下開始</button>
+          <p class="title-note">會播放音樂，可以在遊戲裡按 ♪ 調整音量。</p>
+        </div>
+        <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。</p>
+      </div>
+      <div class="overlay-screen is-cover" id="arrival-screen" style="display:none">
+        <div class="cover-card arrival-card">
+          <div class="masthead">
+            <div class="kicker">出發</div>
+            <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
+            <p class="subtitle" id="arrival-q">要怎麼前往蘭嶼？</p>
+          </div>
+          <div class="arrival-grid" role="group" aria-labelledby="arrival-q">
+            <button type="button" class="arrival-pick" id="btn-arrive-plane" data-way="plane">
+              <span class="ap-ico" aria-hidden="true"><svg viewBox="0 0 48 32" width="48" height="32"><path d="M4 18h30l8-6h3l-4 7 4 1-1 2H6z" fill="currentColor" opacity=".18"/><path d="M4 18h30l8-6h3l-4 7m0 0 4 1-1 2H6l-2-4zM14 18l4-8h4l-2 8M15 21l3 6h4l-1-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="ap-name">搭飛機</span>
+              <span class="ap-hint">從臺東搭小飛機，降落在島西岸的蘭嶼機場。</span>
+            </button>
+            <button type="button" class="arrival-pick" id="btn-arrive-boat" data-way="boat">
+              <span class="ap-ico" aria-hidden="true"><svg viewBox="0 0 48 32" width="48" height="32"><path d="M5 20h38l-5 7H10z" fill="currentColor" opacity=".18"/><path d="M5 20h38l-5 7H10zM12 20v-6h22v6M16 14v-4h12v4M30 10V6h3v4M2 30q4-2 8 0t8 0 8 0 8 0 8 0 6 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+              <span class="ap-name">搭船</span>
+              <span class="ap-hint">從臺東出海，搭一艘小遊艇乘風破浪，駛進開元港。</span>
+            </button>
+          </div>
+          <div class="arrival-actions">
+            <button type="button" class="btn-ghost" id="btn-arrive-back">← 回上一步</button>
+          </div>
+        </div>
+      </div>
+      <div class="arrival-fade" id="arrival-fade" aria-hidden="true"></div>
+      <div class="arrival-intro" id="arrival-intro" style="display:none" role="dialog" aria-label="抵達蘭嶼的開場動畫">
+        <div class="ai-wash" id="ai-wash"></div>
+        <div class="ai-bar ai-top"></div>
+        <div class="ai-bar ai-bottom"></div>
+        <div class="ai-logo" aria-hidden="true"><b>Pongso no Tao</b><span>蘭嶼文化島</span></div>
+        <p class="ai-caption" id="ai-caption"></p>
+        <button type="button" class="ai-skip" id="btn-arrival-skip">點一下或按任意鍵略過 ›</button>
+        <div class="ai-progress" aria-hidden="true"><i id="ai-progress"></i></div>
+        <div class="ai-load" id="ai-load" role="status" aria-live="polite"><span id="ai-load-label">正在載入島嶼……</span><div class="ai-load-track"><i id="ai-load-fill"></i></div></div>
       </div>
       <div class="overlay-screen is-cover" id="origin-screen" style="display:none">
         <div class="cover-card">
@@ -314,6 +372,15 @@ export class UI {
     }
     this.refreshGenderPreview();
     this.bindActivate(this.el('#btn-continue'), () => this.hooks.onContinue());
+    // 0.1.4 opening: title → (party) → arrival choice → cut-scene
+    this.bindActivate(this.el('#btn-title-start'), () => this.leaveTitle());
+    this.el('#title-screen').addEventListener('pointerup', (e) => {
+      if ((e.target as HTMLElement).closest('button')) return;
+      this.leaveTitle();
+    });
+    for (const w of ['plane', 'boat'] as const) this.bindActivate(this.el(`#btn-arrive-${w}`), () => this.hooks.onArrival(w));
+    this.bindActivate(this.el('#btn-arrive-back'), () => this.hooks.onArrivalBack());
+    this.el('#arrival-intro').addEventListener('pointerup', () => this.hooks.onArrivalSkip());
     this.el('#quest-tracker').addEventListener('click', () => this.openJournalTab('quests'));
 
     const times = this.el('#time-chips');
@@ -366,7 +433,9 @@ export class UI {
     this.el('#help-sheet').addEventListener('click', (e) => {
       if (e.target === this.el('#help-sheet')) this.hooks.onOverlay('help', false);
     });
-    this.el('#dlg-next').addEventListener('click', () => this.hooks.onDialogueNext());
+    this.el('#dlg-next').addEventListener('click', () => {
+      if (!this.typer.finish()) this.hooks.onDialogueNext(); // 0.1.4: first tap shows the rest of a typing line
+    });
     this.el('#text-size').addEventListener('click', (e) => {
       const ts = (e.target as HTMLElement).dataset.ts;
       if (ts === 's' || ts === 'm' || ts === 'l') this.setTextSize(ts, true);
@@ -466,11 +535,14 @@ export class UI {
   private bindActivate(el: HTMLElement, fn: () => void): void {
     let armed: { id: number; x: number; y: number } | null = null;
     let handledAt = 0;
-    const run = () => {
+    const run = (fromClick = false) => {
       if ((el as HTMLButtonElement).disabled) return;
       const now = performance.now();
       if (now - handledAt < 400) return;
+      // a tap that switched screens must not also "click" the button that appears under the finger (iPhone)
+      if (fromClick && now - lastPointerActivate.at < 500 && lastPointerActivate.el !== el) return;
       handledAt = now;
+      if (!fromClick) lastPointerActivate = { at: now, el };
       fn();
     };
     el.addEventListener('pointerdown', (e: PointerEvent) => {
@@ -488,7 +560,7 @@ export class UI {
     el.addEventListener('pointercancel', () => { armed = null; });
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      run();
+      run(true);
     });
   }
 
@@ -544,9 +616,101 @@ export class UI {
     }
   }
 
+  /** 0.1.4: the title screen (logo over the island; the tap also lets the browser start the title music) */
+  showTitle(): void {
+    this.setOverlayOpen(true);
+    this.el('#boot-screen').style.display = 'none';
+    this.el('#title-screen').style.display = 'flex';
+    this.focusIn('#btn-title-start');
+  }
+
+  private leaveTitle(): void {
+    if (!this.screenShown('title')) return;
+    menuSfx('menu_confirm');
+    this.el('#title-screen').style.display = 'none';
+    this.showOrigin();
+  }
+
+  /** which opening screen is up (tests) */
+  screenShown(k: 'title' | 'origin' | 'arrival' | 'intro'): boolean {
+    const id = k === 'intro' ? '#arrival-intro' : `#${k}-screen`;
+    return this.el(id).style.display !== 'none';
+  }
+
+  /** 0.1.4: 搭飛機 or 搭船 */
+  showArrival(): void {
+    this.setOverlayOpen(true);
+    this.el('#origin-screen').style.display = 'none';
+    const a = this.el('#arrival-screen');
+    a.style.display = 'flex';
+    a.scrollTop = 0;
+    this.focusIn('#btn-arrive-plane');
+  }
+
+  /** 0.1.4: the arrival cut-scene overlay (letterbox, logo, caption, skip) */
+  showArrivalIntro(way: 'plane' | 'boat'): void {
+    this.el('#arrival-screen').style.display = 'none';
+    this.el('#origin-screen').style.display = 'none';
+    this.el('#title-screen').style.display = 'none';
+    this.el('#ai-caption').textContent = way === 'plane' ? '小飛機穿出雲層，蘭嶼就在前方……' : '小艇切過浪頭，朝開元港前進……';
+    this.el('#ai-progress').style.width = '0%';
+    this.el('#ai-wash').style.opacity = way === 'plane' ? '1' : '0';
+    const o = this.el('#arrival-intro');
+    o.style.display = 'block';
+    o.classList.remove('is-shown', 'logo-on', 'is-approach');
+    void o.offsetWidth;
+    o.classList.add('is-shown');
+    (document.activeElement as HTMLElement | null)?.blur?.();
+  }
+
+  /** cut-scene frame: progress bar, the logo (with the title music), the cloud wash */
+  setArrivalProgress(p: number, logo = true, wash = 0): void {
+    this.el('#ai-progress').style.width = `${Math.round(p * 100)}%`;
+    this.el('#arrival-intro').classList.toggle('logo-on', logo);
+    this.el('#ai-wash').style.opacity = wash.toFixed(3);
+  }
+
+  /** 0.1.4: the island loading under the painted ride (lower-left bar) */
+  setArrivalLoad(p: number, done: boolean, waiting = false): void {
+    this.el('#ai-load-fill').style.width = `${Math.round(Math.min(1, p) * 100)}%`;
+    const label = done ? '島嶼準備好了' : waiting ? '還在載入，好了就直接開始……' : '正在載入島嶼……';
+    const l = this.el('#ai-load-label');
+    if (l.textContent !== label) l.textContent = label;
+    this.el('#ai-load').classList.toggle('is-done', done);
+  }
+
+  /** 0.1.4: the painted ride hands over to the in-world approach (soft cream cut; letterbox stays) */
+  arrivalCut(): void {
+    this.el('#arrival-intro').classList.add('is-approach');
+    this.el('#arrival-intro').classList.remove('logo-on');
+    this.el('#ai-wash').style.opacity = '0';
+    const f = this.el('#arrival-fade');
+    f.classList.remove('is-on');
+    void f.offsetWidth;
+    f.classList.add('is-on');
+  }
+
+  /** 0.1.4: 繼續旅程 before the island has loaded: the boot screen with its bar */
+  showBootLoading(): void {
+    for (const id of ['#title-screen', '#origin-screen', '#arrival-screen']) this.el(id).style.display = 'none';
+    this.setOverlayOpen(true);
+    this.el('#boot-screen').style.display = 'flex';
+  }
+
+  /** cut-scene over: a short soft fade into the game */
+  hideArrivalIntro(): void {
+    this.el('#arrival-intro').style.display = 'none';
+    const f = this.el('#arrival-fade');
+    f.classList.remove('is-on');
+    void f.offsetWidth;
+    f.classList.add('is-on');
+  }
+
   showOrigin(): void {
     this.setOverlayOpen(true);
     this.el('#boot-screen').style.display = 'none';
+    this.el('#title-screen').style.display = 'none';
+    this.el('#arrival-screen').style.display = 'none';
     const origin = this.el('#origin-screen');
     origin.style.display = 'flex';
     origin.scrollTop = 0;
@@ -555,6 +719,9 @@ export class UI {
   hideOverlaysStart(): void {
     this.el('#boot-screen').style.display = 'none';
     this.el('#origin-screen').style.display = 'none';
+    this.el('#title-screen').style.display = 'none';
+    this.el('#arrival-screen').style.display = 'none';
+    this.el('#arrival-intro').style.display = 'none';
     this.setOverlayOpen(false);
     this.el('#hud').style.display = 'flex';
     this.el('#vpad').style.display = 'block';
@@ -668,6 +835,9 @@ export class UI {
   /** Called on any key press: the first-entry hint goes away like any other key hint. */
   onAnyKey(): void {
     if (this.helpTimer !== null) this.dismissHelpToast();
+    // 0.1.4 opening: any key leaves the title / skips the arrival cut-scene (after this key's own handling)
+    if (this.screenShown('intro')) window.setTimeout(() => this.hooks.onArrivalSkip(), 0);
+    else if (this.screenShown('title')) window.setTimeout(() => this.leaveTitle(), 0);
   }
 
   private rememberFocus(): void {
@@ -772,6 +942,8 @@ export class UI {
     const taoEmpty = !tao.trim();
     this.el('#dlg-zh').classList.toggle('hidden', lang === 'tao' && !taoEmpty);
     this.el('#dlg-tao').classList.toggle('hidden', lang === 'zh' || taoEmpty);
+    // 0.1.4: type the visible line(s) out with a soft blip
+    this.typer.start([this.el('#dlg-zh'), this.el('#dlg-tao')].filter((e) => !e.classList.contains('hidden')));
     this.el('#dlg-next').textContent = last ? '結束對話' : '繼續';
     if (!wasOpen && !this.overlay) {
       this.rememberFocus();
@@ -779,9 +951,16 @@ export class UI {
     }
   }
 
+  /** 0.1.4: a tap / key while a dialogue line is typing shows the rest instead of advancing */
+  readonly typer = new Typewriter();
+  finishTyping(): boolean {
+    return this.typer.finish();
+  }
+
   closeDialogue(): void {
     const box = this.el('#dialogue');
     if (!box.classList.contains('open')) return;
+    this.typer.finish();
     box.classList.remove('open');
     if (box.contains(document.activeElement)) this.restoreFocus();
   }
@@ -798,6 +977,7 @@ export class UI {
 
   /** camera-shutter flash (photo quests) */
   flash(): void {
+    sfxShutter(); // 0.1.4: digital camera click
     const f = document.createElement('div');
     f.className = 'shutter-flash';
     this.root.append(f);
@@ -950,7 +1130,29 @@ export class UI {
     }
   }
 
-  /** open the journal straight on a tab (quest tracker, L key) */
+  /** arrival beat: mark 抵達蘭嶼 with an animated ✓ on the open quest-log page */
+  stampQuestDone(id: string): void {
+    const b = this.root.querySelector(`.nb-item[data-qid="${id}"]`) as HTMLElement | null;
+    if (!b) return;
+    b.classList.remove('st-active');
+    b.classList.add('st-done', 'stamping');
+    const m = b.querySelector('.nb-mark');
+    if (m) {
+      m.textContent = '✓';
+      m.setAttribute('aria-label', '完成');
+    }
+    const detail = this.root.querySelector('#nb-detail');
+    if (detail && (detail as HTMLElement).dataset.qid === id) {
+      if (!detail.querySelector('.nd-stamped')) {
+        const tag = document.createElement('p');
+        tag.className = 'nd-stamped';
+        tag.textContent = '✓ 完成';
+        detail.insertBefore(tag, detail.firstChild);
+      }
+    }
+  }
+
+    /** open the journal straight on a tab (quest tracker, L key) */
   openJournalTab(tab: string): void {
     this.journalTab = tab;
     this.el('#journal-tabs').querySelectorAll('button').forEach((b) => b.classList.toggle('on', (b as HTMLElement).dataset.tab === tab));

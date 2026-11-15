@@ -9,7 +9,7 @@ import glob, os, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 chars = set()
-files = glob.glob('src/**/*.*', recursive=True) + glob.glob('content/**/*.json', recursive=True) + glob.glob('public/*.css') + ['index.html'] + glob.glob('*.md')
+files = glob.glob('src/**/*.*', recursive=True) + glob.glob('content/**/*.json', recursive=True) + glob.glob('content-pending/**/*.json', recursive=True) + glob.glob('public/*.css') + ['index.html'] + glob.glob('*.md')
 for f in files:
     try:
         chars |= set(open(f, encoding='utf-8').read())

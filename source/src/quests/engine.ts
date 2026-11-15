@@ -278,7 +278,7 @@ export class QuestEngine {
       for (const [id] of this.active) {
         const q = this.byId.get(id)!;
         const st = this.step(q);
-        if (st?.kind === 'auto' && !st.lines?.length && this.windowOk(q).ok && (!st.until || this.evalReq(st.until))) {
+        if (st?.kind === 'auto' && !st.lines?.length && this.windowOk(q).ok && !this.outfitMissing(q).length && (!st.until || this.evalReq(st.until))) {
           ev.push(...this.advance(q));
           changed = true;
         }
@@ -287,6 +287,17 @@ export class QuestEngine {
     }
     if (this.tracked && !this.active.has(this.tracked)) this.tracked = null;
     return ev;
+  }
+
+  /**
+   * 0.1.4: members still to change into the outfit the quest needs before its first step ([] = fine).
+   * Only the first step checks, so a member may change back to everyday clothes mid-quest.
+   */
+  outfitMissing(q: QuestDef): { role: 'm' | 'f'; outfit: string }[] {
+    if (!q.requiresOutfit || (this.active.get(q.id) ?? 0) !== 0) return [];
+    const out: { role: 'm' | 'f'; outfit: string }[] = [];
+    for (const [r, o] of Object.entries(q.requiresOutfit) as ['m' | 'f', string][]) if (o && this.wear[r] !== o) out.push({ role: r, outfit: o });
+    return out;
   }
 
   /** finish the current step of q (rewards are applied by the caller via gives) */
@@ -320,8 +331,8 @@ export class QuestEngine {
 
   /** the quest the HUD tracker shows: the tracked one, else the first active playable main quest */
   current(): QuestDef | null {
-    if (this.tracked && this.active.has(this.tracked)) return this.byId.get(this.tracked)!;
-    const act = this.defs.filter((q) => this.active.has(q.id) && q.playable);
+    if (this.tracked && this.active.has(this.tracked) && !this.byId.get(this.tracked)?.silent) return this.byId.get(this.tracked)!;
+    const act = this.defs.filter((q) => this.active.has(q.id) && q.playable && !q.silent);
     return act.find((q) => q.line === 'main') ?? act[0] ?? null;
   }
 

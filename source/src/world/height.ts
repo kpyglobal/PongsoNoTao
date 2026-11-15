@@ -9,6 +9,11 @@
  */
 import {
   FACILITIES,
+  LANDMARKS,
+  LAKES,
+  type Lake,
+  JIMAGAOD,
+  runwayLocal,
   VILLAGE_DEFS,
   TARO_FIELDS,
   villageStructures,
@@ -20,6 +25,8 @@ import {
   type TaroField,
 } from './layout';
 import { yieldIfBusy, yieldToUi } from '../core/frame';
+import { coastSdf, seaNormal } from './coast';
+import { geo } from './outline';
 import { lerp, clamp01, smoothstep } from '../core/math';
 
 // kept as re-exports: island.ts and others import these from the heightfield module
@@ -116,49 +123,37 @@ function segDist(x: number, z: number, ax: number, az: number, bx: number, bz: n
 // island shape
 // ---------------------------------------------------------------------------
 
-/** Coastal field: < 1 is land. */
+/** 0.1.4: inland distance (m) that counts as s = 1 (the old oval island's radius scale) */
+const COAST_R = 32;
+
+/** Coastal field: < 1 is land. 0.1.4: the real 蘭嶼 outline (coast.ts), with a little noise on top. */
 function coastField(x: number, z: number): number {
-  const widen = 1 - 0.14 * Math.max(0, (z - 4) / 42);
-  const rx = 33 / widen;
-  const rz = 45;
-  let d = Math.hypot(x / rx, (z - 2) / rz);
-  d += (fbm(x * 0.05, z * 0.05) - 0.5) * 0.1;
-  d += (fbm(x * 0.13, z * 0.13) - 0.5) * 0.045;
-  d += (fbm(x * 0.32, z * 0.32, 3) - 0.5) * 0.018;
-  // Bays: Dongqing (NE), Yayo/Kaiyuan (W), Badai (S), east coves, Iraraley (N)
-  d += gauss(x, z, 32, -18, 9, 7) * 0.28;
-  d += gauss(x, z, -38, -7, 8, 6) * 0.26;
-  d += gauss(x, z, 2, 42, 9, 6) * 0.2;
-  d += gauss(x, z, 34, 12, 6, 5) * 0.14;
-  d += gauss(x, z, -4, -46, 7, 4) * 0.08;
-  d += gauss(x, z, -24, 30, 6, 5) * 0.08;
-  // headlands that stick out: NW nose, 青青草原 SW cape, east capes, north cape
-  d -= gauss(x, z, -16, -30, 8, 6) * 0.06;
-  d -= gauss(x, z, -32, 30, 6, 4) * 0.07;
-  d -= gauss(x, z, 33, -4, 4, 5) * 0.07;
-  d -= gauss(x, z, 20, -36, 5, 4) * 0.05;
-  d -= gauss(x, z, 22, 30, 5, 4) * 0.05;
+  let d = 1 - coastSdf(x, z) / COAST_R;
+  d += (fbm(x * 0.05, z * 0.05) - 0.5) * 0.06;
+  d += (fbm(x * 0.13, z * 0.13) - 0.5) * 0.03;
+  d += (fbm(x * 0.32, z * 0.32, 3) - 0.5) * 0.014;
   return d;
 }
 
 interface RidgeNode { x: number; z: number; h: number }
 interface Ridge { nodes: RidgeNode[]; w: number; sharp: number }
 
+/** 0.1.4: real relief: 紅頭山 (548 m) north-west of centre, 大森山 (480 m) in the south-east lobe, a spine between */
+const P_HONGTOU = geo(121.53455, 22.05303);
+const P_DASEN = geo(121.58571, 22.01032);
 const RIDGES: Ridge[] = [
-  // 紅頭山 Hongtoushan massif (highest, south-centre)
-  { nodes: [{ x: -15, z: 25, h: 4.1 }, { x: -6, z: 20, h: 9.02 }, { x: 3, z: 13, h: 14.5 }, { x: 10, z: 6, h: 10.66 }, { x: 17, z: -1, h: 7.38 }], w: 20.8, sharp: 1.05 },
-  // 大森山 Dasenshan — north-central ridge
-  { nodes: [{ x: -14, z: -31, h: 4.1 }, { x: -8, z: -21, h: 9.84 }, { x: -3, z: -12, h: 11.07 }, { x: 4, z: -4, h: 9.02 }, { x: 10, z: 6, h: 9.84 }], w: 19.5, sharp: 1.05 },
-  // east coast ridge (steep basalt cliffs toward the Pacific)
-  { nodes: [{ x: 19, z: -27, h: 3.28 }, { x: 19, z: -12, h: 7.38 }, { x: 22, z: 0, h: 6.56 }, { x: 19, z: 15, h: 4.92 }, { x: 15, z: 22, h: 3.28 }], w: 11.7, sharp: 1.0 },
-  // west spur toward Yayo
-  { nodes: [{ x: -24, z: -15, h: 2.87 }, { x: -14, z: -10, h: 5.74 }, { x: -3, z: -12, h: 10.25 }], w: 11.7, sharp: 1.0 },
-  // south spur down to Imorod
-  { nodes: [{ x: 3, z: 13, h: 12.3 }, { x: 6, z: 21, h: 6.56 }, { x: 8, z: 26, h: 2.46 }], w: 10.4, sharp: 1.0 },
-  // SW spur to 青青草原 headland
-  { nodes: [{ x: -6, z: 20, h: 9.02 }, { x: -19, z: 27, h: 3.69 }, { x: -30, z: 30, h: 2.62 }], w: 11.1, sharp: 1.0 },
-  // NE spur to Iraraley / Dongqing
-  { nodes: [{ x: -3, z: -12, h: 10.25 }, { x: 8, z: -24, h: 5.33 }, { x: 14, z: -33, h: 2.46 }], w: 11.7, sharp: 1.0 },
+  // main spine: north-west corner → 紅頭山 → saddle → 大森山 → south-east cape
+  { nodes: [{ x: -40, z: -36, h: 4.5 }, { x: -29, z: -25, h: 9.5 }, { x: P_HONGTOU.x, z: P_HONGTOU.z, h: 14.5 }, { x: -4, z: 0, h: 10.5 }, { x: 12, z: 14, h: 9.0 }, { x: 28, z: 28, h: 10.5 }, { x: P_DASEN.x, z: P_DASEN.z, h: 12.5 }, { x: 48, z: 40, h: 4.5 }], w: 20, sharp: 1.05 },
+  // north ridge toward 雙獅岩 (the north-east corner)
+  { nodes: [{ x: P_HONGTOU.x, z: P_HONGTOU.z, h: 13 }, { x: -4, z: -26, h: 10.5 }, { x: 8, z: -36, h: 7.5 }, { x: 16, z: -44, h: 3.5 }], w: 16, sharp: 1.0 },
+  // east-central hills between 東清 and 野銀 (kept off the shore)
+  { nodes: [{ x: -4, z: 0, h: 10 }, { x: 6, z: -6, h: 7.5 }, { x: 6, z: -18, h: 6.5 }], w: 12, sharp: 1.0 },
+  // spur down toward 椰油 (west; it stops short of the airport's coastal flat)
+  { nodes: [{ x: P_HONGTOU.x, z: P_HONGTOU.z, h: 13 }, { x: -24, z: -10, h: 7 }, { x: -27, z: -9, h: 4.0 }], w: 9, sharp: 1.0 },
+  // spur toward 漁人 / 紅頭 (south)
+  { nodes: [{ x: -4, z: 0, h: 10 }, { x: 0, z: 10, h: 6 }, { x: 2, z: 15, h: 3 }], w: 10, sharp: 1.0 },
+  // south-east lobe: 大森山 down to 青青草原
+  { nodes: [{ x: P_DASEN.x, z: P_DASEN.z, h: 12 }, { x: 32, z: 40, h: 5.5 }, { x: 26, z: 43, h: 2.5 }], w: 10, sharp: 1.0 },
 ];
 
 function ridgeField(x: number, z: number): number {
@@ -184,18 +179,21 @@ function ridgeField(x: number, z: number): number {
 }
 
 /** 0..1 how rocky/cliffy the coastline is at this spot. */
+const QQ = LANDMARKS.find((l) => l.id === 'qingqing')!;
+const TL = LANDMARKS.find((l) => l.id === 'twinlions')!;
+
 function cliffiness(x: number, z: number): number {
   let c = noise(x * 0.07 + 5, z * 0.07 - 3) * 1.25 - 0.32;
-  c += smoothstep(14, 26, x) * 0.55; // Pacific-facing east coast
-  c += smoothstep(-30, -42, z) * 0.3; // north cape
-  c += gauss(x, z, -32, 30, 7, 5) * 0.9; // 青青草原 sea cliffs
-  c += gauss(x, z, -16, -30, 8, 6) * 0.6; // 雙獅岩 headland
-  c += gauss(x, z, 33, -4, 5, 6) * 0.6;
-  c += gauss(x, z, 21, 30, 6, 5) * 0.6;
+  // 0.1.4: Pacific-facing east and south-east shores (sea normal pointing east)
+  const n = seaNormal(x, z, 3);
+  c += smoothstep(0.15, 0.7, n.x) * 0.55;
+  c += smoothstep(0.3, 0.9, -n.z) * 0.25; // north shore
+  c += gauss(x, z, QQ.x, QQ.z, 7, 5) * 0.9; // 青青草原 sea cliffs
+  c += gauss(x, z, TL.x, TL.z, 8, 6) * 0.6; // 雙獅岩 headland
   // calm, sandy settlement bays
   for (const v of VILLAGE_DEFS) c -= gauss(x, z, v.cx + v.fx * 6, v.cz + v.fz * 6, 9, 9) * 1.4;
-  c -= gauss(x, z, -38, -7, 6, 5) * 1.5; // Kaiyuan harbour
-  c -= gauss(x, z, -26, 21, 7, 5) * 0.8; // airport shore
+  c -= gauss(x, z, FACILITIES.harbor.x, FACILITIES.harbor.z, 6, 5) * 1.5; // Kaiyuan harbour
+  c -= gauss(x, z, FACILITIES.runway.x, FACILITIES.runway.z, 9, 9) * 0.8; // airport shore
   return clamp01(c);
 }
 
@@ -220,6 +218,12 @@ function settleProx(x: number, z: number): number {
     const { dist } = villageRectDist(v, x, z);
     p = Math.max(p, 1 - smoothstep(0, 14, dist));
   }
+  // 0.1.4: the airport and the clinic sit on gentle coastal flats too
+  const { across, along } = runwayLocal(x, z);
+  const R = FACILITIES.runway;
+  p = Math.max(p, 1 - smoothstep(0, 14, Math.hypot(Math.max(0, Math.abs(across) - R.hx - 6), Math.max(0, Math.abs(along) - R.hz))));
+  const cl = FACILITIES.clinic;
+  p = Math.max(p, 1 - smoothstep(0, 12, Math.max(0, Math.hypot(x - cl.x, z - cl.z) - 4)));
   return p;
 }
 
@@ -276,8 +280,8 @@ function naturalRaw(x: number, z: number): { h: number; s: number; cliff: number
 
 /** Little Lanyu — Jimagaod. */
 function jimagaod(x: number, z: number): { h: number; mask: number } {
-  const lx = 8;
-  const lz = 66;
+  const lx = JIMAGAOD.x;
+  const lz = JIMAGAOD.z;
   const ld = Math.hypot((x - lx) / 6.8, (z - lz) / 5.6) + (fbm(x * 0.2, z * 0.2) - 0.5) * 0.18;
   const mask = smoothstep(1.12, 0.9, ld);
   if (ld > 1.6) return { h: -100, mask: 0 };
@@ -294,7 +298,7 @@ function jimagaod(x: number, z: number): { h: number; mask: number } {
 
 /** Ring road + harbour spur (layout.ts ROADS, 0.1.1). */
 /** reclaimed quay box (flat |dx| < 0.55 hx, |dz| < 0.55 hz, sloping into the sea beyond) */
-export const HARBOUR_QUAY = { x: -32.6, z: -6.4, hx: 4.7, hz: 5.5 };
+export const HARBOUR_QUAY = { x: FACILITIES.harbor.x + 4.4, z: FACILITIES.harbor.z + 0.1, hx: 4.7, hz: 5.5 };
 
 /** top of the coastal road embankment */
 const ROAD_BANK_H = 0.62;
@@ -310,6 +314,17 @@ export function distToRing(x: number, z: number): number {
   let best = 1e9;
   for (const [ax, az, bx, bz] of ROAD_SEGS) best = Math.min(best, segDist(x, z, ax, az, bx, bz).d);
   return best;
+}
+
+const LAKE_SURF = new Map<string, number>();
+/** a lake's water level: the natural ground at its centre (kept above the sea) */
+export function lakeSurface(lk: Lake): number {
+  let v = LAKE_SURF.get(lk.id);
+  if (v === undefined) {
+    v = Math.max(1.2, naturalRaw(lk.x, lk.z).h);
+    LAKE_SURF.set(lk.id, v);
+  }
+  return v;
 }
 
 /** 0.1.1: tagakal check the natural ground so none stands in the sea */
@@ -383,6 +398,7 @@ interface Raw {
   runway: number;
 }
 
+
 function raw(x: number, z: number): Raw {
   const nat = naturalRaw(x, z);
   let h = nat.h;
@@ -425,13 +441,17 @@ function raw(x: number, z: number): Raw {
   let runway = 0;
   const R = FACILITIES.runway;
   if (nat.s > -0.03) {
-    const rw = flattenRect(h, x, z, R.x, R.z, R.hx + 2.4, R.hz + 2.4, 1.05, 0.72);
-    runway = smoothstep(1, 0.8, Math.max(Math.abs(x - R.x) / (R.hx + 0.2), Math.abs(z - R.z) / (R.hz + 0.2)));
+    // 0.1.4: the runway is turned to follow the shore (runway-local across / along)
+    const { across, along } = runwayLocal(x, z);
+    const rw = flattenRect(h, across, along, 0, 0, R.hx + 2.4, R.hz + 2.4, 1.05, 0.72);
+    runway = smoothstep(1, 0.8, Math.max(Math.abs(across) / (R.hx + 0.2), Math.abs(along) / (R.hz + 0.2)));
     h = rw;
-    // terminal apron
-    h = flattenRect(h, x, z, FACILITIES.terminal.x, FACILITIES.terminal.z, 2.6, 5.5, 1.1, 0.5);
+    // terminal apron (its long side along the runway)
+    const T = FACILITIES.terminal;
+    const tl = runwayLocal(T.x, T.z);
+    h = flattenRect(h, across, along, tl.across, tl.along, 3.6, 6.0, 1.1, 0.55);
   }
-  if (nat.s > -0.02) h = flattenRect(h, x, z, -33.5, -6.2, 6.5, 3.4, 0.75);
+  if (nat.s > -0.02) h = flattenRect(h, x, z, FACILITIES.harbor.x + 3.5, FACILITIES.harbor.z + 0.3, 6.5, 3.4, 0.75);
   // 0.1.1: reclaimed quay joining the 開元港 apron to the shore (in 0.1.0 a 4–5 m strip of sea
   // separated the apron from the island, so the arriving party could never walk off the dock)
   {
@@ -471,6 +491,16 @@ function raw(x: number, z: number): Raw {
     if (road > 0) h = lerp(h, Math.max(0.6, Math.min(h, h * 0.94)), road * 0.6);
   }
 
+  // 0.1.4: crater lakes (小天池 / 大天池): a flat bed under the water and a low rim around it
+  for (const lk of LAKES) {
+    const d = Math.hypot(x - lk.x, z - lk.z);
+    if (d > lk.r + 2.6) continue;
+    const surf = lakeSurface(lk);
+    const target = d < lk.r ? surf - 0.45 : surf + 0.12;
+    const k = 1 - smoothstep(lk.r + 0.2, lk.r + 2.6, d);
+    h = lerp(h, target, k);
+  }
+
   // Jimagaod
   const j = jimagaod(x, z);
   if (j.h > h) {
@@ -486,9 +516,10 @@ function raw(x: number, z: number): Raw {
 // baked grid
 // ---------------------------------------------------------------------------
 
-export const TERRAIN_BOX = { xMin: -52, zMin: -56, xMax: 52, zMax: 78 };
-export const GRID_NX = 326;
-export const GRID_NZ = 420;
+/** 0.1.4: the bigger real-outline island (≈ ±58 m) + the 開元港 breakwater (west) + 小蘭嶼 (south-east); ~0.34 m cells */
+export const TERRAIN_BOX = { xMin: -72, zMin: -62, xMax: 66, zMax: 84 };
+export const GRID_NX = 407;
+export const GRID_NZ = 430;
 const CX = (TERRAIN_BOX.xMax - TERRAIN_BOX.xMin) / (GRID_NX - 1);
 const CZ = (TERRAIN_BOX.zMax - TERRAIN_BOX.zMin) / (GRID_NZ - 1);
 
@@ -588,7 +619,7 @@ function fillForestRows(g: Grid, j0: number, j1: number): void {
       f *= 1 - g.runway[k];
       f *= 1 - smoothstep(0.0, 0.3, g.terrace[k]);
       // 青青草原 grassland headland stays open
-      f *= 1 - gauss(x, z, -30, 29, 7, 5);
+      f *= 1 - gauss(x, z, QQ.x, QQ.z, 7, 5); // 青青草原 stays open grass
       // keep taro field surroundings and coastal belt open
       for (const tfld of TARO_FIELDS) f *= 1 - gauss(x, z, tfld.cx, tfld.cz, 6, 6) * 0.9;
       g.forest[k] = clamp01(f);

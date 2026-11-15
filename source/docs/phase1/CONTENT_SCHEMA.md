@@ -146,3 +146,16 @@ Outfit rule (validator): the traveller (`t`) never gets `kind: 'traditional'`; a
   - New NPCs go in `content/npcs/passersby.json` (or any file in that folder).
 - Outfits: `portraitByGender: { m, f }` sets the traveller's accessory portrait. Traditional outfits use `portrait` (`local_trad`, `local_f_trad`) and `sheet` (the variant walk sheet, not drawn yet, so the base sheet is used).
 - Windows: the loader rejects `time: night` + `tide: low` without `periods`, because low tide is only at dawn / dusk for now.
+
+
+## 0.1.4 additions (content worker, 2026-11-14)
+
+- **Quest `requiresOutfit`**: `{ "m"?: outfitId, "f"?: outfitId }`. The quest cannot start (and steps for that member cannot be done) unless the member wears that outfit. The quest that unlocks the outfit must be in the quest's prerequisites (validate-content checks). Used for festival, boat-fishing and tribal-event quests (M3, M4, A2, IT-M1, T5–T8). Engine support: world/src worker. Travellers never get real Tao clothing.
+- **Canoe step `canoeKind`**: `"tatala"` (default) or `"modern"`. Only the Tao man (m) paddles a tatala; any canoe step that f or t may do must say `"canoeKind": "modern"` (validate-content rejects it otherwise).
+- **Photo spot / photo quest `distanceOnly: true`**: sacred or taboo places (P05, P07, P18, P22): photographed from the road or a viewpoint; no entering or touching.
+- **`content-pending/`**: same layout as content/; entries that need a place id from docs/phase1/WORLD_NEEDS.md. Not bundled. `node scripts/content/promote-pending.mjs [--dry]` moves every entry whose places now exist (and whose prerequisite quests are live) into content/. validate-content checks content/ + content-pending/ (with the WORLD_NEEDS ids) at the end of every run.
+- **`review`**: array of strings — what a Tao reviewer must confirm. Listed in docs/phase1/CULTURAL_REVIEW.md.
+
+## 0.1.4 additions
+- Quest `silent: true`: a story beat, not a quest (Q01 arrival). It runs like any quest (lines, flags, unlocks) but never shows in the quest log, the tracker or a 任務完成／新任務 toast.
+- Step line `if: "<flag>"`: the line is only said when that quest flag is set (for example `arrived_plane` / `arrived_boat`, set by the 搭飛機／搭船 choice).

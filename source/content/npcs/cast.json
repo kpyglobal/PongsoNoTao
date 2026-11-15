@@ -920,6 +920,28 @@
             "*"
           ],
           "times": [
+            "dawn"
+          ],
+          "waypoints": [
+            "tank_rock"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
+            "day"
+          ],
+          "waypoints": [
+            "lovers_cave"
+          ]
+        },
+        {
+          "seasons": [
+            "*"
+          ],
+          "times": [
             "*"
           ],
           "waypoints": [

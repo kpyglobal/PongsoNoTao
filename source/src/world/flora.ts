@@ -12,6 +12,28 @@ import * as THREE from 'three';
 import type { Assets } from '../core/assets';
 import ATLAS from './flora_atlas.json';
 import { getHeight } from './height';
+import { FACILITIES, planePark, runwayLocal } from './layout';
+
+/** 0.1.4: nothing grows on the runway or around the parked plane (it was standing in bushes) */
+let PLANE_CLEAR: { x: number; z: number; c: number; s: number } | null = null;
+function keepOut(kind: string, x: number, z: number): boolean {
+  const R = FACILITIES.runway;
+  const rl = runwayLocal(x, z);
+  const big = kind.startsWith('tree') || kind === 'palm' || kind === 'pandanus';
+  const m = big ? 1.6 : 0.4;
+  if (Math.abs(rl.across) < R.hx + m && Math.abs(rl.along) < R.hz + m) return true;
+  if (!PLANE_CLEAR) {
+    const p = planePark();
+    PLANE_CLEAR = { x: p.x, z: p.z, c: Math.cos(p.yaw), s: Math.sin(p.yaw) };
+  }
+  const P = PLANE_CLEAR;
+  const dx = x - P.x;
+  const dz = z - P.z;
+  const lx = dx * P.c - dz * P.s;
+  const lz = dx * P.s + dz * P.c;
+  const r = big ? 4.6 : 3.4; // span / length ≈ 4.75 / 4.6 m, plus room around it
+  return Math.abs(lx) < r && Math.abs(lz) < r;
+}
 
 export type FloraKind = keyof typeof ATLAS;
 
@@ -70,6 +92,7 @@ export class Flora {
 
   /** h = world height of the sprite; y defaults to terrain height. */
   add(kind: FloraKind, x: number, z: number, h: number, opts: { y?: number; tint?: number; shadow?: number; seed?: number } = {}): void {
+    if (keepOut(kind, x, z)) return;
     const seed = opts.seed ?? Math.abs(Math.sin(x * 12.9898 + z * 78.233) * 43758.5453) % 1;
     this.items.push({
       kind, x, z, h,

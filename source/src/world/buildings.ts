@@ -8,14 +8,15 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { stoneTex, thatchTex, woodTex, plasterTex, sheetTex, tatalaTex, rng } from './textures';
-import { AIRPORT_PLANE } from './layout';
 import { BUILDING_ALBEDO as A } from '../render/styleConfig';
 
 export type MatKey =
   | 'stone' | 'stoneDark' | 'woodDark' | 'wood' | 'woodPale' | 'thatch' | 'thatchGold'
   | 'plaster' | 'paintBlue' | 'paintMint' | 'paintPink' | 'paintCream'
   | 'roofBlue' | 'roofRed' | 'roofGreen' | 'roofGrey' | 'concrete' | 'asphalt'
-  | 'red' | 'black' | 'white' | 'glass' | 'hearth' | 'window' | 'lamp' | 'metal' | 'tatala' | 'tatalaIn';
+  | 'red' | 'black' | 'white' | 'glass' | 'hearth' | 'window' | 'lamp' | 'metal' | 'tatala' | 'tatalaIn'
+  // 0.1.4 arrival vehicles (art-ref/arrival/palette.md)
+  | 'vWhite' | 'vBelly' | 'vBlue' | 'vNavy' | 'vGlass' | 'vDark' | 'vAntifoul' | 'vSeat' | 'vSteel';
 
 let MATS: Record<MatKey, THREE.Material> | null = null;
 
@@ -51,6 +52,17 @@ export function archMaterials(): Record<MatKey, THREE.Material> {
     metal: std({ color: 0x8f969c, roughness: 0.45, metalness: 0.6 }),
     tatala: std({ map: tatalaTex(1), roughness: 0.6, side: THREE.FrontSide }),
     tatalaIn: std({ map: woodTex(A.woodInside), roughness: 0.9, side: THREE.BackSide }),
+    // arrival plane / yacht: hull white, light belly, livery blue (plane), deeper navy stripe (yacht), dark glass,
+    // warm dark grey (props, tyres, intakes), antifouling, sand seats, warm steel rails
+    vWhite: std({ color: 0xf6f2ea, roughness: 0.55 }),
+    vBelly: std({ color: 0xc8c1b4, roughness: 0.6 }),
+    vBlue: std({ color: 0x3f87b8, roughness: 0.5 }),
+    vNavy: std({ color: 0x204c71, roughness: 0.5 }),
+    vGlass: std({ color: 0x4e5f6a, roughness: 0.2, metalness: 0.3 }),
+    vDark: std({ color: 0x49483f, roughness: 0.7 }),
+    vAntifoul: std({ color: 0x1d2629, roughness: 0.7 }),
+    vSeat: std({ color: 0xecd49c, roughness: 0.8 }),
+    vSteel: std({ color: 0xb3ad9e, roughness: 0.35, metalness: 0.5 }),
   };
   return MATS;
 }
@@ -407,18 +419,171 @@ export function addAirport(b: ArchBuilder): void {
   b.box('concrete', 1.8, 0.1, 1.8, 2.6, 4.4, -0.4, 0, 1);
   b.box('metal', 0.06, 2.6, 0.06, -4.6, 1.3, 2.5, 0, 1);
   b.add('red', new THREE.ConeGeometry(0.16, 0.9, 6, 1, true), -4.25, 2.5, 2.5, 0, 0, Math.PI / 2);
-  // small commuter plane (Dornier 228 style) on the apron
+  // small commuter plane (Dornier 228 style) on the apron; 0.1.4: the same model that flies the arrival opening
+  // (nose toward local −x like before, scaled to the PLANE_FOOT collision box)
   // 0.1.1: parked beside the terminal; 0.1.1 moved the whole airport 0.8 m east so its wing clears the ring road
-  const px = AIRPORT_PLANE.lx;
-  const pz = AIRPORT_PLANE.lz;
-  b.add('white', new THREE.CylinderGeometry(0.28, 0.24, 4.2, 10), px, 0.75, pz, 0, 0, Math.PI / 2);
-  b.add('white', new THREE.ConeGeometry(0.28, 0.6, 10), px - 2.4, 0.75, pz, 0, 0, Math.PI / 2);
-  b.box('white', 0.7, 0.07, 5.6, px - 0.4, 1.05, pz, 0, 1);
-  b.box('white', 0.4, 0.8, 0.06, px + 1.9, 1.2, pz, 0, 1);
-  b.box('white', 0.4, 0.06, 1.6, px + 1.9, 0.9, pz, 0, 1);
-  b.box('roofBlue', 4.0, 0.08, 0.6, px, 0.72, pz + 0.0, 0, 1);
-  for (const z of [-1.3, 1.3]) b.add('black', new THREE.CylinderGeometry(0.14, 0.14, 0.7, 8), px - 0.6, 1.0, pz + z, 0, 0, Math.PI / 2);
-  for (const z of [-0.4, 0.4]) b.box('black', 0.1, 0.4, 0.1, px - 0.3, 0.2, pz + z, 0, 1);
+  // 0.1.4: the plane is now its own object (src/world/arrival.ts buildArrivalProps), so it can be animated later
+}
+
+/** a sub-frame inside the current ArchBuilder frame: parts placed at (ox, oy, oz), turned by `yaw`, scaled by `s` */
+function subFrame(b: ArchBuilder, ox: number, oy: number, oz: number, yaw: number, s: number) {
+  const c = Math.cos(yaw);
+  const sn = Math.sin(yaw);
+  const at = (x: number, z: number): [number, number] => [ox + (x * c + z * sn) * s, oz + (-x * sn + z * c) * s];
+  const add = (key: MatKey, g: THREE.BufferGeometry, x = 0, y = 0, z = 0, ry = 0, rx = 0, rz = 0): void => {
+    g.scale(s, s, s);
+    const [wx, wz] = at(x, z);
+    b.add(key, g, wx, oy + y * s, wz, ry + yaw, rx, rz);
+  };
+  const box = (key: MatKey, w: number, h: number, d: number, x: number, y: number, z: number, ry = 0): void => add(key, boxUV(w, h, d, 1), x, y, z, ry);
+  return { add, box };
+}
+
+/**
+ * 0.1.4 commuter plane (Do 228-like, after art-ref/arrival/plane_*.png; generic white with a double blue cheat
+ * line sweeping up the fin, no airline marks). Nose toward local +z, wheels on y = 0, about 6.4 m long.
+ * `props`: false leaves the propeller blades out (the arrival scene spins its own).
+ */
+export function addCommuterPlane(b: ArchBuilder, ox: number, oy: number, oz: number, yaw: number, s = 1, props = true): void {
+  const { add, box } = subFrame(b, ox, oy, oz, yaw, s);
+  // long slender fuselage: a rounded box (two boxes + a belly), tapering nose and a long upswept tail cone
+  box('vWhite', 0.6, 0.56, 3.6, 0, 0.86, 0);
+  box('vBelly', 0.58, 0.14, 3.5, 0, 0.55, 0);
+  const nose = new THREE.CylinderGeometry(0.06, 0.32, 1.1, 10);
+  nose.scale(1, 1, 0.9);
+  add('vWhite', nose, 0, 0.78, 2.35, 0, Math.PI / 2, 0);
+  const tail = new THREE.CylinderGeometry(0.3, 0.07, 1.9, 10);
+  add('vWhite', tail, 0, 0.98, -2.7, 0, Math.PI / 2 + 0.12, 0);
+  // cockpit glass (two panes per side, raked) and the row of six square cabin windows
+  for (const sd of [-1, 1]) {
+    add('vGlass', boxUV(0.03, 0.16, 0.34, 1), sd * 0.27, 1.0, 1.85, sd * 0.25, 0, sd * 0.25);
+    for (let k = 0; k < 6; k++) box('vGlass', 0.03, 0.13, 0.14, sd * 0.305, 0.94, 1.1 - k * 0.36);
+    box('vGlass', 0.03, 0.4, 0.22, sd * 0.305, 0.8, 1.45); // the forward door outline reads as a darker panel
+  }
+  box('vGlass', 0.4, 0.16, 0.05, 0, 1.06, 2.02);
+  // double blue cheat line along the lower fuselage
+  box('vBlue', 0.62, 0.07, 4.3, 0, 0.66, -0.2);
+  box('vBlue', 0.62, 0.035, 4.1, 0, 0.74, -0.3);
+  // high straight wing on top of the cabin, slender, with the engines slung at its leading edge
+  box('vWhite', 6.6, 0.07, 0.56, 0, 1.2, 0.35);
+  box('vBelly', 6.4, 0.03, 0.5, 0, 1.15, 0.33);
+  for (const sd of [-1, 1]) {
+    box('vWhite', 0.26, 0.28, 1.15, sd * 1.15, 1.06, 0.6);
+    box('vDark', 0.18, 0.08, 0.2, sd * 1.15, 0.94, 1.12); // intake
+    add('vDark', new THREE.ConeGeometry(0.1, 0.18, 8), sd * 1.15, 1.06, 1.26, 0, Math.PI / 2, 0); // spinner
+    if (props) for (let k = 0; k < 3; k++) add('vDark', boxUV(0.06, 0.95, 0.02, 1), sd * 1.15, 1.06, 1.24, 0, 0, (k / 3) * Math.PI * 2 + 0.4);
+  }
+  // tall swept fin with the blue band, tailplane low on the tail cone
+  const fin = new THREE.Shape();
+  fin.moveTo(-0.15, 0);
+  fin.lineTo(0.85, 0);
+  fin.lineTo(0.95, 1.05);
+  fin.lineTo(0.45, 1.05);
+  fin.closePath();
+  const finG = new THREE.ExtrudeGeometry(fin, { depth: 0.06, bevelEnabled: false });
+  finG.translate(0, 0, -0.03);
+  add('vWhite', finG, 0, 1.1, -2.4, Math.PI / 2);
+  add('vBlue', boxUV(0.07, 0.1, 0.9, 1), 0, 1.62, -3.0, 0, -0.35, 0);
+  add('vBlue', boxUV(0.07, 0.05, 0.9, 1), 0, 1.75, -3.05, 0, -0.35, 0);
+  box('vWhite', 2.1, 0.05, 0.5, 0, 1.08, -3.25);
+  // fixed gear: sponsons with main wheels, nose leg
+  for (const sd of [-1, 1]) {
+    box('vBelly', 0.2, 0.2, 0.8, sd * 0.38, 0.42, 0.0);
+    add('vDark', new THREE.CylinderGeometry(0.15, 0.15, 0.1, 12), sd * 0.46, 0.15, 0.0, 0, 0, Math.PI / 2);
+  }
+  box('vSteel', 0.05, 0.42, 0.05, 0, 0.3, 1.85);
+  add('vDark', new THREE.CylinderGeometry(0.1, 0.1, 0.08, 10), 0, 0.1, 1.85, 0, 0, Math.PI / 2);
+  // 0.1.4 detail: wingtip nav lights (red port / green starboard), tail strobe, beacon, aerials, door and hatch
+  // outlines, engine exhausts, a pitot tube, the rear stairs door, wheel chocks
+  add('red', boxUV(0.08, 0.06, 0.16, 1), 3.32, 1.2, 0.35);
+  add('paintMint', boxUV(0.08, 0.06, 0.16, 1), -3.32, 1.2, 0.35);
+  add('white', boxUV(0.06, 0.06, 0.08, 1), 0, 1.02, -3.62);
+  add('red', new THREE.CylinderGeometry(0.05, 0.06, 0.07, 8), 0, 1.18, -0.9);
+  add('red', new THREE.CylinderGeometry(0.04, 0.05, 0.06, 8), 0, 0.47, 0.2);
+  box('vSteel', 0.02, 0.22, 0.12, 0, 1.24, -1.4, 0);
+  add('vSteel', boxUV(0.015, 0.02, 0.9, 1), 0, 1.22, -0.2, 0, -0.05, 0);
+  for (const sd of [-1, 1]) {
+    box('vBelly', 0.025, 0.62, 0.48, sd * 0.31, 0.83, -1.15); // rear door panel
+    box('vDark', 0.012, 0.6, 0.012, sd * 0.318, 0.83, -0.92);
+    box('vDark', 0.012, 0.6, 0.012, sd * 0.318, 0.83, -1.38);
+    box('vDark', 0.07, 0.07, 0.25, sd * 1.15 + sd * 0.1, 1.0, 0.0); // exhaust
+    box('vBelly', 0.22, 0.03, 0.9, sd * 1.15, 1.205, 0.55); // nacelle top fairing
+    box('vDark', 0.015, 0.05, 0.12, sd * 0.31, 1.06, 2.1); // windscreen wiper
+    for (const z of [-0.18, 0.18]) box('black', 0.06, 0.08, 0.1, sd * 0.46, 0.04, z); // chocks
+  }
+  add('vSteel', new THREE.CylinderGeometry(0.01, 0.01, 0.3, 4), 0.42, 1.18, 0.75, 0, Math.PI / 2, 0); // pitot
+  box('vBlue', 0.62, 0.02, 0.5, 0, 1.17, -2.0); // blue spine accent before the fin
+}
+
+/**
+ * 0.1.4 small motor yacht (after art-ref/arrival/yacht_side.png, the master view): cream-white hull with a deep
+ * navy stripe and a porthole, dark antifouling below, low raked windscreen, a hard-top on a swept arch, bow rails,
+ * sand seats aft, a teak swim platform and an outboard. About 5.2 m; bow toward local +z, waterline at y = 0.
+ */
+export function addYacht(b: ArchBuilder, ox: number, oy: number, oz: number, yaw: number, s = 1): void {
+  const { add, box } = subFrame(b, ox, oy, oz, yaw, s);
+  // hull: antifouling under the waterline, white topsides with a navy stripe, a sheer that rises to the bow
+  box('vAntifoul', 1.5, 0.22, 3.7, 0, -0.08, -0.4);
+  box('vWhite', 1.6, 0.5, 3.8, 0, 0.27, -0.4);
+  box('vNavy', 1.62, 0.13, 3.82, 0, 0.3, -0.4);
+  const bow = new THREE.ConeGeometry(1.13, 1.6, 4, 1);
+  bow.rotateY(Math.PI / 4);
+  bow.scale(1, 1, 0.31); // flattened: a deep V bow (vertical after the turn below)
+  add('vWhite', bow, 0, 0.3, 2.25, 0, Math.PI / 2, 0);
+  const bowStripe = new THREE.ConeGeometry(1.15, 1.62, 4, 1);
+  bowStripe.rotateY(Math.PI / 4);
+  bowStripe.scale(1, 1, 0.08);
+  add('vNavy', bowStripe, 0, 0.3, 2.25, 0, Math.PI / 2, 0);
+  for (const sd of [-1, 1]) add('vDark', new THREE.CylinderGeometry(0.06, 0.06, 0.02, 10), sd * 0.82, 0.31, 1.25, 0, 0, Math.PI / 2); // porthole
+  // deck (white foredeck with a dark hatch, sand seats aft)
+  box('vWhite', 1.5, 0.05, 3.7, 0, 0.53, -0.4);
+  const fore = new THREE.ConeGeometry(1.06, 1.5, 4, 1);
+  fore.rotateY(Math.PI / 4);
+  fore.scale(1, 1, 0.04);
+  add('vWhite', fore, 0, 0.54, 2.2, 0, Math.PI / 2, 0);
+  box('vGlass', 0.5, 0.02, 0.5, 0, 0.57, 1.55); // foredeck hatch
+  // low cabin top and raked windscreen
+  box('vWhite', 1.3, 0.24, 1.3, 0, 0.66, 0.55);
+  add('vGlass', boxUV(1.24, 0.3, 0.03, 1), 0, 0.88, 0.95, 0, -1.05, 0);
+  for (const sd of [-1, 1]) add('vGlass', boxUV(0.03, 0.22, 0.75, 1), sd * 0.62, 0.86, 0.45, 0, 0, sd * -0.12);
+  // swept arch with a hard-top and a radome
+  for (const sd of [-1, 1]) add('vWhite', boxUV(0.08, 0.95, 0.24, 1), sd * 0.55, 1.05, -0.35, 0, -0.38, 0);
+  box('vWhite', 1.3, 0.06, 0.95, 0, 1.5, -0.2);
+  add('vWhite', new THREE.CylinderGeometry(0.16, 0.16, 0.08, 12), 0, 1.58, -0.2);
+  box('vSteel', 0.02, 0.35, 0.02, 0.25, 1.7, -0.4);
+  // seats, the stern bench, teak swim platform, outboard
+  box('vSeat', 0.45, 0.32, 0.4, -0.35, 0.72, -0.55);
+  box('vSeat', 1.2, 0.25, 0.45, 0, 0.66, -1.8);
+  box('woodPale', 1.3, 0.05, 0.4, 0, 0.12, -2.48);
+  box('vDark', 0.26, 0.55, 0.3, 0, 0.3, -2.45);
+  box('vSteel', 0.07, 0.45, 0.07, 0, -0.05, -2.5);
+  // bow rails on stanchions (the POV shot looks over them)
+  for (const sd of [-1, 1]) {
+    for (const z of [0.95, 1.55, 2.1]) box('vSteel', 0.03, 0.28, 0.03, sd * (0.68 - (z - 0.9) * 0.28), 0.7, z);
+    add('vSteel', boxUV(0.03, 0.03, 1.55, 1), sd * 0.52, 0.84, 1.6, sd * -0.2);
+  }
+  add('vSteel', boxUV(0.4, 0.03, 0.03, 1), 0, 0.84, 2.38);
+  // fenders
+  for (const sd of [-1, 1]) add('vWhite', new THREE.CylinderGeometry(0.07, 0.07, 0.3, 8), sd * 0.86, 0.2, -0.2);
+  // 0.1.4 detail: a grey rub rail along the sheer, a second thin stripe, windscreen frame, bow cleats and anchor,
+  // nav lights (red port / green starboard, white masthead), stern cleats, a swim ladder, aft fenders, the helm
+  for (const sd of [-1, 1]) {
+    box('vSteel', 0.04, 0.05, 3.8, sd * 0.81, 0.5, -0.4);
+    box('vBlue', 0.02, 0.025, 3.4, sd * 0.81, 0.14, -0.5);
+    add('vSteel', boxUV(0.03, 0.32, 0.03, 1), sd * 0.62, 0.86, 0.95, 0, -1.05, 0);
+    box('vSteel', 0.05, 0.04, 0.16, sd * 0.32, 0.58, 1.95); // bow cleat
+    box('vSteel', 0.05, 0.04, 0.16, sd * 0.62, 0.58, -2.1); // stern cleat
+    add(sd < 0 ? 'red' : 'paintMint', boxUV(0.05, 0.05, 0.1, 1), sd * 0.66, 0.68, 1.0);
+    add('vWhite', new THREE.CylinderGeometry(0.06, 0.06, 0.26, 8), sd * 0.84, 0.18, -1.7);
+  }
+  add('vSteel', boxUV(1.24, 0.03, 0.03, 1), 0, 1.02, 1.0, 0, -1.05, 0);
+  box('vSteel', 0.12, 0.08, 0.3, 0, 0.42, 2.85); // anchor on the stem
+  box('vSteel', 0.06, 0.03, 0.4, 0, 0.58, 2.5); // anchor roller / chain plate
+  add('white', new THREE.CylinderGeometry(0.035, 0.035, 0.06, 8), 0, 1.66, -0.4);
+  for (const y of [0.0, 0.1, 0.2]) box('vSteel', 0.3, 0.02, 0.03, 0.4, y, -2.7); // ladder rungs
+  for (const sd of [-1, 1]) box('vSteel', 0.02, 0.32, 0.02, 0.4 + sd * 0.15, 0.08, -2.7);
+  add('vDark', new THREE.CylinderGeometry(0.12, 0.12, 0.03, 12), 0.35, 0.86, 0.3, 0, -0.9, 0); // helm wheel
+  box('vSeat', 0.45, 0.3, 0.4, 0.35, 0.71, -0.55);
 }
 
 /** 開元港 breakwater, pier, harbour lighthouse & tetrapods. Origin = harbour apron at sea level. */
@@ -472,6 +637,24 @@ export function addLighthouse(b: ArchBuilder, h = 3.4): void {
   b.add('black', new THREE.CylinderGeometry(0.58, 0.58, 0.08, 12), 0, h + 0.04, 0);
   b.add('lamp', new THREE.CylinderGeometry(0.32, 0.32, 0.5, 12), 0, h + 0.33, 0);
   b.add('red', new THREE.ConeGeometry(0.45, 0.45, 12), 0, h + 0.8, 0);
+}
+
+/** 蘭嶼氣象站 (0.1.4): a low white office, a lattice mast and a radar dome. Origin = ground. */
+export function addWeatherStation(b: ArchBuilder): void {
+  b.box('plaster', 2.6, 1.3, 1.9, 0, 0.65, 0, 0, 1);
+  b.box('roofGrey', 2.8, 0.12, 2.1, 0, 1.36, 0, 0, 1);
+  b.box('window', 0.5, 0.36, 0.02, -0.6, 0.85, 0.96, 0, 1);
+  b.box('window', 0.5, 0.36, 0.02, 0.6, 0.85, 0.96, 0, 1);
+  b.add('white', new THREE.SphereGeometry(0.42, 12, 8), 0.7, 1.75, -0.35);
+  b.add('metal', new THREE.CylinderGeometry(0.04, 0.07, 3.2, 6), -0.95, 1.6, -0.6);
+  b.box('metal', 0.5, 0.03, 0.03, -0.95, 2.9, -0.6, 0, 1);
+}
+
+/** a small roadside waterfall (0.1.4): a wet rock face, a white water ribbon and a pool. Origin = pool. */
+export function addFalls(b: ArchBuilder): void {
+  b.box('stoneDark', 2.4, 2.6, 0.9, 0, 1.3, -0.9, 0, 1);
+  b.box('white', 0.42, 2.3, 0.08, 0, 1.25, -0.42, 0, 1);
+  b.box('paintBlue', 1.5, 0.06, 1.0, 0, 0.04, 0.05, 0, 1);
 }
 
 /** Lantern post: timber post, cross-arm and a paper lantern. Origin = ground. Returns lamp height. */

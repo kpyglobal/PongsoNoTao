@@ -3,7 +3,7 @@
  * and safe standing queries. Keeps characters on dry land or paved decks
  * and sliding around buildings, walls, and sunken 水芋田 basins.
  */
-import { AIRPORT_PLANE, CLINIC_FOOT, FOOTPRINT, PLANE_FOOT, TERMINAL_FOOT, FACILITIES, HARBOUR_LANTERN_DZ, ISLAND_CENTRE } from './layout';
+import { planePark, HARBOUR_YACHT, CLINIC_FOOT, FOOTPRINT, PLANE_FOOT, TERMINAL_FOOT, FACILITIES, HARBOUR_LANTERN_DZ, ISLAND_CENTRE, LAKES, LANDMARKS } from './layout';
 import {
   TERRAIN_BOX,
   ALL_STRUCTURES,
@@ -58,13 +58,6 @@ function addDisc(x: number, z: number, r: number): void {
   discs.push({ x, z, r, kind: 'solid' });
 }
 
-/** Local → world for a yawed frame origin. */
-function worldOf(ox: number, oz: number, lx: number, lz: number, yaw: number): { x: number; z: number } {
-  const c = Math.cos(yaw);
-  const s = Math.sin(yaw);
-  return { x: ox + lx * c + lz * s, z: oz - lx * s + lz * c };
-}
-
 /**
  * Build static colliders once (after the height grid is ready).
  * Harbor frame is placed at (harbor.x + 1.5, harbor.z) with yaw 0,
@@ -86,9 +79,11 @@ export function initCollision(): void {
 
   const t = FACILITIES.terminal;
   addSolid(t.x, t.z, t.yaw, TERMINAL_FOOT.hw, TERMINAL_FOOT.hd);
-  // commuter plane on the apron (local -1.5, 4.6 in terminal frame, yaw = -π/2)
-  const plane = worldOf(t.x, t.z, AIRPORT_PLANE.lx, AIRPORT_PLANE.lz, t.yaw);
-  addSolid(plane.x, plane.z, t.yaw, PLANE_FOOT.hw, PLANE_FOOT.hd);
+  // 0.1.4: the parked commuter plane on the runway (layout.ts planePark)
+  const plane = planePark();
+  addSolid(plane.x, plane.z, plane.yaw, PLANE_FOOT.hw, PLANE_FOOT.hd);
+  // 0.1.4: the arrival yacht moored in 開元港 (on the water beside the pier)
+  addSolid(FACILITIES.harbor.x + HARBOUR_YACHT.dx, FACILITIES.harbor.z + HARBOUR_YACHT.dz, HARBOUR_YACHT.yaw, HARBOUR_YACHT.hw, HARBOUR_YACHT.hd);
 
   const h = FACILITIES.harbor;
   const hx = h.x + 1.5;
@@ -111,6 +106,22 @@ export function initCollision(): void {
   addDisc(hx - 11.0, hz - 0.6, 0.4);
   // land-side lantern posts
   for (const dz of HARBOUR_LANTERN_DZ) addDisc(h.x + 3.2, h.z + dz, 0.28);
+
+  // 0.1.4: shore rocks you could otherwise walk through, and the built landmarks
+  for (const l of LANDMARKS) {
+    if (l.rock) {
+      const k = l.rock;
+      if (k.arch) {
+        const c = Math.cos(k.yaw), sn = Math.sin(k.yaw);
+        for (const side of [-1, 1]) addDisc(k.x + c * side * k.len * 0.36, k.z + sn * side * k.len * 0.36, k.len * 0.2 + 0.4);
+      } else addDisc(k.x, k.z, Math.min(1.6, k.len * 0.32 + 0.4));
+    }
+    if (l.at && l.build === 'lighthouse') addDisc(l.at.x, l.at.z, 1.3);
+    if (l.at && l.build === 'station') addSolid(l.at.x, l.at.z, 0, 1.5, 1.2);
+  }
+
+  // 0.1.4: the crater lakes are seen from the lookout only
+  for (const lk of LAKES) addDisc(lk.x, lk.z, lk.r + 0.4);
 
   const jl = FACILITIES.jimagaodLight;
   addDisc(jl.x, jl.z, 0.7);
