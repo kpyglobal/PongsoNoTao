@@ -9,7 +9,7 @@
       "village": "iranmeylek",
       "name": {
         "zh": "小旅客的望遠鏡",
-        "en": ""
+        "en": "The young visitor's binoculars"
       },
       "time": "day",
       "seasons": [],
@@ -21,11 +21,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q07（島上的規矩）",
+        "preEn": "Q07 (Island rules)",
         "unlock": "與小旅客的約定",
-        "kind": "小故事"
+        "unlockEn": "A promise with the young visitor",
+        "kind": "小故事",
+        "kindEn": "Short story"
       },
       "req": "Q07",
       "steps": [
@@ -33,14 +39,17 @@
           "kind": "talk",
           "npc": "kid_quest_tourist",
           "text": "和東清的小旅客聊聊",
+          "textEn": "Talk with the young visitor in Iranmeylek",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我用望遠鏡看到海邊有好漂亮的船！我可以坐上去拍照嗎？"
+              "zh": "我用望遠鏡看到海邊有好漂亮的船！我可以坐上去拍照嗎？",
+              "en": "I saw a really pretty boat on the beach with my binoculars! Can I sit in it for a photo?"
             },
             {
               "who": "@me",
-              "zh": "那是族人的拼板舟，不能隨便摸，也不能坐上去。我們一起去遠遠看。"
+              "zh": "那是族人的拼板舟，不能隨便摸，也不能坐上去。我們一起去遠遠看。",
+              "en": "That's a Tao family's plank boat. You can't just touch it or sit in it. Let's go look from far away together."
             }
           ]
         },
@@ -49,14 +58,17 @@
           "spot": "iranmeylek_beach",
           "r": 8,
           "text": "到東清灣沙灘，遠遠看灘頭上的拼板舟",
+          "textEn": "Go to the beach at Dongqing Bay and look at the plank boats from far away",
           "lines": [
             {
               "who": "旁白",
-              "zh": "灘頭上的拼板舟，是一家人和船組一起做出來的。遠遠看、不靠近、不碰觸，是對船和主人的尊重。"
+              "zh": "灘頭上的拼板舟，是一家人和船組一起做出來的。遠遠看、不靠近、不碰觸，是對船和主人的尊重。",
+              "en": "The plank boats on the beach are made by a family and a boat crew together. Looking from afar, not going near and not touching is how you respect the boat and its owners."
             },
             {
               "who": "@me",
-              "zh": "用望遠鏡看就好，連船上的花紋都看得很清楚。"
+              "zh": "用望遠鏡看就好，連船上的花紋都看得很清楚。",
+              "en": "Binoculars are enough. You can see even the patterns on the boat clearly."
             }
           ]
         },
@@ -64,10 +76,12 @@
           "kind": "talk",
           "npc": "kid_quest_tourist",
           "text": "回去告訴小旅客",
+          "textEn": "Go back and tell the young visitor",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我知道了！只用望遠鏡看，不去摸它。我也會跟爸爸媽媽說。"
+              "zh": "我知道了！只用望遠鏡看，不去摸它。我也會跟爸爸媽媽說。",
+              "en": "Got it! I'll only look with my binoculars and won't touch. I'll tell Mum and Dad too."
             }
           ],
           "gives": {
@@ -75,6 +89,10 @@
             "toast": [
               "小旅客的望遠鏡",
               "你們陪小旅客遠遠欣賞拼板舟。"
+            ],
+            "toastEn": [
+              "The young visitor's binoculars",
+              "You enjoyed the plank boats from afar with the young visitor."
             ]
           }
         }
@@ -82,7 +100,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "東清有個拿著望遠鏡的小旅客，好像對海邊的船很好奇。"
+        "fromEn": "Iranmeylek",
+        "zh": "東清有個拿著望遠鏡的小旅客，好像對海邊的船很好奇。",
+        "en": "There's a young visitor with binoculars in Iranmeylek who seems curious about the boats on the beach."
       },
       "playable": true,
       "review": [
@@ -96,7 +116,7 @@
       "village": "iratay",
       "name": {
         "zh": "愛畫畫的女孩",
-        "en": ""
+        "en": "The girl who loves drawing"
       },
       "time": "day",
       "tide": "low",
@@ -109,11 +129,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（退潮時：清晨或黃昏）",
+        "seasonEn": "All year (at low tide: dawn or dusk)",
         "pre": "Q07（島上的規矩）",
+        "preEn": "Q07 (Island rules)",
         "unlock": "女孩的寄居蟹畫",
-        "kind": "小故事"
+        "unlockEn": "The girl's hermit crab drawing",
+        "kind": "小故事",
+        "kindEn": "Short story"
       },
       "req": "Q07",
       "steps": [
@@ -121,14 +147,17 @@
           "kind": "talk",
           "npc": "kid_quest_local",
           "text": "和漁人學校旁愛畫畫的女孩聊聊",
+          "textEn": "Talk with the girl who loves drawing, next to the Iratay school",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我在畫海邊的東西。可是貝殼裡常常住著寄居蟹，我不想把牠們帶走。"
+              "zh": "我在畫海邊的東西。可是貝殼裡常常住著寄居蟹，我不想把牠們帶走。",
+              "en": "I'm drawing things from the beach. But hermit crabs often live in the shells, and I don't want to take them away."
             },
             {
               "who": "@npc",
-              "zh": "退潮的時候，你們可以陪我去灘頭看看嗎？"
+              "zh": "退潮的時候，你們可以陪我去灘頭看看嗎？",
+              "en": "At low tide, could you come with me to the beach?"
             }
           ]
         },
@@ -137,14 +166,17 @@
           "spot": "iratay_shore",
           "r": 7,
           "text": "退潮時到漁人灘頭，陪女孩觀察寄居蟹",
+          "textEn": "At low tide, go to the Iratay beach and watch hermit crabs with the girl",
           "lines": [
             {
               "who": "旁白",
-              "zh": "只看不帶走：空貝殼可能是寄居蟹的家，翻過的石頭要放回原來的地方。"
+              "zh": "只看不帶走：空貝殼可能是寄居蟹的家，翻過的石頭要放回原來的地方。",
+              "en": "Look but don't take: an empty shell may be a hermit crab's home, and put any stones you turn back where they were."
             },
             {
               "who": "@me",
-              "zh": "找到了！牠背著貝殼慢慢走。我們看就好。"
+              "zh": "找到了！牠背著貝殼慢慢走。我們看就好。",
+              "en": "Found one! It's walking slowly with its shell. We'll just watch."
             }
           ]
         },
@@ -152,10 +184,12 @@
           "kind": "talk",
           "npc": "kid_quest_local",
           "text": "回去看女孩的畫",
+          "textEn": "Go back and see the girl's drawing",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我把牠畫進本子了！牠還在原來的地方，真好。"
+              "zh": "我把牠畫進本子了！牠還在原來的地方，真好。",
+              "en": "I drew it in my book! And it's still where it was. That's nice."
             }
           ],
           "gives": {
@@ -163,6 +197,10 @@
             "toast": [
               "愛畫畫的女孩",
               "女孩把寄居蟹畫進了她的本子。"
+            ],
+            "toastEn": [
+              "The girl who loves drawing",
+              "The girl drew the hermit crab in her book."
             ]
           }
         }
@@ -170,7 +208,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人學校旁有個拿著素描本的女孩，她想畫寄居蟹。"
+        "fromEn": "Iratay",
+        "zh": "漁人學校旁有個拿著素描本的女孩，她想畫寄居蟹。",
+        "en": "There's a girl with a sketchbook next to the Iratay school. She wants to draw hermit crabs."
       },
       "playable": true,
       "review": [

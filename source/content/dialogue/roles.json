@@ -5,7 +5,8 @@
       "npc": "clinic_doctor",
       "greet": [
         {
-          "zh": "你好，哪裡不舒服嗎？"
+          "zh": "你好，哪裡不舒服嗎？",
+          "en": "Hello. Are you feeling unwell?"
         }
       ],
       "idle": [
@@ -15,10 +16,12 @@
           },
           "lines": [
             {
-              "zh": "下水前先看海況，身體不舒服就不要下去。"
+              "zh": "下水前先看海況，身體不舒服就不要下去。",
+              "en": "Check the sea first before going in. If you don't feel well, stay out."
             },
             {
-              "zh": "島上沒有大醫院，小傷也要好好處理。"
+              "zh": "島上沒有大醫院，小傷也要好好處理。",
+              "en": "There's no big hospital on the island. Take care of even small injuries."
             }
           ]
         },
@@ -28,7 +31,8 @@
           },
           "lines": [
             {
-              "zh": "晚上有急事，先打衛生所的電話。"
+              "zh": "晚上有急事，先打衛生所的電話。",
+              "en": "If something urgent happens at night, call the health station first."
             }
           ]
         }
@@ -38,7 +42,8 @@
       "npc": "nutritionist",
       "greet": [
         {
-          "zh": "嗨！想聊聊吃什麼嗎？"
+          "zh": "嗨！想聊聊吃什麼嗎？",
+          "en": "Hi! Want to talk about food?"
         }
       ],
       "idle": [
@@ -48,10 +53,12 @@
           },
           "lines": [
             {
-              "zh": "芋頭、地瓜、飛魚，搭配起來營養很完整。"
+              "zh": "芋頭、地瓜、飛魚，搭配起來營養很完整。",
+              "en": "Taro, sweet potato and flying fish together make a very complete meal."
             },
             {
-              "zh": "泡麵方便，可是不能天天吃喔。"
+              "zh": "泡麵方便，可是不能天天吃喔。",
+              "en": "Instant noodles are handy, but not every day!"
             }
           ]
         },
@@ -61,7 +68,8 @@
           },
           "lines": [
             {
-              "zh": "晚餐吃清淡一點，明天比較有精神。"
+              "zh": "晚餐吃清淡一點，明天比較有精神。",
+              "en": "Eat something light for dinner and you'll have more energy tomorrow."
             }
           ]
         }
@@ -72,6 +80,7 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
@@ -82,10 +91,12 @@
           },
           "lines": [
             {
-              "zh": "想認識部落，先學會問：可以嗎？"
+              "zh": "想認識部落，先學會問：可以嗎？",
+              "en": "To get to know a village, first learn to ask: \"Is this okay?\""
             },
             {
-              "zh": "有些地方是聖地，遠遠看就好。"
+              "zh": "有些地方是聖地，遠遠看就好。",
+              "en": "Some places are sacred. Just look from afar."
             }
           ]
         },
@@ -95,7 +106,8 @@
           },
           "lines": [
             {
-              "zh": "晚上部落裡的故事，要長輩願意說，才可以聽。"
+              "zh": "晚上部落裡的故事，要長輩願意說，才可以聽。",
+              "en": "Village stories at night are only for listening when the elders want to tell them."
             }
           ]
         },
@@ -107,7 +119,8 @@
           },
           "lines": [
             {
-              "zh": "飛魚季的灘頭，訪客不要進去。"
+              "zh": "飛魚季的灘頭，訪客不要進去。",
+              "en": "In flying fish season, visitors should stay off the boat beach."
             }
           ]
         }
@@ -117,10 +130,12 @@
       "npc": "geologist",
       "greet": [
         {
-          "zh": "哦，你好！你看這塊石頭——"
+          "zh": "哦，你好！你看這塊石頭——",
+          "en": "Oh, hello! Look at this rock —"
         },
         {
-          "zh": "抱歉，我太興奮了。"
+          "zh": "抱歉，我太興奮了。",
+          "en": "Sorry, I got too excited."
         }
       ],
       "idle": [
@@ -130,10 +145,12 @@
           },
           "lines": [
             {
-              "zh": "蘭嶼是火山島，這些黑色的岩石都是很久以前的熔岩。"
+              "zh": "蘭嶼是火山島，這些黑色的岩石都是很久以前的熔岩。",
+              "en": "Lanyu is a volcanic island. These black rocks are lava from long, long ago."
             },
             {
-              "zh": "海浪把岩石切成各種形狀，族人也給它們取了名字。"
+              "zh": "海浪把岩石切成各種形狀，族人也給它們取了名字。",
+              "en": "The waves cut the rocks into all kinds of shapes, and the Tao people gave them names."
             }
           ]
         },
@@ -143,7 +160,8 @@
           },
           "lines": [
             {
-              "zh": "晚上我就整理白天的筆記。"
+              "zh": "晚上我就整理白天的筆記。",
+              "en": "At night I sort out my notes from the day."
             }
           ]
         }

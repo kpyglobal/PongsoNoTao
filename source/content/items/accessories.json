@@ -5,12 +5,15 @@
       "id": "acc_woven_band",
       "name": {
         "zh": "織草帽",
+        "en": "Woven straw hat",
         "tao": ""
       },
       "category": "accessory",
       "collectible": true,
       "description": "族女用原色的天然纖維替旅人編的草帽，帽上一圈素色的纖維帶。",
+      "descriptionEn": "A straw hat the Tao woman wove for the traveller from natural, undyed fibre, with a plain fibre band.",
       "codex": "沒有染色、沒有花紋的日常草帽，是朋友之間的心意，不是傳統服飾，也不帶祭儀紋樣。",
+      "codexEn": "An everyday hat with no dye and no pattern. A gift between friends — not traditional clothing, and no ceremonial patterns.",
       "icon": "icon_acc_woven_band",
       "illustration": "illus_acc_woven_band",
       "equip": {
@@ -28,12 +31,15 @@
       "id": "acc_bag_strap",
       "name": {
         "zh": "織草小袋",
+        "en": "Small woven pouch",
         "tao": ""
       },
       "category": "accessory",
       "collectible": true,
       "description": "族女用原色纖維編的小袋子，掛在一條素色的扭繩上。",
+      "descriptionEn": "A little pouch the Tao woman wove from natural fibre, hung on a plain twisted cord.",
       "codex": "小小的原色織袋，可以裝零錢或撿到的漂亮石頭（看完要放回去）。日常用品，不是傳統服飾。",
+      "codexEn": "A small undyed woven pouch for coins or pretty stones you find (put them back after looking). An everyday item, not traditional clothing.",
       "icon": "icon_acc_bag_strap",
       "illustration": "illus_acc_bag_strap",
       "equip": {

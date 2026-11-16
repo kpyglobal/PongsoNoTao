@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "開墾、整地、引水",
-        "en": ""
+        "en": "Clear, level and water the field"
       },
       "time": "day",
       "seasons": [],
@@ -19,8 +19,11 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "等待飛魚期",
+        "seasonEn": "Waiting for flying fish season",
         "pre": "Q03",
         "unlock": "R2",
         "kind": ""
@@ -34,10 +37,12 @@
             "m"
           ],
           "text": "向女性長輩接下工作：開墾、整地、引水",
+          "textEn": "Take a job from the woman elder: clear, level and water the field",
           "lines": [
             {
               "who": "@npc",
-              "zh": "田要重新整理：開墾、整地、把水引進來，就交給你了。做好了回來跟我說。"
+              "zh": "田要重新整理：開墾、整地、把水引進來，就交給你了。做好了回來跟我說。",
+              "en": "The field needs redoing: clear it, level it and bring the water in. It's up to you. Come tell me when you're done."
             }
           ]
         },
@@ -49,14 +54,17 @@
             "m"
           ],
           "text": "族男到主人家的水芋田，幫忙開墾、整地、引水",
+          "textEn": "The Tao man goes to the host family's taro field to help clear, level and water it",
           "lines": [
             {
               "who": "@m",
-              "zh": "先把田裡的雜石搬開，再把水道清乾淨，讓山上的水流進田裡。"
+              "zh": "先把田裡的雜石搬開，再把水道清乾淨，讓山上的水流進田裡。",
+              "en": "First move the loose stones out of the field, then clear the channel so the mountain water flows in."
             },
             {
               "who": "旁白",
-              "zh": "依文獻記載，開墾水芋田多由男子負責，種植、除草與採收多由女子負責；各家做法不同，細節還要請族人確認。"
+              "zh": "依文獻記載，開墾水芋田多由男子負責，種植、除草與採收多由女子負責；各家做法不同，細節還要請族人確認。",
+              "en": "According to written records, men usually clear taro fields, while women usually plant, weed and harvest. Each family is different; details still need checking with the community."
             }
           ],
           "gives": {
@@ -72,10 +80,12 @@
             "m"
           ],
           "text": "向女性長輩回報：開墾、整地、引水",
+          "textEn": "Report to the woman elder: cleared, levelled and watered",
           "lines": [
             {
               "who": "@npc",
-              "zh": "田整理好了？我看過了，做得很好。"
+              "zh": "田整理好了？我看過了，做得很好。",
+              "en": "Field ready? I checked. Well done."
             }
           ]
         }
@@ -83,7 +93,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "主人家的水芋田要先整地、引水，請族男去幫忙。"
+        "fromEn": "Host family",
+        "zh": "主人家的水芋田要先整地、引水，請族男去幫忙。",
+        "en": "The host family's taro field needs levelling and watering first. Ask the Tao man to help."
       },
       "playable": true,
       "giver": "f"
@@ -95,7 +107,7 @@
       "village": null,
       "name": {
         "zh": "種植水芋",
-        "en": ""
+        "en": "Plant taro"
       },
       "time": "day",
       "seasons": [],
@@ -105,8 +117,11 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "待確認",
+        "seasonEn": "To be confirmed",
         "pre": "R1",
         "unlock": "R3",
         "kind": ""
@@ -120,10 +135,12 @@
             "f"
           ],
           "text": "向女性長輩接下工作：種植水芋",
+          "textEn": "Take a job from the woman elder: plant taro",
           "lines": [
             {
               "who": "@npc",
-              "zh": "水芋可以種了，這件事交給你。做好了回來跟我說。"
+              "zh": "水芋可以種了，這件事交給你。做好了回來跟我說。",
+              "en": "The taro can go in now. It's up to you. Come tell me when you're done."
             }
           ]
         },
@@ -135,10 +152,12 @@
             "f"
           ],
           "text": "族女到水芋田種植水芋",
+          "textEn": "The Tao woman plants taro in the taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "水引進來了，可以種了。種法和時間我再問問家裡的長輩。"
+              "zh": "水引進來了，可以種了。種法和時間我再問問家裡的長輩。",
+              "en": "The water's in, so we can plant. I'll ask the elders at home about how and when."
             }
           ]
         },
@@ -149,10 +168,12 @@
             "f"
           ],
           "text": "向女性長輩回報：種植水芋",
+          "textEn": "Report to the woman elder: taro planted",
           "lines": [
             {
               "who": "@npc",
-              "zh": "種好了？我看過了，做得很好。"
+              "zh": "種好了？我看過了，做得很好。",
+              "en": "All planted? I checked. Well done."
             }
           ]
         }
@@ -160,7 +181,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "田整好了，換族女去種水芋。"
+        "fromEn": "Host family",
+        "zh": "田整好了，換族女去種水芋。",
+        "en": "The field is ready. Now the Tao woman plants the taro."
       },
       "playable": true,
       "giver": "f"
@@ -172,7 +195,7 @@
       "village": null,
       "name": {
         "zh": "除草、照顧田地",
-        "en": ""
+        "en": "Weed and look after the field"
       },
       "time": "day",
       "seasons": [],
@@ -182,10 +205,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（可重複）",
+        "seasonEn": "All year (repeatable)",
         "pre": "R2",
         "unlock": "R4、R5、生態值、E2",
+        "unlockEn": "R4, R5, nature points, E2",
         "kind": ""
       },
       "req": "R2",
@@ -197,10 +224,12 @@
             "f"
           ],
           "text": "向女性長輩接下工作：除草、照顧田地",
+          "textEn": "Take a job from the woman elder: weed and look after the field",
           "lines": [
             {
               "who": "@npc",
-              "zh": "田裡的草又長出來了，去除一除、照顧一下。做好了回來跟我說。"
+              "zh": "田裡的草又長出來了，去除一除、照顧一下。做好了回來跟我說。",
+              "en": "The weeds are back in the field. Go pull them and tidy up. Come tell me when you're done."
             }
           ]
         },
@@ -212,10 +241,12 @@
             "f"
           ],
           "text": "族女到水芋田除草、照顧田地",
+          "textEn": "The Tao woman weeds and looks after the taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "把田裡的雜草拔掉，水芋才長得好。"
+              "zh": "把田裡的雜草拔掉，水芋才長得好。",
+              "en": "Pull out the weeds so the taro grows well."
             }
           ],
           "gives": {
@@ -231,10 +262,12 @@
             "f"
           ],
           "text": "向女性長輩回報：除草、照顧田地",
+          "textEn": "Report to the woman elder: weeded the field",
           "lines": [
             {
               "who": "@npc",
-              "zh": "草拔完了？我看過了，做得很好。"
+              "zh": "草拔完了？我看過了，做得很好。",
+              "en": "All weeded? I checked. Well done."
             }
           ]
         }
@@ -242,7 +275,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "水芋田要常常除草，族女會去照顧。"
+        "fromEn": "Host family",
+        "zh": "水芋田要常常除草，族女會去照顧。",
+        "en": "The taro field needs weeding often. The Tao woman will look after it."
       },
       "playable": true,
       "giver": "f"
@@ -254,7 +289,7 @@
       "village": null,
       "name": {
         "zh": "採收水芋",
-        "en": ""
+        "en": "Harvest taro"
       },
       "time": "day",
       "seasons": [],
@@ -264,10 +299,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "待確認",
+        "seasonEn": "To be confirmed",
         "pre": "R3",
         "unlock": "糧倉、R6、T5",
+        "unlockEn": "Food store, R6, T5",
         "kind": ""
       },
       "req": "R3",
@@ -276,10 +315,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩說：水芋可以採收了",
+          "textEn": "The woman elder says: the taro is ready to harvest",
           "lines": [
             {
               "who": "@npc",
-              "zh": "葉子長得夠大了，可以採了。挑大的，小的留著。"
+              "zh": "葉子長得夠大了，可以採了。挑大的，小的留著。",
+              "en": "The leaves are big enough. Time to pick. Take the big ones and leave the small ones."
             }
           ],
           "actor": [
@@ -291,10 +332,12 @@
           "spot": "host_taro",
           "r": 6,
           "text": "族女到家裡的水芋田採收",
+          "textEn": "The Tao woman harvests taro in the family's taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "腳踩穩，手順著莖往下摸，整顆拔起來。"
+              "zh": "腳踩穩，手順著莖往下摸，整顆拔起來。",
+              "en": "Plant your feet, run your hand down the stem and pull the whole thing up."
             }
           ],
           "actor": [
@@ -313,10 +356,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "採得好。一部分收進糧倉，一部分今天煮。"
+              "zh": "採得好。一部分收進糧倉，一部分今天煮。",
+              "en": "Well picked. Some go in the food store, some we cook today."
             }
           ],
           "actor": [
@@ -329,6 +374,10 @@
             "toast": [
               "糧倉",
               "水芋收成了。"
+            ],
+            "toastEn": [
+              "Food store",
+              "The taro is harvested."
             ]
           }
         }
@@ -336,7 +385,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "水芋長大了，女性長輩會叫族女去採收。"
+        "fromEn": "Host family",
+        "zh": "水芋長大了，女性長輩會叫族女去採收。",
+        "en": "The taro has grown. The woman elder will send the Tao woman to harvest it."
       },
       "playable": true,
       "giver": "f"
@@ -348,7 +399,7 @@
       "village": null,
       "name": {
         "zh": "旅人協助採收、學料理（女旅版內容較多）",
-        "en": ""
+        "en": "The traveller helps with the harvest and learns to cook (more content for a female traveller)"
       },
       "time": "day",
       "seasons": [],
@@ -362,10 +413,15 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋族女",
+        "coopEn": "Pair: Traveller + Tao woman",
         "season": "非祭典時期",
+        "seasonEn": "Outside festival times",
         "pre": "R3、尊重值「學習中」",
+        "preEn": "R3, respect \"Learning\"",
         "unlock": "尊重值、水芋卡",
+        "unlockEn": "Respect points, taro card",
         "kind": ""
       },
       "req": {
@@ -381,10 +437,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "女性長輩讓旅人一起去採水芋",
+          "textEn": "The woman elder lets the traveller come and pick taro",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今天採水芋，你也來。先看族女怎麼做，再試試看。"
+              "zh": "今天採水芋，你也來。先看族女怎麼做，再試試看。",
+              "en": "We're picking taro today. You come too. Watch how the Tao woman does it first, then try."
             }
           ],
           "need": [
@@ -397,14 +455,17 @@
           "spot": "host_taro",
           "r": 6,
           "text": "旅人跟著族女，在水芋田裡試著採收",
+          "textEn": "The traveller follows the Tao woman and tries harvesting in the taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "腳慢慢踩，不要把田埂踩壞。"
+              "zh": "腳慢慢踩，不要把田埂踩壞。",
+              "en": "Step slowly. Don't break the field bank."
             },
             {
               "who": "@t",
-              "zh": "拔起來了！比想像中重好多。"
+              "zh": "拔起來了！比想像中重好多。",
+              "en": "It's out! So much heavier than I thought."
             }
           ],
           "actor": [
@@ -425,10 +486,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "回家學煮水芋",
+          "textEn": "Go home and learn to cook taro",
           "lines": [
             {
               "who": "@npc",
-              "zh": "水芋洗乾淨，整顆下鍋煮。不加什麼，就很好吃。"
+              "zh": "水芋洗乾淨，整顆下鍋煮。不加什麼，就很好吃。",
+              "en": "Wash the taro and put it in the pot whole. Nothing added — it's delicious."
             }
           ],
           "need": [
@@ -443,6 +506,10 @@
             "toast": [
               "水芋卡",
               "旅人跟著族女採收、學煮水芋。"
+            ],
+            "toastEn": [
+              "Taro card",
+              "The traveller harvested and learned to cook taro with the Tao woman."
             ]
           }
         }
@@ -450,7 +517,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "旅人可以跟族女一起去採水芋，回來學怎麼煮。"
+        "fromEn": "Host family",
+        "zh": "旅人可以跟族女一起去採水芋，回來學怎麼煮。",
+        "en": "The traveller can go pick taro with the Tao woman, then learn how to cook it."
       },
       "playable": true,
       "giver": "f",
@@ -465,7 +534,7 @@
       "village": null,
       "name": {
         "zh": "水煮芋頭",
-        "en": ""
+        "en": "Boiled taro"
       },
       "time": "day",
       "seasons": [],
@@ -475,10 +544,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "R4",
         "unlock": "水煮芋頭料理卡",
+        "unlockEn": "Boiled taro recipe card",
         "kind": ""
       },
       "req": "R4",
@@ -487,10 +560,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩請族女煮水芋",
+          "textEn": "The woman elder asks the Tao woman to cook taro",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今天的水芋，整顆水煮就好。"
+              "zh": "今天的水芋，整顆水煮就好。",
+              "en": "Today's taro — just boil it whole."
             }
           ],
           "actor": [
@@ -502,10 +577,12 @@
           "spot": "host_home",
           "r": 7,
           "text": "族女把水芋洗淨，整顆下鍋煮",
+          "textEn": "The Tao woman washes the taro and puts it in the pot whole",
           "lines": [
             {
               "who": "@f",
-              "zh": "煮到筷子插得進去，就好了。"
+              "zh": "煮到筷子插得進去，就好了。",
+              "en": "When a chopstick goes in easily, it's done."
             }
           ],
           "actor": [
@@ -521,10 +598,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "請女性長輩嚐嚐",
+          "textEn": "Ask the woman elder to taste it",
           "lines": [
             {
               "who": "@npc",
-              "zh": "鬆鬆的，很香。妳會煮了。"
+              "zh": "鬆鬆的，很香。妳會煮了。",
+              "en": "Soft and fragrant. You know how to cook it now."
             }
           ],
           "actor": [
@@ -537,6 +616,10 @@
             "toast": [
               "水煮芋頭料理卡",
               "族女學會水煮芋頭。"
+            ],
+            "toastEn": [
+              "Boiled taro recipe card",
+              "The Tao woman learned to make boiled taro."
             ]
           }
         }
@@ -544,7 +627,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "採收之後，族女可以學煮水芋。"
+        "fromEn": "Host family",
+        "zh": "採收之後，族女可以學煮水芋。",
+        "en": "After the harvest, the Tao woman can learn to cook taro."
       },
       "playable": true,
       "giver": "f"
@@ -556,7 +641,7 @@
       "village": null,
       "name": {
         "zh": "採收 5 顆芋頭給主人家",
-        "en": ""
+        "en": "Harvest 5 taro for the host family"
       },
       "time": "day",
       "seasons": [],
@@ -566,11 +651,16 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "待確認",
+        "seasonEn": "To be confirmed",
         "pre": "R4",
         "unlock": "糧倉、W1、W2（同一次採收也算 R6）",
-        "kind": "數量 5"
+        "unlockEn": "Food store, W1, W2 (the same harvest also counts for R6)",
+        "kind": "數量 5",
+        "kindEn": "Count 5"
       },
       "req": "R4",
       "steps": [
@@ -578,10 +668,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩要族女採五顆芋頭給主人家",
+          "textEn": "The woman elder wants the Tao woman to pick five taro for the host family",
           "lines": [
             {
               "who": "@npc",
-              "zh": "家裡要五顆芋頭，挑大的。"
+              "zh": "家裡要五顆芋頭，挑大的。",
+              "en": "We need five taro at home. Pick big ones."
             }
           ],
           "actor": [
@@ -593,10 +685,12 @@
           "spot": "host_taro",
           "r": 6,
           "text": "族女到家裡的水芋田採五顆芋頭",
+          "textEn": "The Tao woman picks five taro in the family's taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "一、二、三、四、五。夠了。"
+              "zh": "一、二、三、四、五。夠了。",
+              "en": "One, two, three, four, five. That's enough."
             }
           ],
           "actor": [
@@ -617,10 +711,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "把芋頭交給女性長輩",
+          "textEn": "Give the taro to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "五顆都很大。收進糧倉吧。"
+              "zh": "五顆都很大。收進糧倉吧。",
+              "en": "All five are big. Put them in the food store."
             }
           ],
           "actor": [
@@ -636,6 +732,10 @@
             "toast": [
               "糧倉",
               "五顆芋頭收進糧倉。"
+            ],
+            "toastEn": [
+              "Food store",
+              "Five taro are in the food store."
             ]
           }
         }
@@ -643,7 +743,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "主人家需要五顆芋頭，族女去田裡採。"
+        "fromEn": "Host family",
+        "zh": "主人家需要五顆芋頭，族女去田裡採。",
+        "en": "The host family needs five taro. The Tao woman goes to pick them."
       },
       "playable": true,
       "giver": "f"

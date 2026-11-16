@@ -21,7 +21,7 @@
       "arc": "split",
       "name": {
         "zh": "飛魚季前，三人分頭準備",
-        "en": ""
+        "en": "Before flying fish season, three errands"
       },
       "need": [
         "m",
@@ -33,11 +33,16 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人分頭（可切換）",
+        "coopEn": "Three split up (switchable)",
         "season": "飛魚季前（招魚祭前後）",
+        "seasonEn": "Before flying fish season (around the fish-calling festival)",
         "pre": "Q07、K4、K5",
         "unlock": "IM-M1、OF1（M3 不必等它，可先做）",
-        "kind": "三方分頭＋集合"
+        "unlockEn": "IM-M1, OF1 (M3 doesn't need to wait for it)",
+        "kind": "三方分頭＋集合",
+        "kindEn": "Three-way split + regroup"
       },
       "req": {
         "all": [
@@ -56,38 +61,46 @@
             "t"
           ],
           "text": "主人家長輩請三個人分頭去準備飛魚季",
+          "textEn": "The host family elder sends the three off to prepare for flying fish season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季快到了，家裡要準備的事很多。你們三個分頭去，比較快。"
+              "zh": "飛魚季快到了，家裡要準備的事很多。你們三個分頭去，比較快。",
+              "en": "Flying fish season is almost here, and there's a lot to prepare at home. It's quicker if you three split up."
             },
             {
               "who": "@npc",
-              "zh": "族男去東清，東清的長輩會教你看繩索和槳；族女去朗島的水芋田，女性長輩在準備飛魚季要吃的芋頭；旅人去朗島找部落文化工作者，聽聽飛魚季時訪客要注意什麼。"
+              "zh": "族男去東清，東清的長輩會教你看繩索和槳；族女去朗島的水芋田，女性長輩在準備飛魚季要吃的芋頭；旅人去朗島找部落文化工作者，聽聽飛魚季時訪客要注意什麼。",
+              "en": "Tao man, go to Iranmeylek — the elder there will teach you to check ropes and paddles. Tao woman, go to the Iraraley taro field — the woman elder is preparing taro for flying fish season. Traveller, go to Iraraley and find the village culture worker to learn what visitors should mind in flying fish season."
             },
             {
               "who": "@npc",
-              "zh": "三個人都辦完，再回主人家集合。人沒到齊，我們就不往下說。"
+              "zh": "三個人都辦完，再回主人家集合。人沒到齊，我們就不往下說。",
+              "en": "When all three of you are done, meet back at the host family. We won't go on until everyone's here."
             },
             {
               "who": "旁白",
-              "zh": "隊伍分頭行動：點左上角頭像切換隊員，鏡頭會跳到那位隊員所在的地方。三人都完成並回到主人家，故事才會繼續。"
+              "zh": "隊伍分頭行動：點左上角頭像切換隊員，鏡頭會跳到那位隊員所在的地方。三人都完成並回到主人家，故事才會繼續。",
+              "en": "The party splits up: tap a portrait at the top left to switch members, and the camera jumps to where that member is. The story continues once all three are done and back at the host family."
             }
           ],
           "split": {
             "m": {
               "at": "iranmeylek",
               "task": "到東清找東清的長輩",
+              "taskEn": "finding the elder in Iranmeylek",
               "ctrl": true
             },
             "f": {
               "at": "taro_iraraley",
               "task": "到朗島水芋田幫女性長輩",
+              "taskEn": "helping the woman elder at the Iraraley taro field",
               "ctrl": true
             },
             "t": {
               "at": "iraraley",
               "task": "到朗島找部落文化工作者",
+              "taskEn": "finding the culture worker in Iraraley",
               "ctrl": true
             }
           },
@@ -96,24 +109,29 @@
         {
           "kind": "tasks",
           "text": "三人分頭準備（族男：東清／族女：朗島水芋田／旅人：朗島）",
+          "textEn": "Three-way preparation (Tao man: Iranmeylek / Tao woman: Iraraley taro field / Traveller: Iraraley)",
           "tasks": [
             {
               "role": "m",
               "kind": "talk",
               "npc": "elder_iranmeylek",
               "text": "族男向東清的長輩學看繩索與槳",
+              "textEn": "The Tao man learns to check ropes and paddles from the Iranmeylek elder",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "主人家叫你來的？好。繩子有沒有磨損、槳有沒有裂，出海前都要自己看過。"
+                  "zh": "主人家叫你來的？好。繩子有沒有磨損、槳有沒有裂，出海前都要自己看過。",
+                  "en": "The host family sent you? Good. Before going to sea, check for yourself whether the ropes are worn or the paddles cracked."
                 },
                 {
                   "who": "@npc",
-                  "zh": "海上的事，是男人要負責的。看不懂的就問，不要裝懂。"
+                  "zh": "海上的事，是男人要負責的。看不懂的就問，不要裝懂。",
+                  "en": "The sea is the men's responsibility. If you don't understand, ask. Don't pretend."
                 },
                 {
                   "who": "@m",
-                  "zh": "我記住了，回去跟長輩說。"
+                  "zh": "我記住了，回去跟長輩說。",
+                  "en": "Got it. I'll tell the elder."
                 }
               ]
             },
@@ -122,18 +140,22 @@
               "kind": "talk",
               "npc": "elder_f_iraraley",
               "text": "族女幫朗島的女性長輩準備芋頭",
+              "textEn": "The Tao woman helps the Iraraley woman elder prepare taro",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "飛魚季男人出海，家裡要有足夠的芋頭。田裡的事，我們女人來安排。"
+                  "zh": "飛魚季男人出海，家裡要有足夠的芋頭。田裡的事，我們女人來安排。",
+                  "en": "In flying fish season the men go to sea, so the house needs enough taro. We women plan the field work."
                 },
                 {
                   "who": "@npc",
-                  "zh": "這幾顆拿回去給主人家。"
+                  "zh": "這幾顆拿回去給主人家。",
+                  "en": "Take these back to the host family."
                 },
                 {
                   "who": "@f",
-                  "zh": "謝謝您，我會帶回去。"
+                  "zh": "謝謝您，我會帶回去。",
+                  "en": "Thank you, I'll take them back."
                 }
               ],
               "gives": {
@@ -147,18 +169,22 @@
               "kind": "talk",
               "npc": "culture_worker",
               "text": "旅人向部落文化工作者請教飛魚季的訪客禮節",
+              "textEn": "The traveller asks the village culture worker about visitor manners in flying fish season",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "飛魚季時，灘頭和船都有規矩。訪客不進灘頭、不碰船，也不要對著出海的人拍照。"
+                  "zh": "飛魚季時，灘頭和船都有規矩。訪客不進灘頭、不碰船，也不要對著出海的人拍照。",
+                  "en": "In flying fish season, the beach and the boats have rules. Visitors don't go onto the beach, don't touch the boats, and don't photograph the people going to sea."
                 },
                 {
                   "who": "@npc",
-                  "zh": "不確定能不能做，就先問，或乾脆不要做。"
+                  "zh": "不確定能不能做，就先問，或乾脆不要做。",
+                  "en": "If you're not sure something is okay, ask first — or just don't do it."
                 },
                 {
                   "who": "@t",
-                  "zh": "好，我會記住，也會提醒其他遊客。"
+                  "zh": "好，我會記住，也會提醒其他遊客。",
+                  "en": "Okay, I'll remember, and I'll remind other tourists too."
                 }
               ],
               "gives": {
@@ -180,18 +206,22 @@
           ],
           "regroup": true,
           "text": "三人回到主人家集合",
+          "textEn": "All three meet back at the host family",
           "lines": [
             {
               "who": "@m",
-              "zh": "繩子和槳我都看過了。"
+              "zh": "繩子和槳我都看過了。",
+              "en": "I checked the ropes and paddles."
             },
             {
               "who": "@f",
-              "zh": "芋頭拿回來了。"
+              "zh": "芋頭拿回來了。",
+              "en": "I brought the taro back."
             },
             {
               "who": "@t",
-              "zh": "我也問清楚飛魚季的規矩了。"
+              "zh": "我也問清楚飛魚季的規矩了。",
+              "en": "And I asked about the flying fish season rules."
             }
           ]
         },
@@ -204,14 +234,17 @@
             "t"
           ],
           "text": "向主人家長輩回報，準備迎接飛魚季",
+          "textEn": "Report to the host family elder and get ready for flying fish season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "大家都回來了。海上、田裡、外面的人，三邊都顧到了，飛魚季才能好好過。"
+              "zh": "大家都回來了。海上、田裡、外面的人，三邊都顧到了，飛魚季才能好好過。",
+              "en": "Everyone's back. The sea, the fields and the outside world — all three are covered, so flying fish season can go well."
             },
             {
               "who": "@npc",
-              "zh": "等紅頭那邊宣告飛魚季開始，族男跟船組出海會更順利。"
+              "zh": "等紅頭那邊宣告飛魚季開始，族男跟船組出海會更順利。",
+              "en": "Once Imorod announces the start of flying fish season, the Tao man's trip to sea with the crew will go more smoothly."
             }
           ],
           "gives": {
@@ -221,6 +254,10 @@
             "toast": [
               "飛魚季準備好了",
               "三人都完成了自己的部分，大家一起回到主人家。"
+            ],
+            "toastEn": [
+              "Ready for flying fish season",
+              "All three did their part, and everyone is back at the host family."
             ]
           }
         }
@@ -228,7 +265,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季前，主人家長輩會請三個人分頭準備；三個人都辦完、回家集合，故事才會往下走。"
+        "fromEn": "Host family",
+        "zh": "飛魚季前，主人家長輩會請三個人分頭準備；三個人都辦完、回家集合，故事才會往下走。",
+        "en": "Before flying fish season, the host family elder will send the three off to prepare. The story moves on once all three are done and back home."
       }
     },
     {
@@ -249,7 +288,7 @@
       "arc": "split",
       "name": {
         "zh": "幫船組把造舟木材從山上搬下來",
-        "en": ""
+        "en": "Help the boat crew carry boat timber down the mountain"
       },
       "giver": "m",
       "review": [
@@ -258,10 +297,15 @@
       ],
       "text": {
         "who": "族男離隊，族女＋旅人支援",
+        "whoEn": "Tao man leaves the party; Tao woman + Traveller help",
         "coop": "族男暫時離隊；其他人送午餐再接他回來",
+        "coopEn": "The Tao man leaves for a while; the others bring lunch and bring him back",
         "season": "非飛魚季",
+        "seasonEn": "Outside flying fish season",
         "pre": "K4（認識朗島的人）、M1",
+        "preEn": "K4 (met someone in Iraraley), M1",
         "unlock": "族男回隊、朗島長輩的信任",
+        "unlockEn": "Tao man rejoins, trust of the Iraraley elder",
         "kind": ""
       },
       "req": {
@@ -278,24 +322,29 @@
             "m"
           ],
           "text": "族男向朗島的長輩接下工作：跟船組上山搬木材",
+          "textEn": "The Tao man takes a job from the Iraraley elder: carry timber down the mountain with the crew",
           "lines": [
             {
               "who": "@npc",
-              "zh": "船組今天要把木材從山上搬下來，人手不夠。你跟我們上去，這要忙一整天。"
+              "zh": "船組今天要把木材從山上搬下來，人手不夠。你跟我們上去，這要忙一整天。",
+              "en": "The crew is bringing timber down the mountain today and we're short of hands. Come up with us — it'll take all day."
             },
             {
               "who": "@npc",
-              "zh": "其他人不用跟上山。中午記得送吃的到山腳的步道口，就在那裡等，不要往裡面走。"
+              "zh": "其他人不用跟上山。中午記得送吃的到山腳的步道口，就在那裡等，不要往裡面走。",
+              "en": "The others don't need to come up. At noon, bring food to the trailhead at the foot of the mountain and wait there. Don't go further in."
             },
             {
               "who": "旁白",
-              "zh": "族男暫時離隊，這段時間不能操控他；需要族男的任務也先暫停。"
+              "zh": "族男暫時離隊，這段時間不能操控他；需要族男的任務也先暫停。",
+              "en": "The Tao man has left the party for now, so you can't control him. Quests that need him are paused too."
             }
           ],
           "split": {
             "m": {
               "at": "dasenshan",
               "task": "跟船組上山搬造舟木材",
+              "taskEn": "carrying boat timber down the mountain with the crew",
               "ctrl": false
             }
           }
@@ -308,14 +357,17 @@
             "t"
           ],
           "text": "族女或旅人向朗島的女性長輩拿午餐",
+          "textEn": "The Tao woman or the traveller gets lunch from the Iraraley woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "上山工作的人要吃得飽。芋頭和地瓜我煮好了，包起來帶去。"
+              "zh": "上山工作的人要吃得飽。芋頭和地瓜我煮好了，包起來帶去。",
+              "en": "The people working up the mountain need a good meal. I've cooked taro and sweet potato — wrap it up and take it."
             },
             {
               "who": "@npc",
-              "zh": "送到步道口就好，男人做事的地方不要進去。"
+              "zh": "送到步道口就好，男人做事的地方不要進去。",
+              "en": "Just take it to the trailhead. Don't go into where the men are working."
             }
           ],
           "gives": {
@@ -338,18 +390,22 @@
           ],
           "regroup": true,
           "text": "把午餐送到山腳的步道口，等族男一起回來",
+          "textEn": "Take lunch to the trailhead at the foot of the mountain and wait to come back with the Tao man",
           "lines": [
             {
               "who": "@m",
-              "zh": "你們來了！木材都搬到路邊了，正好肚子餓。"
+              "zh": "你們來了！木材都搬到路邊了，正好肚子餓。",
+              "en": "You're here! The timber's all down by the road, and I'm starving."
             },
             {
               "who": "@f",
-              "zh": "女性長輩煮的，快吃吧。"
+              "zh": "女性長輩煮的，快吃吧。",
+              "en": "The woman elder cooked it. Eat up."
             },
             {
               "who": "@t",
-              "zh": "我們就在這裡等，沒有往裡面走。"
+              "zh": "我們就在這裡等，沒有往裡面走。",
+              "en": "We waited right here and didn't go further in."
             }
           ],
           "gives": {
@@ -368,10 +424,12 @@
             "m"
           ],
           "text": "族男回報朗島的長輩：木材搬好了",
+          "textEn": "The Tao man reports to the Iraraley elder: the timber is down",
           "lines": [
             {
               "who": "@npc",
-              "zh": "做得好。造船不是一個人的事，是整個船組、整個家一起的。"
+              "zh": "做得好。造船不是一個人的事，是整個船組、整個家一起的。",
+              "en": "Well done. Building a boat isn't one person's job. It's the whole crew and the whole family together."
             }
           ],
           "gives": {
@@ -385,7 +443,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "朗島的長輩需要族男上山幫忙；族男會暫時離隊，記得中午幫他送午餐到步道口。"
+        "fromEn": "Iraraley",
+        "zh": "朗島的長輩需要族男上山幫忙；族男會暫時離隊，記得中午幫他送午餐到步道口。",
+        "en": "The Iraraley elder needs the Tao man's help up the mountain. He'll leave the party for a while — remember to take him lunch at the trailhead at noon."
       },
       "labourNote": "a akey 派工給族男；午餐由 a akes 準備（女性長輩管食物），兩邊分工合作。"
     }

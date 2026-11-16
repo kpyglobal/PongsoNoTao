@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "拜師",
-        "en": ""
+        "en": "Becoming an apprentice"
       },
       "time": "day",
       "seasons": [],
@@ -19,9 +19,13 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 長輩）",
+        "coopEn": "Solo (NPC elder)",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q05、部落關係達標（光做主線就夠）",
+        "preEn": "Q05, enough village ties (the main story is enough)",
         "unlock": "T2",
         "kind": ""
       },
@@ -39,18 +43,22 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "族男請男性長輩教他造船",
+          "textEn": "The Tao man asks the man elder to teach him boat building",
           "lines": [
             {
               "who": "@m",
-              "zh": "我想學造船。可以跟著您學嗎？"
+              "zh": "我想學造船。可以跟著您學嗎？",
+              "en": "I want to learn to build boats. May I learn from you?"
             },
             {
               "who": "@npc",
-              "zh": "造船不是一天的事，要從認識樹開始，要有耐心。"
+              "zh": "造船不是一天的事，要從認識樹開始，要有耐心。",
+              "en": "Building a boat takes more than a day. It starts with knowing the trees. You need patience."
             },
             {
               "who": "@npc",
-              "zh": "先跟我在近海練習划船，把手練穩。"
+              "zh": "先跟我在近海練習划船，把手練穩。",
+              "en": "First, practise paddling with me near the shore to steady your hands."
             }
           ],
           "actor": [
@@ -63,6 +71,10 @@
             "toast": [
               "拜師",
               "男性長輩答應教族男造船。"
+            ],
+            "toastEn": [
+              "Becoming an apprentice",
+              "The man elder agreed to teach the Tao man boat building."
             ]
           }
         }
@@ -70,7 +82,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "部落的人都認識族男了，他可以請男性長輩教他造船。"
+        "fromEn": "Host family",
+        "zh": "部落的人都認識族男了，他可以請男性長輩教他造船。",
+        "en": "The village knows the Tao man now. He can ask the man elder to teach him boat building."
       },
       "playable": true,
       "giver": "m",
@@ -85,7 +99,7 @@
       "village": null,
       "name": {
         "zh": "跟長輩近海練習",
-        "en": ""
+        "en": "Practise near the shore with the elder"
       },
       "time": "day",
       "seasons": [],
@@ -95,11 +109,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "待確認",
+        "seasonEn": "To be confirmed",
         "pre": "T1",
         "unlock": "T3、V4、划船小遊戲",
-        "kind": "漁場（族男）"
+        "unlockEn": "T3, V4, paddling mini-game",
+        "kind": "漁場（族男）",
+        "kindEn": "Fishing ground (Tao man)"
       },
       "req": "T1",
       "steps": [
@@ -108,14 +127,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男跟長輩在港邊近海練習划拼板舟",
+          "textEn": "The Tao man practises paddling a plank boat near the harbour with the elder",
           "lines": [
             {
               "who": "@giver",
-              "zh": "槳要一起下水，船才不會晃。眼睛看浪，不要看槳。"
+              "zh": "槳要一起下水，船才不會晃。眼睛看浪，不要看槳。",
+              "en": "Put the paddles in together so the boat doesn't rock. Watch the waves, not the paddle."
             },
             {
               "who": "@m",
-              "zh": "好像比較穩了。"
+              "zh": "好像比較穩了。",
+              "en": "It feels steadier now."
             }
           ],
           "actor": [
@@ -127,10 +149,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "回岸上聽長輩說",
+          "textEn": "Back on shore, listen to the elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "手穩多了。下次帶你上山看樹。"
+              "zh": "手穩多了。下次帶你上山看樹。",
+              "en": "Your hands are much steadier. Next time I'll take you up the mountain to see the trees."
             }
           ],
           "actor": [
@@ -140,6 +164,10 @@
             "toast": [
               "划船練習",
               "族男可以在近海划拼板舟了。"
+            ],
+            "toastEn": [
+              "Paddling practice",
+              "The Tao man can now paddle a plank boat near the shore."
             ]
           }
         }
@@ -147,7 +175,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "拜師之後，男性長輩會帶族男在近海練習。"
+        "fromEn": "Host family",
+        "zh": "拜師之後，男性長輩會帶族男在近海練習。",
+        "en": "After becoming an apprentice, the man elder will take the Tao man to practise near the shore."
       },
       "playable": true,
       "ground": "fishing",
@@ -160,7 +190,7 @@
       "village": null,
       "name": {
         "zh": "上山認識造舟的樹",
-        "en": ""
+        "en": "Learn the boat-building trees on the mountain"
       },
       "time": "day",
       "seasons": [
@@ -172,8 +202,11 @@
       "n": 1,
       "text": {
         "who": "族男；旅人可參觀",
+        "whoEn": "Tao man; the traveller may watch",
         "coop": "族男可單人；旅人參觀要雙人：族男＋旅人",
+        "coopEn": "The Tao man can go alone; for the traveller to watch, a pair: Tao man + Traveller",
         "season": "等待飛魚期",
+        "seasonEn": "Waiting for flying fish season",
         "pre": "T2",
         "unlock": "T4",
         "kind": ""
@@ -185,18 +218,22 @@
           "spot": "dasenshan",
           "r": 10,
           "text": "族男跟長輩上山認識造舟的樹",
+          "textEn": "The Tao man goes up the mountain with the elder to learn the boat-building trees",
           "lines": [
             {
               "who": "@giver",
-              "zh": "做船的樹，要長在對的地方，也要問過樹的主人家。"
+              "zh": "做船的樹，要長在對的地方，也要問過樹的主人家。",
+              "en": "A tree for a boat has to grow in the right place, and you must ask the family that owns it."
             },
             {
               "who": "@giver",
-              "zh": "每一種木頭放在船的不同位置。樹的名字，以後族人會教你。"
+              "zh": "每一種木頭放在船的不同位置。樹的名字，以後族人會教你。",
+              "en": "Each kind of wood goes in a different part of the boat. The Tao people will teach you the tree names later."
             },
             {
               "who": "@m",
-              "zh": "我記下樹皮和葉子的樣子了。"
+              "zh": "我記下樹皮和葉子的樣子了。",
+              "en": "I've noted what the bark and leaves look like."
             }
           ],
           "actor": [
@@ -207,10 +244,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "下山後向長輩回報",
+          "textEn": "Report to the elder after coming down",
           "lines": [
             {
               "who": "@npc",
-              "zh": "認得樹，船才造得好。等木材乾了，就可以拼板。"
+              "zh": "認得樹，船才造得好。等木材乾了，就可以拼板。",
+              "en": "Know your trees and you'll build a good boat. Once the timber is dry, we can join the planks."
             }
           ],
           "actor": [
@@ -223,6 +262,10 @@
             "toast": [
               "造舟的樹",
               "族男認識了造船用的樹。"
+            ],
+            "toastEn": [
+              "Boat-building trees",
+              "The Tao man learned the trees used for building boats."
             ]
           }
         }
@@ -230,7 +273,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "不是飛魚季的時候，男性長輩會帶族男上大森山看樹。"
+        "fromEn": "Host family",
+        "zh": "不是飛魚季的時候，男性長輩會帶族男上大森山看樹。",
+        "en": "Outside flying fish season, the man elder will take the Tao man up Mt. Dasen to see the trees."
       },
       "playable": true,
       "song": "s09",
@@ -246,7 +291,7 @@
       "village": null,
       "name": {
         "zh": "拼板造船",
-        "en": ""
+        "en": "Build the plank boat"
       },
       "time": "day",
       "seasons": [
@@ -258,8 +303,11 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "等待飛魚期",
+        "seasonEn": "Waiting for flying fish season",
         "pre": "T3",
         "unlock": "own_boat、T5、T6、T8",
         "kind": ""
@@ -270,10 +318,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "男性長輩說：可以開始拼板了",
+          "textEn": "The man elder says: time to start joining the planks",
           "lines": [
             {
               "who": "@npc",
-              "zh": "木材乾了，可以開始了。拼板要慢，一塊錯了整條船都會漏水。"
+              "zh": "木材乾了，可以開始了。拼板要慢，一塊錯了整條船都會漏水。",
+              "en": "The timber is dry. We can begin. Go slowly with the planks — one wrong board and the whole boat leaks."
             }
           ],
           "actor": [
@@ -285,10 +335,12 @@
           "spot": "host_home",
           "r": 7,
           "text": "族男在家旁一塊一塊拼起船板，用木釘固定",
+          "textEn": "Beside the house, the Tao man joins the boat planks one by one and fixes them with wooden pegs",
           "lines": [
             {
               "who": "@m",
-              "zh": "這塊對齊了……再下一塊。"
+              "zh": "這塊對齊了……再下一塊。",
+              "en": "This one's lined up… now the next."
             }
           ],
           "actor": [
@@ -300,14 +352,17 @@
           "spot": "host_home",
           "r": 7,
           "text": "族男在船身塗上紅、白、黑三色",
+          "textEn": "The Tao man paints the hull red, white and black",
           "lines": [
             {
               "who": "@m",
-              "zh": "顏色跟家裡長輩教的一樣。"
+              "zh": "顏色跟家裡長輩教的一樣。",
+              "en": "The colours are just as the elders at home taught."
             },
             {
               "who": "旁白",
-              "zh": "船身的紋樣屬於每一個家族，遊戲只呈現簡單的顏色。"
+              "zh": "船身的紋樣屬於每一個家族，遊戲只呈現簡單的顏色。",
+              "en": "Hull patterns belong to each family. The game only shows simple colours."
             }
           ],
           "actor": [
@@ -318,10 +373,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "請男性長輩看看新船",
+          "textEn": "Ask the man elder to look at the new boat",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這是你的船了。照顧它，就像照顧家人。"
+              "zh": "這是你的船了。照顧它，就像照顧家人。",
+              "en": "This is your boat now. Look after it like you look after family."
             }
           ],
           "actor": [
@@ -337,6 +394,10 @@
             "toast": [
               "自己的船",
               "族男完成了自己的拼板舟。"
+            ],
+            "toastEn": [
+              "A boat of his own",
+              "The Tao man finished his own plank boat."
             ]
           }
         }
@@ -344,7 +405,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "認識造舟的樹之後，族男可以開始拼板造船。"
+        "fromEn": "Host family",
+        "zh": "認識造舟的樹之後，族男可以開始拼板造船。",
+        "en": "After learning the boat-building trees, the Tao man can start building the plank boat."
       },
       "playable": true,
       "giver": "m",
@@ -359,7 +422,7 @@
       "village": null,
       "name": {
         "zh": "新船下水的芋頭（選用，整段待確認）",
-        "en": ""
+        "en": "Taro for the new boat's launch (optional, whole part to be confirmed)"
       },
       "time": "day",
       "seasons": [],
@@ -375,10 +438,14 @@
       ],
       "text": {
         "who": "族男、族女；旅人須受主人邀請",
+        "whoEn": "Tao man, Tao woman; the traveller only if invited by the host",
         "coop": "三人：族男＋族女＋旅人",
+        "coopEn": "Trio: Tao man + Tao woman + Traveller",
         "season": "落成時（待確認）",
+        "seasonEn": "At completion (to be confirmed)",
         "pre": "T4、R4",
         "unlock": "部落關係",
+        "unlockEn": "Village ties",
         "kind": "AND"
       },
       "req": {
@@ -394,10 +461,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "女性長輩和族女準備新船下水要用的芋頭",
+          "textEn": "The woman elder and the Tao woman prepare taro for the new boat's launch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "新船下水，家裡要準備芋頭。這幾顆挑好了，妳拿著。"
+              "zh": "新船下水，家裡要準備芋頭。這幾顆挑好了，妳拿著。",
+              "en": "When a new boat is launched, the family prepares taro. I've picked these — you hold them."
             }
           ],
           "actor": [
@@ -412,14 +481,17 @@
           "kind": "talk",
           "npc": "@host",
           "text": "主人家長輩邀請旅人一起去",
+          "textEn": "The host family elder invites the traveller along",
           "lines": [
             {
               "who": "@npc",
-              "zh": "新船下水，你也是我們家的朋友，一起來。站在後面看就好，不要拍照。"
+              "zh": "新船下水，你也是我們家的朋友，一起來。站在後面看就好，不要拍照。",
+              "en": "The new boat is being launched, and you're a friend of our family. Come with us. Just watch from the back, and no photos."
             },
             {
               "who": "@t",
-              "zh": "謝謝您邀請我。我會站遠一點，不拍照。"
+              "zh": "謝謝您邀請我。我會站遠一點，不拍照。",
+              "en": "Thank you for inviting me. I'll stand back and won't take photos."
             }
           ],
           "need": [
@@ -433,14 +505,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "全隊在岸邊，看新船下水",
+          "textEn": "The whole party watches the new boat launch from the shore",
           "lines": [
             {
               "who": "旁白",
-              "zh": "新船下水的儀式由家族和船組進行，遊戲不呈現儀式本身。"
+              "zh": "新船下水的儀式由家族和船組進行，遊戲不呈現儀式本身。",
+              "en": "The new boat's launch ceremony is done by the family and the crew. The game doesn't show the ceremony itself."
             },
             {
               "who": "@t",
-              "zh": "（小聲）船好漂亮。"
+              "zh": "（小聲）船好漂亮。",
+              "en": "(quietly) What a beautiful boat."
             }
           ],
           "need": [
@@ -453,6 +528,10 @@
             "toast": [
               "新船下水",
               "全家和朋友一起，迎接新的拼板舟。"
+            ],
+            "toastEn": [
+              "New boat launched",
+              "Family and friends together welcome the new plank boat."
             ]
           }
         }
@@ -460,7 +539,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "族男的新船完成了，下水前家裡要準備芋頭，也會邀請旅人。"
+        "fromEn": "Host family",
+        "zh": "族男的新船完成了，下水前家裡要準備芋頭，也會邀請旅人。",
+        "en": "The Tao man's new boat is finished. Before the launch, the family prepares taro and will invite the traveller."
       },
       "playable": true,
       "giver": "m",
@@ -479,7 +560,7 @@
       "village": null,
       "name": {
         "zh": "駕自己的船捕飛魚",
-        "en": ""
+        "en": "Catch flying fish in your own boat"
       },
       "time": "day",
       "seasons": [
@@ -491,11 +572,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季（當地）",
+        "seasonEn": "Flying fish season (local)",
         "pre": "T4、M2",
         "unlock": "另一個飛魚來源、T7",
-        "kind": "季節＋漁場（族男）"
+        "unlockEn": "Another source of flying fish, T7",
+        "kind": "季節＋漁場（族男）",
+        "kindEn": "Season + fishing ground (Tao man)"
       },
       "req": {
         "all": [
@@ -509,14 +595,17 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "族男向男性長輩報告：要駕自己的船出海",
+          "textEn": "The Tao man tells the man elder: he's taking his own boat to sea",
           "lines": [
             {
               "who": "@npc",
-              "zh": "第一次駕自己的船，不要逞強。看不準就回來。"
+              "zh": "第一次駕自己的船，不要逞強。看不準就回來。",
+              "en": "First time in your own boat — don't push yourself. If you can't judge it, come back."
             },
             {
               "who": "旁白",
-              "zh": "出海期間只能操控族男。捕到魚，或按「放棄出海」，才會回岸邊和大家會合。"
+              "zh": "出海期間只能操控族男。捕到魚，或按「放棄出海」，才會回岸邊和大家會合。",
+              "en": "While at sea, you can only control the Tao man. Catch a fish, or tap \"Give up\", to return to shore and rejoin everyone."
             }
           ],
           "actor": [
@@ -526,15 +615,18 @@
             "role": "m",
             "at": "harbor",
             "task": "駕自己的船捕飛魚",
+            "taskEn": "Catch flying fish in your own boat",
             "waitAt": "harbor",
             "giveUp": [
               {
                 "who": "@m",
-                "zh": "今天浪太大，先回岸上。"
+                "zh": "今天浪太大，先回岸上。",
+                "en": "The waves are too big today. Back to shore."
               },
               {
                 "who": "@npc",
-                "zh": "平安最重要，下次再去。"
+                "zh": "平安最重要，下次再去。",
+                "en": "Safety first. Try again next time."
               }
             ]
           }
@@ -544,10 +636,12 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男划自己的拼板舟出海捕飛魚",
+          "textEn": "The Tao man paddles his own plank boat out for flying fish",
           "lines": [
             {
               "who": "@m",
-              "zh": "捕到了！自己的船，自己的魚。"
+              "zh": "捕到了！自己的船，自己的魚。",
+              "en": "Caught one! My own boat, my own fish."
             }
           ],
           "actor": [
@@ -567,14 +661,17 @@
           "spot": "harbor",
           "r": 10,
           "text": "族男回到岸邊，和族女、旅人會合",
+          "textEn": "The Tao man returns to shore and meets up with the Tao woman and the traveller",
           "lines": [
             {
               "who": "@f",
-              "zh": "回來了！自己的船划得好穩。"
+              "zh": "回來了！自己的船划得好穩。",
+              "en": "You're back! Your own boat paddles so steady."
             },
             {
               "who": "@t",
-              "zh": "我們在岸邊一直看著。"
+              "zh": "我們在岸邊一直看著。",
+              "en": "We were watching from the shore the whole time."
             }
           ],
           "actor": [
@@ -591,10 +688,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你的船，第一次帶魚回家。好。"
+              "zh": "你的船，第一次帶魚回家。好。",
+              "en": "Your boat's first time bringing fish home. Good."
             }
           ],
           "actor": [
@@ -604,6 +703,10 @@
             "toast": [
               "自己的船",
               "族男駕自己的船捕到飛魚。"
+            ],
+            "toastEn": [
+              "A boat of his own",
+              "The Tao man caught flying fish in his own boat."
             ]
           }
         }
@@ -611,7 +714,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季時，族男可以駕自己的拼板舟出海。"
+        "fromEn": "Host family",
+        "zh": "飛魚季時，族男可以駕自己的拼板舟出海。",
+        "en": "In flying fish season, the Tao man can take his own plank boat to sea."
       },
       "playable": true,
       "ground": "fishing",
@@ -628,7 +733,7 @@
       "village": null,
       "name": {
         "zh": "夜間火炬捕飛魚（大船）",
-        "en": ""
+        "en": "Night torch fishing for flying fish (big boat)"
       },
       "time": "night",
       "seasons": [
@@ -643,11 +748,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 大船船組）",
+        "coopEn": "Solo (NPC big-boat crew)",
         "season": "飛魚季夜間",
+        "seasonEn": "Flying fish season, at night",
         "pre": "T6",
         "unlock": "成長技能",
-        "kind": "季節＋時段＋漁場（族男）"
+        "unlockEn": "Growth skill",
+        "kind": "季節＋時段＋漁場（族男）",
+        "kindEn": "Season + time + fishing ground (Tao man)"
       },
       "req": {
         "all": [
@@ -660,15 +770,18 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "晚上，男性長輩找族男加入大船船組",
+          "textEn": "At night, the man elder asks the Tao man to join the big-boat crew",
           "lines": [
             {
               "who": "@npc",
               "zh": "今晚大船（cinedkeran）出海，用火把招飛魚。你跟著船組，聽船長的話。",
+              "en": "Tonight the big boat (cinedkeran) goes out to call flying fish with torches. Go with the crew and listen to the captain.",
               "tao": "cinedkeran"
             },
             {
               "who": "旁白",
-              "zh": "出海期間只能操控族男。"
+              "zh": "出海期間只能操控族男。",
+              "en": "While at sea, you can only control the Tao man."
             }
           ],
           "actor": [
@@ -678,15 +791,18 @@
             "role": "m",
             "at": "harbor",
             "task": "跟大船船組夜間出海",
+            "taskEn": "at sea with the big-boat crew at night",
             "waitAt": "harbor",
             "giveUp": [
               {
                 "who": "@m",
-                "zh": "今天浪太大，先回岸上。"
+                "zh": "今天浪太大，先回岸上。",
+                "en": "The waves are too big today. Back to shore."
               },
               {
                 "who": "@npc",
-                "zh": "平安最重要，下次再去。"
+                "zh": "平安最重要，下次再去。",
+                "en": "Safety first. Try again next time."
               }
             ]
           },
@@ -701,14 +817,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男跟大船船組在夜裡出海，火光下撈飛魚",
+          "textEn": "The Tao man goes out at night with the big-boat crew and scoops flying fish by torchlight",
           "lines": [
             {
               "who": "@m",
-              "zh": "火把一亮，飛魚就跳過來了！"
+              "zh": "火把一亮，飛魚就跳過來了！",
+              "en": "The moment the torch lights up, the flying fish jump right over!"
             },
             {
               "who": "@m",
-              "zh": "大家一起划，一起撈。"
+              "zh": "大家一起划，一起撈。",
+              "en": "Everyone paddles together and scoops together."
             }
           ],
           "actor": [
@@ -728,10 +847,12 @@
           "spot": "harbor",
           "r": 10,
           "text": "天快亮時回到岸邊，和大家會合",
+          "textEn": "Return to shore near dawn and meet up with everyone",
           "lines": [
             {
               "who": "@f",
-              "zh": "回來了，平安就好。"
+              "zh": "回來了，平安就好。",
+              "en": "You're back. As long as you're safe."
             }
           ],
           "actor": [
@@ -748,10 +869,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "跟大船出過海，你就是船組的人了。"
+              "zh": "跟大船出過海，你就是船組的人了。",
+              "en": "Now that you've been out with the big boat, you're one of the crew."
             }
           ],
           "actor": [
@@ -761,6 +884,10 @@
             "toast": [
               "成長",
               "族男學會在大船上合作。"
+            ],
+            "toastEn": [
+              "Growth",
+              "The Tao man learned to work together on the big boat."
             ]
           }
         }
@@ -768,7 +895,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季的晚上，大船會用火把出海，男性長輩可能會找族男。"
+        "fromEn": "Host family",
+        "zh": "飛魚季的晚上，大船會用火把出海，男性長輩可能會找族男。",
+        "en": "On flying fish season nights, the big boat goes out with torches. The man elder may come looking for the Tao man."
       },
       "playable": true,
       "ground": "fishing",
@@ -788,7 +917,7 @@
       "village": null,
       "name": {
         "zh": "小蘭嶼（整段待族人同意）",
-        "en": ""
+        "en": "Little Orchid Island (whole part awaits community approval)"
       },
       "time": "day",
       "seasons": [],
@@ -798,10 +927,14 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "待確認",
+        "seasonEn": "To be confirmed",
         "pre": "T4",
         "unlock": "隱藏故事",
+        "unlockEn": "Hidden story",
         "kind": ""
       },
       "req": {
@@ -815,15 +948,18 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "男性長輩說起小蘭嶼",
+          "textEn": "The man elder talks about Little Orchid Island",
           "lines": [
             {
               "who": "@npc",
               "zh": "Jimagaod 是我們很重要的漁場。海流急，要很慎重，只有男人去。",
+              "en": "Jimagaod is a very important fishing ground for us. The currents are strong, so we're very careful. Only men go.",
               "tao": "Jimagaod"
             },
             {
               "who": "@npc",
-              "zh": "今天跟著我，划到附近看看。不上岸，看完就回來。"
+              "zh": "今天跟著我，划到附近看看。不上岸，看完就回來。",
+              "en": "Come with me today and paddle close to have a look. We won't land. We'll look and come back."
             }
           ],
           "actor": [
@@ -833,15 +969,18 @@
             "role": "m",
             "at": "harbor",
             "task": "跟長輩划向小蘭嶼",
+            "taskEn": "paddling toward Little Orchid Island with the elder",
             "waitAt": "harbor",
             "giveUp": [
               {
                 "who": "@m",
-                "zh": "今天浪太大，先回岸上。"
+                "zh": "今天浪太大，先回岸上。",
+                "en": "The waves are too big today. Back to shore."
               },
               {
                 "who": "@npc",
-                "zh": "平安最重要，下次再去。"
+                "zh": "平安最重要，下次再去。",
+                "en": "Safety first. Try again next time."
               }
             ]
           },
@@ -856,14 +995,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男跟長輩划拼板舟，遠遠看著小蘭嶼",
+          "textEn": "The Tao man paddles a plank boat with the elder and looks at Little Orchid Island from afar",
           "lines": [
             {
               "who": "@m",
-              "zh": "島越來越近了……浪也越來越大。"
+              "zh": "島越來越近了……浪也越來越大。",
+              "en": "The island is getting closer… and the waves are getting bigger."
             },
             {
               "who": "@giver",
-              "zh": "就到這裡。記住它的樣子，我們回去。"
+              "zh": "就到這裡。記住它的樣子，我們回去。",
+              "en": "This is far enough. Remember how it looks. We're going back."
             }
           ],
           "actor": [
@@ -876,14 +1018,17 @@
           "spot": "harbor",
           "r": 10,
           "text": "回到岸邊，和大家會合",
+          "textEn": "Return to shore and meet up with everyone",
           "lines": [
             {
               "who": "@t",
-              "zh": "你們去好久！海上怎麼樣？"
+              "zh": "你們去好久！海上怎麼樣？",
+              "en": "You were gone so long! How was it out there?"
             },
             {
               "who": "@m",
-              "zh": "……下次再慢慢說。"
+              "zh": "……下次再慢慢說。",
+              "en": "…I'll tell you about it slowly, another time."
             }
           ],
           "actor": [
@@ -900,10 +1045,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "那邊的故事，等你再大一點，我再告訴你。"
+              "zh": "那邊的故事，等你再大一點，我再告訴你。",
+              "en": "The stories from over there — I'll tell you when you're a bit older."
             }
           ],
           "actor": [
@@ -913,6 +1060,10 @@
             "toast": [
               "隱藏故事",
               "族男遠遠看過了小蘭嶼。"
+            ],
+            "toastEn": [
+              "Hidden story",
+              "The Tao man has seen Little Orchid Island from afar."
             ]
           }
         }
@@ -920,7 +1071,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "有了自己的船之後，男性長輩望著南邊的海，好像想起什麼。"
+        "fromEn": "Host family",
+        "zh": "有了自己的船之後，男性長輩望著南邊的海，好像想起什麼。",
+        "en": "Once the Tao man has his own boat, the man elder gazes at the sea to the south, as if remembering something."
       },
       "playable": true,
       "giver": "m",

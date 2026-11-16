@@ -9,7 +9,7 @@
       "village": "ivalino",
       "name": {
         "zh": "食譜：野銀的水煮芋頭",
-        "en": ""
+        "en": "Recipe: Ivalino boiled taro"
       },
       "time": "any",
       "seasons": [],
@@ -21,11 +21,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K6（認識野銀的人）",
+        "preEn": "K6 (met someone in Ivalino)",
         "unlock": "料理卡「水煮芋頭」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Boiled taro\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K6",
       "steps": [
@@ -33,24 +39,29 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "向野銀的女性長輩請教「水煮芋頭」",
+          "textEn": "Ask the Ivalino woman elder about \"Boiled taro\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學水煮芋頭？好啊，先把材料準備好：水芋三顆。"
+              "zh": "想學水煮芋頭？好啊，先把材料準備好：水芋三顆。",
+              "en": "Want to learn boiled taro? Sure. First get the ingredients ready: three taro."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：水芋三顆",
+          "textEn": "Gather ingredients: three taro",
           "until": {
             "all": [
               {
@@ -64,18 +75,22 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "把食材帶回去給野銀的女性長輩，學會「水煮芋頭」",
+          "textEn": "Bring the ingredients back to the Ivalino woman elder and learn \"Boiled taro\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是水煮芋頭。洗乾淨，水煮就好，最簡單，也最常吃。其他做法改天再問家裡的長輩。"
+              "zh": "這就是水煮芋頭。洗乾淨，水煮就好，最簡單，也最常吃。其他做法改天再問家裡的長輩。",
+              "en": "This is boiled taro. Wash and boil — the simplest dish, and the one we eat most. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -87,6 +102,10 @@
             "toast": [
               "學會食譜",
               "料理卡「水煮芋頭」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Boiled taro\" added to your notebook."
             ]
           }
         }
@@ -94,7 +113,9 @@
       "hint": {
         "tier": "direct",
         "from": "野銀",
-        "zh": "野銀有位會做水煮芋頭的長輩，備齊三顆水芋再去找她。"
+        "fromEn": "Ivalino",
+        "zh": "野銀有位會做水煮芋頭的長輩，備齊三顆水芋再去找她。",
+        "en": "There's an elder in Ivalino who makes boiled taro. Bring three taro and go find her."
       },
       "playable": true,
       "recipe": {
@@ -110,7 +131,7 @@
       "village": "imorod",
       "name": {
         "zh": "食譜：紅頭的水煮飛魚",
-        "en": ""
+        "en": "Recipe: Imorod boiled flying fish"
       },
       "time": "any",
       "seasons": [
@@ -124,11 +145,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "K1（認識紅頭的人）",
+        "preEn": "K1 (met someone in Imorod)",
         "unlock": "料理卡「水煮飛魚」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Boiled flying fish\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K1",
       "steps": [
@@ -136,24 +163,29 @@
           "kind": "talk",
           "npc": "weaver_elder",
           "text": "向紅頭的女性長輩請教「水煮飛魚」",
+          "textEn": "Ask the Imorod woman elder about \"Boiled flying fish\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學水煮飛魚？好啊，先把材料準備好：飛魚兩條。"
+              "zh": "想學水煮飛魚？好啊，先把材料準備好：飛魚兩條。",
+              "en": "Want to learn boiled flying fish? Sure. First get the ingredients ready: two flying fish."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：飛魚兩條",
+          "textEn": "Gather ingredients: two flying fish",
           "until": {
             "all": [
               {
@@ -167,18 +199,22 @@
           "kind": "talk",
           "npc": "weaver_elder",
           "text": "把食材帶回去給紅頭的女性長輩，學會「水煮飛魚」",
+          "textEn": "Bring the ingredients back to the Imorod woman elder and learn \"Boiled flying fish\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是水煮飛魚。水煮、調味簡單。有些東西不能跟飛魚一起煮，這是規矩。其他做法改天再問家裡的長輩。"
+              "zh": "這就是水煮飛魚。水煮、調味簡單。有些東西不能跟飛魚一起煮，這是規矩。其他做法改天再問家裡的長輩。",
+              "en": "This is boiled flying fish. Boil it with simple seasoning. Some foods must never be cooked with flying fish — that's the rule. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -190,6 +226,10 @@
             "toast": [
               "學會食譜",
               "料理卡「水煮飛魚」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Boiled flying fish\" added to your notebook."
             ]
           }
         }
@@ -197,7 +237,9 @@
       "hint": {
         "tier": "direct",
         "from": "紅頭",
-        "zh": "紅頭有位會做水煮飛魚的長輩，備齊兩條飛魚再去找她。"
+        "fromEn": "Imorod",
+        "zh": "紅頭有位會做水煮飛魚的長輩，備齊兩條飛魚再去找她。",
+        "en": "There's an elder in Imorod who makes boiled flying fish. Bring two flying fish and go find her."
       },
       "playable": true,
       "recipe": {
@@ -213,7 +255,7 @@
       "village": "yayo",
       "name": {
         "zh": "食譜：椰油的飛魚乾",
-        "en": ""
+        "en": "Recipe: Yayo dried flying fish"
       },
       "time": "any",
       "seasons": [
@@ -227,11 +269,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "K3（認識椰油的人）",
+        "preEn": "K3 (met someone in Yayo)",
         "unlock": "料理卡「飛魚乾」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Dried flying fish\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K3",
       "steps": [
@@ -239,24 +287,29 @@
           "kind": "talk",
           "npc": "elder_f_yayo",
           "text": "向椰油的女性長輩請教「飛魚乾」",
+          "textEn": "Ask the Yayo woman elder about \"Dried flying fish\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學飛魚乾？好啊，先把材料準備好：飛魚三條。"
+              "zh": "想學飛魚乾？好啊，先把材料準備好：飛魚三條。",
+              "en": "Want to learn dried flying fish? Sure. First get the ingredients ready: three flying fish."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：飛魚三條",
+          "textEn": "Gather ingredients: three flying fish",
           "until": {
             "all": [
               {
@@ -270,18 +323,22 @@
           "kind": "talk",
           "npc": "elder_f_yayo",
           "text": "把食材帶回去給椰油的女性長輩，學會「飛魚乾」",
+          "textEn": "Bring the ingredients back to the Yayo woman elder and learn \"Dried flying fish\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是飛魚乾。處理好、曬乾，收起來以後慢慢吃。其他做法改天再問家裡的長輩。"
+              "zh": "這就是飛魚乾。處理好、曬乾，收起來以後慢慢吃。其他做法改天再問家裡的長輩。",
+              "en": "This is dried flying fish. Prepare it, dry it, and store it to eat slowly later. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -293,6 +350,10 @@
             "toast": [
               "學會食譜",
               "料理卡「飛魚乾」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Dried flying fish\" added to your notebook."
             ]
           }
         }
@@ -300,7 +361,9 @@
       "hint": {
         "tier": "direct",
         "from": "椰油",
-        "zh": "椰油有位會做飛魚乾的長輩，備齊三條飛魚再去找她。"
+        "fromEn": "Yayo",
+        "zh": "椰油有位會做飛魚乾的長輩，備齊三條飛魚再去找她。",
+        "en": "There's an elder in Yayo who makes dried flying fish. Bring three flying fish and go find her."
       },
       "playable": true,
       "recipe": {
@@ -316,7 +379,7 @@
       "village": "iraraley",
       "name": {
         "zh": "食譜：朗島的水煮山藥",
-        "en": ""
+        "en": "Recipe: Iraraley boiled yam"
       },
       "time": "any",
       "seasons": [],
@@ -328,11 +391,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K4（認識朗島的人）",
+        "preEn": "K4 (met someone in Iraraley)",
         "unlock": "料理卡「水煮山藥」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Boiled yam\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K4",
       "steps": [
@@ -340,24 +409,29 @@
           "kind": "talk",
           "npc": "elder_f_iraraley",
           "text": "向朗島的女性長輩請教「水煮山藥」",
+          "textEn": "Ask the Iraraley woman elder about \"Boiled yam\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學水煮山藥？好啊，先把材料準備好：山藥兩根。"
+              "zh": "想學水煮山藥？好啊，先把材料準備好：山藥兩根。",
+              "en": "Want to learn boiled yam? Sure. First get the ingredients ready: two yams."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：山藥兩根",
+          "textEn": "Gather ingredients: two yams",
           "until": {
             "all": [
               {
@@ -371,18 +445,22 @@
           "kind": "talk",
           "npc": "elder_f_iraraley",
           "text": "把食材帶回去給朗島的女性長輩，學會「水煮山藥」",
+          "textEn": "Bring the ingredients back to the Iraraley woman elder and learn \"Boiled yam\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是水煮山藥。去皮、水煮，就這麼簡單，滑滑的，好消化。其他做法改天再問家裡的長輩。"
+              "zh": "這就是水煮山藥。去皮、水煮，就這麼簡單，滑滑的，好消化。其他做法改天再問家裡的長輩。",
+              "en": "This is boiled yam. Peel and boil — that's all. Soft and easy to digest. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -394,6 +472,10 @@
             "toast": [
               "學會食譜",
               "料理卡「水煮山藥」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Boiled yam\" added to your notebook."
             ]
           }
         }
@@ -401,7 +483,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "朗島有位會做水煮山藥的長輩，備齊兩根山藥再去找她。"
+        "fromEn": "Iraraley",
+        "zh": "朗島有位會做水煮山藥的長輩，備齊兩根山藥再去找她。",
+        "en": "There's an elder in Iraraley who makes boiled yam. Bring two yams and go find her."
       },
       "playable": true,
       "recipe": {
@@ -417,7 +501,7 @@
       "village": "iranmeylek",
       "name": {
         "zh": "食譜：東清的水煮貝類與海菜",
-        "en": ""
+        "en": "Recipe: Iranmeylek boiled shellfish and seaweed"
       },
       "time": "any",
       "seasons": [],
@@ -429,11 +513,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K5（認識東清的人）",
+        "preEn": "K5 (met someone in Iranmeylek)",
         "unlock": "料理卡「水煮貝類與海菜」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Boiled shellfish and seaweed\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K5",
       "steps": [
@@ -441,24 +531,29 @@
           "kind": "talk",
           "npc": "elder_f_iranmeylek",
           "text": "向東清的女性長輩請教「水煮貝類與海菜」",
+          "textEn": "Ask the Iranmeylek woman elder about \"Boiled shellfish and seaweed\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學水煮貝類與海菜？好啊，先把材料準備好：貝類兩個、海菜兩把。"
+              "zh": "想學水煮貝類與海菜？好啊，先把材料準備好：貝類兩個、海菜兩把。",
+              "en": "Want to learn boiled shellfish and seaweed? Sure. First get the ingredients ready: two shellfish and two handfuls of seaweed."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：貝類兩個、海菜兩把",
+          "textEn": "Gather ingredients: two shellfish, two handfuls of seaweed",
           "until": {
             "all": [
               {
@@ -476,18 +571,22 @@
           "kind": "talk",
           "npc": "elder_f_iranmeylek",
           "text": "把食材帶回去給東清的女性長輩，學會「水煮貝類與海菜」",
+          "textEn": "Bring the ingredients back to the Iranmeylek woman elder and learn \"Boiled shellfish and seaweed\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是水煮貝類與海菜。洗乾淨，水煮，配芋頭或地瓜，就是海的味道。其他做法改天再問家裡的長輩。"
+              "zh": "這就是水煮貝類與海菜。洗乾淨，水煮，配芋頭或地瓜，就是海的味道。其他做法改天再問家裡的長輩。",
+              "en": "This is boiled shellfish and seaweed. Wash and boil, and eat with taro or sweet potato — that's the taste of the sea. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -500,6 +599,10 @@
             "toast": [
               "學會食譜",
               "料理卡「水煮貝類與海菜」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Boiled shellfish and seaweed\" added to your notebook."
             ]
           }
         }
@@ -507,7 +610,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "東清有位會做水煮貝類與海菜的長輩，備齊兩個貝類、兩把海菜再去找她。"
+        "fromEn": "Iranmeylek",
+        "zh": "東清有位會做水煮貝類與海菜的長輩，備齊兩個貝類、兩把海菜再去找她。",
+        "en": "There's an elder in Iranmeylek who makes boiled shellfish and seaweed. Bring two shellfish and two handfuls of seaweed and go find her."
       },
       "playable": true,
       "recipe": {
@@ -523,7 +628,7 @@
       "village": "iratay",
       "name": {
         "zh": "食譜：漁人的芋頭與地瓜",
-        "en": ""
+        "en": "Recipe: Iratay taro and sweet potato"
       },
       "time": "any",
       "seasons": [],
@@ -535,11 +640,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K2（認識漁人的人）",
+        "preEn": "K2 (met someone in Iratay)",
         "unlock": "料理卡「芋頭與地瓜」",
-        "kind": "食譜"
+        "unlockEn": "Recipe card \"Taro and sweet potato\"",
+        "kind": "食譜",
+        "kindEn": "Recipe"
       },
       "req": "K2",
       "steps": [
@@ -547,24 +658,29 @@
           "kind": "talk",
           "npc": "elder_f_iratay",
           "text": "向漁人的女性長輩請教「芋頭與地瓜」",
+          "textEn": "Ask the Iratay woman elder about \"Taro and sweet potato\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學芋頭與地瓜？好啊，先把材料準備好：水芋一顆、地瓜一顆。"
+              "zh": "想學芋頭與地瓜？好啊，先把材料準備好：水芋一顆、地瓜一顆。",
+              "en": "Want to learn taro and sweet potato? Sure. First get the ingredients ready: one taro and one sweet potato."
             },
             {
               "who": "@npc",
-              "zh": "材料齊了再拿來，我做給你們看。"
+              "zh": "材料齊了再拿來，我做給你們看。",
+              "en": "Bring them when you have everything, and I'll show you."
             },
             {
               "who": "旁白",
-              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。"
+              "zh": "這道菜的做法與規矩，各家各部落不太一樣，細節還要請族人確認。",
+              "en": "How this dish is made, and its rules, differ by family and village. The details still need checking with the community."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：水芋一顆、地瓜一顆",
+          "textEn": "Gather ingredients: one taro, one sweet potato",
           "until": {
             "all": [
               {
@@ -582,18 +698,22 @@
           "kind": "talk",
           "npc": "elder_f_iratay",
           "text": "把食材帶回去給漁人的女性長輩，學會「芋頭與地瓜」",
+          "textEn": "Bring the ingredients back to the Iratay woman elder and learn \"Taro and sweet potato\"",
           "lines": [
             {
               "who": "@npc",
-              "zh": "材料都齊了，你們看好。"
+              "zh": "材料都齊了，你們看好。",
+              "en": "You have everything. Watch closely."
             },
             {
               "who": "@npc",
-              "zh": "這就是芋頭與地瓜。兩個分開水煮，一起當飯吃，簡單，但是很飽。其他做法改天再問家裡的長輩。"
+              "zh": "這就是芋頭與地瓜。兩個分開水煮，一起當飯吃，簡單，但是很飽。其他做法改天再問家裡的長輩。",
+              "en": "This is taro and sweet potato. Boil them separately and eat them together as a meal — simple, but filling. Ask the elders at home about other ways another day."
             },
             {
               "who": "旁白",
-              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。"
+              "zh": "料理卡已收進手札「食材與營養」。調味與分食的規矩還要請族人確認。",
+              "en": "The recipe card is now in the notebook under \"Food & nutrition\". Seasoning and sharing rules still need checking with the community."
             }
           ],
           "gives": {
@@ -606,6 +726,10 @@
             "toast": [
               "學會食譜",
               "料理卡「芋頭與地瓜」已收進手札。"
+            ],
+            "toastEn": [
+              "Recipe learned",
+              "Recipe card \"Taro and sweet potato\" added to your notebook."
             ]
           }
         }
@@ -613,7 +737,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人有位會做芋頭與地瓜的長輩，備齊一顆水芋、一顆地瓜再去找她。"
+        "fromEn": "Iratay",
+        "zh": "漁人有位會做芋頭與地瓜的長輩，備齊一顆水芋、一顆地瓜再去找她。",
+        "en": "There's an elder in Iratay who makes taro and sweet potato. Bring one taro and one sweet potato and go find her."
       },
       "playable": true,
       "recipe": {

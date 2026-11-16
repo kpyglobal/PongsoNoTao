@@ -42,6 +42,7 @@ import { rng } from './textures';
 import { GlowBatch, type GlowSpec } from './glows';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { makeProp } from '../entities/billboard';
+import { wname } from './names';
 import type { Period, Season } from '../core/timeSeason';
 
 export interface PlaceRec {
@@ -185,30 +186,7 @@ export class WorldDecor {
     const b = new ArchBuilder();
     b.bucket('countryside');
     const r = rng(4242);
-    const goat = (x: number, z: number, yaw: number, dark: boolean, notched: boolean): void => {
-      b.frame(x, getHeight(x, z), z, yaw, 0.9);
-      const coat = dark ? 'woodDark' : 'white';
-      b.box(coat, 0.22, 0.24, 0.56, 0, 0.42, 0, 0, 1);
-      for (const [lx, lz] of [[-0.08, 0.2], [0.08, 0.2], [-0.08, -0.2], [0.08, -0.2]]) b.box(coat, 0.05, 0.3, 0.05, lx, 0.15, lz, 0, 1);
-      b.box(coat, 0.14, 0.16, 0.22, 0, 0.6, 0.34, 0, 1); // head, grazing low
-      b.box('black', 0.03, 0.12, 0.03, -0.04, 0.72, 0.3, 0, 1); // horns
-      b.box('black', 0.03, 0.12, 0.03, 0.04, 0.72, 0.3, 0, 1);
-      b.box(coat, notched ? 0.06 : 0.1, 0.03, 0.05, -0.11, 0.64, 0.3, 0, 1); // ears (one notched)
-      b.box(coat, 0.1, 0.03, 0.05, 0.11, 0.64, 0.3, 0, 1);
-    };
-    const herd = (cx: number, cz: number, n: number, notchFirst: boolean): void => {
-      for (let i = 0; i < n; i++) {
-        const a = r() * Math.PI * 2;
-        const d = 1.2 + r() * 2.4;
-        const x = cx + Math.cos(a) * d, z = cz + Math.sin(a) * d;
-        if (getHeight(x, z) < 0.4) continue;
-        goat(x, z, r() * Math.PI * 2, r() < 0.35, notchFirst && i === 0);
-      }
-    };
-    const hs = places.hutou_slope;
-    if (hs) herd(hs.x, hs.z, 4, true);
-    const ht = LANDMARKS.find((l) => l.id === 'hongtoushan');
-    if (ht) herd(ht.x + 2, ht.z + 2, 3, false);
+    // goats now roam as herds in src/world/goats.ts
     // 茅草: a patch of tall gold grass
     const tf = places.thatch_field;
     if (tf) {
@@ -425,7 +403,8 @@ export class WorldDecor {
       zh.className = 'zh';
       zh.textContent = p.zh;
       el.append(zh);
-      if (p.tao) {
+      // English: a village's name already is its Tao name
+      if (p.tao && p.tao !== p.zh) {
         const small = document.createElement('small');
         small.textContent = p.tao;
         el.append(small);
@@ -453,7 +432,7 @@ export class WorldDecor {
   private buildInteractables(places: Record<string, PlaceRec>): void {
     for (const v of VILLAGE_DEFS) {
       const p = places[v.id];
-      this.interactables.push({ id: `tribe-${v.id}`, kind: 'place', x: v.cx, z: v.cz, r: 3.2, label: p ? `${p.zh} ${p.tao}` : v.id });
+      this.interactables.push({ id: `tribe-${v.id}`, kind: 'place', x: v.cx, z: v.cz, r: 3.2, label: p ? (p.tao && p.tao !== p.zh ? `${p.zh} ${p.tao}` : p.zh) : v.id });
     }
     const cl = FACILITIES.clinic;
     this.interactables.push({
@@ -462,7 +441,7 @@ export class WorldDecor {
       x: cl.x + Math.sin(cl.yaw) * 2.6,
       z: cl.z + Math.cos(cl.yaw) * 2.6,
       r: 3.4,
-      label: '蘭嶼衛生所',
+      label: wname('clinic', '蘭嶼衛生所'),
     });
     for (const f of TARO_FIELDS) {
       const p = places[f.id];
@@ -474,14 +453,14 @@ export class WorldDecor {
         x: f.cx + f.fx * u,
         z: f.cz + f.fz * u,
         r: 3.8,
-        label: p?.zh || '水芋田 soli',
+        label: p?.zh || wname('taro', '水芋田 soli'),
       });
     }
     const h = FACILITIES.harbor;
-    this.interactables.push({ id: 'harbor-fish', kind: 'fish', x: h.x - 1, z: h.z, r: 4.2, label: '飛魚海域／拼板舟 tatala' });
+    this.interactables.push({ id: 'harbor-fish', kind: 'fish', x: h.x - 1, z: h.z, r: 4.2, label: wname('harbor-fish', '飛魚海域／拼板舟 tatala') });
     const im = VILLAGE_DEFS.find((v) => v.id === 'imorod')!;
     const look = vlocal(im, -2, 3.6);
-    this.interactables.push({ id: 'look-jimagaod', kind: 'look', x: look.x, z: look.z, r: 4.5, label: '眺望小蘭嶼 Jimagaod' });
+    this.interactables.push({ id: 'look-jimagaod', kind: 'look', x: look.x, z: look.z, r: 4.5, label: wname('look-jimagaod', '眺望小蘭嶼 Jimagaod') });
   }
 
   // -------------------------------------------------------------- atmosphere

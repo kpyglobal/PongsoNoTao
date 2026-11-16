@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "便利商店的泡麵",
-        "en": ""
+        "en": "Instant noodles from the shop"
       },
       "time": "any",
       "seasons": [],
@@ -20,10 +20,14 @@
       "n": 1,
       "text": {
         "who": "族男、族女",
+        "whoEn": "Tao man, Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q05",
         "unlock": "糧倉、部落關係的選擇結果",
+        "unlockEn": "Food store, village ties (depends on your choice)",
         "kind": ""
       },
       "req": "Q05",
@@ -32,14 +36,17 @@
           "kind": "talk",
           "npc": "shop_yayo",
           "text": "到椰油的雜貨店，聽老闆說泡麵",
+          "textEn": "Go to the Yayo grocery store and hear the owner talk about instant noodles",
           "lines": [
             {
               "who": "@npc",
-              "zh": "泡麵最好賣了。方便、放得久，船一來就補貨。"
+              "zh": "泡麵最好賣了。方便、放得久，船一來就補貨。",
+              "en": "Instant noodles sell best. Handy, they keep for ages, and we restock whenever the boat comes."
             },
             {
               "who": "@npc",
-              "zh": "可是風浪大、船停開的時候，架子一下就空了。"
+              "zh": "可是風浪大、船停開的時候，架子一下就空了。",
+              "en": "But when the sea is rough and the boats stop, the shelves empty fast."
             }
           ],
           "actor": [
@@ -51,14 +58,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "回家問女性長輩怎麼看",
+          "textEn": "Go home and ask the woman elder what she thinks",
           "lines": [
             {
               "who": "@npc",
-              "zh": "忙的時候吃泡麵，大家都吃過，不是壞事。"
+              "zh": "忙的時候吃泡麵，大家都吃過，不是壞事。",
+              "en": "We all eat instant noodles when we're busy. It's not a bad thing."
             },
             {
               "who": "@npc",
-              "zh": "可是芋頭和魚，要有人種、有人捕，才不會斷掉。你們自己想想。"
+              "zh": "可是芋頭和魚，要有人種、有人捕，才不會斷掉。你們自己想想。",
+              "en": "But taro and fish need people to grow and catch them, or it all stops. Think about it yourselves."
             }
           ],
           "actor": [
@@ -73,6 +83,10 @@
             "toast": [
               "糧倉",
               "泡麵和田裡的芋頭，都在現在的餐桌上。"
+            ],
+            "toastEn": [
+              "Food store",
+              "Instant noodles and taro from the fields are both on today's table."
             ]
           }
         }
@@ -80,7 +94,9 @@
       "hint": {
         "tier": "vague",
         "from": "椰油",
-        "zh": "椰油的雜貨店老闆說，泡麵是店裡賣最好的東西。"
+        "fromEn": "Yayo",
+        "zh": "椰油的雜貨店老闆說，泡麵是店裡賣最好的東西。",
+        "en": "The Yayo grocery store owner says instant noodles are the best seller in the shop."
       },
       "playable": true
     },
@@ -91,7 +107,7 @@
       "village": null,
       "name": {
         "zh": "水芋田廢耕",
-        "en": ""
+        "en": "An abandoned taro field"
       },
       "time": "any",
       "seasons": [],
@@ -106,10 +122,14 @@
       ],
       "text": {
         "who": "族男、族女",
+        "whoEn": "Tao man, Tao woman",
         "coop": "選「接手耕作」要雙人：族男＋族女",
+        "coopEn": "Choosing \"Take over the field\" needs a pair: Tao man + Tao woman",
         "season": "等待飛魚期",
+        "seasonEn": "Waiting for flying fish season",
         "pre": "R3",
         "unlock": "下一年的 R1",
+        "unlockEn": "Next year's R1",
         "kind": ""
       },
       "req": "R3",
@@ -118,14 +138,17 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "野銀的水芋田長輩說起一塊荒掉的田",
+          "textEn": "The Ivalino taro field elder talks about a field gone wild",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這塊田的主人去台灣工作了，好幾年沒人照顧，草比人還高。"
+              "zh": "這塊田的主人去台灣工作了，好幾年沒人照顧，草比人還高。",
+              "en": "The owner of this field went to work in Taiwan. No one has looked after it for years — the weeds are taller than people."
             },
             {
               "who": "@npc",
-              "zh": "你們兩個要不要試試看接手？我會先問過田主人家。"
+              "zh": "你們兩個要不要試試看接手？我會先問過田主人家。",
+              "en": "Do you two want to try taking it over? I'll ask the owner's family first."
             }
           ],
           "need": [
@@ -138,14 +161,17 @@
           "spot": "taro_ivalino",
           "r": 6,
           "text": "族男清掉田埂上的雜草，族女把水路通開",
+          "textEn": "The Tao man clears the weeds from the field banks, and the Tao woman opens the water channel",
           "lines": [
             {
               "who": "@m",
-              "zh": "草根好深，一點一點拔。"
+              "zh": "草根好深，一點一點拔。",
+              "en": "The roots go so deep. Pull them out bit by bit."
             },
             {
               "who": "@f",
-              "zh": "水路通了！水又流進田裡了。"
+              "zh": "水路通了！水又流進田裡了。",
+              "en": "The channel is open! Water is flowing into the field again."
             }
           ],
           "need": [
@@ -157,10 +183,12 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "向水芋田長輩回報",
+          "textEn": "Report to the taro field elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "田要有人走進去，才不會荒掉。明年就可以種了。"
+              "zh": "田要有人走進去，才不會荒掉。明年就可以種了。",
+              "en": "A field needs people walking in it, or it goes wild. Next year you can plant."
             }
           ],
           "need": [
@@ -174,6 +202,10 @@
             "toast": [
               "接手耕作",
               "明年可以在這塊田重新種下水芋。"
+            ],
+            "toastEn": [
+              "Take over the field",
+              "Next year you can plant taro in this field again."
             ]
           }
         }
@@ -181,7 +213,9 @@
       "hint": {
         "tier": "vague",
         "from": "野銀",
-        "zh": "野銀的水芋田長輩說，有一塊田荒了好幾年。"
+        "fromEn": "Ivalino",
+        "zh": "野銀的水芋田長輩說，有一塊田荒了好幾年。",
+        "en": "The Ivalino taro field elder says one field has been abandoned for years."
       },
       "playable": true,
       "giver": "f",
@@ -197,7 +231,7 @@
       "village": null,
       "name": {
         "zh": "觀光旺季（東清）",
-        "en": ""
+        "en": "Tourist high season (Iranmeylek)"
       },
       "time": "day",
       "seasons": [],
@@ -212,10 +246,14 @@
       ],
       "text": {
         "who": "族人主導，旅人加入",
+        "whoEn": "Tao member leads, traveller joins",
         "coop": "雙人：族人＋旅人，從兩邊看同一件事",
+        "coopEn": "Pair: Tao member + Traveller, seeing the same thing from two sides",
         "season": "飛魚季前後",
+        "seasonEn": "Around flying fish season",
         "pre": "Q05",
         "unlock": "尊重值、部落關係",
+        "unlockEn": "Respect points, village ties",
         "kind": ""
       },
       "req": "Q05",
@@ -224,14 +262,17 @@
           "kind": "talk",
           "npc": "villager_iranmeylek",
           "text": "東清的族人說起暑假的觀光旺季",
+          "textEn": "An Iranmeylek villager talks about the summer tourist season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "暑假的東清，晚上夜市好熱鬧，機車停滿路邊。"
+              "zh": "暑假的東清，晚上夜市好熱鬧，機車停滿路邊。",
+              "en": "In summer, Iranmeylek's night market is so lively, and scooters line the roadside."
             },
             {
               "who": "@npc",
-              "zh": "遊客多，部落的收入多一點；可是灘頭、家門口，也常有人亂走、亂拍。"
+              "zh": "遊客多，部落的收入多一點；可是灘頭、家門口，也常有人亂走、亂拍。",
+              "en": "More tourists means a bit more income for the village. But people also wander and take photos all over the beach and outside our homes."
             }
           ],
           "need": [
@@ -244,14 +285,17 @@
           "spot": "iranmeylek_beach",
           "r": 8,
           "text": "族人和旅人一起站在東清灣，看同一片海灘",
+          "textEn": "The Tao member and the traveller stand together at Dongqing Bay, looking at the same beach",
           "lines": [
             {
               "who": "@me",
-              "zh": "對我們來說，這裡是出海的地方，也是家門口。"
+              "zh": "對我們來說，這裡是出海的地方，也是家門口。",
+              "en": "For us, this is where we go to sea — and it's our front door."
             },
             {
               "who": "@t",
-              "zh": "對遊客來說，這裡是假期。我是客人，好玩也要記得這裡是別人的家。"
+              "zh": "對遊客來說，這裡是假期。我是客人，好玩也要記得這裡是別人的家。",
+              "en": "For tourists, it's a holiday. I'm a guest. Having fun is fine, but I should remember this is someone's home."
             }
           ],
           "need": [
@@ -263,14 +307,17 @@
           "kind": "talk",
           "npc": "pb_couple_f",
           "text": "旅人提醒想坐上拼板舟拍照的情侶遊客",
+          "textEn": "The traveller has a word with a couple who want to sit in a plank boat for a photo",
           "lines": [
             {
               "who": "@t",
-              "zh": "不好意思，拼板舟是族人的，不能坐上去拍。在路邊拍海就很漂亮。"
+              "zh": "不好意思，拼板舟是族人的，不能坐上去拍。在路邊拍海就很漂亮。",
+              "en": "Excuse me, the plank boats belong to Tao families. You can't sit in them for photos. The sea looks lovely from the roadside."
             },
             {
               "who": "@npc",
-              "zh": "啊，我們不知道。謝謝你告訴我們！"
+              "zh": "啊，我們不知道。謝謝你告訴我們！",
+              "en": "Oh, we didn't know. Thanks for telling us!"
             }
           ],
           "need": [
@@ -285,6 +332,10 @@
             "toast": [
               "尊重事件",
               "從兩邊看同一件事：觀光旺季。"
+            ],
+            "toastEn": [
+              "Respect event",
+              "The same thing from two sides: tourist high season."
             ]
           }
         }
@@ -292,7 +343,9 @@
       "hint": {
         "tier": "vague",
         "from": "東清",
-        "zh": "暑假的東清好熱鬧，東清的族人好像有話想說。"
+        "fromEn": "Iranmeylek",
+        "zh": "暑假的東清好熱鬧，東清的族人好像有話想說。",
+        "en": "Iranmeylek is so busy in summer. An Iranmeylek villager seems to have something to say."
       },
       "playable": true,
       "review": [
@@ -306,7 +359,7 @@
       "village": null,
       "name": {
         "zh": "進口食材",
-        "en": ""
+        "en": "Imported food"
       },
       "time": "any",
       "seasons": [],
@@ -318,10 +371,14 @@
       "n": 1,
       "text": {
         "who": "待確認",
+        "whoEn": "To be confirmed",
         "coop": "待確認",
+        "coopEn": "To be confirmed",
         "season": "待族人提供",
+        "seasonEn": "From the community",
         "pre": "Q05",
         "unlock": "待族人提供觀點",
+        "unlockEn": "View from the community",
         "kind": ""
       },
       "req": "Q05",
@@ -330,14 +387,17 @@
           "kind": "talk",
           "npc": "shop_yayo",
           "text": "雜貨店老闆說起店裡的東西從哪裡來",
+          "textEn": "The grocery store owner talks about where the shop's goods come from",
           "lines": [
             {
               "who": "@npc",
-              "zh": "米、麵、罐頭、飲料，都是船從台灣載來的。"
+              "zh": "米、麵、罐頭、飲料，都是船從台灣載來的。",
+              "en": "Rice, noodles, cans, drinks — the boat brings them all from Taiwan."
             },
             {
               "who": "@npc",
-              "zh": "風浪一大，船停開，架子就空了。"
+              "zh": "風浪一大，船停開，架子就空了。",
+              "en": "When the sea gets rough and the boats stop, the shelves go empty."
             }
           ]
         },
@@ -345,14 +405,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "回家聽女性長輩說",
+          "textEn": "Go home and listen to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "以前島上吃的，都是島上長的。現在不一樣了，有方便，也有擔心。"
+              "zh": "以前島上吃的，都是島上長的。現在不一樣了，有方便，也有擔心。",
+              "en": "We used to eat only what grew on the island. Now it's different — it's handy, but there are worries too."
             },
             {
               "who": "旁白",
-              "zh": "這一段的觀點，還要請族人提供。"
+              "zh": "這一段的觀點，還要請族人提供。",
+              "en": "The view in this part still needs to come from the community."
             }
           ],
           "gives": {
@@ -362,6 +425,10 @@
             "toast": [
               "進口食材",
               "店裡的東西大多坐船來。"
+            ],
+            "toastEn": [
+              "Imported food",
+              "Most of the shop's goods come by boat."
             ]
           }
         }
@@ -369,7 +436,9 @@
       "hint": {
         "tier": "vague",
         "from": "椰油",
-        "zh": "雜貨店的貨，好像要看船有沒有來。"
+        "fromEn": "Yayo",
+        "zh": "雜貨店的貨，好像要看船有沒有來。",
+        "en": "What the grocery store has seems to depend on whether the boat came in."
       },
       "playable": true,
       "review": [
@@ -383,7 +452,7 @@
       "village": null,
       "name": {
         "zh": "族人認為最重要的現代挑戰",
-        "en": ""
+        "en": "The modern challenge the Tao people see as most important"
       },
       "time": "any",
       "seasons": [],
@@ -395,10 +464,15 @@
       "n": 1,
       "text": {
         "who": "待確認",
+        "whoEn": "To be confirmed",
         "coop": "待確認",
+        "coopEn": "To be confirmed",
         "season": "待族人提供",
+        "seasonEn": "From the community",
         "pre": "待確認",
+        "preEn": "To be confirmed",
         "unlock": "待確認",
+        "unlockEn": "To be confirmed",
         "kind": ""
       },
       "req": {
@@ -412,14 +486,17 @@
           "kind": "talk",
           "npc": "culture_worker",
           "text": "問部落文化工作者：族人覺得最重要的現代挑戰是什麼",
+          "textEn": "Ask the village culture worker: what do the Tao people see as the biggest modern challenge?",
           "lines": [
             {
               "who": "@npc",
-              "zh": "最重要的挑戰？每個人的答案都不一樣。"
+              "zh": "最重要的挑戰？每個人的答案都不一樣。",
+              "en": "The biggest challenge? Everyone will give a different answer."
             },
             {
               "who": "@npc",
-              "zh": "你們去問問看，不要只聽一個人的。"
+              "zh": "你們去問問看，不要只聽一個人的。",
+              "en": "Go and ask around. Don't just listen to one person."
             }
           ]
         },
@@ -427,10 +504,12 @@
           "kind": "talk",
           "npc": "elder_iratay",
           "text": "問漁人的長輩",
+          "textEn": "Ask the Iratay elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "年輕人去台灣工作，部落裡常常只剩老人和小孩。"
+              "zh": "年輕人去台灣工作，部落裡常常只剩老人和小孩。",
+              "en": "Young people go to Taiwan for work. Often only the old and the kids are left in the village."
             }
           ]
         },
@@ -438,10 +517,12 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "問族語老師",
+          "textEn": "Ask the Tao language teacher",
           "lines": [
             {
               "who": "@npc",
-              "zh": "孩子會說族語的越來越少。語言沒了，很多故事也跟著沒了。"
+              "zh": "孩子會說族語的越來越少。語言沒了，很多故事也跟著沒了。",
+              "en": "Fewer and fewer kids speak Tao. When a language goes, many stories go with it."
             }
           ]
         },
@@ -449,10 +530,12 @@
           "kind": "talk",
           "npc": "elder_f_iranmeylek",
           "text": "問東清的女性長輩",
+          "textEn": "Ask the Iranmeylek woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "海裡的東西，好像沒有以前多了。"
+              "zh": "海裡的東西，好像沒有以前多了。",
+              "en": "There doesn't seem to be as much in the sea as there used to be."
             }
           ]
         },
@@ -460,14 +543,17 @@
           "kind": "talk",
           "npc": "culture_worker",
           "text": "回去告訴部落文化工作者",
+          "textEn": "Go back and tell the village culture worker",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們聽到的，都是真的，也都只是一部分。"
+              "zh": "你們聽到的，都是真的，也都只是一部分。",
+              "en": "Everything you heard is true — and each is only one part."
             },
             {
               "who": "@npc",
-              "zh": "這一頁，要留給族人自己來寫。"
+              "zh": "這一頁，要留給族人自己來寫。",
+              "en": "This page is left for the Tao people to write themselves."
             }
           ],
           "gives": {
@@ -477,6 +563,10 @@
             "toast": [
               "現代的挑戰",
               "這一頁留給族人自己來寫。"
+            ],
+            "toastEn": [
+              "Modern challenges",
+              "This page is left for the Tao people to write themselves."
             ]
           }
         }
@@ -484,7 +574,9 @@
       "hint": {
         "tier": "vague",
         "from": "朗島",
-        "zh": "部落文化工作者說，現代的挑戰要多聽幾個人說。"
+        "fromEn": "Iraraley",
+        "zh": "部落文化工作者說，現代的挑戰要多聽幾個人說。",
+        "en": "The village culture worker says to hear from several people about modern challenges."
       },
       "playable": true,
       "review": [
@@ -498,7 +590,7 @@
       "village": null,
       "name": {
         "zh": "親從子名（選用尾聲）",
-        "en": ""
+        "en": "Named after the child (optional epilogue)"
       },
       "time": "any",
       "seasons": [],
@@ -509,10 +601,15 @@
       "n": 1,
       "text": {
         "who": "族男、族女",
+        "whoEn": "Tao man, Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "一個遊戲年之後",
+        "seasonEn": "After one game year",
         "pre": "完成一個遊戲年",
+        "preEn": "Finish one game year",
         "unlock": "改稱 Syaman-、Sinan-，解鎖「教導孩子辨認魚類」",
+        "unlockEn": "Become Syaman- / Sinan-, unlocks \"Teach a child to tell fish apart\"",
         "kind": ""
       },
       "req": {
@@ -524,23 +621,28 @@
           "spot": "host_tagakal",
           "r": 5,
           "text": "在涼亭上，聽長輩說島上的名字",
+          "textEn": "On the pavilion, listen to the elder talk about names on the island",
           "lines": [
             {
               "who": "@host",
-              "zh": "在島上，有了第一個孩子，大人的名字就跟著孩子改。"
+              "zh": "在島上，有了第一個孩子，大人的名字就跟著孩子改。",
+              "en": "On the island, when someone has their first child, the parents' names change with the child."
             },
             {
               "who": "@host",
               "zh": "爸爸叫 Syaman，媽媽叫 Sinan，後面接孩子的名字。",
+              "en": "The father becomes Syaman and the mother Sinan, followed by the child's name.",
               "tao": "Syaman · Sinan"
             },
             {
               "who": "@host",
-              "zh": "等你們有一天有了孩子，大家就會用孩子的名字叫你們。名字，是跟著家一起長大的。"
+              "zh": "等你們有一天有了孩子，大家就會用孩子的名字叫你們。名字，是跟著家一起長大的。",
+              "en": "One day when you have children, everyone will call you by your child's name. Names grow along with the family."
             },
             {
               "who": "@me",
-              "zh": "那時候，我們再帶孩子回來，教他認魚。"
+              "zh": "那時候，我們再帶孩子回來，教他認魚。",
+              "en": "Then we'll bring the child back and teach them about fish."
             }
           ],
           "actor": [
@@ -555,6 +657,10 @@
             "toast": [
               "尾聲：親從子名",
               "解鎖「教導孩子辨認魚類」。"
+            ],
+            "toastEn": [
+              "Epilogue: named after the child",
+              "Unlocked \"Teach a child to tell fish apart\"."
             ]
           }
         }
@@ -562,7 +668,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "一年過去了，主人家的長輩在涼亭上，好像想說說名字的事。"
+        "fromEn": "Host family",
+        "zh": "一年過去了，主人家的長輩在涼亭上，好像想說說名字的事。",
+        "en": "A year has passed. The host family's elder on the pavilion seems to want to talk about names."
       },
       "playable": true,
       "review": [
@@ -576,7 +684,7 @@
       "village": null,
       "name": {
         "zh": "衛生所醫師的安全下水與工作提醒",
-        "en": ""
+        "en": "The health station doctor's tips on safe swimming and work"
       },
       "time": "day",
       "seasons": [],
@@ -588,10 +696,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q06",
         "unlock": "急救卡、受傷後恢復較快",
+        "unlockEn": "First aid card, faster recovery after injury",
         "kind": ""
       },
       "req": "Q06",
@@ -600,18 +712,22 @@
           "kind": "talk",
           "npc": "clinic_doctor",
           "text": "聽衛生所醫師說安全下水與工作的提醒",
+          "textEn": "Hear the health station doctor's tips on safe swimming and work",
           "lines": [
             {
               "who": "@npc",
-              "zh": "下水前先看浪、看天氣，不要一個人下水。"
+              "zh": "下水前先看浪、看天氣，不要一個人下水。",
+              "en": "Check the waves and weather before going in. Never go in alone."
             },
             {
               "who": "@npc",
-              "zh": "救生衣穿好，扣子扣緊。礁岩很利，穿防滑鞋。"
+              "zh": "救生衣穿好，扣子扣緊。礁岩很利，穿防滑鞋。",
+              "en": "Put on your life jacket and do up the buckles. The reef rocks are sharp — wear non-slip shoes."
             },
             {
               "who": "@npc",
-              "zh": "曬魚、搬木頭的時候多喝水，中午最熱的時候休息一下。"
+              "zh": "曬魚、搬木頭的時候多喝水，中午最熱的時候休息一下。",
+              "en": "Drink plenty of water when drying fish or carrying wood, and rest at midday when it's hottest."
             }
           ],
           "gives": {
@@ -621,6 +737,10 @@
             "toast": [
               "急救卡",
               "記下醫師的安全提醒。"
+            ],
+            "toastEn": [
+              "First aid card",
+              "You noted the doctor's safety tips."
             ]
           }
         }
@@ -628,7 +748,9 @@
       "hint": {
         "tier": "direct",
         "from": "衛生所",
-        "zh": "衛生所醫師說，下水和工作之前有幾件事要注意。"
+        "fromEn": "Health station",
+        "zh": "衛生所醫師說，下水和工作之前有幾件事要注意。",
+        "en": "The health station doctor says there are a few things to watch for before swimming and working."
       },
       "playable": true
     },
@@ -639,7 +761,7 @@
       "village": null,
       "name": {
         "zh": "營養師的島嶼飲食課",
-        "en": ""
+        "en": "The dietitian's island food class"
       },
       "time": "day",
       "seasons": [],
@@ -651,10 +773,15 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q06 或 E1",
+        "preEn": "Q06 or E1",
         "unlock": "營養卡、Y3",
+        "unlockEn": "Nutrition card, Y3",
         "kind": "OR"
       },
       "req": {
@@ -668,14 +795,17 @@
           "kind": "talk",
           "npc": "nutritionist",
           "text": "聽營養師的島嶼飲食課",
+          "textEn": "Listen to the dietitian's island food class",
           "lines": [
             {
               "who": "@npc",
-              "zh": "芋頭和地瓜給力氣，魚給蛋白質，海菜和野菜給礦物質。"
+              "zh": "芋頭和地瓜給力氣，魚給蛋白質，海菜和野菜給礦物質。",
+              "en": "Taro and sweet potato give energy, fish gives protein, seaweed and wild greens give minerals."
             },
             {
               "who": "@npc",
-              "zh": "島上傳統的餐桌，本來就很均衡。"
+              "zh": "島上傳統的餐桌，本來就很均衡。",
+              "en": "The island's traditional table was already well balanced."
             }
           ],
           "gives": {
@@ -686,6 +816,10 @@
             "toast": [
               "營養卡",
               "學到島嶼食物的營養。"
+            ],
+            "toastEn": [
+              "Nutrition card",
+              "You learned about the nutrition of island food."
             ]
           }
         }
@@ -693,7 +827,9 @@
       "hint": {
         "tier": "direct",
         "from": "衛生所",
-        "zh": "衛生所的營養師在講島上的食物。"
+        "fromEn": "Health station",
+        "zh": "衛生所的營養師在講島上的食物。",
+        "en": "The health station dietitian is talking about island food."
       },
       "playable": true
     },
@@ -704,7 +840,7 @@
       "village": null,
       "name": {
         "zh": "和營養師比較傳統食物與進口食物（食物主權）",
-        "en": ""
+        "en": "Compare traditional and imported food with the dietitian (food sovereignty)"
       },
       "time": "day",
       "seasons": [],
@@ -719,10 +855,15 @@
       ],
       "text": {
         "who": "族女＋旅人",
+        "whoEn": "Tao woman + Traveller",
         "coop": "雙人：族女＋旅人，在衛生所",
+        "coopEn": "Pair: Tao woman + Traveller, at the health station",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Y2 且 G1",
+        "preEn": "Y2 and G1",
         "unlock": "食物主權卡、糧倉說明加註",
+        "unlockEn": "Food sovereignty card, note added to the food store",
         "kind": "AND"
       },
       "req": {
@@ -736,22 +877,27 @@
           "kind": "talk",
           "npc": "nutritionist",
           "text": "族女和旅人一起，和營養師比較傳統食物與進口食物",
+          "textEn": "The Tao woman and the traveller compare traditional and imported food with the dietitian",
           "lines": [
             {
               "who": "@f",
-              "zh": "家裡的芋頭、飛魚、地瓜，都是自己種、自己捕的。"
+              "zh": "家裡的芋頭、飛魚、地瓜，都是自己種、自己捕的。",
+              "en": "The taro, flying fish and sweet potato at home — we grow and catch them all ourselves."
             },
             {
               "who": "@npc",
-              "zh": "進口的麵和罐頭很方便，可是船一停就沒有了。"
+              "zh": "進口的麵和罐頭很方便，可是船一停就沒有了。",
+              "en": "Imported noodles and cans are handy, but when the boat stops, they're gone."
             },
             {
               "who": "@npc",
-              "zh": "自己種的、自己捕的，是島上的人自己能決定的食物。這就叫食物主權。"
+              "zh": "自己種的、自己捕的，是島上的人自己能決定的食物。這就叫食物主權。",
+              "en": "Food you grow and catch yourselves is food the island's people can decide on for themselves. That's called food sovereignty."
             },
             {
               "who": "@t",
-              "zh": "原來吃什麼，也是一種可以自己決定的事。"
+              "zh": "原來吃什麼，也是一種可以自己決定的事。",
+              "en": "So what we eat is something we can decide for ourselves too."
             }
           ],
           "need": [
@@ -766,6 +912,10 @@
             "toast": [
               "食物主權卡",
               "糧倉說明加上「自己能決定的食物」。"
+            ],
+            "toastEn": [
+              "Food sovereignty card",
+              "The food store note now adds \"food we can decide on ourselves\"."
             ]
           }
         }
@@ -773,7 +923,9 @@
       "hint": {
         "tier": "direct",
         "from": "衛生所",
-        "zh": "採過芋頭之後，族女可以帶旅人去和營養師聊聊傳統食物。"
+        "fromEn": "Health station",
+        "zh": "採過芋頭之後，族女可以帶旅人去和營養師聊聊傳統食物。",
+        "en": "After picking taro, the Tao woman can take the traveller to talk with the dietitian about traditional food."
       },
       "playable": true,
       "review": [

@@ -17,7 +17,7 @@
       "arc": "outfit",
       "name": {
         "zh": "尋根：阿公的船組",
-        "en": ""
+        "en": "Roots: Grandpa's boat crew"
       },
       "giver": "m",
       "review": [
@@ -26,11 +26,17 @@
       ],
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "M1（跟船組整理過船）",
+        "preEn": "M1 (sorted the boat with the crew)",
         "unlock": "族男傳統服飾",
-        "kind": "成就＋尋根（M3 出海前）"
+        "unlockEn": "Tao man's traditional clothing",
+        "kind": "成就＋尋根（M3 出海前）",
+        "kindEn": "Achievement + Roots (before M3 at sea)"
       },
       "req": "M1",
       "steps": [
@@ -41,14 +47,17 @@
             "m"
           ],
           "text": "主人家長輩提起族男的阿公",
+          "textEn": "The host family elder mentions the Tao man's grandpa",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你跟船組整理過船了，很快就要第一次出海。你阿公年輕的時候，也是這樣開始的。"
+              "zh": "你跟船組整理過船了，很快就要第一次出海。你阿公年輕的時候，也是這樣開始的。",
+              "en": "You've sorted the boat with the crew, and soon you'll go to sea for the first time. Your grandpa started out just like this when he was young."
             },
             {
               "who": "@npc",
-              "zh": "想知道他的事，去問野銀和椰油的長輩，他們跟他一起出過海。"
+              "zh": "想知道他的事，去問以前跟他一起出海的長輩。",
+              "en": "If you want to know about him, ask the elders who went to sea with him."
             }
           ]
         },
@@ -59,16 +68,36 @@
             "m"
           ],
           "text": "野銀的長輩說起阿公出海的樣子",
+          "textEn": "The Ivalino elder talks about Grandpa at sea",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你阿公啊，划船很穩，話不多。分魚的時候，總是先想到別人。"
+              "zh": "你阿公啊，划船很穩，話不多。分魚的時候，總是先想到別人。",
+              "en": "Your grandpa? He paddled steady and didn't talk much. When sharing fish, he always thought of others first."
             },
             {
               "who": "@npc",
-              "zh": "記得一個人的名字和他做過的事，就是把他留在家裡。"
+              "zh": "記得一個人的名字和他做過的事，就是把他留在家裡。",
+              "en": "Remembering a person's name and what he did — that's how you keep him at home."
             }
-          ]
+          ],
+          "alt": {
+            "npc": "elder_iraraley",
+            "text": "朗島的長輩說起阿公出海的樣子",
+            "textEn": "The Iraraley elder talks about Grandpa at sea",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "你阿公啊，划船很穩，話不多。分魚的時候，總是先想到別人。",
+                "en": "Your grandpa? He paddled steady and didn't talk much. When sharing fish, he always thought of others first."
+              },
+              {
+                "who": "@npc",
+                "zh": "記得一個人的名字和他做過的事，就是把他留在家裡。",
+                "en": "Remembering a person's name and what he did — that's how you keep him at home."
+              }
+            ]
+          }
         },
         {
           "kind": "talk",
@@ -77,19 +106,39 @@
             "m"
           ],
           "text": "椰油的長輩說起阿公的船組",
+          "textEn": "The Yayo elder talks about Grandpa's boat crew",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我們同一個船組好多年。他補網補得最快，手很巧。"
+              "zh": "我們同一個船組好多年。他補網補得最快，手很巧。",
+              "en": "We were in the same boat crew for years. He mended nets the fastest. Clever hands."
             },
             {
               "who": "@npc",
-              "zh": "回去吧，家裡的長輩有東西要給你。"
+              "zh": "回去吧，家裡的長輩有東西要給你。",
+              "en": "Go on home. The elder at home has something for you."
             }
           ],
           "gives": {
             "flags": [
               "roots_m_heard"
+            ]
+          },
+          "alt": {
+            "npc": "elder_imorod",
+            "text": "紅頭的長輩說起阿公的船組",
+            "textEn": "The Imorod elder talks about Grandpa's boat crew",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "我年輕時跟他同一個船組好多年。他補網補得最快，手很巧。",
+                "en": "When I was young, I was in his boat crew for years. He mended nets the fastest. Clever hands."
+              },
+              {
+                "who": "@npc",
+                "zh": "回去吧，家裡的長輩有東西要給你。",
+                "en": "Go on home. The elder at home has something for you."
+              }
             ]
           }
         },
@@ -100,18 +149,22 @@
             "m"
           ],
           "text": "主人家的女性長輩把織好的衣服交給族男",
+          "textEn": "The host family's woman elder gives the Tao man clothes woven at home",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這是家裡的女人一起織的。你要跟船組出海了，也問過阿公的事，可以穿了。"
+              "zh": "這是家裡的女人一起織的。你要跟船組出海了，也問過阿公的事，可以穿了。",
+              "en": "The women of the family wove this together. You're going to sea with the crew and you've asked about your grandpa. You can wear it now."
             },
             {
               "who": "@npc",
-              "zh": "出海、祭典、部落的活動，都要穿上它。平常想換回來也可以，要記得是誰織的、是為了什麼。"
+              "zh": "出海、祭典、部落的活動，都要穿上它。平常想換回來也可以，要記得是誰織的、是為了什麼。",
+              "en": "Wear it to sea, to festivals and village events. You can change back whenever you like — just remember who wove it and why."
             },
             {
               "who": "旁白",
-              "zh": "族男解鎖「傳統服飾」，可在手札的「背包」頁換穿。不包含祭儀用的銀盔、金片等物品；穿著的場合還要請族人確認。"
+              "zh": "族男解鎖「傳統服飾」，可在手札的「背包」頁換穿。不包含祭儀用的銀盔、金片等物品；穿著的場合還要請族人確認。",
+              "en": "The Tao man unlocked \"Traditional clothing\". Change into it on the \"Bag\" page of the notebook. It doesn't include ceremonial items like the silver helmet or gold plates; when to wear it still needs checking with the community."
             }
           ],
           "gives": {
@@ -121,6 +174,10 @@
             "toast": [
               "解鎖服裝",
               "族男的傳統服飾已加入手札的「背包」頁。"
+            ],
+            "toastEn": [
+              "Clothing unlocked",
+              "The Tao man's traditional clothing was added to the \"Bag\" page of the notebook."
             ]
           }
         }
@@ -128,7 +185,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "族男跟船組整理過船之後，主人家長輩好像想跟他說說阿公的事。"
+        "fromEn": "Host family",
+        "zh": "族男跟船組整理過船之後，主人家長輩好像想跟他說說阿公的事。",
+        "en": "After the Tao man sorts the boat with the crew, the host family elder seems to want to tell him about his grandpa."
       }
     },
     {
@@ -147,7 +206,7 @@
       "arc": "outfit",
       "name": {
         "zh": "尋根：外婆的織布與水芋田",
-        "en": ""
+        "en": "Roots: Grandma's weaving and taro field"
       },
       "giver": "f",
       "review": [
@@ -156,11 +215,16 @@
       ],
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "非飛魚季",
+        "seasonEn": "Outside flying fish season",
         "pre": "J2、IO-F1",
         "unlock": "族女傳統服飾",
-        "kind": "成就＋尋根"
+        "unlockEn": "Tao woman's traditional clothing",
+        "kind": "成就＋尋根",
+        "kindEn": "Achievement + Roots"
       },
       "req": {
         "all": [
@@ -176,16 +240,36 @@
             "f"
           ],
           "text": "紅頭的織布長輩說起族女的外婆",
+          "textEn": "The Imorod weaving elder talks about the Tao woman's Grandma",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你捲線的手勢，跟你外婆一模一樣。她以前常在簷廊織布，一坐就是一個下午。"
+              "zh": "你捲線的手勢，跟你外婆一模一樣。她以前常在簷廊織布，一坐就是一個下午。",
+              "en": "The way you wind thread is just like your Grandma. She used to weave on the porch for a whole afternoon."
             },
             {
               "who": "@npc",
-              "zh": "她的水芋田在野銀，去問水芋田長輩吧。"
+              "zh": "她的水芋田在野銀。去問問以前跟她一起下田的長輩吧。",
+              "en": "Her taro field is in Ivalino. Go ask the elders who used to work the field with her."
             }
-          ]
+          ],
+          "alt": {
+            "npc": "elder_f_iratay",
+            "text": "漁人的女性長輩說起族女的外婆",
+            "textEn": "The Iratay woman elder talks about the Tao woman's Grandma",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "你捲線的手勢，跟你外婆一模一樣。我們年輕時常一起在簷廊織布，一坐就是一個下午。",
+                "en": "The way you wind thread is just like your Grandma. When we were young we often wove together on the porch for a whole afternoon."
+              },
+              {
+                "who": "@npc",
+                "zh": "她的水芋田在野銀。去問問以前跟她一起下田的長輩吧。",
+                "en": "Her taro field is in Ivalino. Go ask the elders who used to work the field with her."
+              }
+            ]
+          }
         },
         {
           "kind": "talk",
@@ -194,16 +278,36 @@
             "f"
           ],
           "text": "野銀的水芋田長輩說起外婆的田",
+          "textEn": "The Ivalino taro field elder talks about Grandma's field",
           "lines": [
             {
               "who": "@npc",
-              "zh": "那塊田現在是你家的長輩在照顧。你外婆說過，田要有人走進去，才不會荒掉。"
+              "zh": "那塊田現在是你家的長輩在照顧。你外婆說過，田要有人走進去，才不會荒掉。",
+              "en": "Your family's elder looks after that field now. Your Grandma used to say a field needs people walking in it, or it goes wild."
             },
             {
               "who": "@npc",
-              "zh": "去看看吧，回來的時候到家裡的簷廊。"
+              "zh": "去看看吧，回來的時候到家裡的簷廊。",
+              "en": "Go and see it. When you come back, come to the porch at home."
             }
-          ]
+          ],
+          "alt": {
+            "npc": "elder_f_iranmeylek",
+            "text": "東清的女性長輩說起外婆的田",
+            "textEn": "The Iranmeylek woman elder talks about Grandma's field",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "我年輕時常去野銀幫你外婆的田。那塊田現在是你家的長輩在照顧。",
+                "en": "When I was young I often went to Ivalino to help in your Grandma's field. Your family's elder looks after it now."
+              },
+              {
+                "who": "@npc",
+                "zh": "你外婆說過，田要有人走進去，才不會荒掉。去看看吧，回來的時候到家裡的簷廊。",
+                "en": "Your Grandma used to say a field needs people walking in it, or it goes wild. Go and see it. When you come back, come to the porch at home."
+              }
+            ]
+          }
         },
         {
           "kind": "spot",
@@ -213,14 +317,17 @@
             "f"
           ],
           "text": "族女走進家裡的水芋田看看",
+          "textEn": "The Tao woman walks into the family's taro field",
           "lines": [
             {
               "who": "@f",
-              "zh": "原來外婆以前就是在這裡工作。"
+              "zh": "原來外婆以前就是在這裡工作。",
+              "en": "So this is where Grandma used to work."
             },
             {
               "who": "旁白",
-              "zh": "族女在田埂上站了一會兒。"
+              "zh": "族女在田埂上站了一會兒。",
+              "en": "The Tao woman stands on the field bank for a while."
             }
           ],
           "gives": {
@@ -236,18 +343,22 @@
             "f"
           ],
           "text": "主人家的女性長輩把織好的衣服交給族女",
+          "textEn": "The host family's woman elder gives the Tao woman clothes woven at home",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這件是用家裡的線織的，有一部分還是你外婆留下來的。"
+              "zh": "這件是用家裡的線織的，有一部分還是你外婆留下來的。",
+              "en": "This was woven with thread from our home. Some of it was left by your Grandma."
             },
             {
               "who": "@npc",
-              "zh": "妳學會處理苧麻、捲線，也走過外婆的田了。穿上它，記得這些手藝是怎麼傳下來的。"
+              "zh": "妳學會處理苧麻、捲線，也走過外婆的田了。穿上它，記得這些手藝是怎麼傳下來的。",
+              "en": "You've learned to prepare ramie and wind thread, and you've walked Grandma's field. Wear it, and remember how these skills were handed down."
             },
             {
               "who": "旁白",
-              "zh": "族女解鎖「傳統服飾」，可在手札的「背包」頁換穿。穿著的場合與紋樣還要請族人確認。"
+              "zh": "族女解鎖「傳統服飾」，可在手札的「背包」頁換穿。穿著的場合與紋樣還要請族人確認。",
+              "en": "The Tao woman unlocked \"Traditional clothing\". Change into it on the \"Bag\" page of the notebook. When to wear it and its patterns still need checking with the community."
             }
           ],
           "gives": {
@@ -257,14 +368,20 @@
             "toast": [
               "解鎖服裝",
               "族女的傳統服飾已加入手札的「背包」頁。"
+            ],
+            "toastEn": [
+              "Clothing unlocked",
+              "The Tao woman's traditional clothing was added to the \"Bag\" page of the notebook."
             ]
           }
         }
       ],
       "hint": {
         "tier": "vague",
-        "from": "紅頭",
-        "zh": "紅頭的織布長輩看族女捲線的樣子，好像想起了什麼人。"
+        "from": "長輩",
+        "fromEn": "Elder",
+        "zh": "織布的長輩看族女捲線的樣子，好像想起了什麼人。",
+        "en": "Watching the Tao woman wind thread, the weaving elder seems to remember someone."
       }
     },
     {
@@ -282,7 +399,7 @@
       "arc": "outfit",
       "name": {
         "zh": "族女幫旅人編織草小袋",
-        "en": ""
+        "en": "The Tao woman weaves a small straw pouch for the traveller"
       },
       "need": [
         "f",
@@ -294,11 +411,17 @@
       ],
       "text": {
         "who": "族女＋旅人",
+        "whoEn": "Tao woman + Traveller",
         "coop": "兩人合作",
+        "coopEn": "Two working together",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "IT-V2（晚會邀請）、J1",
+        "preEn": "IT-V2 (party invite), J1",
         "unlock": "旅人的日常小飾品（織草帽、織草小袋）",
-        "kind": "支線"
+        "unlockEn": "Traveller's everyday accessories (woven straw hat, small woven pouch)",
+        "kind": "支線",
+        "kindEn": "Side quest"
       },
       "req": {
         "all": [
@@ -315,18 +438,22 @@
             "t"
           ],
           "text": "向織布長輩請教：旅人去晚會可以戴什麼",
+          "textEn": "Ask the weaving elder: what can the traveller wear to the party?",
           "lines": [
             {
               "who": "@npc",
-              "zh": "要去漁人的晚會啊？傳統的衣服是族人的，外面來的朋友不穿。"
+              "zh": "要去漁人的晚會啊？傳統的衣服是族人的，外面來的朋友不穿。",
+              "en": "Going to the Iratay party? Traditional clothes belong to the Tao people. Friends from outside don't wear them."
             },
             {
               "who": "@npc",
-              "zh": "不過，讓族女幫你編個小袋子、一頂草帽，帶在身上，這樣就很好。"
+              "zh": "不過，讓族女幫你編個小袋子、一頂草帽，帶在身上，這樣就很好。",
+              "en": "But you could have the Tao woman weave you a small pouch and a straw hat to carry along. That would be nice."
             },
             {
               "who": "@npc",
-              "zh": "去雜貨店買一捆沒染色的棉線，剩下的我這裡有。"
+              "zh": "去雜貨店買一捆沒染色的棉線，剩下的我這裡有。",
+              "en": "Go buy a bundle of undyed cotton thread at the grocery store. I have the rest here."
             }
           ]
         },
@@ -337,10 +464,12 @@
             "t"
           ],
           "text": "旅人到椰油的雜貨店買棉線",
+          "textEn": "The traveller buys cotton thread at the Yayo grocery store",
           "lines": [
             {
               "who": "@npc",
-              "zh": "棉線？要編東西啊。這捆是原色的，拿去。"
+              "zh": "棉線？要編東西啊。這捆是原色的，拿去。",
+              "en": "Cotton thread? Making something, eh? This bundle is undyed. Here you go."
             }
           ],
           "gives": {
@@ -356,10 +485,12 @@
             "f"
           ],
           "text": "族女向織布長輩拿碎布",
+          "textEn": "The Tao woman gets cloth scraps from the weaving elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這些是織剩的線頭和布邊，拿去用。原色、簡單就好，不要照著祭儀的紋樣做。"
+              "zh": "這些是織剩的線頭和布邊，拿去用。原色、簡單就好，不要照著祭儀的紋樣做。",
+              "en": "These are leftover thread ends and cloth edges. Use them. Keep it plain and simple — don't copy ceremonial patterns."
             }
           ],
           "gives": {
@@ -380,18 +511,22 @@
             "t"
           ],
           "text": "回到簷廊，族女幫旅人編織草小袋與草帽",
+          "textEn": "Back on the porch, the Tao woman weaves a straw pouch and hat for the traveller",
           "lines": [
             {
               "who": "@f",
-              "zh": "頭低一下，我量一下……好了！一頂草帽，一個小袋子。"
+              "zh": "頭低一下，我量一下……好了！一頂草帽，一個小袋子。",
+              "en": "Head down a little, let me measure… there! A straw hat and a little pouch."
             },
             {
               "who": "@t",
-              "zh": "好漂亮！謝謝妳，我會好好珍惜。"
+              "zh": "好漂亮！謝謝妳，我會好好珍惜。",
+              "en": "So pretty! Thank you. I'll treasure them."
             },
             {
               "who": "旁白",
-              "zh": "旅人得到「織草帽」與「織草小袋」。這是日常的小飾品，不是傳統服飾。"
+              "zh": "旅人得到「織草帽」與「織草小袋」。這是日常的小飾品，不是傳統服飾。",
+              "en": "The traveller got a \"Woven straw hat\" and a \"Small woven pouch\". These are everyday accessories, not traditional clothing."
             }
           ],
           "gives": {
@@ -410,6 +545,10 @@
             "toast": [
               "新飾品",
               "旅人可以在手札的「背包」頁戴上織草帽、背上織草小袋。"
+            ],
+            "toastEn": [
+              "New accessories",
+              "The traveller can wear the straw hat and carry the woven pouch from the \"Bag\" page of the notebook."
             ]
           }
         }
@@ -417,7 +556,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "受邀去晚會之後，可以找紅頭的織布長輩，請族女幫旅人編個小飾品。"
+        "fromEn": "Iratay",
+        "zh": "受邀去晚會之後，可以找紅頭的織布長輩，請族女幫旅人編個小飾品。",
+        "en": "After being invited to the party, find the Imorod weaving elder and have the Tao woman weave a small accessory for the traveller."
       }
     }
   ]

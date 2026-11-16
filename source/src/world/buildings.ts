@@ -525,7 +525,12 @@ export function addYacht(b: ArchBuilder, ox: number, oy: number, oz: number, yaw
   // hull: antifouling under the waterline, white topsides with a navy stripe, a sheer that rises to the bow
   box('vAntifoul', 1.5, 0.22, 3.7, 0, -0.08, -0.4);
   box('vWhite', 1.6, 0.5, 3.8, 0, 0.27, -0.4);
-  box('vNavy', 1.62, 0.13, 3.82, 0, 0.3, -0.4);
+  // 0.1.5: navy band on the sides only, turning just around the stern corners; the transom stays white
+  // (art-ref/arrival/layers25d-v2/yacht/10_yacht_rear.png)
+  for (const sd of [-1, 1]) {
+    box('vNavy', 0.02, 0.13, 3.82, sd * 0.81, 0.3, -0.4);
+    box('vNavy', 0.2, 0.13, 0.02, sd * 0.72, 0.3, -2.31);
+  }
   const bow = new THREE.ConeGeometry(1.13, 1.6, 4, 1);
   bow.rotateY(Math.PI / 4);
   bow.scale(1, 1, 0.31); // flattened: a deep V bow (vertical after the turn below)

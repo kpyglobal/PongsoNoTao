@@ -19,15 +19,20 @@
       "giver": "f",
       "name": {
         "zh": "野銀的水芋田長輩：補種芋苗",
-        "en": ""
+        "en": "Ivalino taro field elder: replant taro shoots"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K6",
         "unlock": "水芋田長輩的信任",
-        "kind": "a akes・水芋田"
+        "unlockEn": "Trust of the taro field elder",
+        "kind": "a akes・水芋田",
+        "kindEn": "a akes · Taro field"
       },
       "req": "K6",
       "steps": [
@@ -35,14 +40,17 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "野銀的水芋田長輩請你幫忙補種",
+          "textEn": "The Ivalino taro field elder asks you to help replant",
           "lines": [
             {
               "who": "@npc",
-              "zh": "前幾天採收了，空出來的地方要補種。這幾株芋苗拿去，插進泥巴裡。"
+              "zh": "前幾天採收了，空出來的地方要補種。這幾株芋苗拿去，插進泥巴裡。",
+              "en": "We harvested a few days ago, and the empty spots need replanting. Take these taro shoots and push them into the mud."
             },
             {
               "who": "@npc",
-              "zh": "田裡的事，我們女人最清楚。跟著我做就對了。"
+              "zh": "田裡的事，我們女人最清楚。跟著我做就對了。",
+              "en": "We women know the fields best. Just follow me."
             }
           ],
           "gives": {
@@ -58,14 +66,17 @@
           "spot": "taro_ivalino",
           "r": 6,
           "text": "到野銀水芋田，把芋苗插進泥裡",
+          "textEn": "Go to the Ivalino taro field and push the taro shoots into the mud",
           "lines": [
             {
               "who": "@me",
-              "zh": "泥巴好深，腳都陷進去了！"
+              "zh": "泥巴好深，腳都陷進去了！",
+              "en": "The mud's so deep, my feet are sinking!"
             },
             {
               "who": "旁白",
-              "zh": "三株芋苗種好了。"
+              "zh": "三株芋苗種好了。",
+              "en": "Three taro shoots planted."
             }
           ],
           "gives": {
@@ -78,10 +89,12 @@
           "kind": "talk",
           "npc": "villager_taro",
           "text": "向水芋田長輩回報",
+          "textEn": "Report to the taro field elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "種得很好。等它長大，要好幾個月呢。水要一直流，芋頭才會好吃。"
+              "zh": "種得很好。等它長大，要好幾個月呢。水要一直流，芋頭才會好吃。",
+              "en": "Nicely planted. It'll be a few months before it's grown. The water has to keep flowing, or the taro won't taste good."
             }
           ],
           "gives": {
@@ -95,7 +108,9 @@
       "hint": {
         "tier": "direct",
         "from": "野銀",
-        "zh": "野銀的水芋田長輩採收後要補種芋苗。"
+        "fromEn": "Ivalino",
+        "zh": "野銀的水芋田長輩採收後要補種芋苗。",
+        "en": "After the harvest, the Ivalino taro field elder needs to replant taro shoots."
       }
     },
     {
@@ -117,7 +132,7 @@
       "giver": "m",
       "name": {
         "zh": "野銀的長輩：飛魚季的規矩",
-        "en": ""
+        "en": "Ivalino elder: the rules of flying fish season"
       },
       "need": [
         "m",
@@ -129,11 +144,16 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人一起聽",
+        "coopEn": "All three listen together",
         "season": "夏季（飛魚季）",
+        "seasonEn": "Summer (flying fish season)",
         "pre": "K6",
         "unlock": "手札「飛魚季的規矩」",
-        "kind": "a akey・飛魚季"
+        "unlockEn": "Notebook page \"Flying fish season rules\"",
+        "kind": "a akey・飛魚季",
+        "kindEn": "a akey · Flying fish season"
       },
       "req": "K6",
       "steps": [
@@ -146,22 +166,27 @@
             "t"
           ],
           "text": "聽野銀的長輩說飛魚季的規矩",
+          "textEn": "Hear the Ivalino elder explain the rules of flying fish season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季的時候，什麼時候出海、魚怎麼分，是我們男人一起商量的。"
+              "zh": "飛魚季的時候，什麼時候出海、魚怎麼分，是我們男人一起商量的。",
+              "en": "In flying fish season, when to go to sea and how to share the fish are decided by the men together."
             },
             {
               "who": "@npc",
-              "zh": "一條船回來，魚先分給船組，再分給親戚。行動不方便的長輩，也不會被忘記。"
+              "zh": "一條船回來，魚先分給船組，再分給親戚。行動不方便的長輩，也不會被忘記。",
+              "en": "When a boat comes back, the fish go to the crew first, then to relatives. Elders who can't get around aren't forgotten either."
             },
             {
               "who": "@npc",
-              "zh": "飛魚季結束了，就停下來，讓魚回去。這是對海的禮。"
+              "zh": "飛魚季結束了，就停下來，讓魚回去。這是對海的禮。",
+              "en": "When flying fish season ends, we stop and let the fish go back. That's our respect for the sea."
             },
             {
               "who": "旁白",
-              "zh": "能公開的規矩只有一部分，各部落也不一樣，還要請族人確認。"
+              "zh": "能公開的規矩只有一部分，各部落也不一樣，還要請族人確認。",
+              "en": "Only some of the rules can be shared, and each village is different. This still needs checking with the community."
             }
           ],
           "gives": {
@@ -171,6 +196,10 @@
             "toast": [
               "手札",
               "「飛魚季的規矩」已寫進手札。"
+            ],
+            "toastEn": [
+              "Notebook",
+              "\"Flying fish season rules\" was added to your notebook."
             ]
           }
         }
@@ -178,7 +207,9 @@
       "hint": {
         "tier": "direct",
         "from": "野銀",
-        "zh": "飛魚季時，野銀的長輩會說說飛魚季的規矩。"
+        "fromEn": "Ivalino",
+        "zh": "飛魚季時，野銀的長輩會說說飛魚季的規矩。",
+        "en": "In flying fish season, the Ivalino elder will talk about its rules."
       }
     }
   ]

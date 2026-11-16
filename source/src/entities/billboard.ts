@@ -113,6 +113,10 @@ export class SpriteBillboard {
   groundY = 0;
   facing = 0; // yaw, 0 = toward +Z (south)
   walking = false;
+  /** 1 = player / escort step rate; ambient NPCs use 1/3 so feet don't slide */
+  walkRate = 1;
+  /** frames advanced while walking (tests) */
+  walkSteps = 0;
   frame = 0;
   /** direction row last shown (s / w / n / e, plus sw / nw / ne / se on an 8dir sheet; debug + tests) */
   dir: Dir8 = 's';
@@ -325,10 +329,11 @@ export class SpriteBillboard {
     }
     if (animate && this.rows >= 4) {
       if (this.walking) {
-        this.acc += dt * 7;
+        this.acc += dt * WALK_ANIM_RATE * this.walkRate;
         if (this.acc > 1) {
           this.acc -= 1;
           this.frame = (this.frame + 1) % this.cols;
+          this.walkSteps++;
         }
         const dir = this.facingDir(camYaw);
         this.setCell(dir, this.frame);
@@ -371,6 +376,9 @@ export class SpriteBillboard {
  * The figure is ~69 px tall, so a 2.65-unit frame shows a ~1.9-unit adult (elders ~1.8) beside the buildings.
  * Pose sheets (scooter 96x96, tatala 128x96 frames, 4x4) use the same px-per-unit, i.e. the same worldH.
  */
+/** walk-cycle advances per second at full player speed (acc += dt * rate). */
+export const WALK_ANIM_RATE = 7;
+
 export const CHAR_WORLD_H = 2.65;
 
 export function makeCharacter(assets: Assets, kind: string, worldH = CHAR_WORLD_H): SpriteBillboard {

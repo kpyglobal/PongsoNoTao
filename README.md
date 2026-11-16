@@ -7,7 +7,7 @@
 > - Cultural content is provisional and unverified, and is not authorized for reuse without the community's consent.
 > - Nothing in this project implies endorsement by any person, community, organization or institution.
 
-**Version 0.1.4**
+**Version 0.1.5**
 
 Pongso no Tao is a browser RPG set on Lanyu (Pongso no Tao). Players walk the island with a small party and learn about Tao language, culture, traditional food, ingredients and nutrition. The current build is an early prototype for review, not a finished or authorized cultural work.
 
@@ -16,7 +16,17 @@ Pongso no Tao is a browser RPG set on Lanyu (Pongso no Tao). Players walk the is
 
 Rights are held by Kristen Pin-Chun Yang, PhD and Larry Syu-Heng Lai, PhD. See [LICENSE](./LICENSE). Third-party material (the game engine, fonts, and provisional language or song sources) keeps its own terms; see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
-### What's new in 0.1.4
+### What's new in 0.1.5
+
+- **Chinese, English, or both:** you can play in Chinese, English, or Chinese + English. Pick a language on the start screens or later in the notebook settings, next to music and sound. The choice is remembered. If you have never picked one, a Chinese-language browser starts in Chinese, and any other browser starts in Chinese + English. In the bilingual mode, a smaller English line sits under the Chinese; with one language the sizes stay as before. Tao words stay in Tao (akokey, soli, tatala …), with an explanation wherever the Chinese gives one. Villages use their Tao names: Yayo, Iraraley, Iranmeylek, Ivalino, Imorod, Iratay. "Grandma" is always used for 外婆.
+- **New fonts:** the type set is now「霞光書卷」: LXGW WenKai TC for Chinese titles, text and the notebook, and Cormorant Garamond for English and Tao. Tao words are never in italics. The bundled fonts are about 1 MB, smaller than before.
+- **A new arrival opening:** after you choose plane or boat, you watch from the cabin window or the bow while the island loads. Then the plane flies in on an arc and descends toward Lanyu, or the yacht sails away toward the island, and the notebook stamps 抵達蘭嶼 as done. The window frame and the bow stay in view on a phone held upright or sideways.
+- **New party screen:** the three portraits sit side by side in the middle, with a line that says the three travel together, each with their own purpose. The two Tao members are fixed; tap the traveller to switch male or female. Each Tao member has a small village menu, set to "random" by default, so they may come from the same village or from two different ones. When the villages differ, the party stays at the male member's home (the host family). "Coming home" is two check-ins, then a meeting at the host family's pavilion. Tasks from a woman elder take place at the female member's home; tasks from a man elder take place at the male member's home. Old saves still load, with both members from the same village as before.
+- **A bigger island:** the whole island is about 40% bigger. Imorod now sits in its real place, next to Iratay. A new cross-island road runs over the hills from Imorod to Ivalino, past the weather station. Every house, work house, pavilion, church and school stands on a level terrace cut into the slope, and every building has a small path from its door to the road. "Round-island travel" now opens a map of the island; tap a place to go there. A red arrow shows where you are. 0.1.4 saves still load, with each member placed on the road near the same village or place.
+- **Cards and the field notebook:** the first time you learn a Tao word, get an item, learn a dish or finish a set of clothes, a postcard appears, then shrinks into the notebook button at the top right. A recipe card is a torn scroll, with a row for each ingredient; ingredients you have not seen yet are grey and show "???". The bag is now a grid of pictures you can tap. Accepting a quest opens its own notebook page. With the traveller nearby, the first visit to a scenic spot takes a photo for the album; later visits only show a small camera icon.
+- **Play-testing fixes:** a new game is now led by the male Tao member. The default view is a little farther out. Trees no longer hide buildings or their doors. The round-island road is smoother, with no new cliffs and no flooded road. Notices sit at the top right with shorter text; pickups such as "ingredient +1" appear as small text above the party. Villagers stay near their own spots and walk more slowly in the background. Goats graze and wander in small herds, mostly black. The stern of the yacht at the harbour is now white, matching the opening art. The version number shows on the title screen and in the notebook settings.
+
+### What was new in 0.1.4
 
 - **A new opening:** after the title screen you pick your party, then choose to arrive by plane or by boat. Before the choice you see a painted view of the real island; after it the camera pulls back to a cabin window and wing, or to the bow of a small yacht. The logo and title music play while the game loads in the background (a bar at the lower left). When loading is done the logo fades, then the plane banks toward the island, or the yacht drives forward out of view. The notebook then opens and marks 抵達蘭嶼 as done, and play starts. Both starts are next to a road and lead to the same scooter rental. Older saves skip the opening.
 - **Menu music and sounds:** the start menu has its own light loop that leads into the title music, and short sounds for moving, confirming and going back. Music and sound effects can be turned on or off on the start screens, with the same setting as in the game.
@@ -68,6 +78,16 @@ Then open the local address printed by Vite (usually `http://localhost:5173/`).
 - 遊玩：<https://kpyglobal.github.io/PongsoNoTao/>
 - 攻略：<https://kpyglobal.github.io/PongsoNoTao/guide.html>（獨立網頁，遊戲裡不會連過去）
 
+### 0.1.5 更新
+
+- **可以選中文、英文，或兩種一起：** 開頭畫面或手札設定裡就能選語言（中文／English／中文＋English），就在音樂、音效旁邊，選好會記住。如果還沒選過，用中文瀏覽器會開中文，其他瀏覽器會開「中文＋English」。兩種並列時，中文下面會再出一行比較小的英文；只選一種時，字的大小和以前一樣。族語詞仍用族語（akokey、soli、tatala……），華語有解釋的地方，英文也會有。部落用族語名：Yayo、Iraraley、Iranmeylek、Ivalino、Imorod、Iratay。「外婆」在英文裡一律寫 Grandma。
+- **新字型：** 字型組改成「霞光書卷」：中文用霞鶩文楷 TC，英文和族語用 Cormorant Garamond。族語詞任何地方都不會用斜體。打包進去的字型大約 1 MB，比以前小。
+- **新的抵達開場：** 選好搭飛機或搭船之後，會先從機窗或船頭看著島嶼載入。接著小飛機畫一道弧線朝蘭嶼降落，或遊艇駛向島嶼，然後手札把「抵達蘭嶼」記成已完成。直拿或橫拿手機時，機窗的框和船頭都看得到，不會被切掉。
+- **新的角色選擇畫面：** 三個人的頭像並排在畫面中間，上面一句話說三個人一起旅行，各有各的目的。兩位族人是固定的；點旅人的頭像就能換男生或女生。男族人、女族人各有一個小的部落下拉選單，預設都是「隨機」，可以來自同一個部落，也可以來自兩個不同的部落。兩人不同部落時，大家住在男族人的家（主人家）。「回家報到」變成兩段，再一起到主人家的涼亭集合。女性長輩交代的事在女族人的家，男性長輩交代的事在男族人的家。舊存檔照樣可以讀，兩位族人都算同一個部落，跟以前一樣。
+- **更大的島：** 整座島放大約四成。紅頭現在在真實的位置，就在漁人旁邊。新增一條從紅頭到野銀、經過氣象站的中橫公路。每一棟房子、工作屋、涼亭、教堂和學校都蓋在一塊整平的平台上，每棟房子門口都有小路接到公路。「環島旅行」現在會打開一張島嶼地圖，點一個地點就能去，紅色箭頭標出你在哪裡。0.1.4 的存檔照樣可以讀，隊員會被放到原本那個部落或地點附近的路上。
+- **卡片和圖鑑手札：** 第一次學到族語詞、拿到東西、學會一道菜或做完整套衣服時，會出現一張明信片，點一下就會縮小飛進右上角的手札按鈕。食譜卡是一張捲軸，每樣食材一行；還沒見過的食材是灰色的，名稱顯示「???」。背包改成一格一格的圖片，點一下就能看。接到新任務會打開任務頁。旅人在隊伍裡而且就在旁邊時，第一次走到景點會自動拍照存進相簿；之後再去只會看到一個小相機圖示。
+- **試玩回饋修正：** 新遊戲改由男族人帶頭。預設視野拉遠一點。建築物前面和門口的樹清掉了。環島公路比較平順，沒有新的斷崖，也沒有路面泡水。提醒框移到右上角，文字變短；拿到東西（例如「食材＋1」）會在角色頭上冒出一行小字。村民會在自己的地方附近走動，背景走動的速度也放慢了。山羊變成一小群一小群，會吃草、慢慢走動，大多是黑色的。港邊遊艇的船尾改成白色，跟開場插畫一樣。開頭畫面和手札設定裡會顯示目前的版本。
+
 ### 0.1.4 更新
 
 - **新的開場：** 標題畫面之後先選隊伍，再選「搭飛機」或「搭船」來到蘭嶼。選好之前，先看到手繪的蘭嶼真實景色；選好之後，相機會往後拉，從機窗看見機翼，或站在遊艇船頭。開場時螢幕上有標誌和標題音樂，遊戲在背後載入，左下角有載入條。載好、標誌淡出之後，飛機會轉向蘭嶼，或遊艇向前駛離畫面。接著手札會打開，把「抵達蘭嶼」記成已完成，再開始遊戲。兩個起點都在路旁，也都會帶你去同一家機車出租店。舊存檔會跳過開場。
@@ -103,4 +123,4 @@ Then open the local address printed by Vite (usually `http://localhost:5173/`).
 - **小人物關節更自然：** 膝蓋和手肘看起來更順。
 - **水下景點：** 每個潛水點維持所有人看同一張圖；沒用到的草稿圖已從原始檔中移除。
 
-版本 0.1.4。權利由 Kristen Pin-Chun Yang, PhD 與 Larry Syu-Heng Lai, PhD 持有，詳見 LICENSE。
+版本 0.1.5。權利由 Kristen Pin-Chun Yang, PhD 與 Larry Syu-Heng Lai, PhD 持有，詳見 LICENSE。

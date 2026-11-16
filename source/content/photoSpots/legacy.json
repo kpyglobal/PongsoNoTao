@@ -4,7 +4,8 @@
       "id": "ps_p01",
       "quest": "P01",
       "name": {
-        "zh": "紅頭岩"
+        "zh": "紅頭岩",
+        "en": "Hongtou Rock"
       },
       "r": 12,
       "time": "day",
@@ -15,13 +16,28 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "hongtou_rock"
+      "place": "hongtou_rock",
+      "snap": [
+        {
+          "zh": "📸 路從岩洞中間穿過去欸，這張一定要留。",
+          "en": "📸 The road goes right through the rock. Gotta keep this one."
+        },
+        {
+          "zh": "📸 紅頭岩，收下！等黃昏再來看它變紅。",
+          "en": "📸 Hongtou Rock, got it! I'll come back at dusk to see it turn red."
+        },
+        {
+          "zh": "📸 洞口外面就是海，構圖自己就跑出來了。",
+          "en": "📸 The sea's right outside the tunnel. The shot basically framed itself."
+        }
+      ]
     },
     {
       "id": "ps_p02",
       "quest": "P02",
       "name": {
-        "zh": "鯉魚岩"
+        "zh": "鯉魚岩",
+        "en": "Carp Rock"
       },
       "r": 14,
       "time": "day",
@@ -32,13 +48,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "carp_rock"
+      "place": "carp_rock",
+      "snap": [
+        {
+          "zh": "📸 鯉魚岩！你們看，真的有點像魚在跳。",
+          "en": "📸 Carp Rock! Look, it really does kind of look like a jumping fish."
+        },
+        {
+          "zh": "📸 好，這條魚被我收進相簿了。",
+          "en": "📸 Okay, this fish is in the album now."
+        }
+      ]
     },
     {
       "id": "ps_p03",
       "quest": "P03",
       "name": {
-        "zh": "坦克岩"
+        "zh": "坦克岩",
+        "en": "Tank Rock"
       },
       "r": 14,
       "time": "day",
@@ -49,26 +76,52 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "tank_rock"
+      "place": "tank_rock",
+      "snap": [
+        {
+          "zh": "📸 坦克岩，炮管對著海，蠻有氣勢的。",
+          "en": "📸 Tank Rock, barrel pointed at the sea. Pretty impressive."
+        },
+        {
+          "zh": "📸 拍到了。名字是地圖取的，族人怎麼叫它，我們再問問。",
+          "en": "📸 Got it. The name's from the maps. Let's ask what the Tao call it."
+        }
+      ]
     },
     {
       "id": "ps_p04",
       "quest": "P04",
       "name": {
-        "zh": "從蘭嶼燈塔遠眺"
+        "zh": "從蘭嶼燈塔遠眺",
+        "en": "View from Lanyu Lighthouse"
       },
       "r": 10,
       "time": "any",
       "seasons": [],
       "status": "placed",
       "distanceOnly": false,
-      "place": "lighthouse"
+      "place": "lighthouse",
+      "snap": [
+        {
+          "zh": "📸 從燈塔看下去，整片海都是藍的。",
+          "en": "📸 From the lighthouse, the whole sea is blue."
+        },
+        {
+          "zh": "📸 風好大，手要穩……好，拍到了！",
+          "en": "📸 So windy. Steady hands… okay, got it!"
+        },
+        {
+          "zh": "📸 這個高度看島，跟走路的時候完全不一樣。",
+          "en": "📸 The island looks totally different from up here."
+        }
+      ]
     },
     {
       "id": "ps_p05",
       "quest": "P05",
       "name": {
-        "zh": "五孔洞（只在外遠拍）"
+        "zh": "五孔洞（只在外遠拍）",
+        "en": "Five Holes Cave (photos from outside only)"
       },
       "r": 6,
       "time": "day",
@@ -79,26 +132,48 @@
       "periods": [
         "dawn",
         "day"
+      ],
+      "snap": [
+        {
+          "zh": "📸 五孔洞我們就在外面遠遠拍，不進去打擾。",
+          "en": "📸 We'll just shoot the Five Holes Cave from outside. No need to go in and disturb it."
+        },
+        {
+          "zh": "📸 遠遠的一張就夠了，留給這個地方安靜。",
+          "en": "📸 One shot from afar is enough. Let the place stay quiet."
+        }
       ]
     },
     {
       "id": "ps_p06",
       "quest": "P06",
       "name": {
-        "zh": "玉女岩"
+        "zh": "玉女岩",
+        "en": "Jade Maiden Rock"
       },
       "r": 12,
       "time": "any",
       "seasons": [],
       "status": "placed",
       "distanceOnly": false,
-      "place": "jade_rock"
+      "place": "jade_rock",
+      "snap": [
+        {
+          "zh": "📸 玉女岩，安安靜靜站在海邊。",
+          "en": "📸 Jade Maiden Rock, standing quietly by the sea."
+        },
+        {
+          "zh": "📸 收進相簿。光線剛好，運氣不錯。",
+          "en": "📸 Into the album. The light's just right. Lucky."
+        }
+      ]
     },
     {
       "id": "ps_p07",
       "quest": "P07",
       "name": {
-        "zh": "小天池（只遠拍）"
+        "zh": "小天池（只遠拍）",
+        "en": "Little Heaven Lake (from afar only)"
       },
       "r": 8,
       "time": "day",
@@ -109,13 +184,24 @@
       ],
       "status": "placed",
       "distanceOnly": true,
-      "place": "small_lake_view"
+      "place": "small_lake_view",
+      "snap": [
+        {
+          "zh": "📸 小天池遠遠看就好，那邊是要尊重的地方。",
+          "en": "📸 We'll keep Little Heaven Lake at a distance. It's a place to respect."
+        },
+        {
+          "zh": "📸 遠拍一張，水面像鏡子一樣。",
+          "en": "📸 One from afar. The water's like a mirror."
+        }
+      ]
     },
     {
       "id": "ps_p08",
       "quest": "P08",
       "name": {
-        "zh": "母雞岩"
+        "zh": "母雞岩",
+        "en": "Hen Rock"
       },
       "r": 14,
       "time": "day",
@@ -126,13 +212,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "hen_rock_bay"
+      "place": "hen_rock_bay",
+      "snap": [
+        {
+          "zh": "📸 母雞岩！真的像一隻在孵蛋的雞。",
+          "en": "📸 Hen Rock! It really looks like a hen sitting on eggs."
+        },
+        {
+          "zh": "📸 拍好了，下面那片海聽說很適合浮潛。",
+          "en": "📸 Done. I hear the water down there is great for snorkelling."
+        }
+      ]
     },
     {
       "id": "ps_p09",
       "quest": "P09",
       "name": {
-        "zh": "雙獅岩的星空"
+        "zh": "雙獅岩的星空",
+        "en": "Stars over Twin Lions Rock"
       },
       "landmark": "twinlions",
       "r": 16,
@@ -142,13 +239,28 @@
         "night"
       ],
       "status": "placed",
-      "distanceOnly": false
+      "distanceOnly": false,
+      "snap": [
+        {
+          "zh": "📸 雙獅岩上面全是星星……快門要開久一點。",
+          "en": "📸 Stars all over Twin Lions Rock… gotta keep the shutter open longer."
+        },
+        {
+          "zh": "📸 這片星空，城市裡根本看不到。",
+          "en": "📸 You just can't see stars like this in the city."
+        },
+        {
+          "zh": "📸 大家先別動喔……好，拍到了！",
+          "en": "📸 Everybody hold still… okay, got it!"
+        }
+      ]
     },
     {
       "id": "ps_p10",
       "quest": "P10",
       "name": {
-        "zh": "從岸上遠拍軍艦岩"
+        "zh": "從岸上遠拍軍艦岩",
+        "en": "Battleship Rock from the shore"
       },
       "landmark": "battleship",
       "r": 18,
@@ -159,26 +271,48 @@
         "day"
       ],
       "status": "placed",
-      "distanceOnly": true
+      "distanceOnly": true,
+      "snap": [
+        {
+          "zh": "📸 軍艦岩從岸上拍就好，船開過去太遠了。",
+          "en": "📸 We'll shoot Battleship Rock from the shore. It's too far out by boat."
+        },
+        {
+          "zh": "📸 遠遠看真的像一艘船停在海上。",
+          "en": "📸 From here it really looks like a ship parked at sea."
+        }
+      ]
     },
     {
       "id": "ps_p11",
       "quest": "P11",
       "name": {
-        "zh": "情人洞"
+        "zh": "情人洞",
+        "en": "Lovers' Cave"
       },
       "r": 12,
       "time": "any",
       "seasons": [],
       "status": "placed",
       "distanceOnly": false,
-      "place": "lovers_cave"
+      "place": "lovers_cave",
+      "snap": [
+        {
+          "zh": "📸 情人洞，海浪一直往洞裡打。",
+          "en": "📸 Lovers' Cave, with the waves rolling right in."
+        },
+        {
+          "zh": "📸 拍到了。腳下石頭滑，大家小心。",
+          "en": "📸 Got it. The rocks are slippery, careful everyone."
+        }
+      ]
     },
     {
       "id": "ps_p12",
       "quest": "P12",
       "name": {
-        "zh": "一線天"
+        "zh": "一線天",
+        "en": "Sky Crack"
       },
       "r": 10,
       "time": "day",
@@ -189,13 +323,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "skyline_gap"
+      "place": "skyline_gap",
+      "snap": [
+        {
+          "zh": "📸 一線天！抬頭只看得到一條天空。",
+          "en": "📸 Sky Crack! Look up and there's just a sliver of sky."
+        },
+        {
+          "zh": "📸 兩邊的山壁好近，拍起來好有壓迫感。",
+          "en": "📸 The cliffs are so close. Feels intense in the shot."
+        }
+      ]
     },
     {
       "id": "ps_p13",
       "quest": "P13",
       "name": {
-        "zh": "東清灣日出"
+        "zh": "東清灣日出",
+        "en": "Sunrise at Dongqing Bay"
       },
       "r": 12,
       "time": "day",
@@ -205,13 +350,28 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "iranmeylek_beach"
+      "place": "iranmeylek_beach",
+      "snap": [
+        {
+          "zh": "📸 東清灣的日出，早起值得了！",
+          "en": "📸 Sunrise at Dongqing Bay. Totally worth getting up early!"
+        },
+        {
+          "zh": "📸 太陽從海裡冒出來的那一秒，拍到了。",
+          "en": "📸 Caught the second the sun came up out of the sea."
+        },
+        {
+          "zh": "📸 等一下，再一張……好，這張最好看。",
+          "en": "📸 Wait, one more… okay, this one's the best."
+        }
+      ]
     },
     {
       "id": "ps_p14",
       "quest": "P14",
       "name": {
-        "zh": "鋼盔岩"
+        "zh": "鋼盔岩",
+        "en": "Helmet Rock"
       },
       "r": 12,
       "time": "day",
@@ -222,13 +382,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "helmet_rock"
+      "place": "helmet_rock",
+      "snap": [
+        {
+          "zh": "📸 鋼盔岩，好像有人把頭盔放在海邊。",
+          "en": "📸 Helmet Rock. Like someone left a helmet by the sea."
+        },
+        {
+          "zh": "📸 收下！這顆石頭圓得好可愛。",
+          "en": "📸 Got it! Such a cute round rock."
+        }
+      ]
     },
     {
       "id": "ps_p15",
       "quest": "P15",
       "name": {
-        "zh": "象鼻岩"
+        "zh": "象鼻岩",
+        "en": "Elephant Trunk Rock"
       },
       "r": 12,
       "time": "day",
@@ -239,13 +410,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "elephant_rock"
+      "place": "elephant_rock",
+      "snap": [
+        {
+          "zh": "📸 象鼻岩，鼻子直接伸進海裡。",
+          "en": "📸 Elephant Trunk Rock, its trunk dipping right into the sea."
+        },
+        {
+          "zh": "📸 角度對了，真的是一隻大象。",
+          "en": "📸 From the right angle, it really is an elephant."
+        }
+      ]
     },
     {
       "id": "ps_p16",
       "quest": "P16",
       "name": {
-        "zh": "蘭嶼瀑布"
+        "zh": "蘭嶼瀑布",
+        "en": "Lanyu Waterfall"
       },
       "r": 8,
       "time": "day",
@@ -256,13 +438,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "lanyu_falls"
+      "place": "lanyu_falls",
+      "snap": [
+        {
+          "zh": "📸 蘭嶼瀑布，水聲好大，好涼。",
+          "en": "📸 Lanyu Waterfall. So loud, so cool."
+        },
+        {
+          "zh": "📸 拍到了。相機有點濕，值得。",
+          "en": "📸 Got it. The camera's a bit wet. Worth it."
+        }
+      ]
     },
     {
       "id": "ps_p17",
       "quest": "P17",
       "name": {
-        "zh": "龍頭岩"
+        "zh": "龍頭岩",
+        "en": "Dragon Head Rock"
       },
       "r": 14,
       "time": "day",
@@ -273,13 +466,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "dragonhead_rock"
+      "place": "dragonhead_rock",
+      "snap": [
+        {
+          "zh": "📸 龍頭岩，看起來隨時要游出去。",
+          "en": "📸 Dragon Head Rock. Looks like it could swim off any second."
+        },
+        {
+          "zh": "📸 好，龍頭收進相簿了。",
+          "en": "📸 Okay, the dragon's head is in the album."
+        }
+      ]
     },
     {
       "id": "ps_p18",
       "quest": "P18",
       "name": {
-        "zh": "大天池（只遠拍）"
+        "zh": "大天池（只遠拍）",
+        "en": "Big Heaven Lake (from afar only)"
       },
       "r": 8,
       "time": "day",
@@ -290,13 +494,24 @@
       ],
       "status": "placed",
       "distanceOnly": true,
-      "place": "big_lake_view"
+      "place": "big_lake_view",
+      "snap": [
+        {
+          "zh": "📸 大天池遠遠拍一張就好，不靠近。",
+          "en": "📸 Just one of Big Heaven Lake from afar. We won't go closer."
+        },
+        {
+          "zh": "📸 被山圍著的一片水，好安靜。",
+          "en": "📸 A pool of water ringed by mountains. So peaceful."
+        }
+      ]
     },
     {
       "id": "ps_p19",
       "quest": "P19",
       "name": {
-        "zh": "老人岩"
+        "zh": "老人岩",
+        "en": "Old Man Rock"
       },
       "r": 12,
       "time": "day",
@@ -307,13 +522,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "old_man_rock"
+      "place": "old_man_rock",
+      "snap": [
+        {
+          "zh": "📸 老人岩，像一個人坐著看海。",
+          "en": "📸 Old Man Rock, like someone sitting and watching the sea."
+        },
+        {
+          "zh": "📸 拍到了。他應該在這裡看很久了吧。",
+          "en": "📸 Got it. He's probably been watching for a long time."
+        }
+      ]
     },
     {
       "id": "ps_p20",
       "quest": "P20",
       "name": {
-        "zh": "青青草原的黃昏"
+        "zh": "青青草原的黃昏",
+        "en": "Dusk on Qingqing Prairie"
       },
       "landmark": "qingqing",
       "r": 10,
@@ -323,26 +549,52 @@
         "dusk"
       ],
       "status": "placed",
-      "distanceOnly": false
+      "distanceOnly": false,
+      "snap": [
+        {
+          "zh": "📸 青青草原的黃昏，整片草都變金色。",
+          "en": "📸 Dusk on Qingqing Prairie. The whole field's gone gold."
+        },
+        {
+          "zh": "📸 風吹過來好舒服……好，拍到了。",
+          "en": "📸 The breeze feels so nice… okay, got it."
+        },
+        {
+          "zh": "📸 這張我要拿來當桌布。",
+          "en": "📸 This one's going to be my wallpaper."
+        }
+      ]
     },
     {
       "id": "ps_p21",
       "quest": "P21",
       "name": {
-        "zh": "八代灣（飛魚季只能在部落外遠拍）"
+        "zh": "八代灣（飛魚季只能在部落外遠拍）",
+        "en": "Badai Bay (in flying fish season, only from outside the village)"
       },
       "r": 12,
       "time": "any",
       "seasons": [],
       "status": "placed",
       "distanceOnly": true,
-      "place": "badai_view"
+      "place": "badai_view",
+      "snap": [
+        {
+          "zh": "📸 八代灣我們在部落外遠遠拍，不打擾族人。",
+          "en": "📸 We'll shoot Badai Bay from outside the village. Don't want to bother anyone."
+        },
+        {
+          "zh": "📸 遠遠的一張，海灣好漂亮。",
+          "en": "📸 One from afar. The bay's beautiful."
+        }
+      ]
     },
     {
       "id": "ps_p22",
       "quest": "P22",
       "name": {
-        "zh": "饅頭岩"
+        "zh": "饅頭岩",
+        "en": "Mantou Rock"
       },
       "r": 12,
       "time": "day",
@@ -353,13 +605,24 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "hutou_slope"
+      "place": "hutou_slope",
+      "snap": [
+        {
+          "zh": "📸 饅頭岩，圓圓的，看了肚子都餓了。",
+          "en": "📸 Mantou Rock, round like a steamed bun. Now I'm hungry."
+        },
+        {
+          "zh": "📸 拍好了！等一下去吃點東西吧。",
+          "en": "📸 Done! Let's go grab something to eat."
+        }
+      ]
     },
     {
       "id": "ps_p23",
       "quest": "P23",
       "name": {
-        "zh": "開元港"
+        "zh": "開元港",
+        "en": "Kaiyuan Harbour"
       },
       "place": "harbor",
       "r": 9,
@@ -370,13 +633,24 @@
         "day"
       ],
       "status": "placed",
-      "distanceOnly": false
+      "distanceOnly": false,
+      "snap": [
+        {
+          "zh": "📸 開元港，我們上島的地方。",
+          "en": "📸 Kaiyuan Harbour, where we landed."
+        },
+        {
+          "zh": "📸 船進進出出好熱鬧，拍一張留念。",
+          "en": "📸 Boats coming and going, so lively. One for the memories."
+        }
+      ]
     },
     {
       "id": "ps_p24",
       "quest": "P24",
       "name": {
-        "zh": "蘭嶼航空站（只拍景）"
+        "zh": "蘭嶼航空站（只拍景）",
+        "en": "Lanyu Airport (scenery only)"
       },
       "place": "airport",
       "r": 9,
@@ -387,13 +661,24 @@
         "day"
       ],
       "status": "placed",
-      "distanceOnly": true
+      "distanceOnly": true,
+      "snap": [
+        {
+          "zh": "📸 航空站就拍風景，小小的跑道好可愛。",
+          "en": "📸 Just the scenery at the airport. Such a tiny runway."
+        },
+        {
+          "zh": "📸 好，拍到了。下次搭飛機來就是這裡落地。",
+          "en": "📸 Okay, got it. Next time we fly in, this is where we land."
+        }
+      ]
     },
     {
       "id": "ps_p25",
       "quest": "P25",
       "name": {
-        "zh": "從蘭嶼氣象觀測站俯瞰"
+        "zh": "從蘭嶼氣象觀測站俯瞰",
+        "en": "View down from the Lanyu Weather Station"
       },
       "r": 10,
       "time": "day",
@@ -404,26 +689,48 @@
       ],
       "status": "placed",
       "distanceOnly": false,
-      "place": "weather_station"
+      "place": "weather_station",
+      "snap": [
+        {
+          "zh": "📸 從氣象站看下去，半座島都在腳下。",
+          "en": "📸 From the weather station, half the island is at your feet."
+        },
+        {
+          "zh": "📸 爬上來好累，但這張值得！",
+          "en": "📸 Tiring climb, but this shot's worth it!"
+        }
+      ]
     },
     {
       "id": "ps_p26",
       "quest": "P26",
       "name": {
-        "zh": "野銀傳統家屋（先問屋主）"
+        "zh": "野銀傳統家屋（先問屋主）",
+        "en": "Ivalino traditional houses (ask the owner first)"
       },
       "r": 12,
       "time": "any",
       "seasons": [],
       "status": "placed",
       "distanceOnly": true,
-      "place": "ivalino"
+      "place": "ivalino",
+      "snap": [
+        {
+          "zh": "📸 屋主說可以，我們就拍遠一點的整片家屋。",
+          "en": "📸 The owner said it's okay, so we'll get the houses from a bit further back."
+        },
+        {
+          "zh": "📸 謝謝屋主。房子低低的貼著地，好聰明的設計。",
+          "en": "📸 Thanks to the owner. The houses sit low against the ground. Such clever design."
+        }
+      ]
     },
     {
       "id": "ps_p27",
       "quest": "P27",
       "name": {
-        "zh": "朗島灣的拼板舟（先問船主）"
+        "zh": "朗島灣的拼板舟（先問船主）",
+        "en": "Plank boats at Iraraley Bay (ask the owner first)"
       },
       "r": 12,
       "time": "any",
@@ -432,13 +739,24 @@
       ],
       "status": "placed",
       "distanceOnly": true,
-      "place": "iraraley"
+      "place": "iraraley",
+      "snap": [
+        {
+          "zh": "📸 船主答應了，我們遠遠拍就好，不碰船。",
+          "en": "📸 The boat owner said yes. We'll shoot from afar and not touch the boats."
+        },
+        {
+          "zh": "📸 謝謝船主。拼板舟停在灣裡，好美。",
+          "en": "📸 Thanks to the owner. The plank boats in the bay look beautiful."
+        }
+      ]
     },
     {
       "id": "ps_u1",
       "quest": "U1",
       "name": {
-        "zh": "母雞岩浮潛"
+        "zh": "母雞岩浮潛",
+        "en": "Snorkelling at Hen Rock"
       },
       "place": "hen_rock_bay",
       "r": 10,
@@ -456,7 +774,8 @@
       "id": "ps_u2",
       "quest": "U2",
       "name": {
-        "zh": "椰油港斷崖：跟潛水教練做淺水氣瓶潛水"
+        "zh": "椰油港斷崖：跟潛水教練做淺水氣瓶潛水",
+        "en": "Yayo Harbour drop-off: a shallow scuba dive with the dive coach"
       },
       "place": "yayo_dive",
       "r": 10,
@@ -474,7 +793,8 @@
       "id": "ps_u3",
       "quest": "U3",
       "name": {
-        "zh": "隱藏：旅人的水下視角"
+        "zh": "隱藏：旅人的水下視角",
+        "en": "Hidden: the traveller's underwater view"
       },
       "place": "hen_rock_bay",
       "r": 10,

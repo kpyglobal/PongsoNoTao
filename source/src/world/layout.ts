@@ -5,9 +5,10 @@
  * World axes: +X east, +Z south, sea level = 0.
  */
 
-import { geo } from './outline';
+import { geo, MAP_SCALE as K, MAP_SCALE } from './outline';
 import { ARC_CW, COAST_LEN, coastParam, coastPoint, coastSdf, cwDist, insetPoint, smoothNormal } from './coast';
 import { oldLocal } from './legacy';
+import { setWorldLang, WORLD_EN, type WorldLang } from './names';
 
 export interface Vec2 { x: number; z: number }
 
@@ -42,12 +43,13 @@ export interface VillageDef {
  * 0.1.4: the island follows the real 蘭嶼 outline (outline.ts, coast.ts). Inland point near 紅頭山
  * (last-resort unstuck walk, title camera).
  */
-export const ISLAND_CENTRE = { x: -10, z: -10 };
+export const ISLAND_CENTRE = { x: -10 * K, z: -10 * K };
 
 /** Village grid (local u/w units): house spacing along the row, first row offset inland, row step. */
-export const HOUSE_SPACING = 4.1;
+/** 0.1.5: wider than 0.1.4 (4.1 / 3.7) so each 地下屋 has its own terrace with ~1.7 m of ground between pits */
+export const HOUSE_SPACING = 5.4;
 export const ROW0_W = 3.6;
-export const ROW_STEP = 3.7;
+export const ROW_STEP = 4.9;
 /**
  * The ring road runs through every village along its seafront at local w = ROAD_W (0.1.1):
  * houses / work houses / church / shop / school stay inland of it, the 涼亭 (tagakal) seaward,
@@ -85,7 +87,7 @@ export function coastT(lon: number, lat: number, shift = 0): number {
 }
 
 function mkCoast(c: CoastVillage): VillageDef {
-  const f = coastFrame(coastT(c.lon, c.lat, c.shift), c.depth ?? VILLAGE_DEPTH);
+  const f = coastFrame(coastT(c.lon, c.lat, c.shift * K), c.depth ?? VILLAGE_DEPTH);
   let { fx, fz } = f;
   if (c.face !== undefined) { fx = Math.cos(c.face); fz = Math.sin(c.face); }
   return { id: c.id, cx: f.x, cz: f.z, fx, fz, rows: c.rows, extras: c.extras, plazaH: c.plazaH ?? 1.15 };
@@ -96,10 +98,11 @@ export const VILLAGE_DEFS: VillageDef[] = [
   // 椰油: on the west-facing shore just south of 開元港 (the harbour sits at its north end)
   mkCoast({ id: 'yayo', lon: 121.5125, lat: 22.048, shift: 18.6, rows: [3, 2], extras: ['church', 'shop', 'modern', 'modern'], face: Math.PI }),
   mkCoast({ id: 'iraraley', lon: 121.52622, lat: 22.0778, shift: 0, rows: [3, 2], extras: ['church', 'modern'] }),
-  mkCoast({ id: 'iranmeylek', lon: 121.56458, lat: 22.05782, shift: -12, rows: [3, 2], extras: ['shop', 'modern'] }),
-  mkCoast({ id: 'ivalino', lon: 121.56639, lat: 22.03827, shift: -10, rows: [4, 3], extras: [] }),
-  mkCoast({ id: 'imorod', lon: 121.5615, lat: 22.0195, shift: -12, rows: [3, 2], extras: ['church', 'modern'], plazaH: 1.25 }),
-  mkCoast({ id: 'iratay', lon: 121.54291, lat: 22.02742, shift: 4, rows: [3, 2], extras: ['church', 'modern'] }),
+  mkCoast({ id: 'iranmeylek', lon: 121.56458, lat: 22.05782, shift: -29, rows: [3, 2], extras: ['shop', 'modern'] }),
+  mkCoast({ id: 'ivalino', lon: 121.56639, lat: 22.03827, shift: -14, rows: [4, 3], extras: [] }),
+  // 0.1.5: 紅頭 at the real 紅頭村 (OSM), where the 中橫公路 starts; 漁人 and 紅頭 nudged apart so both fit
+  mkCoast({ id: 'imorod', lon: 121.55367, lat: 22.02549, shift: -4, rows: [3, 2], extras: ['church', 'modern'], plazaH: 1.25 }),
+  mkCoast({ id: 'iratay', lon: 121.54292, lat: 22.02742, shift: 19, rows: [3, 2], extras: ['church', 'modern'] }),
 ];
 
 /** local (u = along coast / right, v = toward sea) -> world */
@@ -156,6 +159,9 @@ export function boxesOverlap(a: Box2, b: Box2, grow = 0): boolean {
   return true;
 }
 
+/** 0.1.5: half the clear gap kept between two building footprints (a footpath fits between them) */
+export const BUILD_GAP = 0.65;
+
 /** flank buildings left out because no clear spot was found (reported by scripts/check-roads.mjs) */
 export const DROPPED: string[] = [];
 
@@ -190,10 +196,11 @@ export function villageStructures(v: VillageDef, dry?: (x: number, z: number) =>
   const isDry = (st: Structure): boolean => !dry || [...boxCorners(footBox(st)), { x: st.x, z: st.z }].every((c) => dry(c.x, c.z));
   const clear = (st: Structure): boolean => {
     const box = footBox(st);
-    if (out.some((o) => boxesOverlap(box, footBox(o), 0.15))) return false;
-    if (others.some((o) => boxesOverlap(box, footBox(o), 0.15))) return false;
+    // 0.1.5: 1.3 m between buildings (BUILD_GAP each side), room for a footpath between them
+    if (out.some((o) => boxesOverlap(box, footBox(o), BUILD_GAP))) return false;
+    if (others.some((o) => boxesOverlap(box, footBox(o), BUILD_GAP))) return false;
     // (the parked plane's wingtips overhang its box: houses keep 0.6 m from it)
-    if (facilityBoxes().some((o, i) => boxesOverlap(box, o, i === 2 ? 0.6 : 0.15))) return false;
+    if (facilityBoxes().some((o, i) => boxesOverlap(box, o, i === 2 ? 0.75 : BUILD_GAP))) return false;
     if (boxRoadClear(box, ROAD_CLEARANCE + 0.05) < ROAD_CLEARANCE + 0.05) return false;
     if (TARO_FIELDS.some((tf) => boxNearField(box, tf, 1.2))) return false;
     // stay in this village's own ground (never nearer another village's centre)
@@ -255,10 +262,15 @@ export function villageStructures(v: VillageDef, dry?: (x: number, z: number) =>
     const f = FOOTPRINT[kind];
     const reachW = f.hw * Math.abs(Math.sin(turn)) + f.hd * Math.cos(turn);
     const w = Math.min(-1.2 - Math.floor(i / 2) * 1.2, ROAD_W - ROAD_CLEARANCE - reachW - 0.05 - Math.floor(i / 2) * 1.6);
-    const st =
-      place(kind, u, w, turn, -side) ??
-      place(kind, u, ROAD_W + ROAD_CLEARANCE + reachW + 0.05, turn, -side, true) ??
-      place(kind, u, w, turn, -side, false, true);
+    let st = place(kind, u, w, turn, -side);
+    if (!st) {
+      // seaward of the road: turned round so its door still faces the road
+      st = place(kind, u, ROAD_W + ROAD_CLEARANCE + reachW + 0.05, turn, -side, true);
+      // (0.1.5: a wider seaward search before going far along the row inland)
+      st ??= place(kind, u, ROAD_W + ROAD_CLEARANCE + reachW + 0.05, turn, -side, true, true);
+      if (st) st = { ...st, yaw: st.yaw + Math.PI };
+    }
+    st ??= place(kind, u, w, turn, -side, false, true);
     push(st, kind);
   });
   return out;
@@ -314,10 +326,59 @@ const FIELD_CFG: Record<string, { u: number; tiers: number; cols: number; side?:
   iraraley: { u: -3, tiers: 4, cols: 4 },
   iranmeylek: { u: 2, tiers: 4, cols: 3 },
   ivalino: { u: -2.5, tiers: 5, cols: 4 },
-  imorod: { u: -4, tiers: 4, cols: 4 },
+  imorod: { u: 6, tiers: 4, cols: 4, side: 1 }, // 0.1.5: beside the west end (the 中橫公路 climbs behind the east end)
   iratay: { u: 3, tiers: 4, cols: 3 },
 };
 
+/**
+ * 0.1.5 中橫公路 (蘭嶼橫貫公路, 東81): from the east end of 紅頭 over the hills, past 蘭嶼氣象站, down to the south end of
+ * 野銀. Its middle follows the real road (OpenStreetMap way 106286207, simplified; data © OpenStreetMap contributors,
+ * ODbL 1.0), carried onto this map by the 紅頭 → 野銀 village pair; both ends run up / down beside the villages (never
+ * through them), then the line is rounded off (Chaikin) so it has no sharp corners.
+ */
+const CROSS_REAL: readonly number[] = [121.55562, 22.02441, 121.55200, 22.02801, 121.55539, 22.02938, 121.55613, 22.03267, 121.55984, 22.03578, 121.56588, 22.03395, 121.56462, 22.03552, 121.56628, 22.03920];
+function chaikin(pts: [number, number][], iters: number): [number, number][] {
+  let p = pts;
+  for (let k = 0; k < iters; k++) {
+    const o: [number, number][] = [p[0]];
+    for (let i = 0; i < p.length - 1; i++) {
+      const [ax, az] = p[i], [bx, bz] = p[i + 1];
+      o.push([ax * 0.75 + bx * 0.25, az * 0.75 + bz * 0.25], [ax * 0.25 + bx * 0.75, az * 0.25 + bz * 0.75]);
+    }
+    o.push(p[p.length - 1]);
+    p = o;
+  }
+  return p;
+}
+/** points ≥ `step` m apart (the road bed is profiled along them) */
+function resample(pts: [number, number][], step: number): [number, number][] {
+  const out: [number, number][] = [pts[0]];
+  let acc = 0;
+  for (let i = 1; i < pts.length; i++) {
+    acc += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+    if (acc >= step || i === pts.length - 1) { out.push(pts[i]); acc = 0; }
+  }
+  return out;
+}
+/**
+ * The route on this map: up beside the east end of 紅頭, over the hills behind 野銀 (inland of its houses and 水芋田, where
+ * the real road climbs to the pass by the weather station), then down beside the north end of 野銀 to the ring road.
+ * Waypoints are set relative to the two villages, so the road keeps clear of both however they are placed.
+ */
+export const CROSS_ROAD: [number, number][] = (() => {
+  const a = VILLAGE_DEFS.find((v) => v.id === 'imorod')!, b = VILLAGE_DEFS.find((v) => v.id === 'ivalino')!;
+  const ea = villageExtent(a), eb = villageExtent(b);
+  const L = (v: VillageDef, u: number, w: number): [number, number] => { const p = vlocal(v, u, w); return [p.x, p.z]; };
+  // between the two villages' back corners (they nearly meet at the island's narrow neck)
+  const ca = vlocal(a, -ea.hu, ea.w0), cb = vlocal(b, eb.hu, eb.w0);
+  const slot: [number, number] = [(ca.x + cb.x) / 2, (ca.z + cb.z) / 2];
+  const pts: [number, number][] = [
+    L(a, -ea.hu - 4.6, ROAD_W), L(a, -ea.hu - 5.0, -6), L(a, -ea.hu - 4.4, ea.w0 + 1.0), slot,
+    L(b, eb.hu - 2, eb.w0 - 4.5), L(b, 0, -27), L(b, -eb.hu + 2, -25), L(b, -eb.hu - 4.5, eb.w0 - 5),
+    L(b, -eb.hu - 3.4, -6), L(b, -eb.hu - 2.6, ROAD_W),
+  ];
+  return resample(chaikin(pts, 3), 1.6);
+})();
 export const TARO_FIELDS: TaroField[] = VILLAGE_DEFS.map((v) => {
   const cfg = FIELD_CFG[v.id];
   const probe = tf('probe', 0, 0, cfg.tiers, cfg.cols);
@@ -327,6 +388,33 @@ export const TARO_FIELDS: TaroField[] = VILLAGE_DEFS.map((v) => {
   const p = cfg.side
     ? vlocal(v, cfg.side * (villageExtent(v).hu + V / 2 + 1.5), ROAD_W - ROAD_CLEARANCE - 1.4 - U / 2)
     : vlocal(v, cfg.u, lastRow - 1.55 - 0.5 - U / 2);
+  // 0.1.5: slide along the village (nearest first) until the terraces are ≥ 3.5 m from the 中橫公路
+  if (!cfg.side) {
+    const w = lastRow - 1.55 - 0.5 - U / 2;
+    const clearOf = (q: Vec2): boolean => {
+      const f = tf('probe', q.x, q.z, cfg.tiers, cfg.cols, v.fx, v.fz);
+      for (let i = 0; i < CROSS_ROAD.length; i++) {
+        const lq = fieldLocal(f, CROSS_ROAD[i][0], CROSS_ROAD[i][1]);
+        if (Math.abs(lq.u) < U / 2 + 3 && Math.abs(lq.v) < V / 2 + 3) return false;
+      }
+      return true;
+    };
+    // also off every village's ground (2 m margin)
+    const offVillages = (q: Vec2): boolean => VILLAGE_DEFS.every((o) => {
+      const e = villageExtent(o);
+      const dx = q.x - o.cx, dz = q.z - o.cz;
+      const uu = dx * -o.fz + dz * o.fx, ww = dx * o.fx + dz * o.fz;
+      const R = Math.hypot(U, V) / 2 + 2;
+      return Math.abs(uu) > e.hu + R || ww < e.w0 - R || ww > e.w1 + R;
+    });
+    const cands: [number, number][] = [];
+    for (let du = -20; du <= 20; du += 1) for (let dw = -16; dw <= 2; dw += 1) cands.push([du, dw]);
+    cands.sort((m, n) => Math.abs(m[0]) + Math.abs(m[1]) * 1.3 - Math.abs(n[0]) - Math.abs(n[1]) * 1.3);
+    for (const [du, dw] of cands) {
+      const q = vlocal(v, cfg.u + du, w + dw);
+      if (clearOf(q) && (du === 0 && dw === 0 ? true : offVillages(q) && coastSdf(q.x, q.z) > VILLAGE_DEPTH + 2.7 + Math.hypot(U, V) / 2)) { p.x = q.x; p.z = q.z; break; }
+    }
+  }
   return tf(`taro_${v.id}`, p.x, p.z, cfg.tiers, cfg.cols, v.fx, v.fz);
 });
 
@@ -398,8 +486,8 @@ const ROAD_EXTEND_DEFAULT: [number, number] = [1.5, 1.5];
  */
 const RUNWAY_HX = 2.3;
 const RUNWAY_HZ = 7.6;
-const SHORE_A = coastPoint(70);
-const SHORE_B = coastPoint(95);
+const SHORE_A = coastPoint(70 * K);
+const SHORE_B = coastPoint(95 * K);
 const SHORE_LEN = Math.hypot(SHORE_B.x - SHORE_A.x, SHORE_B.z - SHORE_A.z);
 const SHORE_D = { x: (SHORE_B.x - SHORE_A.x) / SHORE_LEN, z: (SHORE_B.z - SHORE_A.z) / SHORE_LEN };
 const SHORE_IN = coastSdf(SHORE_A.x + SHORE_D.z * 4, SHORE_A.z - SHORE_D.x * 4) > coastSdf(SHORE_A.x - SHORE_D.z * 4, SHORE_A.z + SHORE_D.x * 4)
@@ -458,7 +546,9 @@ function buildRing(): [number, number][] {
     pts.push(...e);
     LINK_START[RING_ORDER[i]] = pts.length - 1;
     const next = ends[(i + 1) % ends.length];
-    pts.push(...(RING_ORDER[i] === 'iratay' ? AIRPORT_ROAD : linkPoints(e[1], next[0])));
+    // 0.1.5: on the bigger island the beach road past the airport is joined to 漁人 and 椰油 along the coast too
+    if (RING_ORDER[i] === 'iratay') pts.push(...linkPoints(e[1], AIRPORT_ROAD[0]), ...AIRPORT_ROAD, ...linkPoints(AIRPORT_ROAD[AIRPORT_ROAD.length - 1], next[0]));
+    else pts.push(...linkPoints(e[1], next[0]));
   });
   pts.push(pts[0]);
   return pts;
@@ -475,7 +565,28 @@ export const HARBOUR_SPUR: [number, number][] = (() => {
   return [[q.x, q.z], [j.x, j.z]];
 })();
 
-export const ROADS: [number, number][][] = [RING_ROAD, HARBOUR_SPUR];
+/** the 中橫公路 point farthest from both its villages (the pass), pushed `off` m away from the road's inner side */
+function crossSummit(off: number): { x: number; z: number } {
+  const a = vdef('imorod'), b = vdef('ivalino');
+  let bi = 1, bd = -1;
+  for (let i = 1; i < CROSS_ROAD.length - 1; i++) {
+    const [x, z] = CROSS_ROAD[i];
+    const d = Math.min(Math.hypot(x - a.cx, z - a.cz), Math.hypot(x - b.cx, z - b.cz));
+    if (d > bd) { bd = d; bi = i; }
+  }
+  const [x, z] = CROSS_ROAD[bi];
+  const [px, pz] = CROSS_ROAD[bi - 1], [nx, nz] = CROSS_ROAD[bi + 1];
+  const tx = nx - px, tz = nz - pz, tl = Math.hypot(tx, tz) || 1;
+  // the side away from the middle of the two villages
+  let ox = -tz / tl, oz = tx / tl;
+  const mx = (a.cx + b.cx) / 2, mz = (a.cz + b.cz) / 2;
+  if ((x + ox - mx) ** 2 + (z + oz - mz) ** 2 < (x - mx) ** 2 + (z - mz) ** 2) { ox = -ox; oz = -oz; }
+  return { x: round1(x + ox * off), z: round1(z + oz * off) };
+}
+/** the real road (OSM, simplified) for reference / the release notes: 3.9 km from 紅頭 to 野銀 */
+export const CROSS_ROAD_REAL = CROSS_REAL;
+
+export const ROADS: [number, number][][] = [RING_ROAD, HARBOUR_SPUR, CROSS_ROAD];
 
 
 // ---------------------------------------------------------------------------
@@ -487,11 +598,11 @@ export const ROADS: [number, number][][] = [RING_ROAD, HARBOUR_SPUR];
  * 0.1.4: a building beside the ring road on the link that leaves village `from`, at the road point nearest
  * the real place (lon, lat), set `off` metres inland of the road centre; yaw faces the road (and the sea).
  */
-function besideLink(from: string, lon: number, lat: number, off: number): { x: number; z: number; yaw: number } {
+function besideLink(from: string, lon: number, lat: number, off: number, at?: Vec2): { x: number; z: number; yaw: number } {
   const next = RING_ORDER[(RING_ORDER.indexOf(from) + 1) % RING_ORDER.length];
   const i0 = LINK_START[from];
   const i1 = next === RING_ORDER[0] ? RING_ROAD.length - 1 : LINK_START[next] - 1;
-  const g = geo(lon, lat);
+  const g = at ?? geo(lon, lat);
   let best = { x: RING_ROAD[i0][0], z: RING_ROAD[i0][1], dx: 1, dz: 0 };
   let bd = Infinity;
   for (let k = i0 + 1; k <= i1; k++) {
@@ -513,13 +624,17 @@ function besideLink(from: string, lon: number, lat: number, off: number): { x: n
 }
 
 /** 蘭嶼衛生所: beside the road on the 紅頭 → 漁人 stretch, at the real clinic (八代灣) */
-const clinicP = besideLink('imorod', 121.55469, 22.02491, ROAD_CLEARANCE + 1.9 + 0.5);
+// 0.1.5: the real clinic is in 紅頭 itself; on this map it stands on the road out of 紅頭 toward 漁人, past 紅頭's 水芋田
+const clinicP = (() => {
+  const a = villageRoad('imorod')[1], b = villageRoad('iratay')[0];
+  return besideLink('imorod', 121.55469, 22.02491, ROAD_CLEARANCE + 1.9 + 0.5, { x: a[0] + (b[0] - a[0]) * 0.56, z: a[1] + (b[1] - a[1]) * 0.56 });
+})();
 
 const YAYO = VILLAGE_DEFS.find((v) => v.id === 'yayo')!;
 const harbourP = vlocal(YAYO, HARBOUR_U, 9.4);
 
 /** 小蘭嶼 Jimagaod: the real bearing from 蘭嶼 (south-east), brought in closer so it stays in view */
-export const JIMAGAOD = { x: 44, z: 74 };
+export const JIMAGAOD = { x: 64, z: 95 }; // 0.1.5: the same gap off the south-east cape on the bigger island
 
 export const FACILITIES = {
   harbor: { x: harbourP.x, z: harbourP.z },
@@ -703,7 +818,7 @@ export const LANDMARKS: Landmark[] = [
   lm('hongtoushan', '紅頭山', 121.53455, 22.05303, 2.2),
   lm('dasenshan', '大森山', 121.58571, 22.01032, 2.2),
   lm('qingqing', '青青草原', 121.57221, 22.00559, 1.6, -1, -3.5),
-  offshore(lm('battleship', '軍艦岩', 121.579642, 22.07872, 3.2), 3.4), // ~300 m off the shore
+  offshore(lm('battleship', '軍艦岩', 121.579642, 22.07872, 3.2), 3.4 * K), // ~300 m off the shore
   lm('twinlions', '雙獅岩', 121.567086, 22.083503, 3.0),
   // north-west coast, 開元港 → 五孔洞 (OSM)
   shoreLm('hongtou_rock', '紅頭岩', T(121.5066, 22.0645), { d: -0.6, len: 4.2, h: 3.4, arch: true }),
@@ -720,7 +835,8 @@ export const LANDMARKS: Landmark[] = [
   besideBuild(lm('lanyu_falls', '蘭嶼的瀑布', 121.59481, 22.01492, 3.2), 'falls', 3.0), // OSM waterfall 利嘟娜拉 (east of 龍門)
   shoreLm('old_man_rock', '老人岩', T(121.57232, 22.00352), { d: 1.2, len: 1.8, h: 3.4 }),
   shoreLm('carp_rock', '鯉魚岩', cwBetween(T_DRAGON, T_IMOROD, 0.86), { d: 1.6, len: 3.4, h: 2.0 }), // by 紅頭 (鯉魚山); not certain
-  besideBuild(lm('weather_station', '蘭嶼氣象站', 121.55834, 22.03699, 4.2), 'station', 3.2),
+  // 0.1.5: at the top of the 中橫公路 (the real station stands on the pass), on the outer side of the road
+  besideBuild({ ...lm('weather_station', '蘭嶼氣象站', 121.55834, 22.03699, 4.2), ...crossSummit(5.2) }, 'station', 3.2, true),
 ];
 
 /**
@@ -755,6 +871,13 @@ export const LAKES: Lake[] = [
   mkLake('big_lake', '大天池', (() => { const g = geo(121.57281, 22.02078); return interiorSpot(g.x, g.z, 6.5, 6); })(), 2.6),
 ];
 
+/** 0.1.5 English: set the world's language once at boot (before labels / quest spots are made); names.ts */
+const ZH_NAMES = new Map<string, string>([...LANDMARKS, ...LAKES].map((o) => [o.id, o.zh]));
+export function useWorldLang(l: WorldLang): void {
+  setWorldLang(l);
+  for (const o of [...LANDMARKS, ...LAKES]) o.zh = (l === 'en' && WORLD_EN[o.id]) || ZH_NAMES.get(o.id) || o.zh;
+}
+
 /** 饅頭岩: a former sea-burial place, out at sea off 椰油 with no path to it (decor only, no quest spot) */
 export const MANTOU_ROCK: RockSpec = (() => {
   const t = T(121.50942, 22.04618);
@@ -776,6 +899,36 @@ export function remapSavePos(x: number, z: number): Vec2 {
     const dx = bx - ax, dz = bz - az, L = dx * dx + dz * dz || 1;
     const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / L));
     const qx = ax + dx * t, qz = az + dz * t, d = (qx - p.x) ** 2 + (qz - p.z) ** 2;
+    if (d < bd) { bd = d; best = { x: qx, z: qz }; }
+  }
+  return best;
+}
+
+/**
+ * 0.1.5: a 0.1.4 save position (the smaller real-outline island) → the same spot near the same village or facility
+ * on the bigger map, on the ring road there. Anchors: the 0.1.4 place coordinates (content/places.json of 0.1.4).
+ */
+const ANCHORS_014: [string, number, number][] = [
+  ['yayo', -39.8, -15.8], ['iraraley', -23.3, -38.2], ['iranmeylek', 14.7, -24.8], ['ivalino', 11.9, -0.3],
+  ['imorod', 25, 35.9], ['iratay', -11.4, 15.4], ['harbor', -49.2, -20.3], ['airport', -21.9, -2.5], ['clinic', 9.8, 14.8],
+];
+export function remapSavePos014(x: number, z: number): Vec2 {
+  let best = ANCHORS_014[0], bd = Infinity;
+  for (const a of ANCHORS_014) { const d = (a[1] - x) ** 2 + (a[2] - z) ** 2; if (d < bd) { bd = d; best = a; } }
+  const v = VILLAGE_DEFS.find((d) => d.id === best[0]);
+  const to = v ? { x: v.cx, z: v.cz } : best[0] === 'harbor' ? FACILITIES.harbor : best[0] === 'airport' ? FACILITIES.terminal : FACILITIES.clinic;
+  let dx = (x - best[1]) * MAP_SCALE, dz = (z - best[2]) * MAP_SCALE;
+  const L = Math.hypot(dx, dz);
+  if (L > 14) { dx *= 14 / L; dz *= 14 / L; }
+  return nearestRingPoint(to.x + dx, to.z + dz);
+}
+function nearestRingPoint(x: number, z: number): Vec2 {
+  let best = { x, z }, bd = Infinity;
+  for (let i = 0; i < RING_ROAD.length; i++) {
+    const [ax, az] = RING_ROAD[i], [bx, bz] = RING_ROAD[(i + 1) % RING_ROAD.length];
+    const dx = bx - ax, dz = bz - az, L = dx * dx + dz * dz || 1;
+    const t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / L));
+    const qx = ax + dx * t, qz = az + dz * t, d = (qx - x) ** 2 + (qz - z) ** 2;
     if (d < bd) { bd = d; best = { x: qx, z: qz }; }
   }
   return best;

@@ -7,15 +7,18 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
-          "zh": "飛魚季出海、漁網和船組的事，椰油這邊我在看。"
+          "zh": "飛魚季出海、漁網和船組的事，椰油這邊我在看。",
+          "en": "Going to sea in flying fish season, the nets, the boat crews — in Yayo, I keep an eye on all that."
         },
         {
-          "zh": "網是一家人的飯碗，破了就要補。"
+          "zh": "網是一家人的飯碗，破了就要補。",
+          "en": "The net feeds a whole family. When it tears, you mend it."
         }
       ],
       "idle": [
@@ -25,7 +28,8 @@
           },
           "lines": [
             {
-              "zh": "港口的船來來去去，可是海還是那片海。"
+              "zh": "港口的船來來去去，可是海還是那片海。",
+              "en": "Boats come and go at the harbour, but the sea is still the same sea."
             }
           ]
         },
@@ -35,7 +39,8 @@
           },
           "lines": [
             {
-              "zh": "晚上了，早點回家。明天的海，明天再看。"
+              "zh": "晚上了，早點回家。明天的海，明天再看。",
+              "en": "It's night. Go home early. Tomorrow's sea can wait for tomorrow."
             }
           ]
         },
@@ -47,10 +52,12 @@
           },
           "lines": [
             {
-              "zh": "飛魚季到了，船組天還沒亮就要準備。"
+              "zh": "飛魚季到了，船組天還沒亮就要準備。",
+              "en": "Flying fish season is here. The boat crews get ready before dawn."
             },
             {
               "zh": "alibangbang 回來了，大家都忙起來。",
+              "en": "The alibangbang are back, and everyone is busy.",
               "tao": "alibangbang"
             }
           ]
@@ -63,7 +70,8 @@
           },
           "lines": [
             {
-              "zh": "冬天浪大，正好在家補網。"
+              "zh": "冬天浪大，正好在家補網。",
+              "en": "Big waves in winter. A good time to mend nets at home."
             }
           ]
         }
@@ -75,16 +83,19 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
           "zh": "造 tatala、上山選木頭，朗島這邊找我。",
+          "en": "Building a tatala, choosing wood up the mountain — in Iraraley, come to me.",
           "tao": "tatala"
         },
         {
-          "zh": "一條船要好多人一起做，不是一個人的。"
+          "zh": "一條船要好多人一起做，不是一個人的。",
+          "en": "A boat takes many people to build. It never belongs to just one."
         }
       ],
       "idle": [
@@ -94,7 +105,8 @@
           },
           "lines": [
             {
-              "zh": "朗島的潮間帶很大，退潮時去看看。"
+              "zh": "朗島的潮間帶很大，退潮時去看看。",
+              "en": "The tide flats of Iraraley are huge. Go have a look at low tide."
             }
           ]
         },
@@ -104,7 +116,8 @@
           },
           "lines": [
             {
-              "zh": "晚上山裡很暗，不要自己上山。"
+              "zh": "晚上山裡很暗，不要自己上山。",
+              "en": "The mountain is dark at night. Don't go up alone."
             }
           ]
         },
@@ -116,7 +129,8 @@
           },
           "lines": [
             {
-              "zh": "飛魚季的船都下水了，今年的船跑得很好。"
+              "zh": "飛魚季的船都下水了，今年的船跑得很好。",
+              "en": "All the boats are in the water for flying fish season. This year's boats run well."
             }
           ]
         },
@@ -128,7 +142,8 @@
           },
           "lines": [
             {
-              "zh": "冬天要決定先修哪一條船。"
+              "zh": "冬天要決定先修哪一條船。",
+              "en": "In winter we decide which boat to fix first."
             }
           ]
         }
@@ -140,15 +155,18 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
-          "zh": "出海的繩子、槳，東清這邊我在教。"
+          "zh": "出海的繩子、槳，東清這邊我在教。",
+          "en": "Ropes and paddles for the sea — in Iranmeylek, I'm the one who teaches that."
         },
         {
-          "zh": "海上的事要自己看清楚，不要靠別人。"
+          "zh": "海上的事要自己看清楚，不要靠別人。",
+          "en": "At sea you must see things for yourself. Don't rely on others."
         }
       ],
       "idle": [
@@ -158,7 +176,8 @@
           },
           "lines": [
             {
-              "zh": "東清灣的早晨最早亮，遊客也最早來。"
+              "zh": "東清灣的早晨最早亮，遊客也最早來。",
+              "en": "Dongqing Bay gets the first light of morning — and the first tourists."
             }
           ]
         },
@@ -168,7 +187,8 @@
           },
           "lines": [
             {
-              "zh": "聽，浪聲變大了，明天風會比較強。"
+              "zh": "聽，浪聲變大了，明天風會比較強。",
+              "en": "Listen, the waves are getting louder. The wind will be stronger tomorrow."
             }
           ]
         },
@@ -180,7 +200,8 @@
           },
           "lines": [
             {
-              "zh": "飛魚季時，灘頭的規矩要守好。"
+              "zh": "飛魚季時，灘頭的規矩要守好。",
+              "en": "In flying fish season, keep the rules of the boat beach."
             }
           ]
         },
@@ -192,7 +213,8 @@
           },
           "lines": [
             {
-              "zh": "冬天的海不讓人出去，我們就等。"
+              "zh": "冬天的海不讓人出去，我們就等。",
+              "en": "The winter sea won't let us out, so we wait."
             }
           ]
         }
@@ -204,12 +226,14 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
-          "zh": "飛魚季的規矩、魚怎麼分，野銀的男人一起商量，我年紀最大，大家會來問我。"
+          "zh": "飛魚季的規矩、魚怎麼分，野銀的男人一起商量，我年紀最大，大家會來問我。",
+          "en": "The flying fish rules and how to share the catch — the men of Ivalino decide together. I'm the oldest, so everyone asks me."
         }
       ],
       "idle": [
@@ -219,7 +243,8 @@
           },
           "lines": [
             {
-              "zh": "野銀的老房子還在，是祖先留給我們的。想拍，先問屋主。"
+              "zh": "野銀的老房子還在，是祖先留給我們的。想拍，先問屋主。",
+              "en": "The old houses of Ivalino are still here. Our ancestors left them to us. If you want a photo, ask the owner first."
             }
           ]
         },
@@ -229,7 +254,8 @@
           },
           "lines": [
             {
-              "zh": "老人家晚上就是坐著，聽海、想以前的事。"
+              "zh": "老人家晚上就是坐著，聽海、想以前的事。",
+              "en": "At night, old folks just sit, listen to the sea, and think about the past."
             }
           ]
         },
@@ -241,7 +267,8 @@
           },
           "lines": [
             {
-              "zh": "分魚的時候，不能忘記行動不方便的長輩。"
+              "zh": "分魚的時候，不能忘記行動不方便的長輩。",
+              "en": "When sharing the fish, never forget the elders who can't get around."
             }
           ]
         },
@@ -253,7 +280,8 @@
           },
           "lines": [
             {
-              "zh": "冬天的風很冷，老房子比較暖。"
+              "zh": "冬天的風很冷，老房子比較暖。",
+              "en": "Winter wind is cold. The old houses stay warmer."
             }
           ]
         }
@@ -265,15 +293,18 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
-          "zh": "山上的事我比較熟：羊、樹、山路。"
+          "zh": "山上的事我比較熟：羊、樹、山路。",
+          "en": "I know the mountain best: goats, trees, mountain paths."
         },
         {
-          "zh": "上山要跟大人一起，不要亂走。"
+          "zh": "上山要跟大人一起，不要亂走。",
+          "en": "Go up the mountain with an adult. Don't wander off."
         }
       ],
       "idle": [
@@ -283,7 +314,8 @@
           },
           "lines": [
             {
-              "zh": "紅頭山上的羊又跑遠了。"
+              "zh": "紅頭山上的羊又跑遠了。",
+              "en": "The goats on Mt. Hongtou have wandered far again."
             }
           ]
         },
@@ -293,7 +325,8 @@
           },
           "lines": [
             {
-              "zh": "晚上不上山，山有山的規矩。"
+              "zh": "晚上不上山，山有山的規矩。",
+              "en": "We don't go up the mountain at night. The mountain has its own rules."
             }
           ]
         },
@@ -305,7 +338,8 @@
           },
           "lines": [
             {
-              "zh": "紅頭是飛魚的故事開始的地方。"
+              "zh": "紅頭是飛魚的故事開始的地方。",
+              "en": "Imorod is where the flying fish story began."
             }
           ]
         },
@@ -317,7 +351,8 @@
           },
           "lines": [
             {
-              "zh": "冬天草長得慢，羊會跑到比較低的地方。"
+              "zh": "冬天草長得慢，羊會跑到比較低的地方。",
+              "en": "Grass grows slowly in winter, so the goats come down lower."
             }
           ]
         }
@@ -329,12 +364,14 @@
       "greet": [
         {
           "zh": "akokey！來，坐一下。",
+          "en": "akokey! Come, sit for a bit.",
           "tao": "akokey"
         }
       ],
       "duty": [
         {
-          "zh": "漁人的船組出海、分魚，問我就對了。"
+          "zh": "漁人的船組出海、分魚，問我就對了。",
+          "en": "Boat crews going to sea and sharing fish in Iratay — just ask me."
         }
       ],
       "idle": [
@@ -344,7 +381,8 @@
           },
           "lines": [
             {
-              "zh": "飛機起起落落，可是我們的船還是用划的。"
+              "zh": "飛機起起落落，可是我們的船還是用划的。",
+              "en": "Planes come and go, but we still paddle our boats."
             }
           ]
         },
@@ -354,7 +392,8 @@
           },
           "lines": [
             {
-              "zh": "灘頭晚上很安靜，船都在休息。"
+              "zh": "灘頭晚上很安靜，船都在休息。",
+              "en": "The boat beach is quiet at night. The boats are resting."
             }
           ]
         },
@@ -366,7 +405,8 @@
           },
           "lines": [
             {
-              "zh": "飛魚季，族男可以跟我們船組出海。只有男人去。"
+              "zh": "飛魚季，族男可以跟我們船組出海。只有男人去。",
+              "en": "In flying fish season, the Tao man can go to sea with our boat crew. Only men go."
             }
           ]
         },
@@ -378,7 +418,8 @@
           },
           "lines": [
             {
-              "zh": "冬天風大，大家在家整理漁具。"
+              "zh": "冬天風大，大家在家整理漁具。",
+              "en": "Strong winds in winter. Everyone sorts their fishing gear at home."
             }
           ]
         }

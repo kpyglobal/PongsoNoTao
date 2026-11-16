@@ -12,6 +12,7 @@
       "kind": "traditional",
       "name": {
         "zh": "族男的傳統服飾",
+        "en": "Tao man's traditional clothing",
         "tao": ""
       },
       "unlockQuest": "OF1",
@@ -22,6 +23,11 @@
         "銀盔",
         "金片",
         "祭儀用品"
+      ],
+      "excludesEn": [
+        "Silver helmet",
+        "Gold plates",
+        "Ceremonial items"
       ],
       "review": true,
       "note": "外觀需依族人提供的參考圖繪製；穿著場合待確認。"
@@ -34,6 +40,7 @@
       "kind": "traditional",
       "name": {
         "zh": "族女的傳統服飾",
+        "en": "Tao woman's traditional clothing",
         "tao": ""
       },
       "unlockQuest": "OF2",
@@ -42,6 +49,9 @@
       "icon": "icon_outfit_f_tao",
       "excludes": [
         "祭儀用品"
+      ],
+      "excludesEn": [
+        "Ceremonial items"
       ],
       "review": true,
       "note": "外觀與紋樣需依族人提供的參考圖繪製；穿著場合待確認。"
@@ -54,7 +64,8 @@
       "kind": "accessory",
       "item": "acc_woven_band",
       "name": {
-        "zh": "織草帽"
+        "zh": "織草帽",
+        "en": "Woven straw hat"
       },
       "layer": "head",
       "unlockQuest": "OF3",
@@ -77,7 +88,8 @@
       "kind": "accessory",
       "item": "acc_bag_strap",
       "name": {
-        "zh": "織草小袋"
+        "zh": "織草小袋",
+        "en": "Small woven pouch"
       },
       "layer": "bag",
       "unlockQuest": "OF3",

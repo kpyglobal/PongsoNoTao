@@ -3,6 +3,7 @@
  * and safe standing queries. Keeps characters on dry land or paved decks
  * and sliding around buildings, walls, and sunken 水芋田 basins.
  */
+import { MAP_SCALE } from './outline';
 import { planePark, HARBOUR_YACHT, CLINIC_FOOT, FOOTPRINT, PLANE_FOOT, TERMINAL_FOOT, FACILITIES, HARBOUR_LANTERN_DZ, ISLAND_CENTRE, LAKES, LANDMARKS } from './layout';
 import {
   TERRAIN_BOX,
@@ -296,7 +297,8 @@ export function canPaddle(x: number, z: number, radius = 0.6): boolean {
 }
 
 /** Nearest floatable point (spiral search), or null when no water is within ~maxR. */
-export function findWaterNear(x: number, z: number, maxR = 24): { x: number; z: number } | null {
+/** (0.1.5: the search reach grew with the island, 24 m × MAP_SCALE) */
+export function findWaterNear(x: number, z: number, maxR = 24 * MAP_SCALE): { x: number; z: number } | null {
   if (canPaddle(x, z)) return { x, z };
   for (let rad = 0.5; rad <= maxR; rad += 0.5) {
     const steps = Math.max(12, Math.round(rad * 10));

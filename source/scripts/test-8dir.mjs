@@ -45,7 +45,7 @@ if (!process.argv.includes('--no-browser')) {
     await page.waitForFunction(() => window.__TAO_RPG__?.ready, { timeout: 240000, polling: 250 });
     const ev = (fn, a) => page.evaluate(fn, a);
     await ev(() => window.__TAO_RPG__.clearSave());
-    await page.click('#btn-origin-yayo');
+    await page.select('#sel-origin-m', 'yayo'); await page.select('#sel-origin-f', 'yayo');
     await page.click('#btn-gender-m');
     await page.click('#origin-go');
     await new Promise((res) => setTimeout(res, 2500));

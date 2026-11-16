@@ -1,9 +1,9 @@
 {
   "world": {
-    "xMin": -80,
-    "xMax": 80,
-    "zMin": -70,
-    "zMax": 90,
+    "xMin": -101,
+    "xMax": 93,
+    "zMin": -87,
+    "zMax": 105,
     "seaLevel": 0,
     "notes": "x+ = East, z+ = South. Heights in meters-ish game units."
   },
@@ -11,248 +11,288 @@
     "yayo": {
       "id": "yayo",
       "zh": "椰油",
+      "en": "Yayo",
       "tao": "Yayo",
-      "x": -39.8,
-      "z": -15.8,
+      "x": -59.1,
+      "z": -22.3,
       "kind": "tribe",
-      "flavor": "熱鬧的西岸部落，開元港與店家所在。Yayo 意指食物豐盛之地。"
+      "flavor": "熱鬧的西岸部落，開元港與店家所在。Yayo 意指食物豐盛之地。",
+      "flavorEn": "A lively west-coast village, home to Kaiyuan Harbour and the shops. Yayo means a place with plenty of food."
     },
     "iraraley": {
       "id": "iraraley",
       "zh": "朗島",
+      "en": "Iraraley",
       "tao": "Iraraley",
-      "x": -23.3,
-      "z": -38.2,
+      "x": -33.1,
+      "z": -55.8,
       "kind": "tribe",
-      "flavor": "北岸領域最廣的部落，有上、下聚落與寬闊潮間帶。Iraraley 有「有禮貌」之意。"
+      "flavor": "北岸領域最廣的部落，有上、下聚落與寬闊潮間帶。Iraraley 有「有禮貌」之意。",
+      "flavorEn": "The north-coast village with the widest land, an upper and a lower settlement and broad tide flats. Iraraley means \"polite\"."
     },
     "iranmeylek": {
       "id": "iranmeylek",
       "zh": "東清",
+      "en": "Iranmeylek",
       "tao": "Iranmeylek",
-      "x": 14.7,
-      "z": -24.8,
+      "x": 24.2,
+      "z": -40.3,
       "kind": "tribe",
-      "flavor": "東北岸東清灣，島上迎接第一道曙光的地方。"
+      "flavor": "東北岸東清灣，島上迎接第一道曙光的地方。",
+      "flavorEn": "On Dongqing Bay on the north-east coast, where the island sees the first light of the day."
     },
     "ivalino": {
       "id": "ivalino",
       "zh": "野銀",
+      "en": "Ivalino",
       "tao": "Ivalino",
-      "x": 11.9,
-      "z": -0.3,
+      "x": 17.3,
+      "z": -6.9,
       "kind": "tribe",
-      "flavor": "東南岸，保存最完整的傳統地下屋聚落。Ivalino 與馬鞍藤有關。"
+      "flavor": "東南岸，保存最完整的傳統地下屋聚落。Ivalino 與馬鞍藤有關。",
+      "flavorEn": "On the south-east coast, the village with the best-kept traditional underground houses. Ivalino is linked to the beach morning glory."
     },
     "imorod": {
       "id": "imorod",
       "zh": "紅頭",
+      "en": "Imorod",
       "tao": "Imorod",
       "aka": [
         "Imowrod"
       ],
-      "x": 25,
-      "z": 35.9,
+      "x": 12.4,
+      "z": 29.9,
       "kind": "tribe",
-      "flavor": "南岸／西南，飛魚傳說起源地；衛生所、郵局與八代灣在此一帶。"
+      "flavor": "南岸／西南，飛魚傳說起源地；衛生所、郵局與八代灣在此一帶。",
+      "flavorEn": "On the south / south-west coast, where the flying fish story began; the health station, the post office and Badai Bay are around here."
     },
     "iratay": {
       "id": "iratay",
       "zh": "漁人",
+      "en": "Iratay",
       "tao": "Iratay",
-      "x": -11.4,
-      "z": 15.4,
+      "x": -28.2,
+      "z": 17.8,
       "kind": "tribe",
-      "flavor": "西南岸平坦寬敞之地，蘭嶼機場所在。腹地最小。"
+      "flavor": "西南岸平坦寬敞之地，蘭嶼機場所在。腹地最小。",
+      "flavorEn": "A flat, open place on the south-west coast, where Lanyu Airport is. It has the least land."
     },
     "harbor": {
       "id": "harbor",
       "zh": "開元港",
+      "en": "Kaiyuan Harbour",
       "tao": "",
-      "x": -49.2,
-      "z": -20.3,
+      "x": -68.5,
+      "z": -26.8,
       "kind": "facility",
-      "flavor": "位於椰油部落的主要客貨港，往來臺東富岡、後壁湖的船舶在此靠泊。"
+      "flavor": "位於椰油部落的主要客貨港，往來臺東富岡、後壁湖的船舶在此靠泊。",
+      "flavorEn": "The main harbour for people and goods, in Yayo; boats from Fugang in Taitung and from Houbihu stop here."
     },
     "clinic": {
       "id": "clinic",
       "zh": "蘭嶼衛生所",
+      "en": "Lanyu Health Station",
       "tao": "",
-      "x": 9.8,
-      "z": 14.8,
+      "x": -10.8,
+      "z": 20.4,
       "kind": "facility",
-      "flavor": "全島唯一衛生所，位於紅頭部落。遊戲中作為傳統食材與現代營養學對話的據點。"
+      "flavor": "全島唯一衛生所，位於紅頭部落。遊戲中作為傳統食材與現代營養學對話的據點。",
+      "flavorEn": "The only health station on the island, in Imorod. In the game it is where traditional food and modern nutrition meet."
     },
     "airport": {
       "id": "airport",
       "zh": "蘭嶼機場",
+      "en": "Lanyu Airport",
       "tao": "",
-      "x": -21.9,
-      "z": -2.5,
+      "x": -34.7,
+      "z": -0.1,
       "kind": "facility",
-      "flavor": "位於漁人部落的島上航空站。"
+      "flavor": "位於漁人部落的島上航空站。",
+      "flavorEn": "The island's airport, in Iratay."
     },
     "jimagaod": {
       "id": "jimagaod",
       "zh": "小蘭嶼",
+      "en": "Little Orchid Island",
       "tao": "Jimagaod",
-      "x": 44,
-      "z": 74,
+      "x": 64,
+      "z": 95,
       "kind": "island",
-      "flavor": "主島南方的小島，傳統上與紅頭海域、漁獵及椰子等資源相關。原型階段以眺望為主。"
+      "flavor": "主島南方的小島，傳統上與紅頭海域、漁獵及椰子等資源相關。原型階段以眺望為主。",
+      "flavorEn": "A small island south of the main island, traditionally linked to the Imorod waters, fishing and hunting, and coconuts. In this early version you look at it from afar."
     },
     "taro_yayo": {
       "id": "taro_yayo",
       "zh": "椰油水芋田",
+      "en": "Yayo taro field",
       "tao": "soli",
-      "x": -31.4,
-      "z": -18.3,
+      "x": -49.5,
+      "z": -24.8,
       "kind": "taro"
     },
     "taro_iraraley": {
       "id": "taro_iraraley",
       "zh": "朗島水芋田",
+      "en": "Iraraley taro field",
       "tao": "soli",
-      "x": -26.1,
-      "z": -29.6,
+      "x": -37,
+      "z": -46.4,
       "kind": "taro"
     },
     "taro_iranmeylek": {
       "id": "taro_iranmeylek",
       "zh": "東清水芋田",
+      "en": "Iranmeylek taro field",
       "tao": "soli",
-      "x": 6,
-      "z": -24.9,
+      "x": 14.9,
+      "z": -37.3,
       "kind": "taro"
     },
     "taro_ivalino": {
       "id": "taro_ivalino",
       "zh": "野銀水芋田",
+      "en": "Ivalino taro field",
       "tao": "soli",
-      "x": 3.1,
-      "z": -0.2,
+      "x": 7.3,
+      "z": -7.2,
       "kind": "taro"
     },
     "taro_imorod": {
       "id": "taro_imorod",
       "zh": "紅頭水芋田",
+      "en": "Imorod taro field",
       "tao": "soli",
-      "x": 34,
-      "z": 33.4,
+      "x": -2,
+      "z": 18.5,
       "kind": "taro"
     },
     "taro_iratay": {
       "id": "taro_iratay",
       "zh": "漁人水芋田",
+      "en": "Iratay taro field",
       "tao": "soli",
-      "x": -12.7,
-      "z": 6.5,
+      "x": -22.8,
+      "z": 9.2,
       "kind": "taro"
     },
     "fishzone_west": {
       "id": "fishzone_west",
       "zh": "西岸飛魚海域",
+      "en": "West coast flying fish waters",
       "tao": "rayon",
-      "x": -57.8,
-      "z": -9.8,
+      "x": -77.1,
+      "z": -16.3,
       "kind": "sea"
     },
     "fishzone_east": {
       "id": "fishzone_east",
       "zh": "東清灣外海",
+      "en": "Open sea off Dongqing Bay",
       "tao": "rayon",
-      "x": 34.1,
-      "z": -19.8,
+      "x": 44.1,
+      "z": -42.5,
       "kind": "sea"
     },
     "peak": {
       "id": "peak",
       "zh": "紅頭山一帶",
+      "en": "Around Mt. Hongtou",
       "tao": "",
-      "x": -25.6,
-      "z": -13,
+      "x": -36.9,
+      "z": -18.1,
       "kind": "landmark"
     },
     "iranmeylek_beach": {
       "id": "iranmeylek_beach",
       "zh": "東清灣沙灘",
+      "en": "Dongqing Bay beach",
       "tao": "",
-      "x": 20.2,
-      "z": -24.8,
+      "x": 29.3,
+      "z": -42.3,
       "kind": "shore"
     },
     "iratay_shore": {
       "id": "iratay_shore",
       "zh": "漁人灘頭",
+      "en": "Iratay boat beach",
       "tao": "",
-      "x": -14,
-      "z": 20.4,
+      "x": -33.4,
+      "z": 20.1,
       "kind": "shore"
     },
     "iratay_school": {
       "id": "iratay_school",
       "zh": "漁人的學校操場",
+      "en": "Iratay school playground",
       "tao": "",
-      "x": -8.1,
-      "z": 16.6,
+      "x": -26.3,
+      "z": 20.8,
       "kind": "facility"
     },
     "wakay_iratay": {
       "id": "wakay_iratay",
       "zh": "漁人的地瓜田",
+      "en": "Iratay sweet potato field",
       "tao": "",
-      "x": -17.9,
-      "z": 10.7,
+      "x": -30.4,
+      "z": 10,
       "kind": "field"
     },
     "owl_road": {
       "id": "owl_road",
       "zh": "西岸路邊樹林",
+      "en": "Roadside woods on the west coast",
       "tao": "",
-      "x": -34.8,
-      "z": -1.8,
+      "x": -56.9,
+      "z": -8.1,
       "kind": "roadside"
     },
     "five_caves_view": {
       "zh": "五孔洞（路邊遠看）",
+      "en": "Five Holes Cave (seen from the road)",
       "tao": "",
-      "x": -37.7,
-      "z": -35,
+      "x": -56.3,
+      "z": -52.8,
       "kind": "viewpoint"
     },
     "small_lake_view": {
       "zh": "小天池（遠看）",
+      "en": "Little Heaven Lake (seen from afar)",
       "tao": "",
-      "x": -42.1,
-      "z": -38.1,
+      "x": -60.2,
+      "z": -55.2,
       "kind": "viewpoint"
     },
     "big_lake_view": {
       "zh": "大天池（遠看）",
+      "en": "Big Heaven Lake (seen from afar)",
       "tao": "",
-      "x": 26.4,
-      "z": 16.9,
+      "x": 31.7,
+      "z": 36.7,
       "kind": "viewpoint"
     },
     "badai_view": {
       "zh": "八代灣觀景點",
+      "en": "Badai Bay lookout",
       "tao": "",
-      "x": 3.3,
-      "z": 15.3,
+      "x": 1.5,
+      "z": 20.6,
       "kind": "viewpoint"
     },
     "hutou_slope": {
       "zh": "虎頭坡",
+      "en": "Hutou Slope",
       "tao": "",
-      "x": -30.2,
-      "z": -2.3,
+      "x": -46.9,
+      "z": -8.3,
       "kind": "viewpoint"
     },
     "thatch_field": {
       "zh": "山坡上的茅草地",
+      "en": "Thatch grass on the hillside",
       "tao": "",
-      "x": -35.6,
-      "z": -31.9,
+      "x": -54.9,
+      "z": -40.3,
       "kind": "field"
     }
   },

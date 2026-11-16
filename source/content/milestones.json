@@ -1,12 +1,12 @@
 {
   "milestones": [
-    { "id": "arrive", "zh": "踏上 Pongso no Tao", "tao": "Pongso no Tao", "detail": "選定出身並走進蘭嶼。", "hidden": false },
-    { "id": "hear-words", "zh": "把島的名字放進手札", "tao": "ciriciring no Tao", "detail": "向長輩請教，解鎖第一批族語詞卡。", "hidden": false },
-    { "id": "clinic-notes", "zh": "衛生所筆記", "tao": "soli · alibangbang", "detail": "在紅頭衛生所記下飛魚與水芋的營養搭配。", "hidden": false },
-    { "id": "harvest-taro", "zh": "初收水芋", "tao": "soli", "detail": "在教學田裡完成一次水芋採收。", "hidden": false },
-    { "id": "catch-fish", "zh": "飛魚季的海", "tao": "rayon", "detail": "於飛魚季在體驗點完成一次時機互動。", "hidden": false },
-    { "id": "look-jimagaod", "zh": "望見小蘭嶼", "tao": "Jimagaod", "detail": "在南岸眺望 Jimagaod，並收入椰子筆記。", "hidden": false },
-    { "id": "all-times", "zh": "島的四種光", "tao": "", "detail": "親身切換清晨、白天、黃昏與夜晚。", "hidden": true },
-    { "id": "all-seasons", "zh": "歲時走一輪", "tao": "rayon", "detail": "體驗招魚祭、飛魚季、終食祭與休漁期。", "hidden": true }
+    { "id": "arrive", "zh": "踏上 Pongso no Tao", "en": "Set foot on Pongso no Tao", "tao": "Pongso no Tao", "detail": "選定出身並走進蘭嶼。", "detailEn": "Choose your home and walk into Lanyu.", "hidden": false },
+    { "id": "hear-words", "zh": "把島的名字放進手札", "en": "Put the island's name in your notebook", "tao": "ciriciring no Tao", "detail": "向長輩請教，解鎖第一批族語詞卡。", "detailEn": "Ask an elder and unlock your first Tao word cards.", "hidden": false },
+    { "id": "clinic-notes", "zh": "衛生所筆記", "en": "Health station notes", "tao": "soli · alibangbang", "detail": "在紅頭衛生所記下飛魚與水芋的營養搭配。", "detailEn": "At the Imorod health station, note how flying fish and taro work together as food.", "hidden": false },
+    { "id": "harvest-taro", "zh": "初收水芋", "en": "First taro harvest", "tao": "soli", "detail": "在教學田裡完成一次水芋採收。", "detailEn": "Harvest taro once in the teaching field.", "hidden": false },
+    { "id": "catch-fish", "zh": "飛魚季的海", "en": "The sea in flying fish season", "tao": "rayon", "detail": "於飛魚季在體驗點完成一次時機互動。", "detailEn": "Do the timing activity once at the practice spot during flying fish season.", "hidden": false },
+    { "id": "look-jimagaod", "zh": "望見小蘭嶼", "en": "A view of Little Orchid Island", "tao": "Jimagaod", "detail": "在南岸眺望 Jimagaod，並收入椰子筆記。", "detailEn": "Look out at Jimagaod from the south coast and add it to your coconut notes.", "hidden": false },
+    { "id": "all-times", "zh": "島的四種光", "en": "Four lights of the island", "tao": "", "detail": "親身切換清晨、白天、黃昏與夜晚。", "detailEn": "See dawn, day, dusk and night for yourself.", "hidden": true },
+    { "id": "all-seasons", "zh": "歲時走一輪", "en": "A full year", "tao": "rayon", "detail": "體驗招魚祭、飛魚季、終食祭與休漁期。", "detailEn": "Experience the fish-calling festival, flying fish season, end-of-eating festival and the off-season.", "hidden": true }
   ]
 }

@@ -6,7 +6,7 @@
  */
 import { VILLAGE_DEFS, TARO_FIELDS, FACILITIES, JIMAGAOD, LANDMARKS, LAKES, MANTOU_ROCK, RING_ROAD, fromOld, vlocal } from '../../src/world/layout';
 import { geo } from '../../src/world/outline';
-import { getHeight } from '../../src/world/height';
+import { getHeight, TERRAIN_BOX } from '../../src/world/height';
 import { coastSdf } from '../../src/world/coast';
 import fs from 'node:fs';
 const file = 'content/places.json';
@@ -19,6 +19,8 @@ const set = (id: string, p: { x: number; z: number }) => {
   P[id].z = r1(p.z);
 };
 const V = (id: string) => VILLAGE_DEFS.find((v) => v.id === id)!;
+// 0.1.5: the world box follows the (bigger) terrain
+j.world = { ...j.world, xMin: TERRAIN_BOX.xMin, xMax: TERRAIN_BOX.xMax, zMin: TERRAIN_BOX.zMin, zMax: TERRAIN_BOX.zMax };
 for (const v of VILLAGE_DEFS) set(v.id, { x: v.cx, z: v.cz });
 for (const f of TARO_FIELDS) {
   const u = (f.tiers * f.cellU) / 2 + 0.9;

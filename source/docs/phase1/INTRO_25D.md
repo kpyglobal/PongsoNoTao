@@ -1,3 +1,6 @@
+> **0.1.5:** the intro was rebuilt on the v2 art (`art-ref/arrival/layers25d-v2/`). Assets come from
+> `scripts/art/build-intro25d-v2.py`; the scene is `src/intro/introScene.ts`. The notes below describe 0.1.4.
+
 # Arrival intro (2.5D painted layers)
 
 The 搭飛機／搭船 opening is made of hand-painted layers moved with parallax, not a 3D scene.

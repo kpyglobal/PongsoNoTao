@@ -5,12 +5,15 @@
       "id": "millet",
       "name": {
         "zh": "小米",
+        "en": "Millet",
         "tao": ""
       },
       "category": "ingredient",
       "collectible": true,
       "description": "朗島女性長輩給的一小把小米。",
+      "descriptionEn": "A small handful of millet from the Iraraley woman elder.",
       "codex": "小米是島上的老作物之一，由女性長輩照顧田地。種植、收成的時節與相關的規矩還要請族人確認；族語名待確認。",
+      "codexEn": "Millet is one of the island's old crops, and women elders look after the fields. The planting and harvest times and related rules still need checking with the community; the Tao name is unconfirmed.",
       "icon": "icon_millet",
       "illustration": "illus_millet",
       "review": true,
@@ -20,12 +23,15 @@
       "id": "taro_seedling",
       "name": {
         "zh": "芋苗",
+        "en": "Taro shoots",
         "tao": ""
       },
       "category": "material",
       "collectible": true,
       "description": "準備補種的水芋苗。",
+      "descriptionEn": "Taro shoots ready for replanting.",
       "codex": "採收後把芋頭的莖頂留下來再種回去，田就能一直延續下去。",
+      "codexEn": "After harvest, keep the top of the taro stem and plant it back, and the field can go on and on.",
       "icon": "icon_taro_seedling",
       "illustration": "illus_taro_seedling",
       "sources": []
@@ -34,12 +40,15 @@
       "id": "lunch_bundle",
       "name": {
         "zh": "芋頭地瓜午餐",
+        "en": "Taro and sweet potato lunch",
         "tao": ""
       },
       "category": "material",
       "collectible": true,
       "description": "朗島女性長輩包好的午餐，要送給上山工作的人。",
+      "descriptionEn": "A packed lunch from the Iraraley woman elder, for the people working up the mountain.",
       "codex": "家裡的人吃什麼、帶什麼上山，是女性長輩安排的。送到工作的地方附近就好，不進男人做事的地方。",
+      "codexEn": "What the family eats and takes up the mountain is planned by the women elders. Just drop it near the work site — don't go into the place where the men are working.",
       "icon": "icon_lunch_bundle",
       "illustration": "illus_lunch_bundle",
       "review": true,
@@ -49,12 +58,15 @@
       "id": "ramie_thread",
       "name": {
         "zh": "苧麻線",
+        "en": "Ramie thread",
         "tao": ""
       },
       "category": "material",
       "collectible": true,
       "description": "族女捲好的苧麻線。",
+      "descriptionEn": "Ramie thread wound by the Tao woman.",
       "codex": "苧麻剝皮、浸泡、曬乾後，才能捻成線、捲成線團，再拿去織布。飛魚季時婦女不織布，所以多在冬天做。",
+      "codexEn": "Ramie is stripped, soaked and dried, then twisted into thread and wound into balls for weaving. Women don't weave in flying fish season, so this is mostly done in winter.",
       "icon": "icon_ramie_thread",
       "illustration": "illus_ramie_thread",
       "review": true,
@@ -64,12 +76,15 @@
       "id": "cotton_thread",
       "name": {
         "zh": "棉線",
+        "en": "Cotton thread",
         "tao": ""
       },
       "category": "material",
       "collectible": true,
       "description": "在椰油雜貨店買的一捆彩色棉線。",
+      "descriptionEn": "A bundle of coloured cotton thread from the Yayo grocery store.",
       "codex": "現代買得到的棉線，拿來縫日常的小東西很方便。",
+      "codexEn": "Modern cotton thread you can buy. Handy for sewing small everyday things.",
       "icon": "icon_cotton_thread",
       "illustration": "illus_cotton_thread",
       "sources": [
@@ -83,12 +98,15 @@
       "id": "cloth_scrap",
       "name": {
         "zh": "布邊碎布",
+        "en": "Cloth scraps",
         "tao": ""
       },
       "category": "material",
       "collectible": true,
       "description": "織布長輩給的織剩布邊。",
+      "descriptionEn": "Leftover cloth edges from the weaving elder.",
       "codex": "織布剩下的布邊捨不得丟，可以縫成小東西。原色、簡單就好，不仿照祭儀的紋樣。",
+      "codexEn": "Leftover edges from weaving are too good to throw away and can be sewn into small things. Keep them plain and simple — don't copy ceremonial patterns.",
       "icon": "icon_cloth_scrap",
       "illustration": "illus_cloth_scrap",
       "review": true,

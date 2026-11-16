@@ -13,6 +13,7 @@ import type { Assets } from '../core/assets';
 import ATLAS from './flora_atlas.json';
 import { getHeight } from './height';
 import { FACILITIES, planePark, runwayLocal } from './layout';
+import { plantBlocksView, plantHitsBuilding } from './floraClear';
 
 /** 0.1.4: nothing grows on the runway or around the parked plane (it was standing in bushes) */
 let PLANE_CLEAR: { x: number; z: number; c: number; s: number } | null = null;
@@ -92,7 +93,7 @@ export class Flora {
 
   /** h = world height of the sprite; y defaults to terrain height. */
   add(kind: FloraKind, x: number, z: number, h: number, opts: { y?: number; tint?: number; shadow?: number; seed?: number } = {}): void {
-    if (keepOut(kind, x, z)) return;
+    if (keepOut(kind, x, z) || plantHitsBuilding(kind, x, z) || plantBlocksView(kind, x, z, h)) return;
     const seed = opts.seed ?? Math.abs(Math.sin(x * 12.9898 + z * 78.233) * 43758.5453) % 1;
     this.items.push({
       kind, x, z, h,

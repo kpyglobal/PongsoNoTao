@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "準備拼板舟與漁具",
-        "en": ""
+        "en": "Prepare the plank boat and fishing gear"
       },
       "time": "day",
       "seasons": [],
@@ -19,8 +19,11 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 船組陪同）",
+        "coopEn": "Solo (with an NPC boat crew)",
         "season": "等待飛魚期尾聲",
+        "seasonEn": "Late in the wait for flying fish season",
         "pre": "Q05",
         "unlock": "M3",
         "kind": ""
@@ -34,14 +37,17 @@
             "m"
           ],
           "text": "族男向男性長輩接下工作：準備拼板舟與漁具",
+          "textEn": "The Tao man takes a job from the man elder: prepare the plank boat and fishing gear",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季快到了，船和漁具要先整理好。跟著船組的人去港邊看看。"
+              "zh": "飛魚季快到了，船和漁具要先整理好。跟著船組的人去港邊看看。",
+              "en": "Flying fish season is coming. The boat and gear need sorting first. Go with the boat crew to the harbour."
             },
             {
               "who": "旁白",
-              "zh": "船組怎麼分工、哪些事只有船組的人能做，還要請族人確認。"
+              "zh": "船組怎麼分工、哪些事只有船組的人能做，還要請族人確認。",
+              "en": "How the crew splits the work, and which tasks only crew members can do, still needs checking with the community."
             }
           ]
         },
@@ -53,10 +59,12 @@
             "m"
           ],
           "text": "族男到開元港邊，跟船組一起整理拼板舟與漁具",
+          "textEn": "The Tao man goes to Kaiyuan Harbour to sort the plank boat and fishing gear with the boat crew",
           "lines": [
             {
               "who": "@m",
-              "zh": "船身擦乾淨，漁網一段一段檢查，破的地方記下來。"
+              "zh": "船身擦乾淨，漁網一段一段檢查，破的地方記下來。",
+              "en": "Wipe the hull clean, check the net section by section and note the torn spots."
             }
           ]
         },
@@ -67,10 +75,12 @@
             "m"
           ],
           "text": "族男向男性長輩回報：船和漁具整理好了",
+          "textEn": "The Tao man reports to the man elder: the boat and gear are ready",
           "lines": [
             {
               "who": "@npc",
-              "zh": "整理好了就好，等飛魚季開始。"
+              "zh": "整理好了就好，等飛魚季開始。",
+              "en": "Good, all sorted. Now we wait for flying fish season."
             }
           ]
         }
@@ -78,7 +88,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "男性長輩要族男去港邊，跟船組整理拼板舟和漁具。"
+        "fromEn": "Host family",
+        "zh": "男性長輩要族男去港邊，跟船組整理拼板舟和漁具。",
+        "en": "The man elder wants the Tao man to go to the harbour and sort the plank boat and gear with the crew."
       },
       "playable": true,
       "giver": "m"
@@ -90,7 +102,7 @@
       "village": null,
       "name": {
         "zh": "紅頭宣告飛魚季開始",
-        "en": ""
+        "en": "Imorod announces the flying fish season"
       },
       "time": "day",
       "seasons": [
@@ -104,23 +116,32 @@
       "n": 0,
       "text": {
         "who": "全隊收到通知",
+        "whoEn": "Whole party is notified",
         "coop": "不需到場，只顯示季節開始",
+        "coopEn": "No need to be there; just shows the season starting",
         "season": "遊戲年開始",
+        "seasonEn": "Start of the game year",
         "pre": "新遊戲年",
+        "preEn": "New game year",
         "unlock": "紅頭進入飛魚季，其他部落之後各自切換",
-        "kind": "季節通知"
+        "unlockEn": "Imorod enters flying fish season; the other villages follow on their own",
+        "kind": "季節通知",
+        "kindEn": "Season notice"
       },
       "req": "Q05",
       "steps": [
         {
           "kind": "auto",
-          "text": "飛魚季開始（只顯示季節，不需到場）"
+          "text": "飛魚季開始（只顯示季節，不需到場）",
+          "textEn": "Flying fish season begins (shows the season only, no need to be there)"
         }
       ],
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "飛魚季開始時，這一步會自己完成。"
+        "fromEn": "Tao villagers",
+        "zh": "飛魚季開始時，這一步會自己完成。",
+        "en": "This step completes by itself when flying fish season starts."
       },
       "playable": true
     },
@@ -131,7 +152,7 @@
       "village": null,
       "name": {
         "zh": "出海捕飛魚",
-        "en": ""
+        "en": "Go to sea for flying fish"
       },
       "time": "day",
       "seasons": [
@@ -143,11 +164,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 船組陪同）",
+        "coopEn": "Solo (with an NPC boat crew)",
         "season": "飛魚季（以當地部落為準）",
+        "seasonEn": "Flying fish season (by the local village)",
         "pre": "M1、M2、OF1（傳統服飾；MS1 三人分頭準備為選做）",
+        "preEn": "M1, M2, OF1 (traditional clothing; MS1 three-way preparation is optional)",
         "unlock": "M4",
-        "kind": "季節＋漁場（族男）"
+        "kind": "季節＋漁場（族男）",
+        "kindEn": "Season + fishing ground (Tao man)"
       },
       "req": {
         "all": [
@@ -164,32 +190,39 @@
             "m"
           ],
           "text": "族男向男性長輩接下出海的工作",
+          "textEn": "The Tao man takes the job of going to sea from the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季到了，跟船組出海。這趟只有你去，其他人在岸邊等。"
+              "zh": "飛魚季到了，跟船組出海。這趟只有你去，其他人在岸邊等。",
+              "en": "Flying fish season is here. Go out with the boat crew. Only you go this time; the others wait on shore."
             },
             {
               "who": "@npc",
-              "zh": "穿上家裡織的衣服再來。上船出海，是很重要的事。"
+              "zh": "穿上家裡織的衣服再來。上船出海，是很重要的事。",
+              "en": "Put on the clothes woven at home first. Going out to sea on a boat is a serious thing."
             },
             {
               "who": "@npc",
-              "zh": "看準時機，不行就回來，不要逞強。"
+              "zh": "看準時機，不行就回來，不要逞強。",
+              "en": "Watch for the right moment. If it doesn't work, come back. Don't push yourself."
             },
             {
               "who": "旁白",
-              "zh": "依傳統，飛魚季出海捕魚由男子負責。遊戲裡只做時機練習；真正的漁團與規矩還要請族人確認。"
+              "zh": "依傳統，飛魚季出海捕魚由男子負責。遊戲裡只做時機練習；真正的漁團與規矩還要請族人確認。",
+              "en": "By tradition, men go to sea for flying fish. The game only has a timing practice; the real crews and rules still need checking with the community."
             },
             {
               "who": "旁白",
-              "zh": "出海期間只能操控族男。捕到魚，或按「放棄出海」，才會回岸邊和大家會合。"
+              "zh": "出海期間只能操控族男。捕到魚，或按「放棄出海」，才會回岸邊和大家會合。",
+              "en": "While at sea, you can only control the Tao man. Catch a fish, or tap \"Give up\", to return to shore and rejoin everyone."
             }
           ],
           "solo": {
             "role": "m",
             "at": "harbor",
             "task": "出海捕飛魚",
+            "taskEn": "Go to sea for flying fish",
             "waitAt": "harbor"
           }
         },
@@ -203,10 +236,12 @@
           "minigame": "fish",
           "canoe": true,
           "text": "族男划拼板舟出海，看準飛魚躍出的時機（失敗可再試，或放棄出海）",
+          "textEn": "The Tao man paddles the plank boat out and waits for the moment a flying fish leaps (try again if you miss, or give up)",
           "lines": [
             {
               "who": "@m",
-              "zh": "捕到了！划回岸邊。"
+              "zh": "捕到了！划回岸邊。",
+              "en": "Caught one! Paddle back to shore."
             }
           ],
           "gives": {
@@ -229,14 +264,17 @@
           ],
           "regroup": true,
           "text": "族男回到岸邊，和族女、旅人會合",
+          "textEn": "The Tao man returns to shore and meets up with the Tao woman and the traveller",
           "lines": [
             {
               "who": "@f",
-              "zh": "回來了！平安就好。"
+              "zh": "回來了！平安就好。",
+              "en": "You're back! As long as you're safe."
             },
             {
               "who": "@t",
-              "zh": "辛苦了！我們在岸邊一直看著。"
+              "zh": "辛苦了！我們在岸邊一直看著。",
+              "en": "Well done! We were watching from the shore the whole time."
             }
           ]
         },
@@ -247,10 +285,12 @@
             "m"
           ],
           "text": "族男向男性長輩回報：平安回來了",
+          "textEn": "The Tao man reports to the man elder: back safely",
           "lines": [
             {
               "who": "@npc",
-              "zh": "平安回來最重要。漁獲怎麼分，下次再教你。"
+              "zh": "平安回來最重要。漁獲怎麼分，下次再教你。",
+              "en": "Coming back safe matters most. I'll teach you how to share the catch next time."
             }
           ]
         }
@@ -258,7 +298,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季時，男性長輩會叫族男出海；只有族男能去，其他人在岸邊等。"
+        "fromEn": "Host family",
+        "zh": "飛魚季時，男性長輩會叫族男出海；只有族男能去，其他人在岸邊等。",
+        "en": "In flying fish season, the man elder will send the Tao man to sea. Only the Tao man can go; the others wait on shore."
       },
       "playable": true,
       "ground": "fishing",
@@ -275,7 +317,7 @@
       "village": null,
       "name": {
         "zh": "回灘頭處理與分配漁獲",
-        "en": ""
+        "en": "Back to the beach to clean and share the catch"
       },
       "time": "day",
       "seasons": [
@@ -287,11 +329,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 船組陪同）",
+        "coopEn": "Solo (with an NPC boat crew)",
         "season": "飛魚季（當地）",
+        "seasonEn": "Flying fish season (local)",
         "pre": "M3",
         "unlock": "M5、M8、部落關係",
-        "kind": "季節"
+        "unlockEn": "M5, M8, village ties",
+        "kind": "季節",
+        "kindEn": "Season"
       },
       "req": "M3",
       "steps": [
@@ -299,10 +346,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "族男向男性長輩報到，回灘頭處理漁獲",
+          "textEn": "The Tao man reports to the man elder and goes back to the beach to clean the catch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "魚帶回來了，要先在灘頭處理好，再一起分。"
+              "zh": "魚帶回來了，要先在灘頭處理好，再一起分。",
+              "en": "The fish are back. Clean them on the beach first, then we share."
             }
           ],
           "actor": [
@@ -314,14 +363,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男跟船組在灘頭把漁獲平均分好",
+          "textEn": "The Tao man and the boat crew share the catch evenly on the beach",
           "lines": [
             {
               "who": "@m",
-              "zh": "船組每個人一份，一條一條數清楚。"
+              "zh": "船組每個人一份，一條一條數清楚。",
+              "en": "One share for each person in the crew. Count them out one by one."
             },
             {
               "who": "旁白",
-              "zh": "飛魚季的漁獲，按船組的人數分。誰多拿、誰少拿，大家都看得到。"
+              "zh": "飛魚季的漁獲，按船組的人數分。誰多拿、誰少拿，大家都看得到。",
+              "en": "The flying fish catch is shared by the number of people in the crew. Everyone can see who gets more or less."
             }
           ],
           "actor": [
@@ -341,10 +393,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報：漁獲分好了",
+          "textEn": "Report to the man elder: the catch is shared",
           "lines": [
             {
               "who": "@npc",
-              "zh": "分得公平，船組才會長久。把魚帶回家，交給家裡的女人。"
+              "zh": "分得公平，船組才會長久。把魚帶回家，交給家裡的女人。",
+              "en": "Fair sharing keeps a crew together for a long time. Take the fish home and give them to the women of the house."
             }
           ],
           "actor": [
@@ -355,6 +409,10 @@
             "toast": [
               "部落關係",
               "漁獲在灘頭分好了。"
+            ],
+            "toastEn": [
+              "Village ties",
+              "The catch was shared on the beach."
             ]
           }
         }
@@ -362,7 +420,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "族男出海回來後，要回灘頭跟船組處理、分配漁獲。"
+        "fromEn": "Host family",
+        "zh": "族男出海回來後，要回灘頭跟船組處理、分配漁獲。",
+        "en": "After the Tao man comes back from sea, he goes back to the beach to clean and share the catch with the crew."
       },
       "playable": true,
       "song": "s01",
@@ -381,7 +441,7 @@
       "village": null,
       "name": {
         "zh": "交接飛魚、依種類分類",
-        "en": ""
+        "en": "Hand over the flying fish and sort them by kind"
       },
       "time": "day",
       "seasons": [
@@ -398,8 +458,11 @@
       ],
       "text": {
         "who": "族男交魚、族女接手",
+        "whoEn": "Tao man hands over, Tao woman takes over",
         "coop": "雙人：族男＋族女，在家屋前",
+        "coopEn": "Pair: Tao man + Tao woman, in front of the house",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "M4",
         "unlock": "M6",
         "kind": ""
@@ -411,14 +474,17 @@
           "spot": "host_home",
           "r": 7,
           "text": "族男把分到的飛魚帶回家，交給族女",
+          "textEn": "The Tao man brings his share of flying fish home and gives it to the Tao woman",
           "lines": [
             {
               "who": "@m",
-              "zh": "這是今天船組分到的魚。"
+              "zh": "這是今天船組分到的魚。",
+              "en": "This is the crew's share for today."
             },
             {
               "who": "@f",
-              "zh": "交給我。我跟長輩一起處理。"
+              "zh": "交給我。我跟長輩一起處理。",
+              "en": "Give them to me. I'll sort them with the elder."
             }
           ],
           "need": [
@@ -430,14 +496,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "族女跟女性長輩把飛魚依種類分開",
+          "textEn": "The Tao woman and the woman elder sort the flying fish by kind",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚有好幾種，不同的分開放。怎麼分、誰可以吃，聽長輩的，不要自己決定。"
+              "zh": "飛魚有好幾種，不同的分開放。怎麼分、誰可以吃，聽長輩的，不要自己決定。",
+              "en": "There are several kinds of flying fish. Keep each kind apart. How to sort them and who can eat which — follow the elder, don't decide yourself."
             },
             {
               "who": "@f",
-              "zh": "好，我照您說的放。"
+              "zh": "好，我照您說的放。",
+              "en": "Okay, I'll lay them out the way you said."
             }
           ],
           "actor": [
@@ -451,6 +520,10 @@
             "toast": [
               "飛魚分類",
               "漁獲交接完成，接下來要曬魚。"
+            ],
+            "toastEn": [
+              "Sorting flying fish",
+              "The catch is handed over. Next, the fish need drying."
             ]
           }
         }
@@ -458,7 +531,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "族男把漁獲帶回家，交給族女和女性長輩分類。"
+        "fromEn": "Host family",
+        "zh": "族男把漁獲帶回家，交給族女和女性長輩分類。",
+        "en": "The Tao man brings the catch home and gives it to the Tao woman and the woman elder to sort."
       },
       "playable": true,
       "giver": "m",
@@ -474,7 +549,7 @@
       "village": null,
       "name": {
         "zh": "曬魚，飛魚乾入糧倉",
-        "en": ""
+        "en": "Dry the fish and store them"
       },
       "time": "day",
       "seasons": [
@@ -486,10 +561,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "M5",
         "unlock": "糧倉、飛魚乾卡",
+        "unlockEn": "Food store, dried flying fish card",
         "kind": ""
       },
       "req": "M5",
@@ -498,10 +577,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩交代族女曬魚",
+          "textEn": "The woman elder asks the Tao woman to dry the fish",
           "lines": [
             {
               "who": "@npc",
-              "zh": "天氣好，把魚剖開、抹鹽，掛到曬魚架上。"
+              "zh": "天氣好，把魚剖開、抹鹽，掛到曬魚架上。",
+              "en": "Good weather. Split the fish, rub in salt and hang them on the drying rack."
             }
           ],
           "actor": [
@@ -513,14 +594,17 @@
           "spot": "host_fishrack",
           "r": 5,
           "text": "族女把飛魚一條條掛上曬魚架",
+          "textEn": "The Tao woman hangs the flying fish on the drying rack one by one",
           "lines": [
             {
               "who": "@f",
-              "zh": "剖開、洗乾淨、抹鹽，一條一條掛好。"
+              "zh": "剖開、洗乾淨、抹鹽，一條一條掛好。",
+              "en": "Split, wash, salt, and hang them up one by one."
             },
             {
               "who": "旁白",
-              "zh": "曬魚架上的魚，是一家人一整年的糧食。外人不要隨便碰。"
+              "zh": "曬魚架上的魚，是一家人一整年的糧食。外人不要隨便碰。",
+              "en": "The fish on the drying rack are a family's food for the whole year. Outsiders shouldn't touch them."
             }
           ],
           "actor": [
@@ -531,10 +615,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "曬好了就收進糧倉。今年的飛魚乾，就從這裡開始。"
+              "zh": "曬好了就收進糧倉。今年的飛魚乾，就從這裡開始。",
+              "en": "Once dry, put them in the food store. This year's dried flying fish starts here."
             }
           ],
           "actor": [
@@ -547,6 +633,10 @@
             "toast": [
               "飛魚乾卡",
               "飛魚乾收進糧倉了。"
+            ],
+            "toastEn": [
+              "Dried flying fish card",
+              "The dried flying fish are in the food store."
             ]
           }
         }
@@ -554,7 +644,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚分好之後，族女要把魚曬在主人家的曬魚架上。"
+        "fromEn": "Host family",
+        "zh": "飛魚分好之後，族女要把魚曬在主人家的曬魚架上。",
+        "en": "After the flying fish are sorted, the Tao woman dries them on the host family's drying rack."
       },
       "playable": true,
       "giver": "f"
@@ -566,7 +658,7 @@
       "village": null,
       "name": {
         "zh": "烹煮家庭餐點",
-        "en": ""
+        "en": "Cook a family meal"
       },
       "time": "day",
       "seasons": [
@@ -578,10 +670,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "M6",
         "unlock": "水煮飛魚料理卡、M9",
+        "unlockEn": "Boiled flying fish recipe card, M9",
         "kind": ""
       },
       "req": "M6",
@@ -590,10 +686,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩請族女準備家裡的晚餐",
+          "textEn": "The woman elder asks the Tao woman to make the family dinner",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今天煮飛魚。用清水煮就好，不要加別的東西。"
+              "zh": "今天煮飛魚。用清水煮就好，不要加別的東西。",
+              "en": "Flying fish today. Just boil it in plain water. Don't add anything else."
             }
           ],
           "actor": [
@@ -605,14 +703,17 @@
           "spot": "host_home",
           "r": 7,
           "text": "族女在主人家煮一鍋水煮飛魚",
+          "textEn": "The Tao woman cooks a pot of boiled flying fish at the host family's house",
           "lines": [
             {
               "who": "@f",
-              "zh": "水滾了，魚放下去，再煮一下就好。"
+              "zh": "水滾了，魚放下去，再煮一下就好。",
+              "en": "When the water boils, put the fish in and cook a little longer."
             },
             {
               "who": "旁白",
-              "zh": "飛魚季的餐點，鍋子和做法都有規矩；各家的做法不同，還要請族人確認。"
+              "zh": "飛魚季的餐點，鍋子和做法都有規矩；各家的做法不同，還要請族人確認。",
+              "en": "Meals in flying fish season have rules about pots and methods. Each family is different; this still needs checking with the community."
             }
           ],
           "actor": [
@@ -623,10 +724,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "請女性長輩嚐嚐",
+          "textEn": "Ask the woman elder to taste it",
           "lines": [
             {
               "who": "@npc",
-              "zh": "煮得剛好。叫大家回來吃飯吧。"
+              "zh": "煮得剛好。叫大家回來吃飯吧。",
+              "en": "Just right. Call everyone home to eat."
             }
           ],
           "actor": [
@@ -639,6 +742,10 @@
             "toast": [
               "水煮飛魚料理卡",
               "家庭餐點準備好了。"
+            ],
+            "toastEn": [
+              "Boiled flying fish recipe card",
+              "The family meal is ready."
             ]
           }
         }
@@ -646,7 +753,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "女性長輩會請族女在飛魚季煮家裡的餐點。"
+        "fromEn": "Host family",
+        "zh": "女性長輩會請族女在飛魚季煮家裡的餐點。",
+        "en": "In flying fish season, the woman elder will ask the Tao woman to cook the family meal."
       },
       "playable": true,
       "giver": "f"
@@ -658,7 +767,7 @@
       "village": null,
       "name": {
         "zh": "部落外圍的一天",
-        "en": ""
+        "en": "A day outside the village"
       },
       "time": "day",
       "seasons": [
@@ -674,10 +783,14 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋任一族人，在部落外圍",
+        "coopEn": "Pair: Traveller + any Tao member, outside the village",
         "season": "飛魚季（同一時間）",
+        "seasonEn": "Flying fish season (same time)",
         "pre": "M4",
         "unlock": "尊重值、M9",
+        "unlockEn": "Respect points, M9",
         "kind": ""
       },
       "req": "M4",
@@ -686,10 +799,12 @@
           "kind": "talk",
           "npc": "@host",
           "text": "長輩請旅人今天到部落外走走",
+          "textEn": "The elder asks the traveller to spend today outside the village",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今天灘頭在處理漁獲，外面的人不要靠近。你們去部落外面走走，傍晚再回來。"
+              "zh": "今天灘頭在處理漁獲，外面的人不要靠近。你們去部落外面走走，傍晚再回來。",
+              "en": "They're cleaning the catch on the beach today, so outsiders should stay away. Go for a walk outside the village and come back in the evening."
             }
           ],
           "actor": [
@@ -705,14 +820,17 @@
           "spot": "qingqing",
           "r": 10,
           "text": "旅人和族人到南邊的青青草原",
+          "textEn": "The traveller and a Tao member go to Qingqing Prairie in the south",
           "lines": [
             {
               "who": "@t",
-              "zh": "從這裡看海，就不會打擾到灘頭的人。"
+              "zh": "從這裡看海，就不會打擾到灘頭的人。",
+              "en": "Looking at the sea from here, we won't bother the people on the beach."
             },
             {
               "who": "@me",
-              "zh": "小時候放暑假回來，我們也常被叫到這裡玩，不要去灘頭搗蛋。"
+              "zh": "小時候放暑假回來，我們也常被叫到這裡玩，不要去灘頭搗蛋。",
+              "en": "When we came back for summer holidays as kids, we were often sent here to play, so we wouldn't make trouble on the beach."
             }
           ],
           "need": [
@@ -724,10 +842,12 @@
           "kind": "talk",
           "npc": "@host",
           "text": "傍晚回到主人家",
+          "textEn": "Return to the host family in the evening",
           "lines": [
             {
               "who": "@npc",
-              "zh": "回來啦。你們懂得讓開，大家都看在眼裡。"
+              "zh": "回來啦。你們懂得讓開，大家都看在眼裡。",
+              "en": "You're back. Everyone noticed you knew to give them space."
             }
           ],
           "actor": [
@@ -741,6 +861,10 @@
             "toast": [
               "尊重事件",
               "飛魚季時懂得讓開，部落的人都看到了。"
+            ],
+            "toastEn": [
+              "Respect event",
+              "The village saw that you knew to give space in flying fish season."
             ]
           }
         }
@@ -748,7 +872,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季灘頭最忙的日子，長輩會請旅人到部落外面走走。"
+        "fromEn": "Host family",
+        "zh": "飛魚季灘頭最忙的日子，長輩會請旅人到部落外面走走。",
+        "en": "On the beach's busiest days in flying fish season, the elder will ask the traveller to go for a walk outside the village."
       },
       "playable": true,
       "review": [
@@ -762,7 +888,7 @@
       "village": null,
       "name": {
         "zh": "全家一起吃飯",
-        "en": ""
+        "en": "A family meal together"
       },
       "time": "day",
       "seasons": [
@@ -781,8 +907,11 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人：全隊在主人家屋",
+        "coopEn": "Trio: whole party at the host family's house",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "M7、M8",
         "unlock": "M10",
         "kind": "AND"
@@ -799,18 +928,22 @@
           "spot": "host_home",
           "r": 7,
           "text": "全隊回到主人家，一起吃飯",
+          "textEn": "The whole party returns to the host family to eat together",
           "lines": [
             {
               "who": "@hostf",
-              "zh": "大家都回來了，坐下來吃飯。"
+              "zh": "大家都回來了，坐下來吃飯。",
+              "en": "Everyone's back. Sit down and eat."
             },
             {
               "who": "@host",
-              "zh": "海上的、田裡的、外面學到的，今天都在這張桌上了。"
+              "zh": "海上的、田裡的、外面學到的，今天都在這張桌上了。",
+              "en": "What came from the sea, the fields and what we learned outside — it's all on this table today."
             },
             {
               "who": "@t",
-              "zh": "一整天都在忙，原來一頓飯是這樣來的。"
+              "zh": "一整天都在忙，原來一頓飯是這樣來的。",
+              "en": "Busy all day. So this is how a meal comes together."
             }
           ],
           "need": [
@@ -823,10 +956,12 @@
           "kind": "talk",
           "npc": "@host",
           "text": "飯後聽主人家長輩說話",
+          "textEn": "Listen to the host family elder after the meal",
           "lines": [
             {
               "who": "@npc",
-              "zh": "一家人一起吃飯，就是飛魚季最重要的事。"
+              "zh": "一家人一起吃飯，就是飛魚季最重要的事。",
+              "en": "A family eating together — that's the most important thing in flying fish season."
             }
           ],
           "need": [
@@ -841,6 +976,10 @@
             "toast": [
               "全家一起吃飯",
               "飛魚季的一天圓滿結束。"
+            ],
+            "toastEn": [
+              "A family meal together",
+              "A day of flying fish season ends well."
             ]
           }
         }
@@ -848,7 +987,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "魚煮好了，旅人也回來了，全隊回主人家一起吃飯。"
+        "fromEn": "Host family",
+        "zh": "魚煮好了，旅人也回來了，全隊回主人家一起吃飯。",
+        "en": "The fish is cooked and the traveller is back. The whole party returns to the host family to eat together."
       },
       "playable": true
     },
@@ -859,7 +1000,7 @@
       "village": null,
       "name": {
         "zh": "飛魚收藏（名稱待確認）",
-        "en": ""
+        "en": "Storing flying fish (name to be confirmed)"
       },
       "time": "day",
       "seasons": [],
@@ -869,10 +1010,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "時間待確認",
+        "seasonEn": "Time to be confirmed",
         "pre": "M9",
         "unlock": "糧倉結算",
+        "unlockEn": "Food store count",
         "kind": ""
       },
       "req": "M9",
@@ -881,10 +1026,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩交代把曬好的飛魚乾收起來",
+          "textEn": "The woman elder asks you to put away the dried flying fish",
           "lines": [
             {
               "who": "@npc",
-              "zh": "曬好的飛魚乾要收起來，一種一種放好，算一算夠吃多久。"
+              "zh": "曬好的飛魚乾要收起來，一種一種放好，算一算夠吃多久。",
+              "en": "Put away the dried flying fish, each kind in its place, and work out how long it will last."
             }
           ],
           "actor": [
@@ -896,10 +1043,12 @@
           "spot": "host_fishrack",
           "r": 5,
           "text": "族女把飛魚乾從曬魚架收進來",
+          "textEn": "The Tao woman brings the dried flying fish in from the drying rack",
           "lines": [
             {
               "who": "@f",
-              "zh": "乾了，硬硬的。一串一串收好。"
+              "zh": "乾了，硬硬的。一串一串收好。",
+              "en": "Dry and hard. Put them away string by string."
             }
           ],
           "actor": [
@@ -910,10 +1059,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "收好了。等飛魚終食那天，再看看剩多少。"
+              "zh": "收好了。等飛魚終食那天，再看看剩多少。",
+              "en": "All stored. On the day flying fish season ends, we'll see how much is left."
             }
           ],
           "actor": [
@@ -926,6 +1077,10 @@
             "toast": [
               "飛魚收藏",
               "糧倉裡的飛魚乾整理好了。"
+            ],
+            "toastEn": [
+              "Storing flying fish",
+              "The dried flying fish in the food store are sorted."
             ]
           }
         }
@@ -933,7 +1088,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚乾曬好之後，女性長輩會請族女收藏起來。"
+        "fromEn": "Host family",
+        "zh": "飛魚乾曬好之後，女性長輩會請族女收藏起來。",
+        "en": "Once the flying fish are dry, the woman elder will ask the Tao woman to store them."
       },
       "playable": true,
       "giver": "f",
@@ -948,7 +1105,7 @@
       "village": null,
       "name": {
         "zh": "飛魚終食（名稱待確認）",
-        "en": ""
+        "en": "End of flying fish (name to be confirmed)"
       },
       "time": "day",
       "seasons": [],
@@ -960,26 +1117,34 @@
       "n": 0,
       "text": {
         "who": "全隊收到通知",
+        "whoEn": "Whole party is notified",
         "coop": "不需到場",
+        "coopEn": "No need to be there",
         "season": "時間待確認",
+        "seasonEn": "Time to be confirmed",
         "pre": "M10",
         "unlock": "「剛好」結算、Z1、下一個遊戲年",
-        "kind": "季節通知"
+        "unlockEn": "\"Just right\" count, Z1, next game year",
+        "kind": "季節通知",
+        "kindEn": "Season notice"
       },
       "req": "M10",
       "steps": [
         {
           "kind": "auto",
           "text": "飛魚季結束（只顯示季節，不需到場）",
+          "textEn": "Flying fish season ends (shows the season only, no need to be there)",
           "lines": [
             {
               "who": "旁白",
               "zh": "飛魚季到了尾聲。各部落依長輩的決定，迎來飛魚終食的日子。",
+              "en": "Flying fish season is coming to an end. Each village, as the elders decide, reaches the day flying fish are eaten for the last time.",
               "tao": "manoyotoyon"
             },
             {
               "who": "旁白",
-              "zh": "這一天之後，今年的飛魚就告一段落，大家等明年飛魚再來。確切的日子和做法，各部落不同。"
+              "zh": "這一天之後，今年的飛魚就告一段落，大家等明年飛魚再來。確切的日子和做法，各部落不同。",
+              "en": "After this day, this year's flying fish are done, and everyone waits for them to return next year. The exact day and customs differ by village."
             }
           ],
           "gives": {
@@ -992,6 +1157,10 @@
             "toast": [
               "飛魚終食",
               "今年的飛魚季結束了。"
+            ],
+            "toastEn": [
+              "End of flying fish",
+              "This year's flying fish season is over."
             ]
           }
         }
@@ -999,7 +1168,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "飛魚季結束時，這一步會自己完成。"
+        "fromEn": "Tao villagers",
+        "zh": "飛魚季結束時，這一步會自己完成。",
+        "en": "This step completes by itself when flying fish season ends."
       },
       "playable": true,
       "review": [
@@ -1013,7 +1184,7 @@
       "village": null,
       "name": {
         "zh": "辨認女人魚、男人魚、老人魚",
-        "en": ""
+        "en": "Tell women's fish, men's fish and elders' fish apart"
       },
       "time": "day",
       "seasons": [],
@@ -1028,10 +1199,14 @@
       ],
       "text": {
         "who": "族男捕、族女處理",
+        "whoEn": "Tao man catches, Tao woman prepares",
         "coop": "雙人：族男＋族女",
+        "coopEn": "Pair: Tao man + Tao woman",
         "season": "非飛魚季為主",
+        "seasonEn": "Mostly outside flying fish season",
         "pre": "Q05",
         "unlock": "魚類圖鑑、水煮女人魚料理卡、F2",
+        "unlockEn": "Fish field guide, boiled women's fish recipe card, F2",
         "kind": ""
       },
       "req": "Q05",
@@ -1040,14 +1215,17 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "男性長輩說明魚的分類",
+          "textEn": "The man elder explains how fish are sorted",
           "lines": [
             {
               "who": "@npc",
-              "zh": "魚有分：女人可以吃的、男人吃的，還有只有老人吃的。"
+              "zh": "魚有分：女人可以吃的、男人吃的，還有只有老人吃的。",
+              "en": "Fish are sorted: some women can eat, some men eat, and some only elders eat."
             },
             {
               "who": "@npc",
-              "zh": "捕的時候就要分清楚，拿回家才不會放錯鍋子。"
+              "zh": "捕的時候就要分清楚，拿回家才不會放錯鍋子。",
+              "en": "Sort them when you catch them, so they don't end up in the wrong pot at home."
             }
           ],
           "need": [
@@ -1060,10 +1238,12 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男在港邊的礁岩釣魚",
+          "textEn": "The Tao man fishes from the rocks by the harbour",
           "lines": [
             {
               "who": "@m",
-              "zh": "釣到了！這條顏色好亮。"
+              "zh": "釣到了！這條顏色好亮。",
+              "en": "Got one! This one's so bright."
             }
           ],
           "actor": [
@@ -1075,14 +1255,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "族女跟女性長輩把魚分類",
+          "textEn": "The Tao woman and the woman elder sort the fish",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這條是女人魚，給我們煮；那條是男人魚，另外放。"
+              "zh": "這條是女人魚，給我們煮；那條是男人魚，另外放。",
+              "en": "This one is a women's fish — it's for us to cook. That one is a men's fish; keep it apart."
             },
             {
               "who": "@f",
-              "zh": "我記住了，看顏色和形狀分。"
+              "zh": "我記住了，看顏色和形狀分。",
+              "en": "Got it — sort by colour and shape."
             }
           ],
           "actor": [
@@ -1099,6 +1282,10 @@
             "toast": [
               "魚類圖鑑",
               "學會分辨女人魚、男人魚、老人魚。"
+            ],
+            "toastEn": [
+              "Fish field guide",
+              "You learned to tell women's fish, men's fish and elders' fish apart."
             ]
           }
         }
@@ -1106,7 +1293,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "男性長輩要教族男和族女分辨魚的種類。"
+        "fromEn": "Host family",
+        "zh": "男性長輩要教族男和族女分辨魚的種類。",
+        "en": "The man elder wants to teach the Tao man and Tao woman how to tell kinds of fish apart."
       },
       "playable": true,
       "song": "s10",
@@ -1123,7 +1312,7 @@
       "village": null,
       "name": {
         "zh": "漁獲分享給船組與親族",
-        "en": ""
+        "en": "Share the catch with the crew and relatives"
       },
       "time": "day",
       "seasons": [],
@@ -1133,10 +1322,14 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "非飛魚季為主",
+        "seasonEn": "Mostly outside flying fish season",
         "pre": "F1",
         "unlock": "部落關係",
+        "unlockEn": "Village ties",
         "kind": ""
       },
       "req": "F1",
@@ -1145,10 +1338,12 @@
           "kind": "talk",
           "npc": "villager_harbor",
           "text": "族男到開元港，問拼板舟漁人怎麼分這次的魚",
+          "textEn": "The Tao man goes to Kaiyuan Harbour and asks the plank boat fisher how to share this catch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "船組每個人一份，親戚家也送一點。魚是大家的。"
+              "zh": "船組每個人一份，親戚家也送一點。魚是大家的。",
+              "en": "One share for each crew member, and a little for the relatives too. The fish belong to everyone."
             }
           ],
           "actor": [
@@ -1160,10 +1355,12 @@
           "spot": "host_home",
           "r": 7,
           "text": "族男把魚分送到親族家",
+          "textEn": "The Tao man takes fish to the relatives' homes",
           "lines": [
             {
               "who": "@m",
-              "zh": "這是我們家的一點心意。"
+              "zh": "這是我們家的一點心意。",
+              "en": "A little something from our family."
             }
           ],
           "actor": [
@@ -1174,10 +1371,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "分出去的魚，以後會回到你身上。"
+              "zh": "分出去的魚，以後會回到你身上。",
+              "en": "Fish you give away come back to you one day."
             }
           ],
           "actor": [
@@ -1188,6 +1387,10 @@
             "toast": [
               "部落關係",
               "漁獲分享給船組與親族。"
+            ],
+            "toastEn": [
+              "Village ties",
+              "The catch was shared with the crew and relatives."
             ]
           }
         }
@@ -1195,7 +1398,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "釣到的魚要分給船組和親族，族男去問問怎麼分。"
+        "fromEn": "Host family",
+        "zh": "釣到的魚要分給船組和親族，族男去問問怎麼分。",
+        "en": "The fish caught should be shared with the crew and relatives. The Tao man should go ask how."
       },
       "playable": true,
       "song": "s05",
@@ -1208,7 +1413,7 @@
       "village": null,
       "name": {
         "zh": "曬好 10 條飛魚乾",
-        "en": ""
+        "en": "Dry 10 flying fish"
       },
       "time": "day",
       "seasons": [
@@ -1220,11 +1425,16 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季",
+        "seasonEn": "Flying fish season",
         "pre": "M6",
         "unlock": "糧倉、W1",
-        "kind": "季節＋數量 10"
+        "unlockEn": "Food store, W1",
+        "kind": "季節＋數量 10",
+        "kindEn": "Season + count 10"
       },
       "req": "M6",
       "steps": [
@@ -1232,10 +1442,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩交代：家裡分到的飛魚，一起曬",
+          "textEn": "The woman elder asks: dry the family's share of flying fish together",
           "lines": [
             {
               "who": "@npc",
-              "zh": "船組分到的魚，加上親戚送來的，一共十條。都交給妳曬。"
+              "zh": "船組分到的魚，加上親戚送來的，一共十條。都交給妳曬。",
+              "en": "The crew's share plus what the relatives brought makes ten. They're all yours to dry."
             }
           ],
           "actor": [
@@ -1261,10 +1473,12 @@
           "spot": "host_fishrack",
           "r": 5,
           "text": "族女把十條飛魚剖開、抹鹽、掛上曬魚架",
+          "textEn": "The Tao woman splits ten flying fish, salts them and hangs them on the drying rack",
           "lines": [
             {
               "who": "@f",
-              "zh": "……八、九、十。全部掛好了。"
+              "zh": "……八、九、十。全部掛好了。",
+              "en": "…eight, nine, ten. All hung up."
             }
           ],
           "actor": [
@@ -1280,10 +1494,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "十條都曬好了。今年的糧倉會很安心。"
+              "zh": "十條都曬好了。今年的糧倉會很安心。",
+              "en": "All ten are dry. The food store will be in good shape this year."
             }
           ],
           "actor": [
@@ -1296,6 +1512,10 @@
             "toast": [
               "糧倉",
               "十條飛魚乾收進糧倉。"
+            ],
+            "toastEn": [
+              "Food store",
+              "Ten dried flying fish are in the food store."
             ]
           }
         }
@@ -1303,7 +1523,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "家裡分到的飛魚，族女要一條條曬成飛魚乾。"
+        "fromEn": "Host family",
+        "zh": "家裡分到的飛魚，族女要一條條曬成飛魚乾。",
+        "en": "The Tao woman dries the family's share of flying fish, one by one."
       },
       "playable": true,
       "giver": "f"
@@ -1315,7 +1537,7 @@
       "village": null,
       "name": {
         "zh": "釣 6 條魚並一起分類",
-        "en": ""
+        "en": "Catch 6 fish and sort them together"
       },
       "time": "day",
       "seasons": [
@@ -1331,11 +1553,16 @@
       ],
       "text": {
         "who": "族男捕、族女處理",
+        "whoEn": "Tao man catches, Tao woman prepares",
         "coop": "雙人：族男＋族女",
+        "coopEn": "Pair: Tao man + Tao woman",
         "season": "非飛魚季",
+        "seasonEn": "Outside flying fish season",
         "pre": "F1",
         "unlock": "同一趟也算 F2、魚類圖鑑",
-        "kind": "季節＋數量 6＋漁場（族男捕）"
+        "unlockEn": "Also counts for F2, fish field guide",
+        "kind": "季節＋數量 6＋漁場（族男捕）",
+        "kindEn": "Season + count 6 + fishing ground (Tao man catches)"
       },
       "req": "F1",
       "steps": [
@@ -1343,10 +1570,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "男性長輩要族男去釣幾條魚",
+          "textEn": "The man elder asks the Tao man to catch a few fish",
           "lines": [
             {
               "who": "@npc",
-              "zh": "冬天浪大，不出遠海。在港邊礁岩釣幾條就好，拿回家給族女分。"
+              "zh": "冬天浪大，不出遠海。在港邊礁岩釣幾條就好，拿回家給族女分。",
+              "en": "Big waves in winter, so no going far out. Catch a few from the harbour rocks and bring them home for the Tao woman to sort."
             }
           ],
           "actor": [
@@ -1358,10 +1587,12 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男在港邊的礁岩釣魚",
+          "textEn": "The Tao man fishes from the rocks by the harbour",
           "lines": [
             {
               "who": "@m",
-              "zh": "……四、五、六。夠了，回家。"
+              "zh": "……四、五、六。夠了，回家。",
+              "en": "…four, five, six. That's enough. Home we go."
             }
           ],
           "actor": [
@@ -1374,14 +1605,17 @@
           "spot": "host_home",
           "r": 7,
           "text": "族女把六條魚分成女人魚和男人魚",
+          "textEn": "The Tao woman sorts the six fish into women's fish and men's fish",
           "lines": [
             {
               "who": "@f",
-              "zh": "這三條給我們煮，那三條另外放。"
+              "zh": "這三條給我們煮，那三條另外放。",
+              "en": "These three are for us to cook; those three go aside."
             },
             {
               "who": "@m",
-              "zh": "分得好快！"
+              "zh": "分得好快！",
+              "en": "That was quick!"
             }
           ],
           "actor": [
@@ -1396,10 +1630,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "捕的人和分的人都做對了，這就是一家人。"
+              "zh": "捕的人和分的人都做對了，這就是一家人。",
+              "en": "The one who caught and the one who sorted both did it right. That's a family."
             }
           ],
           "actor": [
@@ -1413,6 +1649,10 @@
             "toast": [
               "魚類圖鑑",
               "六條魚都分好了。"
+            ],
+            "toastEn": [
+              "Fish field guide",
+              "All six fish are sorted."
             ]
           }
         }
@@ -1420,7 +1660,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "非飛魚季時，族男可以在港邊釣魚，帶回家給族女分類。"
+        "fromEn": "Host family",
+        "zh": "非飛魚季時，族男可以在港邊釣魚，帶回家給族女分類。",
+        "en": "Outside flying fish season, the Tao man can fish by the harbour and bring the fish home for the Tao woman to sort."
       },
       "playable": true,
       "ground": "fishing",
@@ -1435,7 +1677,7 @@
       "village": null,
       "name": {
         "zh": "年終：在主人家用族語說一句今年學到的話",
-        "en": ""
+        "en": "Year's end: say something you learned this year in Tao, at the host family's home"
       },
       "time": "day",
       "seasons": [],
@@ -1452,10 +1694,15 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人：全隊在主人家屋",
+        "coopEn": "Trio: whole party at the host family's house",
         "season": "一個遊戲年結束",
+        "seasonEn": "A game year ends",
         "pre": "M11 且 X03",
+        "preEn": "M11 and X03",
         "unlock": "結局、N1",
+        "unlockEn": "Ending, N1",
         "kind": "AND"
       },
       "req": {
@@ -1470,33 +1717,40 @@
           "spot": "host_tagakal",
           "r": 5,
           "text": "全隊回到主人家的涼亭，一年結束",
+          "textEn": "The whole party returns to the host family's pavilion as the year ends",
           "lines": [
             {
               "who": "@host",
-              "zh": "一年過去了。來，坐上來，每個人用族語說一句今年學到的話。"
+              "zh": "一年過去了。來，坐上來，每個人用族語說一句今年學到的話。",
+              "en": "A year has passed. Come, sit up here. Each of you, say one thing you learned this year in Tao."
             },
             {
               "who": "@m",
               "zh": "akokey！以前回來只敢點頭，現在敢用族語跟長輩打招呼了。",
+              "en": "akokey! I used to just nod when I came home. Now I can greet the elders in Tao.",
               "tao": "akokey"
             },
             {
               "who": "@f",
               "zh": "soli、alibangbang……田裡和海上的東西，我都記得它們的名字了。",
+              "en": "soli, alibangbang… I remember the names of everything in the fields and at sea now.",
               "tao": "soli · alibangbang"
             },
             {
               "who": "@t",
               "zh": "Pongso no Tao，人之島。謝謝你們讓我一起回家。",
+              "en": "Pongso no Tao, the Island of People. Thank you for bringing me home with you.",
               "tao": "Pongso no Tao"
             },
             {
               "who": "@host",
-              "zh": "你們回來，不是只為了看看。你們記得這裡，這裡就一直是你們的家。"
+              "zh": "你們回來，不是只為了看看。你們記得這裡，這裡就一直是你們的家。",
+              "en": "You didn't come back just to look around. As long as you remember this place, it will always be your home."
             },
             {
               "who": "旁白",
-              "zh": "一個遊戲年結束了。"
+              "zh": "一個遊戲年結束了。",
+              "en": "A game year has ended."
             }
           ],
           "need": [
@@ -1511,6 +1765,10 @@
             "toast": [
               "一年",
               "回家的這一年結束了。島上的日子，還會繼續。"
+            ],
+            "toastEn": [
+              "One year",
+              "The year of coming home is over. Life on the island goes on."
             ]
           }
         }
@@ -1518,7 +1776,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚季結束了，全隊回主人家的涼亭，跟長輩說說這一年。"
+        "fromEn": "Host family",
+        "zh": "飛魚季結束了，全隊回主人家的涼亭，跟長輩說說這一年。",
+        "en": "Flying fish season is over. The whole party returns to the host family's pavilion to talk with the elder about the year."
       },
       "playable": true
     }

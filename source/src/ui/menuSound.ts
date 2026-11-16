@@ -6,6 +6,9 @@
  */
 import { audio } from '../systems/audio/engine';
 import { sfx, type MenuSfxId } from '../systems/audio/sfx';
+import { langToggleHtml, pickLang, syncLangToggles } from './lang';
+import { uiLangToggleHtml } from './i18n';
+import { readStoredLang } from '../core/state';
 
 export function menuSfx(id: MenuSfxId): void {
   try {
@@ -16,16 +19,24 @@ export function menuSfx(id: MenuSfxId): void {
 }
 
 const CSS = `
-.menu-sound{position:absolute;top:calc(10px + var(--safe-t, 0px));right:calc(10px + var(--safe-r, 0px));z-index:5;display:flex;gap:6px}
+.menu-sound{position:absolute;top:calc(10px + var(--safe-t, 0px));right:calc(10px + var(--safe-r, 0px));z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.menu-sound .ms-row{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px}
 .menu-sound button{appearance:none;font:600 calc(12.5px * var(--ts,1)) var(--serif,serif);letter-spacing:.04em;color:#3b2a1c;background:rgba(255,250,240,.88);
  border:1px solid #b89c6e;border-radius:999px;padding:6px 11px;min-height:34px;cursor:pointer;touch-action:manipulation;box-shadow:0 1px 3px rgba(40,25,10,.18)}
 .menu-sound button[aria-pressed=false]{background:rgba(233,225,210,.9);color:#7d6a55}
 .menu-sound button:focus-visible{outline:2px solid #1f6f70;outline-offset:2px}
+.menu-sound .ms-lang-label{font:600 calc(12.5px * var(--ts,1)) var(--serif,serif);color:#3b2a1c;letter-spacing:.04em}
+.menu-sound .lang-toggle{display:flex;gap:4px}
+.menu-sound .lang-toggle button{padding:6px 10px;box-shadow:0 1px 3px rgba(40,25,10,.18)}
+.menu-sound .lang-toggle button.on{background:#1f6f70;color:#fffaf0;border-color:transparent}
+/* reserve room above the scrolling start card for the two settings rows on a phone */
+@media(max-width:640px) and (min-height:600px){#origin-screen .cover-card,#arrival-screen .cover-card{max-height:calc(100dvh - 148px - var(--safe-t,0px) - var(--safe-b,0px))}#origin-screen,#arrival-screen{padding-top:calc(96px + var(--safe-t,0px))}}
+
 `;
 
 const SCREENS = ['#title-screen', '#origin-screen', '#arrival-screen'];
 
-/** the 音樂 / 音效 toggles on each start screen */
+/** the 音樂 / 音效 / 語言 controls on each start screen */
 export function mountMenuSound(): void {
   if (document.querySelector('.menu-sound')) return;
   const style = document.createElement('style');
@@ -38,11 +49,13 @@ export function mountMenuSound(): void {
     const bar = document.createElement('div');
     bar.className = 'menu-sound';
     bar.setAttribute('role', 'group');
-    bar.setAttribute('aria-label', '聲音');
-    bar.innerHTML = `<button type="button" data-ch="music" class="ms-music"></button><button type="button" data-ch="sfx" class="ms-sfx"></button>`;
+    bar.setAttribute('aria-label', '聲音與語言');
+    bar.innerHTML = `<div class="ms-row"><button type="button" data-ch="music" class="ms-music"></button><button type="button" data-ch="sfx" class="ms-sfx"></button></div>
+      <div class="ms-row ms-lang ms-ui"><span class="ms-lang-label">語言</span>${uiLangToggleHtml()}</div>
+      <div class="ms-row ms-lang"><span class="ms-lang-label">對話</span>${langToggleHtml()}</div>`;
     // these taps must not also leave the title screen / skip anything behind them
     for (const ev of ['pointerdown', 'pointerup', 'click', 'keydown'] as const) bar.addEventListener(ev, (e) => e.stopPropagation());
-    for (const b of bar.querySelectorAll('button')) {
+    for (const b of bar.querySelectorAll<HTMLButtonElement>('button[data-ch]')) {
       b.addEventListener('click', () => {
         const ch = b.dataset.ch as 'music' | 'sfx';
         const key = ch === 'music' ? 'musicOn' : 'sfxOn';
@@ -51,6 +64,15 @@ export function mountMenuSound(): void {
         if (on && audio.settings[ch] === 0) patch[ch] = ch === 'music' ? 0.35 : 0.5;
         audio.set(patch);
         menuSfx('menu_toggle');
+      });
+    }
+    for (const b of bar.querySelectorAll<HTMLButtonElement>('.lang-toggle [data-lang]')) {
+      b.addEventListener('click', () => {
+        const m = b.dataset.lang;
+        if (m === 'both' || m === 'zh' || m === 'tao') {
+          pickLang(m);
+          menuSfx('menu_toggle');
+        }
       });
     }
     host.append(bar);
@@ -69,10 +91,11 @@ export function mountMenuSound(): void {
   };
   audio.onChange(render);
   render();
+  syncLangToggles(document, readStoredLang() ?? 'both');
 }
 
 /** buttons that go back or close: the cancel sound */
-const CANCEL = '#btn-arrive-back, .ap-x, [data-sfx=cancel], [aria-label="關閉"], .sheet-close, .journal-close, .btn-close';
+const CANCEL = '#btn-arrive-back, .ap-x, [data-sfx=cancel], [aria-label="關閉"], [aria-label="Close"], .sheet-close, .journal-close, .btn-close';
 /** never a menu sound: movement / camera controls and the start-menu sound toggles (they play their own) */
 const SKIP = '#vpad, #cam-btns, #minimap, .menu-sound, #game-canvas, #dlg-next, #btn-act';
 /** where menu sounds apply */

@@ -19,18 +19,23 @@
       "giver": "f",
       "name": {
         "zh": "織布長輩：把苧麻線捲好",
-        "en": ""
+        "en": "Weaving elder: wind the ramie thread"
       },
       "review": [
         "飛魚季不織布的規矩"
       ],
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "冬季（非飛魚季）",
+        "seasonEn": "Winter (outside flying fish season)",
         "pre": "K1、J1",
         "unlock": "苧麻線、OF2",
-        "kind": "a akes・紡織"
+        "unlockEn": "Ramie thread, OF2",
+        "kind": "a akes・紡織",
+        "kindEn": "a akes · Weaving"
       },
       "req": {
         "all": [
@@ -46,14 +51,17 @@
             "f"
           ],
           "text": "紅頭的織布長輩請族女幫忙捲線",
+          "textEn": "The Imorod weaving elder asks the Tao woman to help wind thread",
           "lines": [
             {
               "who": "@npc",
-              "zh": "妳處理過苧麻了，現在來學捲線。線捲得好，布才織得平。"
+              "zh": "妳處理過苧麻了，現在來學捲線。線捲得好，布才織得平。",
+              "en": "You've prepared ramie, so now learn to wind thread. Wind it well and the cloth weaves flat."
             },
             {
               "who": "@npc",
-              "zh": "飛魚季的時候我們不織布，所以冬天要多做一點。"
+              "zh": "飛魚季的時候我們不織布，所以冬天要多做一點。",
+              "en": "We don't weave during flying fish season, so we do more in winter."
             }
           ]
         },
@@ -65,10 +73,12 @@
             "f"
           ],
           "text": "族女在紅頭的簷廊下，把苧麻線一圈一圈捲好",
+          "textEn": "Under the Imorod porch, the Tao woman winds the ramie thread round and round",
           "lines": [
             {
               "who": "@f",
-              "zh": "一圈、兩圈……手要放鬆，線才不會斷。"
+              "zh": "一圈、兩圈……手要放鬆，線才不會斷。",
+              "en": "One turn, two… keep your hands relaxed so the thread doesn't snap."
             }
           ]
         },
@@ -79,10 +89,12 @@
             "f"
           ],
           "text": "把捲好的線交給織布長輩",
+          "textEn": "Give the wound thread to the weaving elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "捲得很漂亮。這一捲給妳留著，以後用得到。"
+              "zh": "捲得很漂亮。這一捲給妳留著，以後用得到。",
+              "en": "Beautifully wound. Keep this roll — you'll need it later."
             }
           ],
           "gives": {
@@ -96,7 +108,9 @@
       "hint": {
         "tier": "direct",
         "from": "紅頭",
-        "zh": "冬天紅頭的織布長輩需要人幫忙捲苧麻線。"
+        "fromEn": "Imorod",
+        "zh": "冬天紅頭的織布長輩需要人幫忙捲苧麻線。",
+        "en": "In winter, the Imorod weaving elder needs help winding ramie thread."
       }
     },
     {
@@ -114,7 +128,7 @@
       "giver": "m",
       "name": {
         "zh": "紅頭的長輩：上山看羊",
-        "en": ""
+        "en": "Imorod elder: check the goats on the mountain"
       },
       "review": [
         "「打獵」在達悟文化中的實際內容（羊群、山林）",
@@ -122,11 +136,16 @@
       ],
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K1",
         "unlock": "看到山上的羊（A4 解鎖）",
-        "kind": "a akey・山林"
+        "unlockEn": "Seeing the goats on the mountain (unlocks A4)",
+        "kind": "a akey・山林",
+        "kindEn": "a akey · Mountain"
       },
       "req": "K1",
       "steps": [
@@ -137,15 +156,18 @@
             "m"
           ],
           "text": "紅頭的長輩要族男一起上山看羊",
+          "textEn": "The Imorod elder wants the Tao man to come up the mountain to check the goats",
           "lines": [
             {
               "who": "@npc",
               "zh": "山上的事，男人要懂。今天上去看看我們家的羊（kagling）。",
+              "en": "Men need to know the mountain. Today we'll go see our family's goats (kagling).",
               "tao": "kagling"
             },
             {
               "who": "@npc",
-              "zh": "每家的羊，耳朵上的記號不一樣。不是自己家的，不要碰。"
+              "zh": "每家的羊，耳朵上的記號不一樣。不是自己家的，不要碰。",
+              "en": "Each family's goats have a different ear mark. If it's not yours, don't touch it."
             }
           ]
         },
@@ -157,10 +179,12 @@
             "m"
           ],
           "text": "族男跟長輩上紅頭山，數一數山坡上的羊",
+          "textEn": "The Tao man goes up Mt. Hongtou with the elder and counts the goats on the slope",
           "lines": [
             {
               "who": "@m",
-              "zh": "一、二、三……耳朵缺一角的是我們家的，總共五隻。"
+              "zh": "一、二、三……耳朵缺一角的是我們家的，總共五隻。",
+              "en": "One, two, three… the ones with a notched ear are ours. Five in all."
             }
           ]
         },
@@ -171,10 +195,12 @@
             "m"
           ],
           "text": "向紅頭的長輩回報",
+          "textEn": "Report to the Imorod elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "五隻，對。以後羊走丟了，你就知道去哪裡找。"
+              "zh": "五隻，對。以後羊走丟了，你就知道去哪裡找。",
+              "en": "Five, that's right. Now if a goat goes missing, you'll know where to look."
             }
           ],
           "gives": {
@@ -188,7 +214,9 @@
       "hint": {
         "tier": "direct",
         "from": "紅頭",
-        "zh": "紅頭的長輩負責山上的事，族男可以跟他上山看羊。"
+        "fromEn": "Imorod",
+        "zh": "紅頭的長輩負責山上的事，族男可以跟他上山看羊。",
+        "en": "The Imorod elder looks after the mountain. The Tao man can go up with him to check the goats."
       }
     }
   ]

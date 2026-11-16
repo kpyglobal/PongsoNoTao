@@ -4,6 +4,7 @@
       "id": "fish-and-taro",
       "name": {
         "zh": "飛魚與水芋",
+        "en": "Flying fish and taro",
         "tao": "alibangbang · soli"
       },
       "village": null,
@@ -16,7 +17,9 @@
       "seasons": [],
       "unlockedBy": "clinic-nutrition",
       "steps": "傳統上，飛魚（鮮魚或飛魚乾）常和水芋一起準備。烹煮時要遵守飛魚不可與某些食物混煮的規矩——這是文化裡的飲食禮，也見於黑翅飛魚教導祖先的傳說。",
+      "stepsEn": "Traditionally, flying fish (fresh or dried) are often prepared with taro. When cooking, follow the rule that flying fish are never cooked with certain foods — a food custom in the culture, also told in the legend of the black-winged flying fish teaching the ancestors.",
       "nutrition": "蛋白質和複合碳水搭配得正好，很適合勞動的日子：飛魚補足必需胺基酸與脂肪酸，水芋提供較持久的能量與鉀。衛生所筆記把這份搭配同時放在「傳統食譜」與「營養學」兩頁上，彼此補充，誰也不取代誰。",
+      "nutritionEn": "Protein and complex carbs go together perfectly for working days: flying fish give essential amino acids and fatty acids, taro gives longer-lasting energy and potassium. The health station notes put this pairing on both the \"Traditional recipes\" and \"Nutrition\" pages — each adds to the other; neither replaces the other.",
       "clinicNote": true,
       "icon": "dish_fish-and-taro",
       "illustration": "illus_dish_fish-and-taro",
@@ -26,6 +29,7 @@
       "id": "rc-boiled-taro",
       "name": {
         "zh": "水煮芋頭",
+        "en": "Boiled taro",
         "tao": "soli"
       },
       "village": "ivalino",
@@ -37,7 +41,9 @@
       "seasons": [],
       "unlockedBy": "recipe-keeper-野銀",
       "steps": "水芋洗淨後以水煮熟，是最常見的吃法之一。削皮、切塊、煮多久，以及和哪些食物一起吃，各家做法不同，還要請族人確認。",
+      "stepsEn": "Taro washed and boiled is one of the most common ways to eat it. Peeling, cutting, how long to cook it and what to eat it with differ by family; this still needs checking with the community.",
       "nutrition": "水芋是溫和的複合碳水，富含膳食纖維與鉀；水煮保留養分、不加油，適合田裡與海上的勞動。",
+      "nutritionEn": "Taro is a gentle complex carb, rich in fibre and potassium. Boiling keeps the nutrients and needs no oil — good for work in the fields and at sea.",
       "icon": "dish_rc-boiled-taro",
       "illustration": "illus_dish_rc-boiled-taro",
       "review": true
@@ -46,6 +52,7 @@
       "id": "rc-boiled-flyingfish",
       "name": {
         "zh": "水煮飛魚",
+        "en": "Boiled flying fish",
         "tao": "alibangbang"
       },
       "village": "imorod",
@@ -59,7 +66,9 @@
       ],
       "unlockedBy": "recipe-keeper-紅頭",
       "steps": "飛魚季時以水煮為主、調味簡單。飛魚有自己的烹煮與食用規矩（例如不和某些食物混煮），細節還要請族人確認。",
+      "stepsEn": "In flying fish season it's mostly boiled with simple seasoning. Flying fish have their own cooking and eating rules (such as not cooking them with certain foods); details still need checking with the community.",
       "nutrition": "飛魚提供優質蛋白質、Omega-3 脂肪酸與維生素 D；水煮的做法少油、清淡。",
+      "nutritionEn": "Flying fish give good protein, omega-3 fats and vitamin D. Boiling uses little oil and keeps it light.",
       "icon": "dish_rc-boiled-flyingfish",
       "illustration": "illus_dish_rc-boiled-flyingfish",
       "review": true
@@ -68,6 +77,7 @@
       "id": "rc-dried-flyingfish",
       "name": {
         "zh": "飛魚乾",
+        "en": "Dried flying fish",
         "tao": "alibangbang"
       },
       "village": "yayo",
@@ -81,7 +91,9 @@
       ],
       "unlockedBy": "recipe-keeper-椰油",
       "steps": "飛魚季捕到的飛魚經處理後曬乾，收進糧倉，是一家人之後的糧食。處理、曬魚的方法與規矩還要請族人確認；遊戲中只呈現族人同意公開的部分。",
+      "stepsEn": "Flying fish caught in the season are prepared, dried and put in the food store, as food for the family later. How to prepare and dry them, and the rules, still need checking with the community; the game only shows what the community agrees to share.",
       "nutrition": "曬乾濃縮了蛋白質與礦物質，方便保存；食用時的份量與搭配還要請族人與營養師說明。",
+      "nutritionEn": "Drying concentrates protein and minerals and keeps well. Portions and what to eat it with still need explaining by the community and the dietitian.",
       "icon": "dish_rc-dried-flyingfish",
       "illustration": "illus_dish_rc-dried-flyingfish",
       "review": true
@@ -90,6 +102,7 @@
       "id": "rc-boiled-yam",
       "name": {
         "zh": "水煮山藥",
+        "en": "Boiled yam",
         "tao": "ovi"
       },
       "village": "iraraley",
@@ -101,7 +114,9 @@
       "seasons": [],
       "unlockedBy": "recipe-keeper-朗島",
       "steps": "山藥去皮後水煮。山邊採集的地點與時節還要請族人確認。",
+      "stepsEn": "Peel the yam and boil it. Where and when to dig yams by the hills still needs checking with the community.",
       "nutrition": "山藥的黏質多醣與澱粉好消化，搭配蛋白質食物更均衡。",
+      "nutritionEn": "Yam's mucilage and starch are easy to digest. Eaten with protein foods, it's more balanced.",
       "icon": "dish_rc-boiled-yam",
       "illustration": "illus_dish_rc-boiled-yam",
       "review": true
@@ -110,6 +125,7 @@
       "id": "rc-shellfish-seaweed",
       "name": {
         "zh": "水煮貝類與海菜",
+        "en": "Boiled shellfish and seaweed",
         "tao": ""
       },
       "village": "iranmeylek",
@@ -122,7 +138,9 @@
       "seasons": [],
       "unlockedBy": "recipe-keeper-東清",
       "steps": "退潮時在潮間帶採集的貝類與海菜，洗淨後以水煮熟。哪些可以採、什麼時候採，各部落有自己的規矩，還要請族人確認。",
+      "stepsEn": "Shellfish and seaweed picked on the tide flats at low tide, washed and boiled. Each village has its own rules on what can be picked and when; this still needs checking with the community.",
       "nutrition": "貝類提供蛋白質、鐵與鋅，海菜含碘與礦物質；水煮清淡，常與芋頭、地瓜等主食一起吃。",
+      "nutritionEn": "Shellfish give protein, iron and zinc; seaweed has iodine and minerals. Boiled and light, often eaten with staples like taro and sweet potato.",
       "icon": "dish_rc-shellfish-seaweed",
       "illustration": "illus_dish_rc-shellfish-seaweed",
       "review": true
@@ -131,6 +149,7 @@
       "id": "rc-taro-sweetpotato",
       "name": {
         "zh": "芋頭與地瓜",
+        "en": "Taro and sweet potato",
         "tao": "soli · wakay"
       },
       "village": "iratay",
@@ -143,7 +162,9 @@
       "seasons": [],
       "unlockedBy": "recipe-keeper-漁人",
       "steps": "水芋與地瓜分別水煮，一起當作主食。份量與搭配還要請族人確認。",
+      "stepsEn": "Taro and sweet potato boiled separately and eaten together as the staple. Portions and pairings still need checking with the community.",
       "nutrition": "兩種根莖類一起吃，澱粉、纖維與鉀都充足，是勞動日的穩定能量來源。",
+      "nutritionEn": "Two root crops together give plenty of starch, fibre and potassium — steady energy for working days.",
       "icon": "dish_rc-taro-sweetpotato",
       "illustration": "illus_dish_rc-taro-sweetpotato",
       "review": true

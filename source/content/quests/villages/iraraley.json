@@ -21,7 +21,7 @@
       "giver": "f",
       "name": {
         "zh": "朗島的女性長輩：小米田除草",
-        "en": ""
+        "en": "Iraraley woman elder: weed the millet field"
       },
       "review": [
         "小米在朗島的種植時節與相關祭儀",
@@ -29,11 +29,16 @@
       ],
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "夏季",
+        "seasonEn": "Summer",
         "pre": "K4",
         "unlock": "小米",
-        "kind": "a akes・田地"
+        "unlockEn": "Millet",
+        "kind": "a akes・田地",
+        "kindEn": "a akes · Fields"
       },
       "req": "K4",
       "steps": [
@@ -41,14 +46,17 @@
           "kind": "talk",
           "npc": "elder_f_iraraley",
           "text": "朗島的女性長輩請你幫忙拔草",
+          "textEn": "The Iraraley woman elder asks you to help pull weeds",
           "lines": [
             {
               "who": "@npc",
-              "zh": "小米長出來了，草也長得快。來幫我拔草，小心不要拔到小米。"
+              "zh": "小米長出來了，草也長得快。來幫我拔草，小心不要拔到小米。",
+              "en": "The millet is up, and the weeds grow fast too. Help me weed — careful not to pull the millet."
             },
             {
               "who": "@npc",
-              "zh": "田要常常照顧，不然草會比小米還高。"
+              "zh": "田要常常照顧，不然草會比小米還高。",
+              "en": "A field needs regular care, or the weeds grow taller than the millet."
             }
           ]
         },
@@ -57,14 +65,17 @@
           "spot": "taro_iraraley",
           "r": 6,
           "text": "跟著女性長輩在田邊拔草",
+          "textEn": "Pull weeds by the field with the woman elder",
           "lines": [
             {
               "who": "@me",
-              "zh": "這株是草，這株是小米……長得好像！"
+              "zh": "這株是草，這株是小米……長得好像！",
+              "en": "This one's a weed, this one's millet… they look so alike!"
             },
             {
               "who": "elder_f_iraraley",
-              "zh": "葉子比較細的是小米，慢慢就認得了。"
+              "zh": "葉子比較細的是小米，慢慢就認得了。",
+              "en": "The one with thinner leaves is millet. You'll get the hang of it."
             }
           ]
         },
@@ -72,10 +83,12 @@
           "kind": "talk",
           "npc": "elder_f_iraraley",
           "text": "向朗島的女性長輩回報",
+          "textEn": "Report to the Iraraley woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "謝謝你。這一小把是去年留下的，拿去看看。小米怎麼收、什麼時候收，以後再教你。"
+              "zh": "謝謝你。這一小把是去年留下的，拿去看看。小米怎麼收、什麼時候收，以後再教你。",
+              "en": "Thank you. This little handful is from last year — take a look. I'll teach you how and when to harvest millet another time."
             }
           ],
           "gives": {
@@ -89,7 +102,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "朗島的女性長輩在照顧小米田，正缺人手拔草。"
+        "fromEn": "Iraraley",
+        "zh": "朗島的女性長輩在照顧小米田，正缺人手拔草。",
+        "en": "The Iraraley woman elder looks after the millet field and needs help weeding."
       }
     },
     {
@@ -109,7 +124,7 @@
       "giver": "m",
       "name": {
         "zh": "朗島的長輩：今年先修哪一條船",
-        "en": ""
+        "en": "Iraraley elder: which boat to fix first this year"
       },
       "review": [
         "女性與拼板舟的距離規矩",
@@ -117,11 +132,16 @@
       ],
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "冬季",
+        "seasonEn": "Winter",
         "pre": "K4",
         "unlock": "拼板舟知識",
-        "kind": "a akey・拼板舟"
+        "unlockEn": "Plank boat knowledge",
+        "kind": "a akey・拼板舟",
+        "kindEn": "a akey · Plank boat"
       },
       "req": "K4",
       "steps": [
@@ -132,10 +152,12 @@
             "m"
           ],
           "text": "朗島的長輩要族男一起去看船",
+          "textEn": "The Iraraley elder wants the Tao man to come look at the boats",
           "lines": [
             {
               "who": "@npc",
-              "zh": "冬天要決定先修哪一條船。跟我去灘頭看看，只看，不要碰別人家的船。"
+              "zh": "冬天要決定先修哪一條船。跟我去灘頭看看，只看，不要碰別人家的船。",
+              "en": "In winter we decide which boat to fix first. Come to the beach with me. Just look — don't touch other families' boats."
             }
           ]
         },
@@ -147,14 +169,17 @@
             "m"
           ],
           "text": "族男跟長輩到朗島灘頭看拼板舟",
+          "textEn": "The Tao man goes to the Iraraley beach with the elder to look at the plank boats",
           "lines": [
             {
               "who": "@m",
-              "zh": "這條船的船板有一點裂開了。"
+              "zh": "這條船的船板有一點裂開了。",
+              "en": "This boat's planks are cracking a little."
             },
             {
               "who": "elder_iraraley",
-              "zh": "眼睛很利。這條先修。"
+              "zh": "眼睛很利。這條先修。",
+              "en": "Sharp eyes. This one gets fixed first."
             }
           ]
         },
@@ -165,14 +190,17 @@
             "m"
           ],
           "text": "向朗島的長輩回報",
+          "textEn": "Report to the Iraraley elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "船怎麼修、什麼時候修，是船組一起決定的。你今天看得很仔細。"
+              "zh": "船怎麼修、什麼時候修，是船組一起決定的。你今天看得很仔細。",
+              "en": "How and when to fix a boat is decided by the crew together. You looked very carefully today."
             },
             {
               "who": "@npc",
-              "zh": "女孩子和外面來的朋友，就從遠一點的地方看。"
+              "zh": "女孩子和外面來的朋友，就從遠一點的地方看。",
+              "en": "Girls and friends from outside watch from a bit further away."
             }
           ],
           "gives": {
@@ -186,7 +214,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "冬天朗島的長輩會去灘頭看船，決定今年先修哪一條。"
+        "fromEn": "Iraraley",
+        "zh": "冬天朗島的長輩會去灘頭看船，決定今年先修哪一條。",
+        "en": "In winter, the Iraraley elder goes to the beach to look at the boats and decide which one to fix first this year."
       }
     }
   ]

@@ -54,13 +54,13 @@
 
 | 檔案 | 字族 | 字重 | 用途 | 授權 |
 |---|---|---|---|---|
-| `public/fonts/noto-serif-tc-600.woff2` | Noto Serif TC | 600 | 副標、按鈕 | SIL OFL 1.1 |
-| `public/fonts/noto-serif-tc-700.woff2` | Noto Serif TC | 700 | 標題、地名標籤 | SIL OFL 1.1 |
-| `public/fonts/noto-sans-tc-400.woff2` | Noto Sans TC | 400 | 內文、對話 | SIL OFL 1.1 |
-| `public/fonts/noto-sans-tc-500.woff2` | Noto Sans TC | 500 | 介面標籤 | SIL OFL 1.1 |
-| `public/fonts/noto-sans-tc-700.woff2` | Noto Sans TC | 700 | 強調 | SIL OFL 1.1 |
+| `public/fonts/wenkai-400.woff2` | LXGW WenKai TC 霞鶩文楷 | 400 | 中文內文、對話、手札 | SIL OFL 1.1 |
+| `public/fonts/wenkai-500.woff2` | LXGW WenKai TC 霞鶩文楷 | 500（也用於 600、700） | 中文標題、按鈕、強調 | SIL OFL 1.1 |
+| `public/fonts/cormorant-500.woff2` | Cormorant Garamond | 500（也用於 400） | 英文、族語內文 | SIL OFL 1.1 |
+| `public/fonts/cormorant-600.woff2` | Cormorant Garamond | 600 | 英文對話、族語詞 | SIL OFL 1.1 |
+| `public/fonts/cormorant-700.woff2` | Cormorant Garamond | 700 | 英文標題、強調 | SIL OFL 1.1 |
 
-由 `scripts/build-fonts.py` 自 `fonts-src/*.otf` 子集化；`public/fonts/fonts.css` 以相對路徑宣告。
+0.1.5 字型組「霞光書卷」。由 `scripts/build-fonts.py` 自 `fonts-src/`（LXGWWenKaiTC-Regular／Medium.ttf、CormorantGaramond.ttf，授權檔同目錄）子集化；`public/fonts/fonts.css` 以相對路徑宣告。
 
 ## 程序化 3D 場景
 

@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "到椰油的學校找族語老師",
-        "en": ""
+        "en": "Find the Tao language teacher at the Yayo school"
       },
       "time": "day",
       "seasons": [],
@@ -26,10 +26,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q02",
         "unlock": "手札族語詞卡、X02、X03",
+        "unlockEn": "Notebook Tao word cards, X02, X03",
         "kind": ""
       },
       "req": "Q02",
@@ -38,14 +42,17 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "白天到椰油的學校找族語老師",
+          "textEn": "Go to the Yayo school in the daytime to find the Tao language teacher",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們好，我在這裡的學校教族語。"
+              "zh": "你們好，我在這裡的學校教族語。",
+              "en": "Hello. I teach Tao at the school here."
             },
             {
               "who": "@npc",
-              "zh": "聽到長輩說的族語，不懂的話就記下來，帶來問我。學會的詞會寫進手札的族語詞卡。"
+              "zh": "聽到長輩說的族語，不懂的話就記下來，帶來問我。學會的詞會寫進手札的族語詞卡。",
+              "en": "If you hear the elders speak Tao and don't understand, write it down and bring it to me. Words you learn go onto the Tao word cards in your notebook."
             }
           ],
           "gives": {
@@ -55,6 +62,10 @@
             "toast": [
               "族語詞卡",
               "手札的「族語詞卡」可以開始收集了。"
+            ],
+            "toastEn": [
+              "Tao word cards",
+              "You can start collecting \"Tao word cards\" in your notebook."
             ]
           }
         }
@@ -62,7 +73,9 @@
       "hint": {
         "tier": "direct",
         "from": "租車行老闆",
-        "zh": "族語老師白天在椰油的學校。"
+        "fromEn": "Scooter rental owner",
+        "zh": "族語老師白天在椰油的學校。",
+        "en": "The Tao language teacher is at the Yayo school in the daytime."
       },
       "playable": true
     },
@@ -73,7 +86,7 @@
       "village": null,
       "name": {
         "zh": "學第一句：akokey（你好）",
-        "en": ""
+        "en": "First phrase: akokey (hello)"
       },
       "time": "day",
       "seasons": [],
@@ -85,10 +98,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "X01",
         "unlock": "族語詞卡 1 詞、NPC 打招呼提示",
+        "unlockEn": "1 Tao word card, greeting hints from NPCs",
         "kind": ""
       },
       "req": "X01",
@@ -97,15 +114,18 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "跟族語老師學第一句：akokey（你好）",
+          "textEn": "Learn your first phrase from the Tao language teacher: akokey (hello)",
           "lines": [
             {
               "who": "@npc",
               "zh": "第一句就學打招呼。",
+              "en": "The first thing to learn is a greeting.",
               "tao": "akokey"
             },
             {
               "who": "@npc",
-              "zh": "見到長輩就說 akokey，大家都會很高興。"
+              "zh": "見到長輩就說 akokey，大家都會很高興。",
+              "en": "Say akokey when you meet an elder — it makes everyone happy."
             }
           ],
           "gives": {
@@ -118,7 +138,9 @@
       "hint": {
         "tier": "direct",
         "from": "族語老師",
-        "zh": "再跟族語老師說一次話，學第一句。"
+        "fromEn": "Tao language teacher",
+        "zh": "再跟族語老師說一次話，學第一句。",
+        "en": "Talk to the Tao language teacher again to learn your first phrase."
       },
       "playable": true
     },
@@ -129,7 +151,7 @@
       "village": null,
       "name": {
         "zh": "把長輩的族語提示帶給老師翻譯",
-        "en": ""
+        "en": "Take an elder's Tao hint to the teacher"
       },
       "time": "day",
       "seasons": [],
@@ -146,11 +168,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "X01 且 收到第一則只說族語的提示",
+        "preEn": "X01 and the first hint given only in Tao",
         "unlock": "翻譯流程、X04、Z1",
-        "kind": "AND＋族語提示"
+        "unlockEn": "Translation, X04, Z1",
+        "kind": "AND＋族語提示",
+        "kindEn": "AND + Tao hint"
       },
       "req": {
         "all": [
@@ -165,11 +193,13 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "把長輩只說族語的提示帶給族語老師翻譯",
+          "textEn": "Take the elder's Tao-only hint to the Tao language teacher to translate",
           "translate": true,
           "lines": [
             {
               "who": "@npc",
-              "zh": "長輩跟你們說了族語？我看看筆記。"
+              "zh": "長輩跟你們說了族語？我看看筆記。",
+              "en": "An elder spoke to you in Tao? Let me check my notes."
             }
           ],
           "gives": {
@@ -179,6 +209,10 @@
             "toast": [
               "翻譯流程",
               "之後聽到只說族語的提示，都可以帶來給老師翻譯。"
+            ],
+            "toastEn": [
+              "Translation",
+              "From now on, bring any Tao-only hints to the teacher to translate."
             ]
           }
         }
@@ -186,7 +220,9 @@
       "hint": {
         "tier": "direct",
         "from": "族語老師",
-        "zh": "聽到長輩只說族語的提示後，帶回椰油的學校給老師翻譯。"
+        "fromEn": "Tao language teacher",
+        "zh": "聽到長輩只說族語的提示後，帶回椰油的學校給老師翻譯。",
+        "en": "When an elder gives you a hint only in Tao, take it back to the Yayo school for the teacher to translate."
       },
       "playable": true
     },
@@ -197,7 +233,7 @@
       "village": null,
       "name": {
         "zh": "族語詞卡收集 10 個詞",
-        "en": ""
+        "en": "Collect 10 Tao word cards"
       },
       "time": "any",
       "seasons": [],
@@ -209,17 +245,22 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "X03",
         "unlock": "X05、W4",
-        "kind": "數量 10"
+        "kind": "數量 10",
+        "kindEn": "Count 10"
       },
       "req": "X03",
       "steps": [
         {
           "kind": "auto",
           "text": "族語詞卡收集 10 個詞",
+          "textEn": "Collect 10 Tao word cards",
           "until": {
             "count": "words",
             "min": 10
@@ -229,7 +270,9 @@
       "hint": {
         "tier": "direct",
         "from": "族語老師",
-        "zh": "多跟長輩、族人說話，學到的詞會自動寫進族語詞卡。"
+        "fromEn": "Tao language teacher",
+        "zh": "多跟長輩、族人說話，學到的詞會自動寫進族語詞卡。",
+        "en": "Talk with elders and villagers more. Words you learn are added to your Tao word cards automatically."
       },
       "playable": true
     },
@@ -240,7 +283,7 @@
       "village": null,
       "name": {
         "zh": "族語詞卡收集 20 個詞",
-        "en": ""
+        "en": "Collect 20 Tao word cards"
       },
       "time": "any",
       "seasons": [],
@@ -252,17 +295,23 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "X04",
         "unlock": "隱藏任務 H1",
-        "kind": "數量 20"
+        "unlockEn": "Hidden quest H1",
+        "kind": "數量 20",
+        "kindEn": "Count 20"
       },
       "req": "X04",
       "steps": [
         {
           "kind": "auto",
           "text": "族語詞卡收集 20 個詞",
+          "textEn": "Collect 20 Tao word cards",
           "until": {
             "count": "words",
             "min": 20
@@ -272,20 +321,27 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "把 20 個詞的詞卡拿給族語老師看",
+          "textEn": "Show your 20 word cards to the Tao language teacher",
           "lines": [
             {
               "who": "@npc",
-              "zh": "二十個詞了！你們會的，已經比很多孩子多了。"
+              "zh": "二十個詞了！你們會的，已經比很多孩子多了。",
+              "en": "Twenty words! You already know more than many kids."
             },
             {
               "who": "@npc",
-              "zh": "接下來，最好的老師是部落裡的長輩。"
+              "zh": "接下來，最好的老師是部落裡的長輩。",
+              "en": "From here on, the best teachers are the elders in the villages."
             }
           ],
           "gives": {
             "toast": [
               "族語詞卡",
               "收集了 20 個族語詞。"
+            ],
+            "toastEn": [
+              "Tao word cards",
+              "You've collected 20 Tao words."
             ]
           }
         }
@@ -293,7 +349,9 @@
       "hint": {
         "tier": "direct",
         "from": "族語老師",
-        "zh": "多跟長輩、族人說話，拜訪各部落，學到的詞會自動寫進族語詞卡。"
+        "fromEn": "Tao language teacher",
+        "zh": "多跟長輩、族人說話，拜訪各部落，學到的詞會自動寫進族語詞卡。",
+        "en": "Talk with elders and villagers and visit every village. Words you learn are added to your Tao word cards automatically."
       },
       "playable": true
     }

@@ -5,6 +5,7 @@
 import { type Structure, coastT, fromOld, ROAD_W, VILLAGE_DEFS, vlocal } from './layout';
 import { fishRacks } from './racks';
 import { insetPoint } from './coast';
+import { hostNames, wname } from './names';
 import { ALL_STRUCTURES, getHeight, getSlope, inTaroBasin, WALK_MAX_SLOPE, WALK_WATER_MARGIN, WATER_LEVEL } from './height';
 
 export interface PlaceLike {
@@ -60,7 +61,7 @@ export function clearOfBuildings(p: { x: number; z: number }, offs: [number, num
 /** shop / school in 椰油, the rental + dive shop by 開元港, the two dive spots (adds only missing ids) */
 export function addQuestPlaces(P: Record<string, PlaceLike>): void {
   const mk = (id: string, zh: string, p: { x: number; z: number }): void => {
-    if (!P[id]) P[id] = { id, zh, tao: '', x: p.x, z: p.z, kind: 'facility' };
+    if (!P[id]) P[id] = { id, zh: wname(id, zh), tao: '', x: p.x, z: p.z, kind: 'facility' };
   };
   {
     // the same (road-cleared) structures the world builds
@@ -98,7 +99,7 @@ export const HOST_PLACE_IDS: HostPlaceId[] = ['host_home', 'host_taro', 'host_we
  * 0.1.4: the family's 涼亭 (the village tagakal nearest the plaza; you stand on its road side)
  * and its fish rack (you stand on the road beside it)
  */
-export function hostPlaces(P: Record<string, PlaceLike>, home: string): Record<HostPlaceId, PlaceLike> | null {
+export function hostPlaces(P: Record<string, PlaceLike>, home: string, memberHome = false): Record<HostPlaceId, PlaceLike> | null {
   const v = P[home] ?? P.yayo;
   if (!v) return null;
   const vid = P[home] ? home : 'yayo';
@@ -111,11 +112,14 @@ export function hostPlaces(P: Record<string, PlaceLike>, home: string): Record<H
   let rack = { x: v.x - 3, z: v.z };
   const rk = fishRacks().filter((r) => r.village === vid).sort((a, b) => Math.abs(a.u) - Math.abs(b.u))[0];
   if (rk && vd) rack = vlocal(vd, rk.u, ROAD_W);
+  // 0.1.5: a Tao member's own home that is not the 主人家 is just 「<village>的家」
+  // 0.1.5 English: the same names in English (names.ts)
+  const n = hostNames(v.zh, memberHome, taro.zh);
   return {
-    host_home: mk('host_home', `${v.zh}的主人家`, { x: v.x + 1.8, z: v.z + 2.4 }),
-    host_taro: mk('host_taro', taro.zh, taro),
-    host_weave: mk('host_weave', `${v.zh}的簷廊`, { x: v.x - 2.2, z: v.z + 1.6 }),
-    host_tagakal: mk('host_tagakal', `${v.zh}主人家的涼亭`, tag),
-    host_fishrack: mk('host_fishrack', `${v.zh}主人家的曬魚架`, rack),
+    host_home: mk('host_home', n.home, { x: v.x + 1.8, z: v.z + 2.4 }),
+    host_taro: mk('host_taro', n.taro, taro),
+    host_weave: mk('host_weave', n.weave, { x: v.x - 2.2, z: v.z + 1.6 }),
+    host_tagakal: mk('host_tagakal', n.tagakal, tag),
+    host_fishrack: mk('host_fishrack', n.fishrack, rack),
   };
 }

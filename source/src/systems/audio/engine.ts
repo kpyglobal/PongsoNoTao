@@ -109,6 +109,10 @@ class AudioEngine {
     this.listeners.push(fn);
   }
 
+  offChange(fn: Listener): void {
+    this.listeners = this.listeners.filter((f) => f !== fn);
+  }
+
   private emit(): void {
     for (const fn of this.listeners) fn();
   }

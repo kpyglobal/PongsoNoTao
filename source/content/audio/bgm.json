@@ -36,6 +36,7 @@
       "loop": 17.1429,
       "gain": 0.7,
       "zh": "選單・出發前",
+      "en": "Menu · Before the trip",
       "mood": "112 BPM, D (the title's key and tempo), quieter (gain 0.7), no melody: lo-fi atmosphere with a light forward groove. Rhodes maj7 / add9 chord comping (fixed voice-led voicings, top note F#4-F#4-F#4-E4) + soft piano dyads, soft string pad, warm pulsing 8th-note bass, light kit on 1 / 3 + backbeat, hats 8ths -> 16ths in bars 5-8, a small fill in bar 8, pad swell + soft noise riser in bars 7-8; quiet room tone and soft vinyl ticks. Imaj9-IVmaj9-vi9-Vadd9 x2, every pass ends on V",
       "loopStart": 0.0348,
       "bpm": 112,
@@ -47,6 +48,7 @@
       "loop": 34.2857,
       "gain": 0.9,
       "zh": "標題曲・Pongso no Tao",
+      "en": "Title theme · Pongso no Tao",
       "mood": "112 BPM; epic strings / choir / taiko intro (kept exactly, spliced from the approved master), then a fresh, open 'new world' bed with no melody: bright piano chords (top note held on A5) over Rhodes maj7 / add9 voicings, airy high strings, soft choir in the lift, sparse glockenspiel sparkle inside the chords, warm pulsing 8th-note bass, light forward kit, room tone + vinyl ticks; I-IV-vi-V x2 | IV-V-vi-I | IV-I-IV-V, bars 9-16 lift, bar 16 swell + soft riser back to bar 1",
       "loopStart": 11.0714,
       "bpm": 112,
@@ -55,9 +57,10 @@
     },
     "harbour_day": {
       "file": "harbour_day.mp3",
-      "loop": 32.0,
+      "loop": 32,
       "gain": 0.9,
       "zh": "開元港・島嶼主題（白天）",
+      "en": "Kaiyuan Harbour · Island theme (day)",
       "mood": "120 BPM; the same modern cozy groove: syncopated ukulele, acoustic arpeggios, string pad, moving bass, light kit; pizzicato strings lead + glockenspiel",
       "loopStart": 0.0348,
       "bpm": 120,
@@ -65,9 +68,10 @@
     },
     "night": {
       "file": "night.mp3",
-      "loop": 40.0,
+      "loop": 40,
       "gain": 0.85,
       "zh": "夜晚",
+      "en": "Night",
       "mood": "96 BPM; nylon + harp picking, warm pad, soft congas",
       "loopStart": 0.0348,
       "loopEnd": 40.0348
@@ -77,6 +81,7 @@
       "loop": 31.0345,
       "gain": 0.9,
       "zh": "外海・拼板舟",
+      "en": "Open sea · Plank boat",
       "mood": "116 BPM 6/8; steel guitar + flute, strings, log-drum feel, a taiko hit",
       "loopStart": 0.0348,
       "loopEnd": 31.0693
@@ -86,6 +91,7 @@
       "loop": 35.5556,
       "gain": 0.9,
       "zh": "紅頭部落",
+      "en": "Imorod village",
       "mood": "108 BPM; nylon guitar lead, marimba, slack-key thumb bass",
       "loopStart": 0.0348,
       "loopEnd": 35.5904
@@ -95,15 +101,17 @@
       "loop": 36.9231,
       "gain": 0.9,
       "zh": "野銀部落",
+      "en": "Ivalino village",
       "mood": "104 BPM; soft flute + harp, light strings",
       "loopStart": 0.0348,
       "loopEnd": 36.9579
     },
     "iranmeylek": {
       "file": "iranmeylek.mp3",
-      "loop": 32.0,
+      "loop": 32,
       "gain": 0.9,
       "zh": "東清部落",
+      "en": "Iranmeylek village",
       "mood": "120 BPM; marimba + steel guitar, the bounciest",
       "loopStart": 0.0348,
       "loopEnd": 32.0348
@@ -113,6 +121,7 @@
       "loop": 31.4754,
       "gain": 0.9,
       "zh": "山上・島內",
+      "en": "Up the hills · Inland",
       "mood": "122 BPM; pan flute + steel guitar, driving strum, taiko",
       "loopStart": 0.0348,
       "loopEnd": 31.5102

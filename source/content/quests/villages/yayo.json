@@ -21,15 +21,20 @@
       "giver": "f",
       "name": {
         "zh": "椰油的女性長輩：整理家裡的存糧",
-        "en": ""
+        "en": "Yayo woman elder: sort the family's food stores"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "冬季",
+        "seasonEn": "Winter",
         "pre": "K3",
         "unlock": "椰油女性長輩的信任",
-        "kind": "a akes・食物"
+        "unlockEn": "Trust of the Yayo woman elder",
+        "kind": "a akes・食物",
+        "kindEn": "a akes · Food"
       },
       "req": "K3",
       "steps": [
@@ -37,20 +42,24 @@
           "kind": "talk",
           "npc": "elder_f_yayo",
           "text": "椰油的女性長輩請你幫忙整理存糧",
+          "textEn": "The Yayo woman elder asks you to help sort the food stores",
           "lines": [
             {
               "who": "@npc",
-              "zh": "冬天浪大，船出不去。夏天曬好的飛魚乾、田裡的地瓜，要省著吃到下一季。"
+              "zh": "冬天浪大，船出不去。夏天曬好的飛魚乾、田裡的地瓜，要省著吃到下一季。",
+              "en": "The waves are big in winter and the boats can't go out. The dried flying fish from summer and the sweet potatoes from the field must last until next season."
             },
             {
               "who": "@npc",
-              "zh": "家裡吃什麼、存多少，是我們女人在管的。幫我補兩顆地瓜進來吧。"
+              "zh": "家裡吃什麼、存多少，是我們女人在管的。幫我補兩顆地瓜進來吧。",
+              "en": "What the family eats and how much we store — that's for us women to manage. Help me add two sweet potatoes."
             }
           ]
         },
         {
           "kind": "auto",
           "text": "收集食材：地瓜兩顆",
+          "textEn": "Gather ingredients: two sweet potatoes",
           "until": {
             "all": [
               {
@@ -64,14 +73,17 @@
           "kind": "talk",
           "npc": "elder_f_yayo",
           "text": "把地瓜交給椰油的女性長輩",
+          "textEn": "Give the sweet potatoes to the Yayo woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "好，放這裡。地瓜放乾燥的地方可以放比較久，飛魚乾要常拿出來看看。"
+              "zh": "好，放這裡。地瓜放乾燥的地方可以放比較久，飛魚乾要常拿出來看看。",
+              "en": "Good, put them here. Sweet potatoes keep longer somewhere dry. The dried flying fish should be checked often."
             },
             {
               "who": "@npc",
-              "zh": "存糧剛好就好，不要多也不要少，多的就分給親戚。"
+              "zh": "存糧剛好就好，不要多也不要少，多的就分給親戚。",
+              "en": "Just enough in store — not too much, not too little. Extra goes to the relatives."
             }
           ],
           "gives": {
@@ -88,7 +100,9 @@
       "hint": {
         "tier": "direct",
         "from": "椰油",
-        "zh": "椰油的女性長輩在整理冬天的存糧，帶兩顆地瓜去幫忙。"
+        "fromEn": "Yayo",
+        "zh": "椰油的女性長輩在整理冬天的存糧，帶兩顆地瓜去幫忙。",
+        "en": "The Yayo woman elder is sorting the winter food stores. Take two sweet potatoes to help."
       }
     },
     {
@@ -108,18 +122,23 @@
       "giver": "m",
       "name": {
         "zh": "椰油的長輩：補漁網",
-        "en": ""
+        "en": "Yayo elder: mend the fishing net"
       },
       "review": [
         "補網是否限男性"
       ],
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "冬季",
+        "seasonEn": "Winter",
         "pre": "K3",
         "unlock": "漁網知識",
-        "kind": "a akey・漁"
+        "unlockEn": "Fishing net knowledge",
+        "kind": "a akey・漁",
+        "kindEn": "a akey · Fishing"
       },
       "req": {
         "all": [
@@ -134,14 +153,17 @@
             "m"
           ],
           "text": "椰油的長輩叫族男一起補漁網",
+          "textEn": "The Yayo elder asks the Tao man to mend a fishing net with him",
           "lines": [
             {
               "who": "@npc",
-              "zh": "冬天不出海，正好補網。夏天要用的網，現在不補，到時候就來不及了。"
+              "zh": "冬天不出海，正好補網。夏天要用的網，現在不補，到時候就來不及了。",
+              "en": "No going to sea in winter, so it's a good time to mend nets. If we don't mend the summer nets now, it'll be too late."
             },
             {
               "who": "@npc",
-              "zh": "拿去港邊攤開，看哪裡破了。"
+              "zh": "拿去港邊攤開，看哪裡破了。",
+              "en": "Take it to the harbour, spread it out and see where it's torn."
             }
           ]
         },
@@ -153,10 +175,12 @@
             "m"
           ],
           "text": "族男到港邊把漁網攤開，找出破洞",
+          "textEn": "The Tao man spreads the net out by the harbour and finds the holes",
           "lines": [
             {
               "who": "@m",
-              "zh": "這裡破了三個洞，這邊的線也鬆了。"
+              "zh": "這裡破了三個洞，這邊的線也鬆了。",
+              "en": "Three holes here, and the thread is loose over there."
             }
           ]
         },
@@ -167,10 +191,12 @@
             "m"
           ],
           "text": "向椰油的長輩回報，學補網的結",
+          "textEn": "Report to the Yayo elder and learn the mending knot",
           "lines": [
             {
               "who": "@npc",
-              "zh": "線繞過去，再拉緊……對，就這樣。慢慢來，手會記得。"
+              "zh": "線繞過去，再拉緊……對，就這樣。慢慢來，手會記得。",
+              "en": "Loop the thread over, then pull it tight… yes, like that. Take it slowly — your hands will remember."
             }
           ],
           "gives": {
@@ -184,7 +210,9 @@
       "hint": {
         "tier": "direct",
         "from": "椰油",
-        "zh": "冬天椰油的長輩在港邊補網，族男可以去幫忙。"
+        "fromEn": "Yayo",
+        "zh": "冬天椰油的長輩在港邊補網，族男可以去幫忙。",
+        "en": "In winter, the Yayo elder mends nets by the harbour. The Tao man can go help."
       }
     }
   ]

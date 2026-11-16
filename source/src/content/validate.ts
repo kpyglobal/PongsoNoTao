@@ -29,7 +29,7 @@ export interface ValidateInput {
   songs: Record<string, unknown>;
 }
 
-const TOKENS = new Set(['@host', '@giver', '@hostf', '@m', '@f', '@t', '@npc', '@me', '旁白', '文化聲明']);
+const TOKENS = new Set(['@host', '@giver', '@hostf', '@host.m', '@host.f', '@hostf.m', '@hostf.f', '@m', '@f', '@t', '@npc', '@me', '旁白', '文化聲明']);
 const TIMES = new Set(['day', 'night', 'any']);
 const SEASONS = new Set(['summer', 'winter']);
 
@@ -87,8 +87,9 @@ export function validateContent(c: ValidateInput): void {
     const at = `quest ${q.id} (${q.__file})`;
     win(q, at);
     req(q.req, at);
-    q.steps?.forEach((s, i) => {
+    [...(q.steps ?? []), ...(q.twoHomes?.steps ?? [])].forEach((s, i) => {
       const a = `${at} step ${i}`;
+      if (s.alt) { npc(s.alt.npc, `${a} alt`); lines(s.alt.lines, `${a} alt`); }
       npc(s.npc, a);
       place(s.spot, a);
       place(s.meet, a);

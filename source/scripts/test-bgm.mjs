@@ -30,7 +30,8 @@ try {
   let s = await st();
   ok(!s.unlocked && s.playing === null, 'silent before first interaction');
   ok(s.settings.music === 0.35 && s.settings.sfx === 0.5 && s.settings.musicOn && s.settings.sfxOn, `quiet defaults ${JSON.stringify(s.settings)}`);
-  await page.click('#btn-origin-yayo'); // first tap: the menu loop starts on the start screens (0.1.4)
+  await page.click('#btn-gender-m'); // first tap: the menu loop starts on the start screens (0.1.4)
+  await page.select('#sel-origin-m', 'yayo'); await page.select('#sel-origin-f', 'yayo');
   await page.waitForFunction(() => window.__bgm().playing, { timeout: 30000 }).catch(() => {});
   ok((await st()).playing === 'menu', `start screen → ${(await st()).playing} (want menu)`);
   await page.click('#btn-gender-f');
@@ -45,8 +46,8 @@ try {
     const el = document.getElementById('dlg-zh');
     const b0 = window.__sfx.blips;
     const t0 = performance.now();
-    // re-show the current line (雙語 button re-opens it), so it types out again from the start
-    document.querySelector('#lang-toggle button[data-lang=both]').click();
+    // re-show the current line (setLang re-opens it), so it types out again from the start
+    g.setLang('both');
     out.partial = await wait(() => el.querySelector('span')?.style.color === 'transparent', 3000);
     await wait(() => window.__sfx.blips > b0, 4000);
     await new Promise((r) => setTimeout(r, 200));

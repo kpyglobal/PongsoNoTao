@@ -1,0 +1,200 @@
+/* ===== 0.1.5 unlock cards, quest page, item grid, printed photos (src/ui/cards.ts, questPage.ts, itemGrid.ts) =====
+   One card shell (.tc-card) in four looks; sizes follow the card width (container units) so iPhone portrait and
+   landscape keep the same layout. Tao words: upright, semi-bold, never italic. */
+
+.tc-layer {
+  position: absolute; inset: 0; z-index: 30; pointer-events: auto; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  padding: calc(12px + var(--safe-t)) calc(12px + var(--safe-r)) calc(12px + var(--safe-b)) calc(12px + var(--safe-l));
+  outline: none; -webkit-tap-highlight-color: transparent;
+}
+.tc-layer[hidden] { display: none; }
+.tc-scrim { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 50%, rgba(12, 20, 26, 0.38), rgba(8, 14, 20, 0.62)); transition: opacity 0.45s ease; }
+.tc-layer[data-kind="photo"] .tc-scrim { background: rgba(8, 14, 20, 0.35); }
+.tc-layer.leaving .tc-scrim { opacity: 0; }
+.tc-stage { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; max-width: 100%; }
+.tc-hint {
+  position: relative; z-index: 1; font: 600 calc(12.5px * var(--ts, 1)) var(--serif); color: #fffaf0; letter-spacing: 0.06em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7); opacity: 0.9; transition: opacity 0.2s;
+}
+.tc-layer.leaving .tc-hint { opacity: 0; }
+
+.tc-card { position: relative; container-type: inline-size; color: #2f241b; font-family: var(--serif); user-select: none; -webkit-user-select: none; }
+.tc-card img.missing { visibility: hidden; }
+.tc-tao, .tc-pic-word { font-family: "Cormorant Garamond", Georgia, serif; font-style: normal !important; font-weight: 600; letter-spacing: 0.01em; }
+
+/* --- postcard: picture left, names right (art rects from art-ref/cards-v1/README.md, as % of 1200×800) --- */
+.tc-postcard {
+  width: min(560px, 92vw, calc((100dvh - 90px - var(--safe-t) - var(--safe-b)) * 1.5));
+  aspect-ratio: 3 / 2; background: var(--bg) center / 100% 100% no-repeat, #f3e7cc;
+  border-radius: 6px; box-shadow: 0 18px 40px rgba(8, 12, 16, 0.45), 0 2px 6px rgba(8, 12, 16, 0.3);
+}
+.tc-pic { position: absolute; left: 7.75%; top: 14%; width: 33.9%; height: 73%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.tc-pic-img { width: 100%; height: 100%; object-fit: contain; padding: 6%; box-sizing: border-box; }
+.tc-pic.word { background: radial-gradient(closest-side, rgba(255, 250, 238, 0.85), rgba(244, 233, 206, 0.4)); }
+.tc-pic-word { font-size: 6.2cqw; color: #8a3a2a; text-align: center; line-height: 1.15; padding: 0 6%; overflow-wrap: anywhere; }
+.tc-text { position: absolute; left: 45.7%; top: 14%; width: 47.5%; height: 73%; display: flex; flex-direction: column; justify-content: center; gap: 1.2cqw; overflow: hidden; }
+.tc-kicker { font: 600 2.5cqw var(--serif); color: #1f6f70; letter-spacing: 0.12em; }
+.tc-names { display: flex; flex-direction: column; gap: 0.4cqw; }
+.tc-names .tc-tao { font-size: 5.4cqw; color: #8a3a2a; line-height: 1.1; }
+.tc-names .tc-name { font-size: 4.3cqw; font-weight: 600; line-height: 1.25; }
+.tc-names .tc-name.solo { font-size: 5cqw; }
+.tc-names .tc-en { font-size: 2.5cqw; color: #5a4636; font-weight: 600; line-height: 1.3; }
+.tc-line { margin: 0.6cqw 0 0; font-size: 2.6cqw; line-height: 1.55; color: #5a4636; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1cqw; }
+.tc-names.small .tc-tao { font-size: 3.4cqw; }
+.tc-names.small .tc-name { font-size: 2.9cqw; }
+.tc-names.small .tc-en { font-size: 2cqw; }
+/* 中文＋English: Chinese a little smaller, English much smaller; single language = normal size */
+html[data-ui="zhen"] .tc-names .tc-name { font-size: 3.9cqw; }
+html[data-ui="zhen"] .tc-line { font-size: 2.35cqw; }
+/* English only: ×1.08, semi-bold (en.css rule for dialogue / notices / notebook) */
+html[data-ui="en"] .tc-names .tc-name { font-size: 4.6cqw; }
+html[data-ui="en"] .tc-line, html[data-ui="en"] .tc-kicker { font-size: 2.8cqw; font-weight: 600; }
+
+/* --- recipe: torn scroll (900×1200), text rect x 13.3% y 16.7% w 73.3% h 66.7% --- */
+.tc-recipe {
+  width: min(400px, 88vw, calc((100dvh - 80px - var(--safe-t) - var(--safe-b)) * 0.75));
+  aspect-ratio: 3 / 4; background: var(--bg) center / 100% 100% no-repeat;
+  filter: drop-shadow(0 16px 28px rgba(8, 12, 16, 0.45));
+}
+.tc-recipe .tc-text { left: 13.3%; top: 15.5%; width: 73.3%; height: 70%; justify-content: flex-start; gap: 1.6cqw; }
+.tc-recipe .tc-kicker { font-size: 3.6cqw; }
+.tc-recipe .tc-names .tc-tao { font-size: 6.4cqw; }
+.tc-recipe .tc-names .tc-name { font-size: 6cqw; }
+.tc-recipe .tc-names .tc-en { font-size: 3.4cqw; }
+html[data-ui="zhen"] .tc-recipe .tc-names .tc-name { font-size: 5.4cqw; }
+.tc-sketch { flex: 0 1 34%; min-height: 0; display: flex; justify-content: center; }
+.tc-sketch-img { height: 100%; max-width: 70%; object-fit: contain; opacity: 0.92; }
+.tc-label { font: 600 3.2cqw var(--serif); color: #1f6f70; letter-spacing: 0.14em; border-bottom: 1px solid rgba(31, 111, 112, 0.3); padding-bottom: 0.6cqw; }
+.tc-ings { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.4cqw; }
+.tc-ing { display: grid; grid-template-columns: 9cqw 1fr auto; align-items: center; gap: 2.2cqw; }
+.tc-ing-ico { width: 9cqw; height: 9cqw; object-fit: contain; }
+.tc-ing-n { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 2cqw; row-gap: 0; min-width: 0; }
+.tc-ing-n .tc-tao { font-size: 4.6cqw; color: #8a3a2a; }
+.tc-ing-name { font-size: 4.4cqw; font-weight: 600; }
+.tc-ing-n .tc-en { flex-basis: 100%; font-size: 3cqw; color: #5a4636; font-weight: 600; }
+html[data-ui="zhen"] .tc-ing-name { font-size: 4cqw; }
+.tc-count { font: 700 4.4cqw "Cormorant Garamond", var(--serif); color: #8a3a2a; font-variant-numeric: tabular-nums; }
+.tc-ing.enough .tc-count { color: #1f6f70; }
+.tc-ing.unfound .tc-ing-ico { filter: grayscale(1) brightness(1.15) contrast(0.6); opacity: 0.45; }
+.tc-ing.unfound .tc-ing-name, .tc-ing.unfound .tc-count { color: #9a8a76; }
+.tc-ing.unfound .tc-tao { color: #a0786a; }
+
+/* --- printed photo: frame 1264×1052, window x 4.43% y 4.94% w 91.1% h 82.1%, lip 87–98% --- */
+.tc-photo {
+  width: min(520px, 86vw, calc((100dvh - 90px - var(--safe-t) - var(--safe-b)) * 1.2));
+  aspect-ratio: 1264 / 1052; transform: rotate(-1.6deg);
+}
+.tc-photo-win { position: absolute; left: 4.43%; top: 4.94%; width: 91.1%; height: 82.1%; overflow: hidden; background: #ddd; }
+.tc-photo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tc-photo-frame { position: absolute; inset: 0; background: var(--frame) center / 100% 100% no-repeat; pointer-events: none; }
+.tc-caption { position: absolute; left: 6%; right: 6%; top: 88%; height: 9%; display: flex; align-items: center; justify-content: center; font: 600 4.2cqw var(--serif); color: #3a2a1e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fx .tc-layer[data-kind="photo"] .tc-photo-img { animation: tc-develop 1.2s ease-out both; }
+@keyframes tc-develop { from { filter: brightness(1.9) saturate(0.2); } to { filter: none; } }
+
+/* --- quest page: a notebook page (same paper as the 圖鑑手札) --- */
+.tc-page {
+  width: min(560px, 94vw); max-height: calc(100dvh - 70px - var(--safe-t) - var(--safe-b)); overflow: hidden auto;
+  box-sizing: border-box; padding: 26px 30px 22px; border-radius: 6px 10px 10px 6px;
+  background-color: #f7efdc;
+  background-image:
+    radial-gradient(120% 90% at 50% 40%, transparent 62%, rgba(150, 110, 50, 0.13) 100%),
+    repeating-linear-gradient(180deg, transparent 0 33px, rgba(31, 111, 112, 0.08) 33px 34px);
+  box-shadow: 0 0 0 6px #2d4d48, 0 0 0 7px #1d3531, 0 22px 50px rgba(8, 12, 16, 0.5);
+  font-family: "Cormorant Garamond", "LXGW WenKai TC", var(--serif); cursor: pointer;
+}
+.qp-head { display: flex; align-items: center; gap: 10px; }
+.qp-badge { background: #b33a32; color: #fffaf0; font: 600 calc(12px * var(--ts, 1)) var(--serif); padding: 2px 10px; border-radius: 999px; letter-spacing: 0.1em; }
+.qp-kicker { font-size: calc(12.5px * var(--ts, 1)); color: #1f6f70; letter-spacing: 0.08em; }
+.qp-title { margin: 8px 0 2px; font: 400 calc(23px * var(--ts, 1)) var(--serif); color: #164e52; }
+.qp-title-en { font-size: calc(12.5px * var(--ts, 1)); color: #5a4636; font-weight: 600; }
+.qp-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 4px; }
+.qp-chip { font-size: calc(12px * var(--ts, 1)); border: 1px solid rgba(31, 111, 112, 0.4); color: #164e52; border-radius: 999px; padding: 1px 9px; }
+.qp-chip.giver { border-color: rgba(179, 58, 50, 0.45); color: #8a3a2a; }
+.qp-label { margin: 14px 0 4px; font: 600 calc(12.5px * var(--ts, 1)) var(--serif); color: #b33a32; letter-spacing: 0.14em; }
+.qp-p { margin: 0 0 4px; font-size: calc(16px * var(--ts, 1)); line-height: 1.7; }
+.qp-en { margin: 0 0 6px; font-size: calc(12px * var(--ts, 1)); line-height: 1.5; color: #5a4636; font-weight: 600; }
+html[data-ui="zhen"] .qp-p { font-size: calc(14.5px * var(--ts, 1)); }
+html[data-ui="en"] .tc-page { --ts: calc(var(--ts-root, 0.92) * 1.08); }
+html[data-ui="en"] .qp-p { font-weight: 600; }
+.qp-tao { margin: 0 0 4px; font: 600 calc(15px * var(--ts, 1)) "Cormorant Garamond", serif; color: #8a3a2a; font-style: normal !important; }
+.qp-ings { container-type: inline-size; max-width: 360px; }
+.qp-ings .tc-ing { grid-template-columns: 34px 1fr auto; gap: 10px; }
+.qp-ings .tc-ing-ico { width: 34px; height: 34px; }
+.qp-ings .tc-ing-n .tc-tao { font-size: calc(15px * var(--ts, 1)); }
+.qp-ings .tc-ing-name, .qp-ings .tc-count { font-size: calc(15px * var(--ts, 1)); }
+.qp-ings .tc-ing-n .tc-en { font-size: calc(11px * var(--ts, 1)); }
+
+/* --- 圖鑑手札 button: something just landed in it --- */
+.journal-btn.nb-got { animation: nb-got 0.7s ease-out; }
+@keyframes nb-got { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(201, 162, 74, 0.8); } 35% { transform: scale(1.12); } 100% { transform: scale(1); box-shadow: 0 0 0 14px rgba(201, 162, 74, 0); } }
+
+/* --- the notebook grows from / shrinks into the button: the backdrop fades with it --- */
+.journal-backdrop.closing { display: block; pointer-events: none; }
+.fx .journal-backdrop.open { animation: nb-dim-in 0.5s ease-out; }
+.fx .journal-backdrop.closing { animation: nb-dim-out 0.8s ease-in forwards; }
+@keyframes nb-dim-in { from { background-color: rgba(10, 16, 22, 0); } }
+@keyframes nb-dim-out { to { background-color: rgba(10, 16, 22, 0); } }
+.journal { will-change: auto; }
+
+/* --- gathered: a small icon with +1 --- */
+.loot-pop.has-ico { display: inline-flex; align-items: center; gap: 3px; font-size: calc(17px * var(--ts, 1)); }
+.loot-ico { width: 34px; height: 34px; object-fit: contain; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6)); }
+
+/* --- 背包 item grid --- */
+.ig-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 10px; }
+.ig-tab {
+  appearance: none; border: 1px solid rgba(31, 111, 112, 0.35); background: rgba(255, 252, 243, 0.6); color: #164e52;
+  border-radius: 999px; padding: 3px 11px; font: 400 calc(13.5px * var(--ts, 1)) var(--hand, var(--serif)); cursor: pointer; touch-action: manipulation;
+}
+.ig-tab.on { background: #1f6f70; color: #fffaf0; border-color: #1f6f70; }
+.ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px; align-content: start; }
+.ig-cell {
+  position: relative; appearance: none; aspect-ratio: 1; border-radius: 10px; cursor: pointer; padding: 4px; touch-action: manipulation;
+  border: 1px solid rgba(90, 70, 54, 0.28); background: radial-gradient(circle at 50% 40%, #fffaf0, #efe2c3);
+  box-shadow: inset 0 -2px 0 rgba(90, 70, 54, 0.12); display: flex; align-items: center; justify-content: center;
+}
+.ig-cell.on { border-color: #b33a32; box-shadow: 0 0 0 2px rgba(179, 58, 50, 0.45), inset 0 -2px 0 rgba(90, 70, 54, 0.12); }
+.ig-cell.locked { background: repeating-linear-gradient(135deg, #e8dcc0 0 6px, #e2d4b5 6px 12px); }
+.ig-ico { width: 88%; height: 88%; object-fit: contain; pointer-events: none; }
+.ig-q { font: 600 calc(20px * var(--ts, 1)) var(--serif); color: #9a8a76; }
+.ig-ph { font: 600 calc(18px * var(--ts, 1)) var(--serif); color: #5a4636; }
+.ig-n {
+  position: absolute; right: 3px; bottom: 2px; min-width: 18px; padding: 0 4px; border-radius: 9px; box-sizing: border-box;
+  background: #2f241b; color: #fffaf0; font: 700 calc(11.5px * var(--ts, 1)) "Cormorant Garamond", serif; text-align: center; line-height: 17px;
+}
+.ig-badge { position: absolute; left: 4px; top: 3px; color: #1f6f70; font-weight: 700; font-size: calc(13px * var(--ts, 1)); }
+.ig-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ig-detail .tc-card { width: 100%; max-width: 420px; margin: 0 auto 12px; transform: none; }
+.ig-detail .tc-recipe { max-width: 340px; }
+
+/* --- album: printed photos --- */
+.album-prints { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
+.album-print { appearance: none; border: 0; cursor: pointer; padding: 6px 6px 4px; background: #fffdf6; box-shadow: 0 3px 8px rgba(40, 28, 16, 0.25); display: flex; flex-direction: column; gap: 4px; transform: rotate(-1deg); }
+.album-print:nth-child(even) { transform: rotate(1.2deg); }
+.album-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: #ddd; }
+.album-cap { font-size: calc(12px * var(--ts, 1)); color: #3a2a1e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.album-big { margin-bottom: 12px; cursor: pointer; }
+.album-big .tc-photo { width: 100%; max-width: 440px; margin: 0 auto; }
+
+@media (max-width: 640px) {
+  .tc-page { padding: 20px 18px 16px; }
+  .qp-title { font-size: calc(20px * var(--ts, 1)); }
+  .qp-p { font-size: calc(15px * var(--ts, 1)); }
+  html[data-ui="zhen"] .qp-p { font-size: calc(13.5px * var(--ts, 1)); }
+  .ig-grid { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 6px; }
+}
+/* landscape phones: tighter card, hint beside nothing */
+@media (max-height: 460px) {
+  .tc-layer { gap: 4px; }
+  .tc-hint { font-size: calc(11px * var(--ts, 1)); }
+  .tc-page { padding: 16px 22px 12px; }
+  .qp-label { margin-top: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journal-btn.nb-got, .fx .journal-backdrop.open, .fx .journal-backdrop.closing, .fx .tc-layer[data-kind="photo"] .tc-photo-img { animation: none; }
+}
+
+/* keep the notebook button on one line on phones (cards fly into it) */
+.journal-btn { white-space: nowrap; }

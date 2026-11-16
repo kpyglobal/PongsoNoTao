@@ -19,15 +19,20 @@
       "giver": "f",
       "name": {
         "zh": "漁人的女性長輩：地瓜田採收",
-        "en": ""
+        "en": "Iratay woman elder: sweet potato harvest"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K2",
         "unlock": "地瓜、地瓜田採集許可",
-        "kind": "a akes・田地"
+        "unlockEn": "Sweet potato, permission to dig in the sweet potato field",
+        "kind": "a akes・田地",
+        "kindEn": "a akes · Fields"
       },
       "req": "K2",
       "steps": [
@@ -35,10 +40,12 @@
           "kind": "talk",
           "npc": "elder_f_iratay",
           "text": "漁人的女性長輩請你幫忙挖地瓜",
+          "textEn": "The Iratay woman elder asks you to help dig sweet potatoes",
           "lines": [
             {
               "who": "@npc",
-              "zh": "地瓜可以挖了。田是我們家的，你來幫忙，挖到的分你一些。"
+              "zh": "地瓜可以挖了。田是我們家的，你來幫忙，挖到的分你一些。",
+              "en": "The sweet potatoes are ready. The field is our family's — help me, and I'll share some of what we dig."
             }
           ]
         },
@@ -47,14 +54,17 @@
           "spot": "wakay_iratay",
           "r": 6,
           "text": "到漁人的地瓜田，跟著長輩把地瓜挖出來",
+          "textEn": "Go to the Iratay sweet potato field and dig sweet potatoes with the elder",
           "lines": [
             {
               "who": "@me",
-              "zh": "這顆好大！"
+              "zh": "這顆好大！",
+              "en": "This one's huge!"
             },
             {
               "who": "elder_f_iratay",
-              "zh": "輕一點，不要把它挖破了。"
+              "zh": "輕一點，不要把它挖破了。",
+              "en": "Gently. Don't break it while digging."
             }
           ]
         },
@@ -62,10 +72,12 @@
           "kind": "talk",
           "npc": "elder_f_iratay",
           "text": "向漁人的女性長輩回報",
+          "textEn": "Report to the Iratay woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "辛苦了，這些拿去。以後要地瓜，先跟我說一聲，就可以來田裡挖。"
+              "zh": "辛苦了，這些拿去。以後要地瓜，先跟我說一聲，就可以來田裡挖。",
+              "en": "Thanks for your help. Take these. If you want sweet potatoes later, just tell me first and you can dig in the field."
             }
           ],
           "gives": {
@@ -84,7 +96,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人的女性長輩要採收地瓜，去幫忙吧。"
+        "fromEn": "Iratay",
+        "zh": "漁人的女性長輩要採收地瓜，去幫忙吧。",
+        "en": "The Iratay woman elder is harvesting sweet potatoes. Go help."
       }
     },
     {
@@ -104,7 +118,7 @@
       "giver": "m",
       "name": {
         "zh": "漁人的長輩：族男跟船組再出海",
-        "en": ""
+        "en": "Iratay elder: the Tao man goes to sea with the crew again"
       },
       "abortTo": 0,
       "ground": "fishing",
@@ -113,11 +127,16 @@
       ],
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "族男單獨（其他人在岸邊等）",
+        "coopEn": "Tao man alone (the others wait on shore)",
         "season": "夏季（飛魚季）",
+        "seasonEn": "Summer (flying fish season)",
         "pre": "M3、K2",
         "unlock": "漁人長輩的信任、飛魚",
-        "kind": "a akey・單獨出海"
+        "unlockEn": "Trust of the Iratay elder, flying fish",
+        "kind": "a akey・單獨出海",
+        "kindEn": "a akey · To sea alone"
       },
       "req": {
         "all": [
@@ -133,29 +152,35 @@
             "m"
           ],
           "text": "族男向漁人的長輩領出海的工作",
+          "textEn": "The Tao man takes the job of going to sea from the Iratay elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "聽說你在椰油出過海了。今天跟我們漁人的船組出去，一樣，只有你去。"
+              "zh": "聽說你在椰油出過海了。今天跟我們漁人的船組出去，一樣，只有你去。",
+              "en": "I hear you've been to sea in Yayo. Today, go out with our Iratay crew. Same as before — only you go."
             },
             {
               "who": "@npc",
-              "zh": "海況不好就回來，沒有人會笑你。"
+              "zh": "海況不好就回來，沒有人會笑你。",
+              "en": "If the sea is bad, come back. No one will laugh at you."
             },
             {
               "who": "旁白",
-              "zh": "出海期間只能操控族男，族女與旅人在漁人灘頭等。捕到魚，或按「放棄出海」，才會回來會合。"
+              "zh": "出海期間只能操控族男，族女與旅人在漁人灘頭等。捕到魚，或按「放棄出海」，才會回來會合。",
+              "en": "While at sea, you can only control the Tao man; the Tao woman and traveller wait on the Iratay beach. Catch a fish, or tap \"Give up\", to come back and rejoin them."
             }
           ],
           "solo": {
             "role": "m",
             "at": "iratay_shore",
             "task": "跟漁人的船組出海",
+            "taskEn": "at sea with the Iratay boat crew",
             "waitAt": "iratay_shore",
             "giveUp": [
               {
                 "who": "elder_iratay",
-                "zh": "回來了？好，平安最重要。下次再出去。"
+                "zh": "回來了？好，平安最重要。下次再出去。",
+                "en": "Back already? Good. Safety comes first. Go out again next time."
               }
             ]
           }
@@ -170,10 +195,12 @@
           "minigame": "fish",
           "canoe": true,
           "text": "族男划拼板舟出海，看準飛魚躍出的時機（失敗可再試，或放棄出海）",
+          "textEn": "The Tao man paddles the plank boat out and waits for the moment a flying fish leaps (try again if you miss, or give up)",
           "lines": [
             {
               "who": "@m",
-              "zh": "捕到了！划回去。"
+              "zh": "捕到了！划回去。",
+              "en": "Caught one! Paddle back."
             }
           ],
           "gives": {
@@ -197,14 +224,17 @@
           ],
           "regroup": true,
           "text": "族男回到漁人灘頭，和族女、旅人會合",
+          "textEn": "The Tao man returns to the Iratay beach and meets the Tao woman and the traveller",
           "lines": [
             {
               "who": "@f",
-              "zh": "回來了！"
+              "zh": "回來了！",
+              "en": "You're back!"
             },
             {
               "who": "@t",
-              "zh": "我們一直在這裡等，沒有靠近船。"
+              "zh": "我們一直在這裡等，沒有靠近船。",
+              "en": "We waited right here the whole time and didn't go near the boats."
             }
           ]
         },
@@ -218,14 +248,17 @@
             "m"
           ],
           "text": "族男回報漁人的長輩",
+          "textEn": "The Tao man reports to the Iratay elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "平安回來就好。魚先分給船組，再帶一點回家給長輩。"
+              "zh": "平安回來就好。魚先分給船組，再帶一點回家給長輩。",
+              "en": "As long as you're back safe. Share the fish with the crew first, then take some home for the elders."
             },
             {
               "who": "@npc",
-              "zh": "你阿公如果看到，一定很高興。"
+              "zh": "你阿公如果看到，一定很高興。",
+              "en": "If your grandpa could see you, he'd be so happy."
             }
           ],
           "gives": {
@@ -239,7 +272,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "飛魚季時，漁人的長輩會邀族男跟漁人的船組出海；只有族男能去。"
+        "fromEn": "Iratay",
+        "zh": "飛魚季時，漁人的長輩會邀族男跟漁人的船組出海；只有族男能去。",
+        "en": "In flying fish season, the Iratay elder will invite the Tao man to go to sea with the Iratay crew. Only the Tao man can go."
       },
       "requiresOutfit": {
         "m": "outfit_m_tao"
@@ -261,15 +296,20 @@
       "arc": "village",
       "name": {
         "zh": "漁人的族人：從機場回來的阿嬤",
-        "en": ""
+        "en": "Iratay villager: Grandma back from the airport"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K2",
         "unlock": "漁人族人的信任",
-        "kind": "關鍵人物・現代生活"
+        "unlockEn": "Trust of the Iratay villagers",
+        "kind": "關鍵人物・現代生活",
+        "kindEn": "Key person · Modern life"
       },
       "req": "K2",
       "steps": [
@@ -277,14 +317,17 @@
           "kind": "talk",
           "npc": "villager_iratay",
           "text": "漁人的族人要去機場接媽媽",
+          "textEn": "An Iratay villager is going to pick up his mum at the airport",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我媽媽去臺灣的醫院檢查，今天坐飛機回來。島上沒有大醫院，看病要跑來跑去。"
+              "zh": "我媽媽去臺灣的醫院檢查，今天坐飛機回來。島上沒有大醫院，看病要跑來跑去。",
+              "en": "My mum went to a hospital in Taiwan for a check-up, and she's flying back today. There's no big hospital on the island, so seeing a doctor means a lot of travel."
             },
             {
               "who": "@npc",
-              "zh": "可以幫我去機場提行李嗎？我還要先去準備車子。"
+              "zh": "可以幫我去機場提行李嗎？我還要先去準備車子。",
+              "en": "Could you go help with her bags at the airport? I need to get the car ready first."
             }
           ]
         },
@@ -293,14 +336,17 @@
           "spot": "airport",
           "r": 9,
           "text": "到蘭嶼機場幫阿嬤提行李",
+          "textEn": "Go to Lanyu Airport and help Grandma with her bags",
           "lines": [
             {
               "who": "@me",
-              "zh": "阿嬤，行李給我拿就好！"
+              "zh": "阿嬤，行李給我拿就好！",
+              "en": "Grandma, let me carry your bags!"
             },
             {
               "who": "旁白",
-              "zh": "阿嬤笑著把醫院的資料袋交給你，請你拿去衛生所。"
+              "zh": "阿嬤笑著把醫院的資料袋交給你，請你拿去衛生所。",
+              "en": "Smiling, Grandma hands you the hospital papers and asks you to take them to the health station."
             }
           ]
         },
@@ -308,14 +354,17 @@
           "kind": "talk",
           "npc": "clinic_nurse",
           "text": "把醫院的資料交給衛生所護理師",
+          "textEn": "Give the hospital papers to the health station nurse",
           "lines": [
             {
               "who": "@npc",
-              "zh": "謝謝，我們會照著臺灣醫院的建議，定期去家裡看阿嬤。"
+              "zh": "謝謝，我們會照著臺灣醫院的建議，定期去家裡看阿嬤。",
+              "en": "Thank you. We'll follow the Taiwan hospital's advice and visit Grandma at home regularly."
             },
             {
               "who": "@npc",
-              "zh": "島上的長輩看病不容易，大家互相幫忙很重要。"
+              "zh": "島上的長輩看病不容易，大家互相幫忙很重要。",
+              "en": "Seeing a doctor isn't easy for the island's elders. It matters that people help each other."
             }
           ]
         },
@@ -323,10 +372,12 @@
           "kind": "talk",
           "npc": "villager_iratay",
           "text": "回報漁人的族人",
+          "textEn": "Report to the Iratay villager",
           "lines": [
             {
               "who": "@npc",
-              "zh": "真的太謝謝你們了。我媽說，下次要煮地瓜給你們吃。"
+              "zh": "真的太謝謝你們了。我媽說，下次要煮地瓜給你們吃。",
+              "en": "Thank you so much. My mum says she'll cook sweet potatoes for you next time."
             }
           ],
           "gives": {
@@ -340,7 +391,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人的族人要去機場接剛看完病回來的媽媽。"
+        "fromEn": "Iratay",
+        "zh": "漁人的族人要去機場接剛看完病回來的媽媽。",
+        "en": "An Iratay villager is going to the airport to pick up his mum, back from seeing a doctor."
       }
     },
     {
@@ -359,15 +412,20 @@
       "arc": "village",
       "name": {
         "zh": "漁人的族人：晚會的邀請",
-        "en": ""
+        "en": "Iratay villager: an invitation to the evening party"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "IT-V1",
         "unlock": "晚會邀請（NT4、OF3）",
-        "kind": "關鍵人物"
+        "unlockEn": "Party invitation (NT4, OF3)",
+        "kind": "關鍵人物",
+        "kindEn": "Key person"
       },
       "req": "IT-V1",
       "steps": [
@@ -375,14 +433,17 @@
           "kind": "talk",
           "npc": "villager_iratay",
           "text": "漁人的族人邀大家參加部落的晚會",
+          "textEn": "An Iratay villager invites everyone to the village's evening party",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這幾天晚上，學校操場有部落的晚會，大家一起吃東西、聽孩子唱歌。你們三個一起來吧！"
+              "zh": "這幾天晚上，學校操場有部落的晚會，大家一起吃東西、聽孩子唱歌。你們三個一起來吧！",
+              "en": "These next few nights there's a village party on the school field. We eat together and listen to the kids sing. All three of you, come!"
             },
             {
               "who": "@npc",
-              "zh": "旅人不用特別打扮。真的想戴點什麼，可以請族女幫你縫個小東西，紅頭的織布長輩會教。"
+              "zh": "旅人不用特別打扮。真的想戴點什麼，可以請族女幫你縫個小東西，紅頭的織布長輩會教。",
+              "en": "The traveller doesn't need to dress up. If you really want to wear something, ask the Tao woman to sew you something small — the Imorod weaving elder can teach her."
             }
           ],
           "gives": {
@@ -392,6 +453,10 @@
             "toast": [
               "晚會邀請",
               "晚上到漁人的學校操場參加晚會（NT4）。"
+            ],
+            "toastEn": [
+              "Party invitation",
+              "Go to the evening party at the Iratay school field at night (NT4)."
             ]
           }
         }
@@ -399,7 +464,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人的族人好像有好消息要說。"
+        "fromEn": "Iratay",
+        "zh": "漁人的族人好像有好消息要說。",
+        "en": "An Iratay villager seems to have good news."
       }
     }
   ]

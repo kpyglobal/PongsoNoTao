@@ -4,8 +4,10 @@
     {
       "id": "yayo",
       "zh": "椰油",
+      "en": "Yayo",
       "tao": "Yayo",
       "hint": "西岸返鄉／尋根，開元港就在家門口。",
+      "hintEn": "West coast, coming home / finding roots, with Kaiyuan Harbour on the doorstep.",
       "spawn": {
         "place": "yayo",
         "ox": -1.2,
@@ -15,8 +17,10 @@
     {
       "id": "iraraley",
       "zh": "朗島",
+      "en": "Iraraley",
       "tao": "Iraraley",
       "hint": "北岸開闊海岸，分上、下部落與潮間帶。",
+      "hintEn": "The open north coast, with upper and lower villages and tide flats.",
       "spawn": {
         "place": "iraraley",
         "ox": 0,
@@ -26,8 +30,10 @@
     {
       "id": "iranmeylek",
       "zh": "東清",
+      "en": "Iranmeylek",
       "tao": "Iranmeylek",
       "hint": "東北岸東清灣，迎接島上第一道曙光。",
+      "hintEn": "Dongqing Bay on the northeast coast, greeting the island's first light.",
       "spawn": {
         "place": "iranmeylek",
         "ox": -2.4,
@@ -37,8 +43,10 @@
     {
       "id": "ivalino",
       "zh": "野銀",
+      "en": "Ivalino",
       "tao": "Ivalino",
       "hint": "東南岸，最完整的傳統地下屋聚落。",
+      "hintEn": "Southeast coast, the most complete village of traditional underground houses.",
       "spawn": {
         "place": "ivalino",
         "ox": -2.2,
@@ -48,8 +56,10 @@
     {
       "id": "imorod",
       "zh": "紅頭",
+      "en": "Imorod",
       "tao": "Imorod",
       "hint": "南岸，飛魚傳說起源；衛生所在此。",
+      "hintEn": "South coast, where the flying fish legend began; the health station is here.",
       "spawn": {
         "place": "imorod",
         "ox": -2,
@@ -59,8 +69,10 @@
     {
       "id": "iratay",
       "zh": "漁人",
+      "en": "Iratay",
       "tao": "Iratay",
       "hint": "西南平坦之地，蘭嶼機場就在部落旁。",
+      "hintEn": "Flat land in the southwest, with Lanyu Airport right next to the village.",
       "spawn": {
         "place": "iratay",
         "ox": 2.2,
@@ -70,8 +82,11 @@
     {
       "id": "visitor",
       "zh": "外來訪客",
+      "en": "Visitor from outside",
       "tao": "開元港登島",
+      "taoEn": "Landing at Kaiyuan Harbour",
       "hint": "自開元港上岸。先看、先聽、先問，再走近舟與屋。",
+      "hintEn": "Arriving at Kaiyuan Harbour. Look first, listen first, ask first — then go near the boats and houses.",
       "spawn": {
         "place": "harbor",
         "ox": 0.8,
@@ -81,60 +96,75 @@
     {
       "id": "random",
       "zh": "隨機",
+      "en": "Random",
       "tao": "",
-      "hint": "交給海風決定這趟旅程的起點。"
+      "hint": "交給海風決定這趟旅程的起點。",
+      "hintEn": "Let the sea wind decide where this journey starts."
     }
   ],
   "travel": [
     {
       "id": "yayo",
       "zh": "椰油",
+      "en": "Yayo",
       "tao": "Yayo"
     },
     {
       "id": "iraraley",
       "zh": "朗島",
+      "en": "Iraraley",
       "tao": "Iraraley"
     },
     {
       "id": "iranmeylek",
       "zh": "東清",
+      "en": "Iranmeylek",
       "tao": "Iranmeylek"
     },
     {
       "id": "ivalino",
       "zh": "野銀",
+      "en": "Ivalino",
       "tao": "Ivalino"
     },
     {
       "id": "imorod",
       "zh": "紅頭",
+      "en": "Imorod",
       "tao": "Imorod"
     },
     {
       "id": "iratay",
       "zh": "漁人",
+      "en": "Iratay",
       "tao": "Iratay"
     },
     {
       "id": "harbor",
       "zh": "開元港",
+      "en": "Kaiyuan Harbour",
       "tao": ""
     },
     {
       "id": "clinic",
       "zh": "蘭嶼衛生所",
-      "tao": "南岸 · 紅頭旁"
+      "en": "Lanyu Health Station",
+      "tao": "南岸 · 紅頭旁",
+      "taoEn": "South coast · by Imorod"
     },
     {
       "id": "airport",
       "zh": "蘭嶼機場",
-      "tao": "西南 · 漁人旁"
+      "en": "Lanyu Airport",
+      "tao": "西南 · 漁人旁",
+      "taoEn": "South-west · by Iratay"
     },
     {
       "id": "qingqing",
       "zh": "青青草原",
+      "en": "Qingqing Prairie",
       "tao": "南端草原",
+      "taoEn": "Grassland at the south tip",
       "landmark": true
     }
   ],
@@ -144,53 +174,82 @@
       "單指轉視角",
       "雙指縮放"
     ],
+    "toastTouchEn": [
+      "Swipe bottom-left to move",
+      "One finger to turn the view",
+      "Two fingers to zoom"
+    ],
     "toastDesktop": [
       "WASD 移動",
       "拖曳轉視角",
       "滾輪縮放",
       "E 互動"
     ],
+    "toastDesktopEn": [
+      "WASD to move",
+      "Drag to turn the view",
+      "Scroll to zoom",
+      "E to interact"
+    ],
     "touch": [
       {
         "title": "移動與機車",
-        "body": "左下方滑動即可移動。點「步行｜機車」可騎上電動機車；環島公路較快，田埂與碼頭會自動放慢。"
+        "titleEn": "Moving and the scooter",
+        "body": "左下方滑動即可移動。點「步行｜機車」可騎上電動機車；環島公路較快，田埂與碼頭會自動放慢。",
+        "bodyEn": "Swipe bottom-left to move. Tap \"Walk | Scooter\" to ride the e-scooter. The round-island road is faster; field banks and docks slow you down automatically."
       },
       {
         "title": "視角縮放",
-        "body": "單指拖曳轉視角，雙指開合縮放。點「視角」可重置或微調遠近。"
+        "titleEn": "View and zoom",
+        "body": "單指拖曳轉視角，雙指開合縮放。點「視角」可重置或微調遠近。",
+        "bodyEn": "Drag one finger to turn the view, pinch with two to zoom. Tap \"View\" to reset or adjust the distance."
       },
       {
         "title": "互動與手札",
-        "body": "靠近人物或地點後，點畫面提示或右下「互動」。右上角打開圖鑑手札；點小地圖可環島傳送。"
+        "titleEn": "Interact and notebook",
+        "body": "靠近人物或地點後，點畫面提示或右下「互動」。右上角打開圖鑑手札；點小地圖可環島傳送。",
+        "bodyEn": "Get close to a person or place, then tap the prompt or \"Interact\" at the bottom right. Open the notebook at the top right; tap the minimap to travel around the island."
       },
       {
         "title": "隊伍與任務",
-        "body": "左上角三個頭像是族男、族女和旅人，點一下就換人操控，其他人會跟在後面。點任務條或右上角手札的「任務」頁，查看進行中、已完成和還沒解鎖的任務。"
+        "titleEn": "Party and quests",
+        "body": "左上角三個頭像是族男、族女和旅人，點一下就換人操控，其他人會跟在後面。點任務條或右上角手札的「任務」頁，查看進行中、已完成和還沒解鎖的任務。",
+        "bodyEn": "The three portraits at the top left are the Tao man, the Tao woman and the traveller. Tap one to switch who you control; the others follow. Tap the quest bar or the \"Quests\" page in the notebook (top right) to see active, finished and locked quests."
       }
     ],
     "desktop": [
       {
         "title": "移動與機車",
-        "body": "WASD 或方向鍵移動，方向跟著畫面。按 M 或點「步行｜機車」切換電動機車；環島公路較快，田埂與碼頭會自動放慢。"
+        "titleEn": "Moving and the scooter",
+        "body": "WASD 或方向鍵移動，方向跟著畫面。按 M 或點「步行｜機車」切換電動機車；環島公路較快，田埂與碼頭會自動放慢。",
+        "bodyEn": "WASD or arrow keys to move; directions follow the screen. Press M or tap \"Walk | Scooter\" to switch to the e-scooter. The round-island road is faster; field banks and docks slow you down automatically."
       },
       {
         "title": "視角縮放",
-        "body": "拖曳畫面或按 Q／R 旋轉視角，滾輪縮放。點「視角」可重置或微調遠近。"
+        "titleEn": "View and zoom",
+        "body": "拖曳畫面或按 Q／R 旋轉視角，滾輪縮放。點「視角」可重置或微調遠近。",
+        "bodyEn": "Drag the screen or press Q / R to turn the view; scroll to zoom. Tap \"View\" to reset or adjust the distance."
       },
       {
         "title": "互動與手札",
-        "body": "靠近後按 E（或 F、空白鍵），或點畫面提示。按 J 或右上角打開圖鑑手札；點小地圖可環島傳送。"
+        "titleEn": "Interact and notebook",
+        "body": "靠近後按 E（或 F、空白鍵），或點畫面提示。按 J 或右上角打開圖鑑手札；點小地圖可環島傳送。",
+        "bodyEn": "When close, press E (or F, Space), or tap the prompt. Press J or tap the top right to open the notebook; tap the minimap to travel around the island."
       },
       {
         "title": "隊伍與任務",
-        "body": "按 1／2／3 或點左上角頭像切換族男、族女、旅人；按 C 輪流切換。按 L 打開任務頁。進度會自動存在這台裝置的瀏覽器裡。"
+        "titleEn": "Party and quests",
+        "body": "按 1／2／3 或點左上角頭像切換族男、族女、旅人；按 C 輪流切換。按 L 打開任務頁。進度會自動存在這台裝置的瀏覽器裡。",
+        "bodyEn": "Press 1 / 2 / 3 or tap a portrait at the top left to switch between the Tao man, Tao woman and traveller; press C to cycle. Press L for the quests page. Progress saves automatically in this device's browser."
       }
     ]
   },
   "minigames": {
     "taro": {
       "title": "採收水芋  soli",
+      "titleEn": "Taro harvest  soli",
       "desc": "看準綠色區間按下「把握時機」。這是教學田，請不要走進別人的田埂。",
+      "descEn": "Tap \"Now!\" when the marker is in the green zone. This is a teaching field — please don't walk on other people's field banks.",
       "unlocks": {
         "ingredients": [
           "soli"
@@ -203,20 +262,28 @@
       "milestone": {
         "id": "harvest-taro",
         "title": "初收水芋",
-        "body": "soli 已寫入手札。"
+        "titleEn": "First taro harvest",
+        "body": "soli 已寫入手札。",
+        "bodyEn": "soli was added to your notebook."
       },
       "success": {
         "title": "採收成功",
-        "body": "水芋 soli 收入傳統食材。"
+        "titleEn": "Harvest done",
+        "body": "水芋 soli 收入傳統食材。",
+        "bodyEn": "Taro (soli) added to traditional foods."
       },
       "fail": {
         "title": "再試一次",
-        "body": "節奏偏了，水還很涼，再靠近田埂看看。"
+        "titleEn": "Try again",
+        "body": "節奏偏了，水還很涼，再靠近田埂看看。",
+        "bodyEn": "The rhythm was off. The water's still cool — get closer to the field bank and try again."
       }
     },
     "fish": {
       "title": "飛魚躍出  alibangbang",
+      "titleEn": "Flying fish leap  alibangbang",
       "desc": "看準飛魚躍出的時機。這只是港口體驗點，不是漁團的火把招魚。",
+      "descEn": "Catch the moment a flying fish leaps. This is just a practice spot at the harbour, not a crew's torch fishing.",
       "unlocks": {
         "ingredients": [
           "alibangbang"
@@ -230,44 +297,76 @@
       "milestone": {
         "id": "catch-fish",
         "title": "飛魚季的海",
-        "body": "alibangbang 已寫入手札。"
+        "titleEn": "The sea in flying fish season",
+        "body": "alibangbang 已寫入手札。",
+        "bodyEn": "alibangbang was added to your notebook."
       },
       "success": {
         "title": "時機剛好",
-        "body": "飛魚 alibangbang 收入傳統食材。"
+        "titleEn": "Perfect timing",
+        "body": "飛魚 alibangbang 收入傳統食材。",
+        "bodyEn": "Flying fish (alibangbang) added to traditional foods."
       },
       "fail": {
         "title": "再試一次",
-        "body": "飛魚已經落下水面，等下一躍。"
+        "titleEn": "Try again",
+        "body": "飛魚已經落下水面，等下一躍。",
+        "bodyEn": "The flying fish has dropped back into the water. Wait for the next leap."
       }
     }
   },
   "text": {
     "startTitle": "踏上 Pongso no Tao",
-    "startBody": "里程碑已寫入手札。按 J 或右上角打開圖鑑。",
+    "startTitleEn": "Set foot on Pongso no Tao",
+    "startBody": "里程碑記進手札了。按 J 或點右上角就能翻開看。",
+    "startBodyEn": "Milestone saved in your notebook. Press J or tap the top right to have a look.",
     "startErrorTitle": "無法開始",
-    "startErrorBody": "開場時發生錯誤，請重新整理再試一次。",
+    "startErrorTitleEn": "Can't start",
+    "startErrorBody": "開場出了點問題，重新整理一下再試試看。",
+    "startErrorBodyEn": "Something went wrong at the start. Refresh the page and give it another go.",
     "visitorWho": "開元港",
+    "visitorWhoEn": "Kaiyuan Harbour",
     "originWho": "{name}的風",
+    "originWhoEn": "Wind of {name}",
     "allTimesTitle": "島的四種光",
+    "allTimesTitleEn": "Four lights of the island",
     "allTimesBody": "你看過清晨、白天、黃昏與夜晚。",
+    "allTimesBodyEn": "You've seen dawn, day, dusk and night.",
     "allSeasonsTitle": "歲時走一輪",
+    "allSeasonsTitleEn": "A full year",
     "allSeasonsBody": "招魚祭、飛魚季、終食祭與休漁期都走過了。",
+    "allSeasonsBodyEn": "You've been through the fish-calling festival, flying fish season, end-of-eating festival and the off-season.",
     "journalUpdateTitle": "手札更新",
+    "journalUpdateTitleEn": "Notebook updated",
     "journalGlossary": "族語詞卡 ×{n}",
+    "journalGlossaryEn": "Tao word cards ×{n}",
     "journalRecipes": "食譜／衛生所筆記",
+    "journalRecipesEn": "Recipes / health station notes",
     "journalIngredients": "食材",
+    "journalIngredientsEn": "Food",
     "talkPrompt": "與{name}交談",
-    "placeHint": "在部落廣場走走，找長輩或涼亭旁的人談談。",
+    "talkPromptEn": "Talk to {name}",
+    "placeHint": "在部落廣場走走，找長輩或涼亭旁的人聊聊吧。",
+    "placeHintEn": "Wander around the village square and have a chat with an elder or the people by the pavilion.",
     "clinicWho": "蘭嶼衛生所護理師",
+    "clinicWhoEn": "Lanyu Health Station nurse",
     "lookWho": "南岸眺望",
+    "lookWhoEn": "South coast view",
     "fisherWho": "灘頭的漁人",
+    "fisherWhoEn": "Fisher on the boat beach",
     "fallbackLine": "（他們微笑點頭，暫時沒有要多說。）",
+    "fallbackLineEn": "(They smile and nod, and don't say more for now.)",
     "scooterOnTitle": "騎上電動機車",
-    "scooterOnBody": "環島公路上會跑得更快；水芋田埂與碼頭會自動放慢。按 M 或點「步行｜機車」可切換。",
+    "scooterOnTitleEn": "On the e-scooter",
+    "scooterOnBody": "在環島公路上快很多；到了水芋田埂和碼頭會自己放慢。按 M 或點「步行｜機車」就能換。",
+    "scooterOnBodyEn": "Much quicker on the round-island road; it slows down by itself on taro field banks and docks. Press M or tap \"Walk | Scooter\" to switch.",
     "scooterOffTitle": "下車步行",
-    "scooterOffBody": "改為步行。按 M 或再點「步行｜機車」可出發。",
+    "scooterOffTitleEn": "Walking",
+    "scooterOffBody": "現在用走的。想再騎，按 M 或再點一次「步行｜機車」。",
+    "scooterOffBodyEn": "On foot now. Want to ride again? Press M or tap \"Walk | Scooter\" once more.",
     "travelTitle": "抵達{name}",
-    "travelBody": "已傳送。可用機車沿環島公路繼續走訪。"
+    "travelTitleEn": "Arrived at {name}",
+    "travelBody": "到了！還想去別的地方，就騎機車沿著環島公路走。",
+    "travelBodyEn": "You're here! Hop on the scooter and follow the round-island road to keep exploring."
   }
 }

@@ -19,7 +19,7 @@
       "giver": "f",
       "name": {
         "zh": "東清的女性長輩：退潮時只拿需要的",
-        "en": ""
+        "en": "Iranmeylek woman elder: take only what you need at low tide"
       },
       "tide": "low",
       "review": [
@@ -27,11 +27,16 @@
       ],
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（退潮）",
+        "seasonEn": "All year (low tide)",
         "pre": "K5",
         "unlock": "貝類、海菜、潮間帶規矩",
-        "kind": "a akes・潮間帶"
+        "unlockEn": "Shellfish, seaweed, tide flat rules",
+        "kind": "a akes・潮間帶",
+        "kindEn": "a akes · Tide flats"
       },
       "req": "K5",
       "steps": [
@@ -39,10 +44,12 @@
           "kind": "talk",
           "npc": "elder_f_iranmeylek",
           "text": "東清的女性長輩帶你去潮間帶",
+          "textEn": "The Iranmeylek woman elder takes you to the tide flats",
           "lines": [
             {
               "who": "@npc",
-              "zh": "退潮了，跟我來。潮間帶是大家的廚房，要留給明天，也要留給別人。"
+              "zh": "退潮了，跟我來。潮間帶是大家的廚房，要留給明天，也要留給別人。",
+              "en": "Low tide. Come with me. The tide flats are everyone's kitchen. Leave some for tomorrow, and for others."
             }
           ]
         },
@@ -51,18 +58,22 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "跟著長輩在潮間帶撿貝類、採海菜，太小的放回去",
+          "textEn": "Follow the elder on the tide flats picking shellfish and seaweed, putting the small ones back",
           "lines": [
             {
               "who": "elder_f_iranmeylek",
-              "zh": "這個太小了，放回去，讓牠再長大。"
+              "zh": "這個太小了，放回去，讓牠再長大。",
+              "en": "This one's too small. Put it back and let it grow."
             },
             {
               "who": "@me",
-              "zh": "那這個呢？"
+              "zh": "那這個呢？",
+              "en": "What about this one?"
             },
             {
               "who": "elder_f_iranmeylek",
-              "zh": "這個可以。夠吃就好，不要裝滿。"
+              "zh": "這個可以。夠吃就好，不要裝滿。",
+              "en": "That one's fine. Just enough to eat — don't fill up."
             }
           ]
         },
@@ -70,10 +81,12 @@
           "kind": "talk",
           "npc": "elder_f_iranmeylek",
           "text": "回到東清的女性長輩身邊",
+          "textEn": "Go back to the Iranmeylek woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今天就這些，剛剛好。潮水要回來了，我們上去吧。"
+              "zh": "今天就這些，剛剛好。潮水要回來了，我們上去吧。",
+              "en": "That's enough for today — just right. The tide is coming back. Let's go up."
             }
           ],
           "gives": {
@@ -91,7 +104,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "退潮時，東清的女性長輩會去潮間帶，可以跟她學怎麼採。"
+        "fromEn": "Iranmeylek",
+        "zh": "退潮時，東清的女性長輩會去潮間帶，可以跟她學怎麼採。",
+        "en": "At low tide, the Iranmeylek woman elder goes to the tide flats. You can learn from her how to pick."
       }
     },
     {
@@ -111,15 +126,20 @@
       "giver": "m",
       "name": {
         "zh": "東清的長輩：出海前的繩索與槳",
-        "en": ""
+        "en": "Iranmeylek elder: ropes and paddles before going to sea"
       },
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "夏季（飛魚季）",
+        "seasonEn": "Summer (flying fish season)",
         "pre": "MS1",
         "unlock": "族男的出海準備",
-        "kind": "a akey・拼板舟"
+        "unlockEn": "The Tao man's preparation for sea",
+        "kind": "a akey・拼板舟",
+        "kindEn": "a akey · Plank boat"
       },
       "req": "MS1",
       "steps": [
@@ -130,10 +150,12 @@
             "m"
           ],
           "text": "東清的長輩要族男自己檢查一次",
+          "textEn": "The Iranmeylek elder wants the Tao man to check everything himself",
           "lines": [
             {
               "who": "@npc",
-              "zh": "上次教你看，這次你自己來。繩子、槳，一樣一樣看。"
+              "zh": "上次教你看，這次你自己來。繩子、槳，一樣一樣看。",
+              "en": "Last time I showed you. This time you do it. The ropes, the paddles — check them one by one."
             }
           ]
         },
@@ -145,10 +167,12 @@
             "m"
           ],
           "text": "族男到東清灣沙灘，把繩索拉直、檢查槳",
+          "textEn": "The Tao man goes to the Dongqing Bay beach, pulls the ropes straight and checks the paddles",
           "lines": [
             {
               "who": "@m",
-              "zh": "這段繩子磨得很薄了，要換。槳沒問題。"
+              "zh": "這段繩子磨得很薄了，要換。槳沒問題。",
+              "en": "This section of rope is worn very thin. It needs replacing. The paddles are fine."
             }
           ]
         },
@@ -159,10 +183,12 @@
             "m"
           ],
           "text": "向東清的長輩回報",
+          "textEn": "Report to the Iranmeylek elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "看得對。海上出事，常常是從一條小繩子開始的。"
+              "zh": "看得對。海上出事，常常是從一條小繩子開始的。",
+              "en": "You saw it right. Trouble at sea often starts with one small rope."
             }
           ],
           "gives": {
@@ -176,7 +202,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "飛魚季時，東清的長輩要族男自己檢查繩索與槳。"
+        "fromEn": "Iranmeylek",
+        "zh": "飛魚季時，東清的長輩要族男自己檢查繩索與槳。",
+        "en": "In flying fish season, the Iranmeylek elder wants the Tao man to check the ropes and paddles himself."
       }
     },
     {
@@ -195,7 +223,7 @@
       "arc": "village",
       "name": {
         "zh": "東清的族人：清晨的海灣",
-        "en": ""
+        "en": "Iranmeylek villager: the bay at dawn"
       },
       "periods": [
         "dawn",
@@ -203,11 +231,16 @@
       ],
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K5",
         "unlock": "東清族人的信任",
-        "kind": "關鍵人物"
+        "unlockEn": "Trust of the Iranmeylek villagers",
+        "kind": "關鍵人物",
+        "kindEn": "Key person"
       },
       "req": "K5",
       "steps": [
@@ -215,14 +248,17 @@
           "kind": "talk",
           "npc": "villager_iranmeylek",
           "text": "東清的族人說起看日出的遊客",
+          "textEn": "An Iranmeylek villager talks about the sunrise tourists",
           "lines": [
             {
               "who": "@npc",
-              "zh": "每天清晨，很多遊客來東清灣看日出。人多是好事，可是垃圾也多。"
+              "zh": "每天清晨，很多遊客來東清灣看日出。人多是好事，可是垃圾也多。",
+              "en": "Every morning, lots of tourists come to Dongqing Bay for the sunrise. More people is good, but there's more rubbish too."
             },
             {
               "who": "@npc",
-              "zh": "還有人坐到拼板舟上拍照……那是別人家的船啊。可以幫我一起去海灣看看嗎？"
+              "zh": "還有人坐到拼板舟上拍照……那是別人家的船啊。可以幫我一起去海灣看看嗎？",
+              "en": "And some sit in the plank boats for photos… those are other families' boats. Could you help me check on the bay?"
             }
           ]
         },
@@ -231,14 +267,17 @@
           "spot": "iranmeylek_beach",
           "r": 8,
           "text": "到東清灣沙灘撿垃圾，客氣地請遊客離拼板舟遠一點",
+          "textEn": "Pick up rubbish on the Dongqing Bay beach and politely ask tourists to move away from the plank boats",
           "lines": [
             {
               "who": "@me",
-              "zh": "不好意思，這是族人的船，可以到旁邊拍嗎？謝謝！"
+              "zh": "不好意思，這是族人的船，可以到旁邊拍嗎？謝謝！",
+              "en": "Excuse me, this is a Tao family's boat. Could you take your photo from the side? Thanks!"
             },
             {
               "who": "旁白",
-              "zh": "撿起了寶特瓶和塑膠袋。"
+              "zh": "撿起了寶特瓶和塑膠袋。",
+              "en": "Picked up plastic bottles and plastic bags."
             }
           ]
         },
@@ -246,10 +285,12 @@
           "kind": "talk",
           "npc": "villager_iranmeylek",
           "text": "回報東清的族人",
+          "textEn": "Report to the Iranmeylek villager",
           "lines": [
             {
               "who": "@npc",
-              "zh": "謝謝你們。我們不是不歡迎遊客，只是希望大家記得，這裡是有人住的地方。"
+              "zh": "謝謝你們。我們不是不歡迎遊客，只是希望大家記得，這裡是有人住的地方。",
+              "en": "Thank you. It's not that we don't welcome tourists — we just hope people remember that people live here."
             }
           ],
           "gives": {
@@ -263,7 +304,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "東清的族人在煩惱清晨看日出的遊客，去問問他怎麼了。"
+        "fromEn": "Iranmeylek",
+        "zh": "東清的族人在煩惱清晨看日出的遊客，去問問他怎麼了。",
+        "en": "An Iranmeylek villager is worried about the sunrise tourists. Go ask him what's wrong."
       }
     },
     {
@@ -282,15 +325,20 @@
       "arc": "village",
       "name": {
         "zh": "東清的族人：回家的理由",
-        "en": ""
+        "en": "Iranmeylek villager: reasons for coming home"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "IM-V1",
         "unlock": "東清族人的故事",
-        "kind": "夜晚・故事"
+        "unlockEn": "An Iranmeylek villager's story",
+        "kind": "夜晚・故事",
+        "kindEn": "Night · Story"
       },
       "req": "IM-V1",
       "steps": [
@@ -298,18 +346,22 @@
           "kind": "talk",
           "npc": "villager_iranmeylek",
           "text": "晚上在東清，聽族人說他為什麼回到島上",
+          "textEn": "At night in Iranmeylek, hear a villager tell why he came back to the island",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我以前在臺北工作十幾年，每天坐捷運，看不到海。"
+              "zh": "我以前在臺北工作十幾年，每天坐捷運，看不到海。",
+              "en": "I worked in Taipei for over ten years. I took the metro every day and never saw the sea."
             },
             {
               "who": "@npc",
-              "zh": "後來阿爸身體不好，我就回來了。現在開民宿、帶導覽，也跟長輩學出海。"
+              "zh": "後來阿爸身體不好，我就回來了。現在開民宿、帶導覽，也跟長輩學出海。",
+              "en": "Then Dad's health got worse, so I came back. Now I run a guesthouse, lead tours, and learn to go to sea with the elders."
             },
             {
               "who": "@npc",
-              "zh": "年輕人回來不容易，工作少。可是你看這片海，晚上這麼安靜，我就知道我選對了。"
+              "zh": "年輕人回來不容易，工作少。可是你看這片海，晚上這麼安靜，我就知道我選對了。",
+              "en": "It's not easy for young people to come back. There's little work. But look at this sea, so quiet at night — I know I made the right choice."
             }
           ],
           "gives": {
@@ -323,7 +375,9 @@
       "hint": {
         "tier": "vague",
         "from": "東清",
-        "zh": "晚上東清的族人常在灣邊乘涼。"
+        "fromEn": "Iranmeylek",
+        "zh": "晚上東清的族人常在灣邊乘涼。",
+        "en": "At night, Iranmeylek villagers often relax by the bay."
       }
     }
   ]

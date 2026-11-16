@@ -61,8 +61,8 @@ try {
     await ev(() => window.__TAO_RPG__.clearSave());
     await boot(); // fresh cover without the 繼續 block (the desktop run left a save)
     await shot('01-character-select', 600);
-    await page.waitForSelector('#btn-origin-ivalino', { visible: true, timeout: 15000 });
-    await page.click('#btn-origin-ivalino');
+    await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 15000 });
+    await page.select('#sel-origin-m', 'ivalino'); await page.select('#sel-origin-f', 'ivalino');
     await page.waitForSelector('#btn-gender-f', { visible: true, timeout: 15000 });
     await page.click('#btn-gender-f');
     await page.waitForSelector('#origin-go', { visible: true, timeout: 15000 });
@@ -70,7 +70,7 @@ try {
     await sleep(900);
     await shot('02-q01-arrival-statement', 900);
     const p0 = await ev(() => window.__TAO_RPG__.party());
-    check(`${T}: party is 族男 + 族女 + chosen traveller, traveller controlled`, p0.controlled === 't' && p0.outfits.m === 'player' && p0.outfits.f === 'player_f' && p0.outfits.t === 'player_visitor_f', p0);
+    check(`${T}: party is 族男 + 族女 + chosen traveller, 族男 controlled`, p0.controlled === 'm' && p0.outfits.m === 'player' && p0.outfits.f === 'player_f' && p0.outfits.t === 'player_visitor_f', p0);
     await drain();
     check(`${T}: Q01 done → Q02/Q03/Q04 active`, (await q('Q01')).status === 'done' && (await q('Q02')).status === 'active' && (await q('Q04')).status === 'active');
     await ev(() => window.__TAO_RPG__.toggleScooter());
@@ -177,9 +177,11 @@ try {
       await ev(() => window.__TAO_RPG__.setTime('day'));
       const ph = await ev(() => window.__TAO_RPG__.questTarget('P23'));
       await ev((p) => { const g = window.__TAO_RPG__; g.teleport(p.x + 2, p.z + 2); g.gatherParty(); g.useSpot(); }, ph);
-      check(`${T}: photo refused for 族女`, (await q('P23')).status === 'active');
-      await ev(() => { const g = window.__TAO_RPG__; g.switchMember('t'); g.useSpot(); });
-      check(`${T}: P23 photo by traveller`, (await q('P23')).status === 'done');
+      // 0.1.5: anyone can lead the photo as long as the traveller is in the party (the traveller holds the camera)
+      await drain();
+      const p23 = await ev(() => { const g = window.__TAO_RPG__; return { q: g.quest('P23'), ctl: g.questState?.().members ?? null, mode: g.mode(), dlg: document.querySelector('#dialogue')?.textContent?.slice(0, 120) ?? '', toast: [...document.querySelectorAll('.toast')].map((t) => t.textContent).slice(-2) }; });
+      check(`${T}: P23 photo with 族女 leading and the traveller in the party`, p23.q.status === 'done', [p23, ph]);
+      await ev(() => window.__TAO_RPG__.switchMember('t'));
       await ev(() => window.__TAO_RPG__.setTime('night'));
       await ev(() => window.__TAO_RPG__.switchMember('f'));
       const c1 = await ev(() => window.__TAO_RPG__.questTarget('C1'));
