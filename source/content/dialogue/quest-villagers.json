@@ -5,12 +5,14 @@
       "npc": "villager_iranmeylek",
       "greet": [
         {
-          "zh": "嘿，你們好！來東清玩嗎？"
+          "zh": "嘿，你們好！來東清玩嗎？",
+          "en": "Hey, hello! Here to visit Iranmeylek?"
         }
       ],
       "duty": [
         {
-          "zh": "我開民宿、帶導覽，也跟長輩學出海。"
+          "zh": "我開民宿、帶導覽，也跟長輩學出海。",
+          "en": "I run a guesthouse, lead tours, and I'm learning to go to sea with the elders."
         }
       ],
       "idle": [
@@ -20,10 +22,12 @@
           },
           "lines": [
             {
-              "zh": "早上的東清灣人最多，中午就安靜了。"
+              "zh": "早上的東清灣人最多，中午就安靜了。",
+              "en": "Dongqing Bay is busiest in the morning. By noon it's quiet."
             },
             {
-              "zh": "帶導覽的時候，我都先講規矩，再講風景。"
+              "zh": "帶導覽的時候，我都先講規矩，再講風景。",
+              "en": "On my tours, I always explain the rules first, then the scenery."
             }
           ]
         },
@@ -33,7 +37,8 @@
           },
           "lines": [
             {
-              "zh": "晚上的灣邊最舒服，風吹著，什麼都不用想。"
+              "zh": "晚上的灣邊最舒服，風吹著，什麼都不用想。",
+              "en": "The bay is nicest at night. The wind blows and you don't have to think about anything."
             }
           ]
         },
@@ -45,7 +50,8 @@
           },
           "lines": [
             {
-              "zh": "飛魚季的時候，我會提醒客人不要進灘頭。"
+              "zh": "飛魚季的時候，我會提醒客人不要進灘頭。",
+              "en": "In flying fish season, I remind guests not to go onto the boat beach."
             }
           ]
         },
@@ -57,7 +63,8 @@
           },
           "lines": [
             {
-              "zh": "冬天遊客少，正好整理房子，也陪陪阿爸。"
+              "zh": "冬天遊客少，正好整理房子，也陪陪阿爸。",
+              "en": "Fewer tourists in winter. A good time to fix up the house and spend time with Dad."
             }
           ]
         }
@@ -65,12 +72,14 @@
       "after": {
         "IM-V1": [
           {
-            "zh": "海灣乾淨多了，謝謝你們。"
+            "zh": "海灣乾淨多了，謝謝你們。",
+            "en": "The bay is much cleaner. Thank you."
           }
         ],
         "IM-V2": [
           {
-            "zh": "那天晚上說了好多，你們不要笑我。"
+            "zh": "那天晚上說了好多，你們不要笑我。",
+            "en": "I said so much that night. Don't laugh at me."
           }
         ]
       }
@@ -79,12 +88,14 @@
       "npc": "villager_iratay",
       "greet": [
         {
-          "zh": "你們好！要去機場嗎？順路的話我載你們。"
+          "zh": "你們好！要去機場嗎？順路的話我載你們。",
+          "en": "Hello! Going to the airport? I can give you a lift if it's on my way."
         }
       ],
       "duty": [
         {
-          "zh": "我在漁人做小生意，也照顧家裡的長輩。"
+          "zh": "我在漁人做小生意，也照顧家裡的長輩。",
+          "en": "I run a small business in Iratay and look after the elders at home."
         }
       ],
       "idle": [
@@ -94,10 +105,12 @@
           },
           "lines": [
             {
-              "zh": "飛機又誤點了，風太大。島上的人都習慣了。"
+              "zh": "飛機又誤點了，風太大。島上的人都習慣了。",
+              "en": "The plane is late again. Too windy. People here are used to it."
             },
             {
-              "zh": "我媽每次去臺灣看病，我都要請假陪她。"
+              "zh": "我媽每次去臺灣看病，我都要請假陪她。",
+              "en": "Every time Mum goes to Taiwan to see a doctor, I take time off to go with her."
             }
           ]
         },
@@ -107,7 +120,8 @@
           },
           "lines": [
             {
-              "zh": "學校操場晚上很熱鬧，孩子們在練唱歌。"
+              "zh": "學校操場晚上很熱鬧，孩子們在練唱歌。",
+              "en": "The school field is lively at night. The kids are practising songs."
             }
           ]
         },
@@ -119,7 +133,8 @@
           },
           "lines": [
             {
-              "zh": "夏天遊客多，生意比較好，可是也比較累。"
+              "zh": "夏天遊客多，生意比較好，可是也比較累。",
+              "en": "Lots of tourists in summer. Business is better, but it's tiring too."
             }
           ]
         },
@@ -131,7 +146,8 @@
           },
           "lines": [
             {
-              "zh": "冬天船常常停駛，東西都要先買好。"
+              "zh": "冬天船常常停駛，東西都要先買好。",
+              "en": "Boats often stop in winter, so you have to buy things in advance."
             }
           ]
         }
@@ -139,17 +155,20 @@
       "after": {
         "IT-V1": [
           {
-            "zh": "我媽一直說你們很有禮貌。"
+            "zh": "我媽一直說你們很有禮貌。",
+            "en": "My mum keeps saying how polite you are."
           }
         ],
         "IT-V2": [
           {
-            "zh": "晚會記得來喔！"
+            "zh": "晚會記得來喔！",
+            "en": "Don't forget the evening party!"
           }
         ],
         "NT4": [
           {
-            "zh": "昨天的晚會好玩吧？孩子們唱得很好聽。"
+            "zh": "昨天的晚會好玩吧？孩子們唱得很好聽。",
+            "en": "Fun party last night, right? The kids sang so well."
           }
         ]
       }

@@ -29,14 +29,29 @@ export class Inventory {
     return this.store().items[id] ?? 0;
   }
 
+  /** 0.1.5 cards: called the first time an item becomes known (found, bought, given or observed) */
+  onFirst: ((id: string) => void) | null = null;
+
   /** put n in the bag (observe-only items are just marked seen); returns the new count */
   add(id: string, n = 1): number {
     const s = this.store();
+    const was = this.known(id);
     s.collect.add(`item:${id}`);
     const d = this.defs.get(id);
-    if (d && !d.collectible) return 0;
+    if (d && !d.collectible) {
+      if (!was) this.onFirst?.(id);
+      return 0;
+    }
     s.items[id] = (s.items[id] ?? 0) + n;
+    if (!was) this.onFirst?.(id);
     return s.items[id];
+  }
+
+  /** mark seen without putting anything in the bag (a quest shows or gives it) */
+  see(id: string): void {
+    const was = this.known(id);
+    this.store().collect.add(`item:${id}`);
+    if (!was && this.defs.has(id)) this.onFirst?.(id);
   }
 
   take(id: string, n = 1): boolean {
@@ -57,8 +72,10 @@ export class Inventory {
 
   observe(id: string): boolean {
     const s = this.store();
+    const was = this.known(id);
     const fresh = !s.collect.has(`item:${id}`);
     s.collect.add(`item:${id}`);
+    if (!was) this.onFirst?.(id);
     return fresh;
   }
 

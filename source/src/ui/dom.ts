@@ -6,9 +6,13 @@ import type { Gender, GameState, LangMode } from '../core/state';
 import { PERIODS, SEASONS, type Period, type Season } from '../core/timeSeason';
 import type { GlossaryEntry, MilestoneEntry, PlayableOrigin, UiContent } from '../core/content';
 import type { ItemDef, RecipeDef } from '../content/types';
-import { codexPage, type CodexVM } from './codex';
+import { codexCells, type CodexVM } from './codex';
+import { ItemGrid } from './itemGrid';
+import { fxOn, zoomButton } from './fly';
 import { TERRAIN_BOX } from '../world/height';
 import { Notebook, h, nbTitle, nbMore, nbSource, type NbItem } from './notebook';
+import { onLangPick, syncLangToggles } from './lang';
+import { english, isBi } from './i18n';
 
 /** Modal layers drawn over the world; Game owns which one is open (at most one at a time). */
 
@@ -27,7 +31,8 @@ function readTextSize(): TextSize {
 export type Overlay = 'journal' | 'travel' | 'help';
 
 export interface UiHooks {
-  onOrigin: (id: PlayableOrigin, gender: Gender) => void;
+  /** 0.1.5: 族男's village (= the 主人家), 族女's village, traveller 男生／女生 */
+  onOrigin: (id: PlayableOrigin, idF: PlayableOrigin, gender: Gender) => void;
   onPeriod: (p: Period) => void;
   onSeason: (s: Season) => void;
   onLang: (m: LangMode) => void;
@@ -108,7 +113,9 @@ let lastPointerActivate: { at: number; el: HTMLElement | null } = { at: 0, el: n
 export class UI {
   root: HTMLElement;
   hooks!: UiHooks;
-  private selected: UiContent['origins'][number]['id'] | null = null;
+  /** 0.1.5: each Tao member's village on the party screen (default 隨機) */
+  private selM: UiContent['origins'][number]['id'] = 'random';
+  private selF: UiContent['origins'][number]['id'] = 'random';
   private gender: Gender = 'm';
   private content: UiContent | null = null;
   private overlay: Overlay | null = null;
@@ -134,6 +141,7 @@ export class UI {
 
   constructor(root: HTMLElement) {
     this.root = root;
+    document.documentElement.classList.toggle('fx', fxOn());
     this.root.innerHTML = `
       <div class="overlay-screen is-boot" id="boot-screen">
         <div class="cover-card boot-card">
@@ -155,7 +163,7 @@ export class UI {
           <button type="button" class="btn-primary title-start" id="btn-title-start">點一下開始</button>
           <p class="title-note">會播放音樂，可以在遊戲裡按 ♪ 調整音量。</p>
         </div>
-        <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。</p>
+        <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。<span class="app-ver" id="app-ver">　版本 ${__APP_VERSION__}</span></p>
       </div>
       <div class="overlay-screen is-cover" id="arrival-screen" style="display:none">
         <div class="cover-card arrival-card">
@@ -199,23 +207,40 @@ export class UI {
             <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
             <p class="subtitle">兩位族人同學放假回島，帶著一位朋友一起來。</p>
           </div>
-          <p class="lede">隊伍固定三人：族男、族女，加上一位旅人。先選兩位族人的家鄉部落（主人家），再決定旅人來自哪裡、是男生還是女生。</p>
           <div class="origin-continue" id="origin-continue" hidden>
             <button type="button" class="btn-primary" id="btn-continue">繼續上次的旅程</button>
             <span class="oc-meta" id="continue-meta"></span>
           </div>
-          <div class="pick-label">族人的家鄉部落</div>
-          <div class="origin-grid" id="origin-grid"></div>
-          <div class="gender-pick" id="gender-pick" role="radiogroup" aria-label="旅人是男生或女生">
-            <span class="gp-label">旅人</span>
-            <button type="button" class="gender-card selected" id="btn-gender-m" data-g="m" role="radio" aria-checked="true"><i class="gp-sprite" aria-hidden="true"></i><span class="gp-name">男生</span></button>
-            <button type="button" class="gender-card" id="btn-gender-f" data-g="f" role="radio" aria-checked="false"><i class="gp-sprite" aria-hidden="true"></i><span class="gp-name">女生</span></button>
+          <p class="lede cs-lede">三個人一起旅行，各有各的目的。</p>
+          <div class="cs-party" id="cs-party">
+            <div class="cs-member" id="cs-member-m">
+              <figure class="cs-face" aria-hidden="true"><img alt="" decoding="async" /></figure>
+              <b class="cs-name">族男</b>
+              <span class="cs-goal">回家學造船、出海</span>
+              <label class="cs-tribe"><span class="cs-tribe-k">部落</span><select id="sel-origin-m" aria-label="族男的部落"></select></label>
+            </div>
+            <div class="cs-member" id="cs-member-f">
+              <figure class="cs-face" aria-hidden="true"><img alt="" decoding="async" /></figure>
+              <b class="cs-name">族女</b>
+              <span class="cs-goal">回家學芋田、織布</span>
+              <label class="cs-tribe"><span class="cs-tribe-k">部落</span><select id="sel-origin-f" aria-label="族女的部落"></select></label>
+            </div>
+            <div class="cs-member is-pick">
+              <button type="button" class="cs-face cs-face-btn" id="cs-traveller" aria-label="旅人：點一下換男生或女生"><img alt="" decoding="async" /><i class="cs-swap" aria-hidden="true">⇄</i></button>
+              <b class="cs-name">旅人</b>
+              <span class="cs-goal">第一次來，跟著學</span>
+              <div class="gender-pick cs-gender" id="gender-pick" role="radiogroup" aria-label="旅人是男生或女生">
+                <button type="button" class="gender-card selected" id="btn-gender-m" data-g="m" role="radio" aria-checked="true"><span class="gp-name">男生</span></button>
+                <button type="button" class="gender-card" id="btn-gender-f" data-g="f" role="radio" aria-checked="false"><span class="gp-name">女生</span></button>
+              </div>
+            </div>
           </div>
+          <p class="cs-note" id="cs-note">大家住在族男的家（主人家）。</p>
           <div class="origin-actions">
-            <button type="button" class="btn-primary" id="origin-go" disabled>踏上 Pongso no Tao</button>
+            <button type="button" class="btn-primary" id="origin-go">踏上 Pongso no Tao</button>
           </div>
         </div>
-        <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。</p>
+        <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。　版本 ${__APP_VERSION__}</p>
       </div>
       <div class="hud-top" id="hud" style="display:none">
         <div class="hud-left">
@@ -253,8 +278,11 @@ export class UI {
           <h3 id="travel-title">環島傳送</h3>
           <button type="button" class="close-x" id="travel-close" aria-label="關閉">×</button>
         </header>
-        <p class="travel-lead">六大部落、開元港、衛生所、機場與青青草原，點一下即可前往。</p>
-        <div class="travel-grid" id="travel-grid"></div>
+        <p class="travel-lead">點地圖上的地點就能前往：六大部落、開元港、機場、衛生所與青青草原。</p>
+        <div class="travel-map" id="travel-map">
+          <canvas id="travel-canvas" width="4" height="4" aria-hidden="true"></canvas>
+          <div class="travel-you" id="travel-you" aria-hidden="true"></div>
+        </div>
       </div>
       <div class="help-toast" id="help-toast" style="display:none">
         <span class="help-toast-msg" id="help-toast-msg"></span>
@@ -301,18 +329,15 @@ export class UI {
         <div class="dlg-body">
         <div class="who" id="dlg-who"></div>
         <div class="line-zh" id="dlg-zh"></div>
+        <div class="line-en hidden" id="dlg-en" lang="en"></div>
         <div class="line-tao" id="dlg-tao" lang="tao"></div>
         <div class="dialogue-bar">
-          <div class="lang-toggle" id="lang-toggle">
-            <button type="button" data-lang="both">雙語</button>
-            <button type="button" data-lang="zh">僅繁中</button>
-            <button type="button" data-lang="tao">僅族語</button>
-          </div>
           <button type="button" class="next" id="dlg-next">繼續</button>
         </div>
         </div>
       </div>
       <div class="unlock-toast" id="unlock-toast" role="status" aria-live="polite"></div>
+      <div id="loot-layer" aria-live="polite"></div>
       <div class="journal-backdrop" id="journal-backdrop">
         <div class="journal notebook" id="journal" role="dialog" aria-modal="true" aria-labelledby="journal-title">
           <nav class="nb-ribbons" id="journal-tabs" aria-label="手札分頁">
@@ -359,16 +384,25 @@ export class UI {
 
   private bindStatic(): void {
     this.bindActivate(this.el('#origin-go'), () => {
-      if (!this.selected || !this.content) return;
-      let id = this.selected;
-      if (id === 'random') {
-        const pool = this.content.origins.filter((o) => o.spawn && o.id !== 'visitor').map((o) => o.id);
-        id = pool[Math.floor(Math.random() * pool.length)];
-      }
-      this.hooks.onOrigin(id as PlayableOrigin, this.gender);
+      if (!this.content) return;
+      // 隨機 is drawn separately for each member (the two may land in the same village)
+      const pool = this.content.origins.filter((o) => o.spawn && o.id !== 'visitor').map((o) => o.id);
+      const draw = (id: string): PlayableOrigin => (id === 'random' ? pool[Math.floor(Math.random() * pool.length)] : id) as PlayableOrigin;
+      this.hooks.onOrigin(draw(this.selM), draw(this.selF), this.gender);
     });
     for (const g of ['m', 'f'] as const) {
       this.bindActivate(this.el(`#btn-gender-${g}`), () => this.setGender(g));
+    }
+    // the traveller's portrait itself switches 男生／女生
+    this.bindActivate(this.el('#cs-traveller'), () => this.setGender(this.gender === 'm' ? 'f' : 'm'));
+    for (const r of ['m', 'f'] as const) {
+      const sel = this.el(`#sel-origin-${r}`) as HTMLSelectElement;
+      sel.addEventListener('change', () => {
+        const v = sel.value as UiContent['origins'][number]['id'];
+        if (r === 'm') this.selM = v;
+        else this.selF = v;
+        this.refreshPartyNote();
+      });
     }
     this.refreshGenderPreview();
     this.bindActivate(this.el('#btn-continue'), () => this.hooks.onContinue());
@@ -441,8 +475,11 @@ export class UI {
       if (ts === 's' || ts === 'm' || ts === 'l') this.setTextSize(ts, true);
     });
     this.setTextSize(readTextSize(), false);
-    this.el('#lang-toggle').addEventListener('click', (e) => {
-      const lang = (e.target as HTMLElement).dataset.lang as LangMode | undefined;
+    onLangPick((m) => this.hooks.onLang(m));
+    this.root.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest?.('.lang-toggle [data-lang]') as HTMLElement | null;
+      if (!btn) return;
+      const lang = btn.dataset.lang as LangMode | undefined;
       if (lang) this.hooks.onLang(lang);
     });
     this.el('#btn-act').addEventListener('click', () => this.hooks.onInteract());
@@ -475,6 +512,8 @@ export class UI {
     });
     this.el('#minimap').addEventListener('click', () => this.hooks.onOverlay('travel', true));
     this.el('#travel-close').addEventListener('click', () => this.hooks.onOverlay('travel', false));
+    window.addEventListener('resize', () => this.fitTravelMap());
+    window.visualViewport?.addEventListener('resize', () => this.fitTravelMap());
     this.el('#mg-hit').addEventListener('click', () => this.hooks.onMinigameHit());
     this.setupPad();
   }
@@ -591,11 +630,19 @@ export class UI {
       b.classList.toggle('selected', k === g);
       b.setAttribute('aria-checked', k === g ? 'true' : 'false');
     }
+    this.refreshGenderPreview();
+  }
+
+  /** party screen: one line under the portraits (who stays where) */
+  private refreshPartyNote(): void {
+    const differ = this.selM !== 'random' && this.selF !== 'random' && this.selM !== this.selF;
+    this.el('#cs-note').textContent = differ ? '兩人不同部落：先各自回家報到，大家住在族男的家（主人家）。' : '大家住在族男的家（主人家）。';
   }
 
   /** 文字大小 小／中／大 → CSS variable --ts on <html>; saved in localStorage */
   setTextSize(ts: TextSize, save: boolean): void {
     document.documentElement.style.setProperty('--ts', String(TEXT_SCALE[ts]));
+    document.documentElement.style.setProperty('--ts-root', String(TEXT_SCALE[ts])); // en.css scales English boxes from it
     document.documentElement.dataset.textSize = ts;
     this.el('#text-size').querySelectorAll('button').forEach((b) => {
       const on = b.dataset.ts === ts;
@@ -607,13 +654,17 @@ export class UI {
     }
   }
 
+  /** party screen portraits (v7 painted portraits: 族男 local, 族女 local_f, traveller visitor_m / visitor) */
   private refreshGenderPreview(): void {
-    const base = 'player_visitor';
-    for (const k of ['m', 'f'] as const) {
-      const sheet = k === 'f' ? `${base}_f` : base;
-      const i = this.el(`#btn-gender-${k}`).querySelector('.gp-sprite') as HTMLElement;
-      i.style.backgroundImage = `url(${assetUrl(`assets/sprites/characters/${sheet}_sheet.png`)})`;
-    }
+    const set = (sel: string, name: string): void => {
+      const img = this.el(sel).querySelector('img') as HTMLImageElement;
+      const src = assetUrl(`assets/portraits/${name}.webp`);
+      if (img.getAttribute('src') !== src) img.setAttribute('src', src);
+    };
+    set('#cs-member-m', 'local');
+    set('#cs-member-f', 'local_f');
+    set('#cs-traveller', this.gender === 'f' ? 'visitor' : 'visitor_m');
+    this.el('#cs-traveller').setAttribute('aria-label', `旅人（${this.gender === 'f' ? '女生' : '男生'}）：點一下換成${this.gender === 'f' ? '男生' : '女生'}`);
   }
 
   /** 0.1.4: the title screen (logo over the island; the tap also lets the browser start the title music) */
@@ -652,7 +703,7 @@ export class UI {
     this.el('#arrival-screen').style.display = 'none';
     this.el('#origin-screen').style.display = 'none';
     this.el('#title-screen').style.display = 'none';
-    this.el('#ai-caption').textContent = way === 'plane' ? '小飛機穿出雲層，蘭嶼就在前方……' : '小艇切過浪頭，朝開元港前進……';
+    this.el('#ai-caption').textContent = way === 'plane' ? '小飛機朝蘭嶼飛去，就快到了……' : '小艇切過浪頭，朝開元港前進……';
     this.el('#ai-progress').style.width = '0%';
     this.el('#ai-wash').style.opacity = way === 'plane' ? '1' : '0';
     const o = this.el('#arrival-intro');
@@ -748,37 +799,21 @@ export class UI {
   /** Build the copy-driven parts of the UI (origin cards, travel sheet, help copy) from ui.json. */
   setContent(content: UiContent): void {
     this.content = content;
-    const grid = this.el('#origin-grid');
-    grid.replaceChildren();
-    for (const o of content.origins) {
-      // the traveller is always in the party now: the grid picks the 族人 home village (or 隨機)
-      if (o.id === 'visitor') continue;
-      const b = document.createElement('button');
-      b.className = 'origin-card';
-      b.type = 'button';
-      b.id = `btn-origin-${o.id}`;
-      b.append(span('zh', o.zh), span('tao', o.tao), span('hint', o.hint));
-      this.bindActivate(b, () => {
-        this.selected = o.id;
-        grid.querySelectorAll('.origin-card').forEach((c) => c.classList.remove('selected'));
-        b.classList.add('selected');
-        (this.el('#origin-go') as HTMLButtonElement).disabled = false;
-        this.refreshGenderPreview();
-      });
-      grid.appendChild(b);
+    // 0.1.5: one small dropdown per Tao member, 隨機 first and selected (the traveller is always in the party)
+    const opts = [...content.origins.filter((o) => o.id === 'random'), ...content.origins.filter((o) => o.id !== 'random' && o.id !== 'visitor')];
+    for (const r of ['m', 'f'] as const) {
+      const sel = this.el(`#sel-origin-${r}`) as HTMLSelectElement;
+      sel.replaceChildren(...opts.map((o) => {
+        const op = document.createElement('option');
+        op.value = o.id;
+        op.textContent = o.tao && o.tao !== o.zh ? `${o.zh} ${o.tao}` : o.zh; // English: the village name is already the Tao name
+        op.title = o.hint;
+        return op;
+      }));
+      sel.value = r === 'm' ? this.selM : this.selF;
     }
-    const gridEl = this.el('#travel-grid');
-    gridEl.replaceChildren();
-    for (const d of content.travel) {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'travel-item';
-      b.dataset.id = d.id;
-      b.append(span('zh', d.zh));
-      if (d.tao) b.append(span('tao', d.tao));
-      b.addEventListener('click', () => this.hooks.onFastTravel(d.id));
-      gridEl.appendChild(b);
-    }
+    this.refreshPartyNote();
+    // (0.1.5: the fast-travel destinations are pins on the big map, see bakeTravelMap)
   }
 
   /** First-entry hint strip (auto = true); auto = false is the 「?」 button: toggle the help sheet. */
@@ -819,8 +854,28 @@ export class UI {
     const prev = this.overlay;
     if (prev === next) return;
     this.overlay = next;
-    this.el('#journal-backdrop').classList.toggle('open', next === 'journal');
-    this.el('#travel-sheet').style.display = next === 'travel' ? 'block' : 'none';
+    // 0.1.5: the notebook grows out of the 圖鑑手札 button and shrinks back into it (src/ui/fly.ts)
+    const bd = this.el('#journal-backdrop');
+    const jr = this.el('#journal');
+    const nbBtn = this.root.querySelector<HTMLElement>('#btn-journal');
+    if (next === 'journal') {
+      this.nbAnim++;
+      bd.classList.remove('closing');
+      jr.getAnimations?.().forEach((a) => a.cancel());
+      bd.classList.add('open');
+      void zoomButton(jr, nbBtn, 'open', 900);
+    } else if (prev === 'journal') {
+      const tok = ++this.nbAnim;
+      bd.classList.remove('open');
+      bd.classList.add('closing');
+      void zoomButton(jr, nbBtn, 'close', 800).then(() => {
+        if (tok !== this.nbAnim) return;
+        bd.classList.remove('closing');
+        jr.getAnimations?.().forEach((a) => a.cancel());
+      });
+    }
+    this.el('#travel-sheet').style.display = next === 'travel' ? 'flex' : 'none';
+    if (next === 'travel') this.showTravelMap();
     if (next === 'help') this.fillHelpRows();
     this.el('#help-sheet').style.display = next === 'help' ? 'flex' : 'none';
     if (next) {
@@ -893,9 +948,11 @@ export class UI {
   syncChips(period: Period, season: Season, lang: LangMode): void {
     PERIODS.forEach((p) => this.el(`#time-${p.id}`).classList.toggle('on', p.id === period));
     SEASONS.forEach((s) => this.el(`#season-${s.id}`).classList.toggle('on', s.id === season));
-    this.el('#lang-toggle').querySelectorAll('button').forEach((b) => {
-      b.classList.toggle('on', (b as HTMLElement).dataset.lang === lang);
-    });
+    this.syncLang(lang);
+  }
+
+  syncLang(lang: LangMode): void {
+    syncLangToggles(this.root, lang);
   }
 
   setPrompt(text: string | null): void {
@@ -942,8 +999,13 @@ export class UI {
     const taoEmpty = !tao.trim();
     this.el('#dlg-zh').classList.toggle('hidden', lang === 'tao' && !taoEmpty);
     this.el('#dlg-tao').classList.toggle('hidden', lang === 'zh' || taoEmpty);
+    // 0.1.5 中文 + English: a small English line under the Chinese one (whenever the Chinese line shows)
+    const enEl = this.el('#dlg-en');
+    const en = isBi() ? english(zh) : null;
+    enEl.textContent = en ?? '';
+    enEl.classList.toggle('hidden', !en || this.el('#dlg-zh').classList.contains('hidden'));
     // 0.1.4: type the visible line(s) out with a soft blip
-    this.typer.start([this.el('#dlg-zh'), this.el('#dlg-tao')].filter((e) => !e.classList.contains('hidden')));
+    this.typer.start([this.el('#dlg-zh'), enEl, this.el('#dlg-tao')].filter((e) => !e.classList.contains('hidden')));
     this.el('#dlg-next').textContent = last ? '結束對話' : '繼續';
     if (!wasOpen && !this.overlay) {
       this.rememberFocus();
@@ -966,6 +1028,49 @@ export class UI {
   }
 
   private toastQ: [string, string][] = [];
+  private loots: { el: HTMLElement; x: number; z: number; y: number; t: number }[] = [];
+
+  /**
+   * Item-gain pop (食材＋1, …) above a world point. Shows immediately, never queues
+   * behind a toast or dialogue, and several can be on screen at once.
+   */
+  popLoot(text: string, x: number, z: number, icon?: string): void {
+    const el = document.createElement('div');
+    el.className = 'loot-pop';
+    if (icon) {
+      // 0.1.5: gathered items show only a small icon with +1
+      el.classList.add('has-ico');
+      const i = document.createElement('img');
+      i.className = 'loot-ico';
+      i.alt = '';
+      i.decoding = 'async';
+      i.src = icon;
+      el.append(i);
+      if (text) el.append(text);
+    } else el.textContent = text;
+    this.el('#loot-layer').append(el);
+    this.loots.push({ el, x, z, y: 1.75, t: 0 });
+  }
+
+  updateLoots(
+    dt: number,
+    project: (x: number, y: number, z: number) => { x: number; y: number; vis: boolean },
+    heightAt: (x: number, z: number) => number,
+  ): void {
+    const keep: typeof this.loots = [];
+    for (const L of this.loots) {
+      L.t += dt;
+      L.y += dt * 0.9;
+      if (L.t >= 1.6) { L.el.remove(); continue; }
+      const p = project(L.x, heightAt(L.x, L.z) + L.y, L.z);
+      const fade = L.t < 0.12 ? L.t / 0.12 : Math.max(0, 1 - (L.t - 0.95) / 0.65);
+      L.el.style.opacity = p.vis ? String(fade) : '0';
+      L.el.style.transform = `translate(${p.x}px, ${p.y}px) translate(-50%, -100%)`;
+      keep.push(L);
+    }
+    this.loots = keep;
+  }
+
   /** queued: several toasts in a row (quest done + new quests) each get their moment */
   toast(title: string, body: string): void {
     if (this.toastTimer !== null) {
@@ -989,6 +1094,17 @@ export class UI {
     const b = document.createElement('b');
     b.textContent = title;
     el.replaceChildren(b, body);
+    // 0.1.5 中文 + English: the notice in English too, in a small line
+    if (isBi()) {
+      const en = [english(title), english(body)].filter(Boolean).join(' · ');
+      if (en) {
+        const s = document.createElement('small');
+        s.className = 'toast-en';
+        s.lang = 'en';
+        s.textContent = en;
+        el.append(s);
+      }
+    }
     el.classList.add('show');
     if (this.toastTimer !== null) window.clearTimeout(this.toastTimer);
     this.toastTimer = window.setTimeout(() => {
@@ -999,6 +1115,8 @@ export class UI {
     }, this.toastQ.length ? 2200 : 3000);
   }
 
+  private grid = new ItemGrid();
+  private nbAnim = 0;
   private nbInst: Notebook | null = null;
   private get nb(): Notebook {
     if (!this.nbInst) this.nbInst = new Notebook(this.el('#nb-list'), this.el('#nb-head'), this.el('#nb-detail'), this.el('#journal'), this.el('#nb-pager'));
@@ -1078,7 +1196,10 @@ export class UI {
       return;
     }
     if (tab === 'bag') {
-      if (this.codexVM) this.nb.show(tab, codexPage(this.codexVM()));
+      if (this.codexVM) {
+        const { cells, sub } = codexCells(this.codexVM());
+        this.nb.showCustom(tab, (host) => this.grid.render(host, cells, sub));
+      }
       return;
     }
     if (tab === 'milestones') {
@@ -1109,11 +1230,13 @@ export class UI {
       const items: NbItem[] = secs.map((sec, i) => {
         const title = sec.querySelector('h3')?.textContent ?? `第 ${i + 1} 頁`;
         const missing = tab === 'album' && /（0\//.test(title);
+        const saveKind = tab === 'save' ? sec.dataset.save : undefined;
         return {
           key: `${tab}:${i}`,
           title: title.replace(/（\d+\/\d+）$/, ''),
           tao: tab === 'album' ? (title.match(/（\d+\/\d+）$/)?.[0].slice(1, -1) ?? '') : undefined,
           mark: tab === 'album' ? (missing ? 'none' : 'done') : 'none',
+          data: saveKind ? { save: saveKind } : undefined,
           render: (box) => {
             nbTitle(box, tab === 'album' ? `相簿與水下${title.match(/（\d+\/\d+）$/)?.[0] ?? ''}` : '存檔', title.replace(/（\d+\/\d+）$/, ''));
             box.append(sec);
@@ -1122,9 +1245,10 @@ export class UI {
       });
       this.nb.show(tab, {
         heading: tab === 'album' ? '相簿與水下' : '存檔',
-        sub: tab === 'album' ? '照片、水下美景與活動歌謠' : '匯出備份，或在別台裝置匯入',
+        sub: tab === 'album' ? '照片、水下美景與活動歌謠' : '設定、匯出備份，或在別台裝置匯入',
         note,
         items,
+        preferKey: tab === 'save' ? items.find((i) => i.data?.save === 'settings')?.key : undefined,
       });
       return;
     }
@@ -1249,7 +1373,7 @@ export class UI {
     for (const r of q.roles) chips.append(h('span', 'qc-role', r));
     if (q.coop) chips.append(h('span', 'qc-coop', q.coop));
     if (q.ground) chips.append(h('span', `qc-ground g-${q.ground.startsWith('漁場') ? 'fish' : 'dive'}`, q.ground));
-    if (q.giver) chips.append(h('span', `qc-giver g-${q.giver.startsWith('女') ? 'f' : 'm'}`, q.giver));
+    if (q.giver) chips.append(h('span', `qc-giver g-${/^女|woman/i.test(q.giver) ? 'f' : 'm'}`, q.giver));
     box.append(chips);
     if (q.status === 'active') {
       box.append(h('div', 'nd-label', '目標'), h('p', 'nd-body nd-obj', q.objective + (q.progress ? `（${q.progress}）` : '')));
@@ -1383,6 +1507,96 @@ export class UI {
 
   private minimapBase: HTMLCanvasElement | null = null;
 
+  // ---- 0.1.5: fast travel on a big island map (tap a pin) ----
+  private travelBox: { xMin: number; zMin: number; xMax: number; zMax: number } | null = null;
+  private travelPainter: ((ctx: CanvasRenderingContext2D, w: number, h: number) => void) | null = null;
+  private travelBaked = false;
+
+  /**
+   * Set up the fast-travel map: the island crop (world box), a painter for it, and the destinations (world x / z).
+   * The map itself is painted the first time it opens.
+   */
+  setTravelMap(box: { xMin: number; zMin: number; xMax: number; zMax: number }, painter: (ctx: CanvasRenderingContext2D, w: number, h: number) => void, spots: { id: string; zh: string; tao: string; x: number; z: number; kind: 'tribe' | 'place' }[]): void {
+    this.travelBox = box;
+    this.travelPainter = painter;
+    this.travelBaked = false;
+    const map = this.el('#travel-map');
+    map.querySelectorAll('.travel-pin').forEach((n) => n.remove());
+    const bw = box.xMax - box.xMin, bh = box.zMax - box.zMin;
+    map.style.setProperty('--ar', String(bw / bh));
+    for (const sp of spots) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = `travel-pin is-${sp.kind} lab-${TRAVEL_LABEL_SIDE[sp.id] ?? 'r'}`;
+      b.dataset.id = sp.id;
+      b.style.left = `${(((sp.x - box.xMin) / bw) * 100).toFixed(2)}%`;
+      b.style.top = `${(((sp.z - box.zMin) / bh) * 100).toFixed(2)}%`;
+      b.setAttribute('aria-label', `前往${sp.zh}`);
+      const dot = document.createElement('i');
+      dot.className = 'dot';
+      const lab = document.createElement('span');
+      lab.className = 'lab';
+      lab.append(span('zh', sp.zh));
+      // English: the village name already is its Tao name, so no second line
+      if (sp.kind === 'tribe' && sp.tao && sp.tao !== sp.zh) lab.append(span('tao', sp.tao));
+      b.append(dot, lab);
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.hooks.onFastTravel(sp.id);
+      });
+      map.appendChild(b);
+    }
+  }
+
+  /** paint (once) and size the travel map to the sheet, and put the "you are here" mark on it */
+  private showTravelMap(): void {
+    const box = this.travelBox;
+    if (!box) return;
+    const c = this.el('#travel-canvas') as HTMLCanvasElement;
+    const bw = box.xMax - box.xMin, bh = box.zMax - box.zMin;
+    if (!this.travelBaked && this.travelPainter) {
+      const W = 640;
+      c.width = W;
+      c.height = Math.round((W * bh) / bw);
+      this.travelPainter(c.getContext('2d')!, c.width, c.height);
+      this.travelBaked = true;
+    }
+    this.fitTravelMap();
+    const you = this.el('#travel-you');
+    const m = this.mmLast;
+    if (Number.isFinite(m.x)) {
+      you.style.display = 'block';
+      you.style.left = `${(((m.x - box.xMin) / bw) * 100).toFixed(2)}%`;
+      you.style.top = `${(((m.z - box.zMin) / bh) * 100).toFixed(2)}%`;
+      you.style.transform = `translate(-50%, -50%) rotate(${m.yaw}rad)`;
+    } else you.style.display = 'none';
+  }
+
+  /** the biggest map that fits the sheet on this screen (desktop, phone portrait or landscape) */
+  fitTravelMap(): void {
+    const box = this.travelBox;
+    const sheet = this.el('#travel-sheet');
+    if (!box || sheet.style.display === 'none') return;
+    const map = this.el('#travel-map');
+    const ar = (box.xMax - box.xMin) / (box.zMax - box.zMin);
+    const cs = getComputedStyle(sheet);
+    const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    let above = 0;
+    for (const ch of Array.from(sheet.children) as HTMLElement[]) {
+      if (ch === map || getComputedStyle(ch).display === 'none') continue;
+      const st = getComputedStyle(ch);
+      above += ch.getBoundingClientRect().height + parseFloat(st.marginTop) + parseFloat(st.marginBottom);
+    }
+    const vw = window.visualViewport?.width ?? window.innerWidth;
+    const vh = window.visualViewport?.height ?? window.innerHeight;
+    const maxW = Math.min(720, vw - 20) - padX;
+    const maxH = vh - 20 - padY - above;
+    const w = Math.max(160, Math.min(maxW, maxH * ar));
+    map.style.width = `${Math.floor(w)}px`;
+    map.style.height = `${Math.floor(w / ar)}px`;
+  }
+
   bakeMinimap(painter: (ctx: CanvasRenderingContext2D, w: number, h: number) => void): void {
     const c = this.el('#minimap-canvas') as HTMLCanvasElement;
     const base = document.createElement('canvas');
@@ -1426,6 +1640,11 @@ export class UI {
     ctx.restore();
   }
 }
+
+/** which side of its pin each travel label sits on (l / r / t / b), so neighbouring labels don't overlap */
+const TRAVEL_LABEL_SIDE: Record<string, 'l' | 'r' | 't' | 'b'> = {
+  yayo: 'r', harbor: 't', iraraley: 'b', iranmeylek: 'l', ivalino: 'r', imorod: 'b', iratay: 'b', clinic: 't', airport: 'l', qingqing: 'r',
+};
 
 function span(cls: string, text: string): HTMLSpanElement {
   const e = document.createElement('span');

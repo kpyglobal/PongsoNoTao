@@ -10,9 +10,15 @@ The game uses [three.js](https://github.com/mrdoob/three.js) 0.170.0, licensed u
 
 The following fonts are included as subsetted WOFF2 files and remain under the SIL Open Font License, Version 1.1.
 
-- **Iansui (芫荽)** — The Iansui Project Authors ([ButTaiwan/iansui](https://github.com/ButTaiwan/iansui)). Used for notebook handwriting. The OFL text is at [`guide/fonts/OFL-Iansui.txt`](./guide/fonts/OFL-Iansui.txt) (also `source/fonts-src/Iansui-OFL.txt` and `source/public/guide/fonts/OFL-Iansui.txt`).
-- **Literata** — The Literata Project Authors (TypeTogether / [googlefonts/literata](https://github.com/googlefonts/literata)). Used for Tao and Latin text in the notebook. The OFL text is at [`guide/fonts/OFL-Literata.txt`](./guide/fonts/OFL-Literata.txt) (also `source/fonts-src/Literata-OFL.txt` and `source/public/guide/fonts/OFL-Literata.txt`).
-- **Noto Sans TC** and **Noto Serif TC** — [notofonts/noto-cjk](https://github.com/notofonts/noto-cjk), SIL OFL 1.1. Used for Traditional Chinese interface and body text, as noted in `source/public/fonts/fonts.css` and `source/ASSET_MANIFEST.md`. An OFL text for Noto is not bundled in this repository.
+**Game fonts (0.1.5 set「霞光書卷」):**
+
+- **LXGW WenKai TC（霞鶩文楷 TC）** — The LXGW WenKai Project Authors ([lxgw/LxgwWenkaiTC](https://github.com/lxgw/LxgwWenkaiTC)). Used for Chinese titles, body text and the notebook. The OFL text is at [`source/fonts-src/LXGWWenKaiTC-OFL.txt`](./source/fonts-src/LXGWWenKaiTC-OFL.txt).
+- **Cormorant Garamond** — The Cormorant Project Authors ([CatharsisFonts/Cormorant](https://github.com/CatharsisFonts/Cormorant)). Used for English and Tao text. No italic face is shipped; Tao words are never shown in italics. The OFL text is at [`source/fonts-src/Cormorant-OFL.txt`](./source/fonts-src/Cormorant-OFL.txt).
+
+**Guide page fonts** (the separate guide page still uses these):
+
+- **Iansui (芫荽)** — The Iansui Project Authors ([ButTaiwan/iansui](https://github.com/ButTaiwan/iansui)). The OFL text is at [`guide/fonts/OFL-Iansui.txt`](./guide/fonts/OFL-Iansui.txt) (also `source/public/guide/fonts/OFL-Iansui.txt`).
+- **Literata** — The Literata Project Authors (TypeTogether / [googlefonts/literata](https://github.com/googlefonts/literata)). The OFL text is at [`guide/fonts/OFL-Literata.txt`](./guide/fonts/OFL-Literata.txt) (also `source/public/guide/fonts/OFL-Literata.txt`).
 
 ## Map data (OpenStreetMap, ODbL 1.0)
 

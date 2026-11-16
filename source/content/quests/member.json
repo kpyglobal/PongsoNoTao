@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "跟婦女長輩處理苧麻：剝皮、浸泡、曬乾",
-        "en": ""
+        "en": "Prepare ramie with the women elders: strip, soak and dry"
       },
       "time": "day",
       "seasons": [
@@ -21,11 +21,16 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人（NPC 婦女長輩）",
+        "coopEn": "Solo (NPC woman elder)",
         "season": "當地非飛魚季",
+        "seasonEn": "Local off-season",
         "pre": "R3",
         "unlock": "苧麻圖鑑、J2",
-        "kind": "季節"
+        "unlockEn": "Ramie field guide, J2",
+        "kind": "季節",
+        "kindEn": "Season"
       },
       "req": "R3",
       "steps": [
@@ -36,20 +41,24 @@
             "f"
           ],
           "text": "族女向女性長輩接下工作：去簷廊幫忙處理苧麻",
+          "textEn": "The Tao woman takes a job from the woman elder: help prepare ramie on the porch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "苧麻收回來了，要剝皮、浸泡、曬乾。族女去簷廊幫婦女長輩，這要忙一陣子。"
+              "zh": "苧麻收回來了，要剝皮、浸泡、曬乾。族女去簷廊幫婦女長輩，這要忙一陣子。",
+              "en": "The ramie is in. It needs stripping, soaking and drying. The Tao woman will help the women elders on the porch — this takes a while."
             },
             {
               "who": "@npc",
-              "zh": "其他人先去忙別的，等一下帶水過去幫她。"
+              "zh": "其他人先去忙別的，等一下帶水過去幫她。",
+              "en": "The rest of you go do something else, then bring her some water."
             }
           ],
           "split": {
             "f": {
               "at": "host_weave",
               "task": "在簷廊處理苧麻",
+              "taskEn": "preparing ramie on the porch",
               "ctrl": false
             }
           }
@@ -62,10 +71,12 @@
             "t"
           ],
           "text": "族男或旅人先到椰油的雜貨店買飲水，帶去簷廊",
+          "textEn": "The Tao man or the traveller buys water at the Yayo grocery store and takes it to the porch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "要帶水去給在簷廊忙的人？拿去吧。"
+              "zh": "要帶水去給在簷廊忙的人？拿去吧。",
+              "en": "Water for the people working on the porch? Here you go."
             }
           ],
           "gives": {
@@ -86,18 +97,22 @@
           ],
           "regroup": true,
           "text": "帶水到簷廊，幫忙把苧麻收好，接族女回隊",
+          "textEn": "Bring the water to the porch, help put the ramie away, and bring the Tao woman back to the party",
           "lines": [
             {
               "who": "@npc",
-              "zh": "來，苧麻的皮這樣剝下來，泡在水裡，再拿去曬乾。"
+              "zh": "來，苧麻的皮這樣剝下來，泡在水裡，再拿去曬乾。",
+              "en": "Here — strip the ramie bark like this, soak it, then dry it."
             },
             {
               "who": "@f",
-              "zh": "有你們幫忙快多了！原來要這麼多步驟，才會變成可以織的線。"
+              "zh": "有你們幫忙快多了！原來要這麼多步驟，才會變成可以織的線。",
+              "en": "So much faster with your help! It takes this many steps to become thread you can weave."
             },
             {
               "who": "旁白",
-              "zh": "依文獻記載，飛魚汛期婦女不織布，所以這件事在非飛魚季才做；各部落細節還要請族人確認。"
+              "zh": "依文獻記載，飛魚汛期婦女不織布，所以這件事在非飛魚季才做；各部落細節還要請族人確認。",
+              "en": "According to written records, women don't weave during the flying fish run, so this is done outside flying fish season. Details for each village still need checking with the community."
             }
           ],
           "gives": {
@@ -107,6 +122,10 @@
             "toast": [
               "苧麻圖鑑",
               "已寫進手札。族女回到隊上了。"
+            ],
+            "toastEn": [
+              "Ramie field guide",
+              "Added to your notebook. The Tao woman is back with the party."
             ]
           }
         },
@@ -117,10 +136,12 @@
             "f"
           ],
           "text": "族女向女性長輩回報：苧麻處理好了",
+          "textEn": "The Tao woman reports to the woman elder: the ramie is done",
           "lines": [
             {
               "who": "@npc",
-              "zh": "苧麻都處理好了？做得很好，大家一起幫忙就快了。"
+              "zh": "苧麻都處理好了？做得很好，大家一起幫忙就快了。",
+              "en": "All the ramie is done? Well done. It goes fast when everyone helps."
             }
           ]
         }
@@ -128,7 +149,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "女性長輩在找族女幫忙處理苧麻；族女會留在簷廊，其他人要帶水去幫她。"
+        "fromEn": "Host family",
+        "zh": "女性長輩在找族女幫忙處理苧麻；族女會留在簷廊，其他人要帶水去幫她。",
+        "en": "The woman elder is looking for the Tao woman to help prepare ramie. The Tao woman will stay on the porch; the others should bring her water."
       },
       "playable": true,
       "giver": "f"
@@ -140,7 +163,7 @@
       "village": null,
       "name": {
         "zh": "看婦女長輩在簷廊織一小段布",
-        "en": ""
+        "en": "Watch a woman elder weave a short piece of cloth on the porch"
       },
       "time": "day",
       "seasons": [
@@ -152,11 +175,16 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人（NPC 婦女長輩）",
+        "coopEn": "Solo (NPC woman elder)",
         "season": "當地非飛魚季",
+        "seasonEn": "Local off-season",
         "pre": "J1",
         "unlock": "織布學習卡（只畫簡單的背帶織布機，不畫織紋與禮衣）",
-        "kind": "季節"
+        "unlockEn": "Weaving card (only a simple backstrap loom, no woven patterns or ceremonial clothes)",
+        "kind": "季節",
+        "kindEn": "Season"
       },
       "req": "J1",
       "steps": [
@@ -167,18 +195,22 @@
             "f"
           ],
           "text": "族女在簷廊看婦女長輩織一小段布",
+          "textEn": "The Tao woman watches a woman elder weave a short piece of cloth on the porch",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這是背帶織布機，腰靠著這條帶子，線就拉緊了。你先看就好。"
+              "zh": "這是背帶織布機，腰靠著這條帶子，線就拉緊了。你先看就好。",
+              "en": "This is a backstrap loom. Lean your waist against this strap and the threads pull tight. Just watch for now."
             },
             {
               "who": "旁白",
-              "zh": "織布有一些禁忌，例如喪忌期間不碰織布機、男子不跨過織布機。這裡只用旁白說明，遊戲不會讓你去做。"
+              "zh": "織布有一些禁忌，例如喪忌期間不碰織布機、男子不跨過織布機。這裡只用旁白說明，遊戲不會讓你去做。",
+              "en": "Weaving has some taboos — for example, no touching the loom during mourning, and men don't step over the loom. This is only explained here; the game won't make you do it."
             },
             {
               "who": "旁白",
-              "zh": "織紋與禮衣不在這裡呈現，等族人校對後再決定。"
+              "zh": "織紋與禮衣不在這裡呈現，等族人校對後再決定。",
+              "en": "Woven patterns and ceremonial clothes aren't shown here. That waits until the community has reviewed it."
             }
           ],
           "gives": {
@@ -188,6 +220,10 @@
             "toast": [
               "織布學習卡",
               "已寫進手札。"
+            ],
+            "toastEn": [
+              "Weaving card",
+              "Added to your notebook."
             ]
           }
         }
@@ -195,7 +231,9 @@
       "hint": {
         "tier": "direct",
         "from": "婦女長輩",
-        "zh": "苧麻曬好了，族女可以來簷廊看看織布。"
+        "fromEn": "Woman elder",
+        "zh": "苧麻曬好了，族女可以來簷廊看看織布。",
+        "en": "The ramie is dry. The Tao woman can come to the porch to watch the weaving."
       },
       "playable": true,
       "giver": "f"
@@ -207,7 +245,7 @@
       "village": null,
       "name": {
         "zh": "在家屋附近餵豬、餵雞",
-        "en": ""
+        "en": "Feed the pigs and chickens near the house"
       },
       "time": "day",
       "seasons": [],
@@ -217,10 +255,14 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（可重複）",
+        "seasonEn": "All year (repeatable)",
         "pre": "Q03",
         "unlock": "家畜圖鑑（kois 豬）、糧倉",
+        "unlockEn": "Livestock field guide (kois pig), food store",
         "kind": ""
       },
       "req": "Q03",
@@ -232,10 +274,12 @@
             "f"
           ],
           "text": "向女性長輩接下工作：在家屋附近餵豬、餵雞",
+          "textEn": "Take a job from the woman elder: feed the pigs and chickens near the house",
           "lines": [
             {
               "who": "@npc",
-              "zh": "家屋附近的豬和雞該餵了，交給你。做好了回來跟我說。"
+              "zh": "家屋附近的豬和雞該餵了，交給你。做好了回來跟我說。",
+              "en": "The pigs and chickens by the house need feeding. Can you do it? Come back and tell me when you're done."
             }
           ]
         },
@@ -247,15 +291,18 @@
             "f"
           ],
           "text": "族女在主人家附近餵豬、餵雞",
+          "textEn": "The Tao woman feeds the pigs and chickens near the host family's house",
           "lines": [
             {
               "who": "@f",
               "zh": "豬和雞都餓了，先餵牠們。",
+              "en": "The pigs and chickens are hungry. Feed them first.",
               "tao": "kois"
             },
             {
               "who": "@f",
-              "zh": "餵完再去看看糧倉。"
+              "zh": "餵完再去看看糧倉。",
+              "en": "After feeding, go check the food store."
             }
           ],
           "gives": {
@@ -274,10 +321,12 @@
             "f"
           ],
           "text": "向女性長輩回報：在家屋附近餵豬、餵雞",
+          "textEn": "Report to the woman elder: fed the pigs and chickens near the house",
           "lines": [
             {
               "who": "@npc",
-              "zh": "餵過了？我看過了，做得很好。"
+              "zh": "餵過了？我看過了，做得很好。",
+              "en": "All fed? I checked. Well done."
             }
           ]
         }
@@ -285,7 +334,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "家屋旁邊的豬和雞要有人餵，族女會去。"
+        "fromEn": "Host family",
+        "zh": "家屋旁邊的豬和雞要有人餵，族女會去。",
+        "en": "The pigs and chickens by the house need feeding. The Tao woman will go."
       },
       "playable": true,
       "song": "s02",
@@ -298,7 +349,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：茅草地的午後（幫主人家割茅草）",
-        "en": ""
+        "en": "Hidden: an afternoon in the thatch field (cut thatch for the host family)"
       },
       "time": "day",
       "seasons": [
@@ -310,11 +361,17 @@
       "n": 1,
       "text": {
         "who": "族女",
+        "whoEn": "Tao woman",
         "coop": "單人（NPC 婦女長輩）",
+        "coopEn": "Solo (NPC woman elder)",
         "season": "飛魚季後的夏秋",
+        "seasonEn": "Summer and autumn after flying fish season",
         "pre": "第一次走進茅草地遇到婦女長輩",
+        "preEn": "First time in the thatch field meeting a woman elder",
         "unlock": "茅草圖鑑、主人家的一句讚美",
-        "kind": "隱藏：第一次見面"
+        "unlockEn": "Thatch field guide, a word of praise from the host family",
+        "kind": "隱藏：第一次見面",
+        "kindEn": "Hidden: first meeting"
       },
       "req": {
         "any": [
@@ -329,10 +386,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "女性長輩約族女下午去割茅草",
+          "textEn": "The woman elder asks the Tao woman to cut thatch in the afternoon",
           "lines": [
             {
               "who": "@npc",
-              "zh": "涼亭的屋頂要補了。下午跟我去山坡上割茅草。"
+              "zh": "涼亭的屋頂要補了。下午跟我去山坡上割茅草。",
+              "en": "The pavilion roof needs patching. Come cut thatch on the hillside with me this afternoon."
             }
           ],
           "actor": [
@@ -344,14 +403,17 @@
           "spot": "thatch_field",
           "r": 8,
           "text": "族女跟女性長輩在茅草地割茅草，一把一把綁好",
+          "textEn": "The Tao woman and the woman elder cut thatch and tie it in bundles",
           "lines": [
             {
               "who": "@f",
-              "zh": "手套戴好，葉子邊很利。"
+              "zh": "手套戴好，葉子邊很利。",
+              "en": "Put your gloves on. The leaf edges are sharp."
             },
             {
               "who": "@hostf",
-              "zh": "割下來的，綁成一樣大的一把，背回去才好算。"
+              "zh": "割下來的，綁成一樣大的一把，背回去才好算。",
+              "en": "Tie what you cut into bundles of the same size. Easier to count when we carry them back."
             }
           ],
           "actor": [
@@ -362,10 +424,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "回家後，長輩看著族女綁的茅草",
+          "textEn": "Back home, the elder looks at the thatch the Tao woman tied",
           "lines": [
             {
               "who": "@npc",
-              "zh": "綁得很整齊，跟妳外婆以前一樣。"
+              "zh": "綁得很整齊，跟妳外婆以前一樣。",
+              "en": "Very neat. Just like your Grandma used to do."
             }
           ],
           "actor": [
@@ -379,6 +443,10 @@
             "toast": [
               "茅草圖鑑",
               "主人家的長輩稱讚了族女。"
+            ],
+            "toastEn": [
+              "Thatch field guide",
+              "The host family's elder praised the Tao woman."
             ]
           }
         }
@@ -386,7 +454,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "冬天的下午，主人家的女性長輩好像要上山坡做什麼。"
+        "fromEn": "Host family",
+        "zh": "冬天的下午，主人家的女性長輩好像要上山坡做什麼。",
+        "en": "On a winter afternoon, the host family's woman elder seems to be heading up the hillside for something."
       },
       "playable": true,
       "hidden": true,
@@ -402,7 +472,7 @@
       "village": null,
       "name": {
         "zh": "把小一點的飛魚放在外圍，留給行動不便的長輩",
-        "en": ""
+        "en": "Put the smaller flying fish around the edge for elders who can't get around"
       },
       "time": "day",
       "seasons": [
@@ -414,11 +484,16 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人（NPC 船組）",
+        "coopEn": "Solo (NPC boat crew)",
         "season": "飛魚季（當地）",
+        "seasonEn": "Flying fish season (local)",
         "pre": "M4",
         "unlock": "部落關係、「分享」故事卡",
-        "kind": "季節"
+        "unlockEn": "Village ties, \"Sharing\" story card",
+        "kind": "季節",
+        "kindEn": "Season"
       },
       "req": "M4",
       "steps": [
@@ -426,10 +501,12 @@
           "kind": "talk",
           "npc": "villager_harbor",
           "text": "族男在灘頭問船組，小一點的飛魚怎麼處理",
+          "textEn": "On the beach, the Tao man asks the crew what to do with the smaller flying fish",
           "lines": [
             {
               "who": "@npc",
-              "zh": "小的放外圍，留給走不動、不能出海的長輩。他們會自己來拿，或請孩子來。"
+              "zh": "小的放外圍，留給走不動、不能出海的長輩。他們會自己來拿，或請孩子來。",
+              "en": "The small ones go around the edge, for elders who can't walk far or go to sea. They come and take them, or send a child."
             }
           ],
           "actor": [
@@ -441,10 +518,12 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男把小一點的飛魚放在外圍",
+          "textEn": "The Tao man puts the smaller flying fish around the edge",
           "lines": [
             {
               "who": "@m",
-              "zh": "這幾條放這裡。長輩來的時候，一眼就看得到。"
+              "zh": "這幾條放這裡。長輩來的時候，一眼就看得到。",
+              "en": "These go here. When the elders come, they'll see them right away."
             }
           ],
           "actor": [
@@ -455,10 +534,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向男性長輩回報",
+          "textEn": "Report to the man elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "能出海的人，要想到不能出海的人。這就是分享。"
+              "zh": "能出海的人，要想到不能出海的人。這就是分享。",
+              "en": "Those who can go to sea should think of those who can't. That's sharing."
             }
           ],
           "actor": [
@@ -472,6 +553,10 @@
             "toast": [
               "「分享」故事卡",
               "小一點的飛魚留給了行動不便的長輩。"
+            ],
+            "toastEn": [
+              "\"Sharing\" story card",
+              "The smaller flying fish were kept for the elders who can't get around."
             ]
           }
         }
@@ -479,7 +564,9 @@
       "hint": {
         "tier": "direct",
         "from": "開元港",
-        "zh": "分魚的時候，船組會把小一點的飛魚放在外圍，留給長輩。"
+        "fromEn": "Kaiyuan Harbour",
+        "zh": "分魚的時候，船組會把小一點的飛魚放在外圍，留給長輩。",
+        "en": "When sharing fish, the crew puts the smaller flying fish around the edge for the elders."
       },
       "playable": true,
       "song": "s01",
@@ -498,7 +585,7 @@
       "village": null,
       "name": {
         "zh": "飛魚季後修整田埂與灌溉水道",
-        "en": ""
+        "en": "Repair field banks and water channels after flying fish season"
       },
       "time": "day",
       "seasons": [
@@ -510,10 +597,14 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "飛魚季後（約 7 月）",
+        "seasonEn": "After flying fish season (about July)",
         "pre": "R1",
         "unlock": "生態值、水芋田照顧卡",
+        "unlockEn": "Nature points, taro field care card",
         "kind": ""
       },
       "req": "R1",
@@ -525,10 +616,12 @@
             "m"
           ],
           "text": "向女性長輩接下工作：飛魚季後修整田埂與灌溉水道",
+          "textEn": "Take a job from the woman elder: repair field banks and water channels after flying fish season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季過了，田埂和水道該修一修。交給你了，做好了回來跟我說。"
+              "zh": "飛魚季過了，田埂和水道該修一修。交給你了，做好了回來跟我說。",
+              "en": "Flying fish season is over. The field banks and channels need fixing. It's up to you — come tell me when you're done."
             }
           ]
         },
@@ -540,14 +633,17 @@
             "m"
           ],
           "text": "飛魚季後，族男修整田埂與灌溉水道",
+          "textEn": "After flying fish season, the Tao man repairs the field banks and water channels",
           "lines": [
             {
               "who": "@m",
-              "zh": "田埂被水沖壞了一點，補一補，水道也清一清。"
+              "zh": "田埂被水沖壞了一點，補一補，水道也清一清。",
+              "en": "The water damaged the bank a little. Patch it up and clear the channel too."
             },
             {
               "who": "旁白",
-              "zh": "修田埂的月份還要請族人確認。"
+              "zh": "修田埂的月份還要請族人確認。",
+              "en": "Which month the banks are repaired still needs checking with the community."
             }
           ],
           "gives": {
@@ -557,6 +653,10 @@
             "toast": [
               "水芋田照顧卡",
               "已寫進手札。"
+            ],
+            "toastEn": [
+              "Taro field care card",
+              "Added to your notebook."
             ]
           }
         },
@@ -567,10 +667,12 @@
             "m"
           ],
           "text": "向女性長輩回報：飛魚季後修整田埂與灌溉水道",
+          "textEn": "Report to the woman elder: repaired the field banks and water channels",
           "lines": [
             {
               "who": "@npc",
-              "zh": "田埂和水道修好了？我看過了，做得很好。"
+              "zh": "田埂和水道修好了？我看過了，做得很好。",
+              "en": "Banks and channels fixed? I checked. Well done."
             }
           ]
         }
@@ -578,7 +680,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "非飛魚季的時候，田埂和水道要整理。"
+        "fromEn": "Host family",
+        "zh": "非飛魚季的時候，田埂和水道要整理。",
+        "en": "Outside flying fish season, the field banks and channels need tidying."
       },
       "playable": true,
       "giver": "f"
@@ -590,7 +694,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：找回走失的羊（kagling）",
-        "en": ""
+        "en": "Hidden: find the lost goat (kagling)"
       },
       "time": "day",
       "seasons": [],
@@ -605,11 +709,17 @@
       "n": 1,
       "text": {
         "who": "族男",
+        "whoEn": "Tao man",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "第一次在山邊看到羊群",
+        "preEn": "First time seeing a goat herd by the hills",
         "unlock": "羊的圖鑑、族語詞卡加 kagling",
-        "kind": "隱藏：第一次發現"
+        "unlockEn": "Goat field guide, kagling added to Tao word cards",
+        "kind": "隱藏：第一次發現",
+        "kindEn": "Hidden: first discovery"
       },
       "req": {
         "flag": "saw_goats"
@@ -619,14 +729,17 @@
           "kind": "talk",
           "npc": "elder_imorod",
           "text": "紅頭的長輩說：一隻羊沒回來",
+          "textEn": "The Imorod elder says: a goat didn't come home",
           "lines": [
             {
               "who": "@npc",
-              "zh": "耳朵缺一角的那隻羊，昨天沒回來。山上找過了，你再去找找。"
+              "zh": "耳朵缺一角的那隻羊，昨天沒回來。山上找過了，你再去找找。",
+              "en": "The goat with a notch in its ear didn't come back yesterday. I looked on the mountain. Go look again."
             },
             {
               "who": "@npc",
-              "zh": "看到別人家的羊，不要碰。只找我們家的記號。"
+              "zh": "看到別人家的羊，不要碰。只找我們家的記號。",
+              "en": "If you see other families' goats, don't touch them. Only look for our family's mark."
             }
           ],
           "actor": [
@@ -638,10 +751,12 @@
           "spot": "hongtoushan",
           "r": 10,
           "text": "族男先上紅頭山找",
+          "textEn": "The Tao man searches Mt. Hongtou first",
           "lines": [
             {
               "who": "@m",
-              "zh": "這裡的羊耳朵都是完整的……不是我們家的。"
+              "zh": "這裡的羊耳朵都是完整的……不是我們家的。",
+              "en": "These goats' ears are all whole… not ours."
             }
           ],
           "actor": [
@@ -653,14 +768,17 @@
           "spot": "hutou_slope",
           "r": 10,
           "text": "族男沿著路找到虎頭坡",
+          "textEn": "The Tao man follows the road to Hutou Slope",
           "lines": [
             {
               "who": "@m",
-              "zh": "找到了！耳朵缺一角，就是牠。跑得真遠。"
+              "zh": "找到了！耳朵缺一角，就是牠。跑得真遠。",
+              "en": "Found it! Notched ear — that's the one. It ran so far."
             },
             {
               "who": "@m",
               "zh": "走吧，kagling，回家了。",
+              "en": "Come on, kagling, let's go home.",
               "tao": "kagling"
             }
           ],
@@ -672,10 +790,12 @@
           "kind": "talk",
           "npc": "elder_imorod",
           "text": "把羊帶回紅頭",
+          "textEn": "Bring the goat back to Imorod",
           "lines": [
             {
               "who": "@npc",
-              "zh": "回來就好。羊認得路，人也要認得路。"
+              "zh": "回來就好。羊認得路，人也要認得路。",
+              "en": "Good, it's back. Goats know the way, and people should too."
             }
           ],
           "actor": [
@@ -689,6 +809,10 @@
             "toast": [
               "羊的圖鑑",
               "族語詞卡加上 kagling（羊）。"
+            ],
+            "toastEn": [
+              "Goat field guide",
+              "kagling (goat) added to Tao word cards."
             ]
           }
         }
@@ -696,7 +820,9 @@
       "hint": {
         "tier": "vague",
         "from": "紅頭",
-        "zh": "紅頭的長輩好像在數羊，數來數去少了一隻。"
+        "fromEn": "Imorod",
+        "zh": "紅頭的長輩好像在數羊，數來數去少了一隻。",
+        "en": "The Imorod elder seems to be counting goats — and keeps coming up one short."
       },
       "playable": true,
       "hidden": true,

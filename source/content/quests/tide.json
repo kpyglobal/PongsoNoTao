@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "看懂潮汐時鐘",
-        "en": ""
+        "en": "Read the tide clock"
       },
       "time": "day",
       "seasons": [],
@@ -21,8 +21,11 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "I2",
         "kind": ""
@@ -33,14 +36,17 @@
           "kind": "talk",
           "npc": "harbor_staff",
           "text": "請開元港港務人員教你看潮汐時鐘",
+          "textEn": "Ask the Kaiyuan Harbour staff to teach you the tide clock",
           "lines": [
             {
               "who": "@npc",
-              "zh": "出海、下潮間帶前都要先看潮汐。"
+              "zh": "出海、下潮間帶前都要先看潮汐。",
+              "en": "Check the tide before going to sea or onto the tide flats."
             },
             {
               "who": "@npc",
-              "zh": "一天大約有兩次退潮。我把潮汐時鐘放在畫面上方，退潮的時候再去潮間帶。"
+              "zh": "一天大約有兩次退潮。我把潮汐時鐘放在畫面上方，退潮的時候再去潮間帶。",
+              "en": "There are about two low tides a day. I've put the tide clock at the top of the screen — go to the tide flats at low tide."
             }
           ],
           "gives": {
@@ -50,6 +56,10 @@
             "toast": [
               "潮汐時鐘",
               "畫面上方會顯示漲潮或退潮。現在先簡化成清晨與黃昏退潮。"
+            ],
+            "toastEn": [
+              "Tide clock",
+              "The top of the screen shows high or low tide. For now it's simplified to low tide at dawn and dusk."
             ]
           }
         }
@@ -57,7 +67,9 @@
       "hint": {
         "tier": "direct",
         "from": "租車行老闆",
-        "zh": "開元港的港務人員最懂潮汐。"
+        "fromEn": "Scooter rental owner",
+        "zh": "開元港的港務人員最懂潮汐。",
+        "en": "The Kaiyuan Harbour staff know the tides best."
       },
       "playable": true
     },
@@ -68,7 +80,7 @@
       "village": null,
       "name": {
         "zh": "潮間帶的早晨",
-        "en": ""
+        "en": "Morning on the tide flats"
       },
       "time": "day",
       "seasons": [],
@@ -79,11 +91,16 @@
       "n": 1,
       "text": {
         "who": "族女；旅人跟著去",
+        "whoEn": "Tao woman; the traveller comes along",
         "coop": "族女可單人；旅人參加要雙人：族女＋旅人",
+        "coopEn": "The Tao woman can go alone; for the traveller to join, a pair: Tao woman + Traveller",
         "season": "退潮時段",
+        "seasonEn": "At low tide",
         "pre": "I1",
         "unlock": "貝類、海藻卡（族語名待族人提供）、I3",
-        "kind": "潮汐"
+        "unlockEn": "Shellfish and seaweed cards (Tao names to come from the community), I3",
+        "kind": "潮汐",
+        "kindEn": "Tide"
       },
       "req": "I1",
       "steps": [
@@ -95,14 +112,17 @@
             "f"
           ],
           "text": "退潮時，族女到朗島的潮間帶（旅人可以跟著去）",
+          "textEn": "At low tide, the Tao woman goes to the Iraraley tide flats (the traveller can come along)",
           "lines": [
             {
               "who": "@f",
-              "zh": "退潮了，礁岩露出來了。"
+              "zh": "退潮了，礁岩露出來了。",
+              "en": "Low tide. The reef is showing."
             },
             {
               "who": "@f",
-              "zh": "貝類、海藻的族語名稱還要請族人告訴我們，今天先用中文記下來。"
+              "zh": "貝類、海藻的族語名稱還要請族人告訴我們，今天先用中文記下來。",
+              "en": "We still need the community to tell us the Tao names for shellfish and seaweed. Today we'll note them in Chinese."
             }
           ],
           "gives": {
@@ -118,9 +138,11 @@
       "hint": {
         "tier": "tao",
         "from": "朗島的長輩",
+        "fromEn": "Iraraley elder",
         "npc": "elder_iraraley",
         "phrase": "ikongo",
-        "zh": "長輩問「海裡有什麼呢？」——意思是要你們退潮時去潮間帶看看。先看懂潮汐時鐘，再請族女帶路。"
+        "zh": "長輩問「海裡有什麼呢？」——意思是要你們退潮時去潮間帶看看。先看懂潮汐時鐘，再請族女帶路。",
+        "en": "The elder asked, \"What's in the sea?\" — meaning go look at the tide flats at low tide. Learn the tide clock first, then ask the Tao woman to lead the way."
       },
       "playable": true,
       "giver": "f"
@@ -132,7 +154,7 @@
       "village": null,
       "name": {
         "zh": "只取需要的量",
-        "en": ""
+        "en": "Take only what you need"
       },
       "time": "day",
       "seasons": [],
@@ -144,11 +166,16 @@
       "n": 1,
       "text": {
         "who": "族女、旅人",
+        "whoEn": "Tao woman, Traveller",
         "coop": "同 I2",
+        "coopEn": "Same as I2",
         "season": "退潮時段",
+        "seasonEn": "At low tide",
         "pre": "I2",
         "unlock": "生態值、C1",
-        "kind": "潮汐"
+        "unlockEn": "Nature points, C1",
+        "kind": "潮汐",
+        "kindEn": "Tide"
       },
       "req": "I2",
       "steps": [
@@ -157,14 +184,17 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "退潮時，族女在潮間帶只拿需要的量（旅人可以跟著看）",
+          "textEn": "At low tide, the Tao woman takes only what she needs from the tide flats (the traveller can watch)",
           "lines": [
             {
               "who": "@f",
-              "zh": "這個太小了，放回去。夠煮一餐就好。"
+              "zh": "這個太小了，放回去。夠煮一餐就好。",
+              "en": "This one's too small. Put it back. Enough for one meal is fine."
             },
             {
               "who": "@t",
-              "zh": "原來不是看到就撿。"
+              "zh": "原來不是看到就撿。",
+              "en": "So you don't just pick up everything you see."
             }
           ],
           "actor": [
@@ -181,10 +211,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "只拿需要的，海才會一直有。"
+              "zh": "只拿需要的，海才會一直有。",
+              "en": "Take only what you need, and the sea will always have more."
             }
           ],
           "actor": [
@@ -194,6 +226,10 @@
             "toast": [
               "生態值",
               "只取需要的量。"
+            ],
+            "toastEn": [
+              "Nature points",
+              "Took only what was needed."
             ]
           }
         }
@@ -201,7 +237,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "退潮時去潮間帶，女性長輩說：只拿需要的。"
+        "fromEn": "Host family",
+        "zh": "退潮時去潮間帶，女性長輩說：只拿需要的。",
+        "en": "At the tide flats at low tide, the woman elder says: take only what you need."
       },
       "playable": true,
       "giver": "f"
@@ -213,7 +251,7 @@
       "village": null,
       "name": {
         "zh": "夜晚的陸蟹",
-        "en": ""
+        "en": "Land crabs at night"
       },
       "time": "night",
       "seasons": [],
@@ -226,11 +264,17 @@
       "n": 1,
       "text": {
         "who": "族女；旅人跟著去",
+        "whoEn": "Tao woman; the traveller comes along",
         "coop": "族女可單人；旅人參加要雙人：族女＋旅人",
+        "coopEn": "The Tao woman can go alone; for the traveller to join, a pair: Tao woman + Traveller",
         "season": "陸蟹季（待確認）的夜間",
+        "seasonEn": "Land crab season (to be confirmed), at night",
         "pre": "I2；可提早接，頭燈來自 S1",
+        "preEn": "I2; can be taken early, headlamp from S1",
         "unlock": "陸蟹卡、水煮陸蟹料理卡、C2",
-        "kind": "提早接、道具卡關＋時段"
+        "unlockEn": "Land crab card, boiled land crab recipe card, C2",
+        "kind": "提早接、道具卡關＋時段",
+        "kindEn": "Take early, needs an item + time of day"
       },
       "req": "I2",
       "steps": [
@@ -242,15 +286,18 @@
             "f"
           ],
           "text": "夜裡，族女帶著頭燈在朗島附近看看陸蟹（旅人可以跟著去）",
+          "textEn": "At night, the Tao woman takes a headlamp to look for land crabs near Iraraley (the traveller can come along)",
           "lines": [
             {
               "who": "@f",
               "zh": "頭燈照到了，路邊有螃蟹在走。",
+              "en": "The headlamp caught one — there's a crab walking by the road.",
               "tao": "kalang"
             },
             {
               "who": "@f",
-              "zh": "陸蟹的季節和規矩還要請族人確認，今晚先只看、不抓。"
+              "zh": "陸蟹的季節和規矩還要請族人確認，今晚先只看、不抓。",
+              "en": "The land crab season and its rules still need checking with the community. Tonight we only look, no catching."
             }
           ],
           "gives": {
@@ -263,7 +310,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "晚上路邊常看得到螃蟹，記得帶頭燈。"
+        "fromEn": "Villager",
+        "zh": "晚上路邊常看得到螃蟹，記得帶頭燈。",
+        "en": "You often see crabs by the road at night. Remember your headlamp."
       },
       "playable": true,
       "needsItem": {
@@ -279,7 +328,7 @@
       "village": null,
       "name": {
         "zh": "護送陸蟹過馬路",
-        "en": ""
+        "en": "Help land crabs cross the road"
       },
       "time": "night",
       "seasons": [
@@ -296,10 +345,15 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人（騎車經過時觸發）",
+        "coopEn": "Solo (triggered when riding past)",
         "season": "陸蟹季的夜間",
+        "seasonEn": "Land crab season, at night",
         "pre": "Q02、陸蟹季開始",
+        "preEn": "Q02, land crab season begins",
         "unlock": "生態值",
+        "unlockEn": "Nature points",
         "kind": ""
       },
       "req": {
@@ -321,14 +375,17 @@
           "spot": "owl_road",
           "r": 8,
           "text": "陸蟹季的晚上，騎車慢慢經過，停車護送陸蟹過馬路",
+          "textEn": "On land crab season nights, ride past slowly and stop to help land crabs cross the road",
           "lines": [
             {
               "who": "@me",
-              "zh": "停車！前面有陸蟹。慢慢走，不要用手抓。"
+              "zh": "停車！前面有陸蟹。慢慢走，不要用手抓。",
+              "en": "Stop! There's a land crab ahead. Go slowly, don't grab it."
             },
             {
               "who": "旁白",
-              "zh": "陸蟹季的夜晚，母蟹要穿過馬路到海邊釋放幼蟲。騎慢一點，就能少壓到一隻。"
+              "zh": "陸蟹季的夜晚，母蟹要穿過馬路到海邊釋放幼蟲。騎慢一點，就能少壓到一隻。",
+              "en": "On land crab season nights, mother crabs cross the road to release their young in the sea. Ride slower and you'll save one more."
             }
           ],
           "gives": {
@@ -341,6 +398,10 @@
             "toast": [
               "生態值",
               "護送陸蟹安全過馬路。"
+            ],
+            "toastEn": [
+              "Nature points",
+              "You helped land crabs cross the road safely."
             ]
           }
         }
@@ -348,7 +409,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "夏天的晚上，西岸路邊常有陸蟹過馬路，騎車要慢。"
+        "fromEn": "Villager",
+        "zh": "夏天的晚上，西岸路邊常有陸蟹過馬路，騎車要慢。",
+        "en": "On summer nights, land crabs often cross the west coast road. Ride slowly."
       },
       "playable": true,
       "review": [
@@ -362,7 +425,7 @@
       "village": null,
       "name": {
         "zh": "現在不能吃的椰子蟹",
-        "en": ""
+        "en": "The coconut crab you can't eat now"
       },
       "time": "day",
       "seasons": [],
@@ -374,10 +437,15 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "遇到椰子蟹",
+        "preEn": "Met a coconut crab",
         "unlock": "保育教育卡",
+        "unlockEn": "Conservation card",
         "kind": ""
       },
       "req": {
@@ -393,14 +461,17 @@
           "kind": "talk",
           "npc": "@host",
           "text": "問長輩：晚上看到的椰子蟹能不能吃",
+          "textEn": "Ask the elder: can you eat the coconut crab you saw tonight?",
           "lines": [
             {
               "who": "@npc",
-              "zh": "以前椰子蟹是會吃的。現在牠們少了，是保育動物，看到了也不能抓。"
+              "zh": "以前椰子蟹是會吃的。現在牠們少了，是保育動物，看到了也不能抓。",
+              "en": "People used to eat coconut crabs. Now there are fewer, and they're protected. Even if you see one, you can't catch it."
             },
             {
               "who": "@npc",
-              "zh": "等牠們多回來，再說。"
+              "zh": "等牠們多回來，再說。",
+              "en": "When there are more of them again, we'll see."
             }
           ],
           "gives": {
@@ -410,6 +481,10 @@
             "toast": [
               "保育教育卡",
               "椰子蟹現在是保育動物，不能抓。"
+            ],
+            "toastEn": [
+              "Conservation card",
+              "Coconut crabs are protected now. No catching."
             ]
           }
         }
@@ -417,7 +492,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "晚上在路邊好像看到一隻好大的蟹……問問長輩。"
+        "fromEn": "Host family",
+        "zh": "晚上在路邊好像看到一隻好大的蟹……問問長輩。",
+        "en": "I think I saw a huge crab by the road last night… Ask the elder."
       },
       "playable": true
     },
@@ -428,7 +505,7 @@
       "village": null,
       "name": {
         "zh": "到椰油的雜貨店買頭燈",
-        "en": ""
+        "en": "Buy a headlamp at the Yayo grocery store"
       },
       "time": "day",
       "seasons": [],
@@ -440,10 +517,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "頭燈（C1 需要）",
+        "unlockEn": "Headlamp (needed for C1)",
         "kind": ""
       },
       "req": "Q02",
@@ -452,10 +533,12 @@
           "kind": "talk",
           "npc": "shop_yayo",
           "text": "到椰油的雜貨店買頭燈",
+          "textEn": "Buy a headlamp at the Yayo grocery store",
           "lines": [
             {
               "who": "@npc",
-              "zh": "頭燈嗎？晚上走路用得到。電池也幫你裝好了。"
+              "zh": "頭燈嗎？晚上走路用得到。電池也幫你裝好了。",
+              "en": "A headlamp? Handy for walking at night. I've put the batteries in for you."
             }
           ],
           "gives": {
@@ -465,6 +548,10 @@
             "toast": [
               "取得：頭燈",
               "夜晚的陸蟹（C1）需要它。"
+            ],
+            "toastEn": [
+              "Got: Headlamp",
+              "Needed for \"Land crabs at night\" (C1)."
             ]
           }
         }
@@ -472,7 +559,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "椰油的雜貨店什麼都有。"
+        "fromEn": "Tao villagers",
+        "zh": "椰油的雜貨店什麼都有。",
+        "en": "The Yayo grocery store has everything."
       },
       "playable": true
     },
@@ -483,7 +572,7 @@
       "village": null,
       "name": {
         "zh": "到雜貨店買防曬與飲水",
-        "en": ""
+        "en": "Buy sunscreen and water at the grocery store"
       },
       "time": "day",
       "seasons": [],
@@ -495,10 +584,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "防曬（G3 需要，也降低曬傷機率）",
+        "unlockEn": "Sunscreen (needed for G3, also lowers the chance of sunburn)",
         "kind": ""
       },
       "req": "Q02",
@@ -507,10 +600,12 @@
           "kind": "talk",
           "npc": "shop_yayo",
           "text": "到雜貨店買防曬與飲水",
+          "textEn": "Buy sunscreen and water at the grocery store",
           "lines": [
             {
               "who": "@npc",
-              "zh": "島上太陽很大，防曬和水都帶著。"
+              "zh": "島上太陽很大，防曬和水都帶著。",
+              "en": "The island sun is strong. Bring sunscreen and water."
             }
           ],
           "gives": {
@@ -521,6 +616,10 @@
             "toast": [
               "取得：防曬、飲水",
               "潮間帶撿貝類（G3）需要防曬。"
+            ],
+            "toastEn": [
+              "Got: Sunscreen, Drinking water",
+              "Picking shellfish on the tide flats (G3) needs sunscreen."
             ]
           }
         }
@@ -528,7 +627,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "椰油的雜貨店有防曬和水。"
+        "fromEn": "Tao villagers",
+        "zh": "椰油的雜貨店有防曬和水。",
+        "en": "The Yayo grocery store has sunscreen and water."
       },
       "playable": true
     },
@@ -539,7 +640,7 @@
       "village": null,
       "name": {
         "zh": "一次退潮撿 8 個貝類（太小的不撿）",
-        "en": ""
+        "en": "Pick 8 shellfish in one low tide (leave the small ones)"
       },
       "time": "day",
       "seasons": [],
@@ -550,11 +651,17 @@
       "n": 1,
       "text": {
         "who": "族女；旅人跟著去",
+        "whoEn": "Tao woman; the traveller comes along",
         "coop": "族女可單人；旅人同行要雙人：族女＋旅人",
+        "coopEn": "The Tao woman can go alone; for the traveller to join, a pair: Tao woman + Traveller",
         "season": "退潮時段",
+        "seasonEn": "At low tide",
         "pre": "I3；可提早接，防曬來自 S2",
+        "preEn": "I3; can be taken early, sunscreen from S2",
         "unlock": "同一趟也算 I3、料理卡、糧倉",
-        "kind": "提早接、道具卡關＋潮汐＋數量 8"
+        "unlockEn": "The same trip also counts for I3, recipe card, food store",
+        "kind": "提早接、道具卡關＋潮汐＋數量 8",
+        "kindEn": "Take early, needs an item + tide + count 8"
       },
       "req": "I3",
       "steps": [
@@ -562,10 +669,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "女性長輩帶族女退潮去撿貝類",
+          "textEn": "The woman elder takes the Tao woman to pick shellfish at low tide",
           "lines": [
             {
               "who": "@npc",
-              "zh": "退潮了，帶上防曬和水。太小的不撿，夠吃就好。"
+              "zh": "退潮了，帶上防曬和水。太小的不撿，夠吃就好。",
+              "en": "Low tide. Bring sunscreen and water. Leave the small ones; just enough to eat."
             }
           ],
           "actor": [
@@ -577,10 +686,12 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "族女在潮間帶撿貝類（太小的放回去）",
+          "textEn": "The Tao woman picks shellfish on the tide flats (puts the small ones back)",
           "lines": [
             {
               "who": "@f",
-              "zh": "這四個夠大。小的放回石縫裡。"
+              "zh": "這四個夠大。小的放回石縫裡。",
+              "en": "These four are big enough. The small ones go back in the cracks."
             }
           ],
           "actor": [
@@ -600,10 +711,12 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "趁潮水回來之前，再撿幾個",
+          "textEn": "A few more before the tide comes back",
           "lines": [
             {
               "who": "@f",
-              "zh": "……七、八。潮水要回來了，上岸。"
+              "zh": "……七、八。潮水要回來了，上岸。",
+              "en": "…seven, eight. The tide is coming in. Back to shore."
             }
           ],
           "actor": [
@@ -622,10 +735,12 @@
           "kind": "talk",
           "npc": "@giver",
           "text": "向女性長輩回報",
+          "textEn": "Report to the woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "八個，大小都剛好。妳記得放小的回去，很好。"
+              "zh": "八個，大小都剛好。妳記得放小的回去，很好。",
+              "en": "Eight, all a good size. You remembered to put the small ones back. Good."
             }
           ],
           "actor": [
@@ -641,6 +756,10 @@
             "toast": [
               "糧倉",
               "一次退潮撿了八個貝類。"
+            ],
+            "toastEn": [
+              "Food store",
+              "Picked eight shellfish in one low tide."
             ]
           }
         }
@@ -648,7 +767,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "退潮時，女性長輩會帶族女去撿貝類。記得先買防曬。"
+        "fromEn": "Host family",
+        "zh": "退潮時，女性長輩會帶族女去撿貝類。記得先買防曬。",
+        "en": "At low tide, the woman elder will take the Tao woman to pick shellfish. Buy sunscreen first."
       },
       "playable": true,
       "needsItem": {

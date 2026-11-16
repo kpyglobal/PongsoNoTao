@@ -5,12 +5,15 @@
       "id": "land_crab",
       "name": {
         "zh": "陸蟹",
+        "en": "Land crab",
         "tao": ""
       },
       "category": "observe",
       "collectible": false,
       "description": "夏天夜裡過馬路的陸蟹。",
+      "descriptionEn": "Land crabs crossing the road on summer nights.",
       "codex": "陸蟹在夏夜下海釋放幼生。開車騎車放慢，不抓、不擋路，數一數就好。",
+      "codexEn": "On summer nights, land crabs go down to the sea to release their young. Slow down on the road, don't catch them or block their way — just count them.",
       "icon": "icon_land_crab",
       "illustration": "illus_land_crab",
       "unlockFlag": "seen_land_crab",
@@ -25,12 +28,15 @@
       "id": "hermit_crab",
       "name": {
         "zh": "寄居蟹",
+        "en": "Hermit crab",
         "tao": ""
       },
       "category": "observe",
       "collectible": false,
       "description": "夜間潮間帶背著殼走路的寄居蟹。",
+      "descriptionEn": "Hermit crabs carrying their shells across the tide flats at night.",
       "codex": "寄居蟹需要合適的殼才能長大，不要把殼帶走當紀念品。",
+      "codexEn": "Hermit crabs need the right shells to grow. Don't take shells home as souvenirs.",
       "icon": "icon_hermit_crab",
       "illustration": "illus_hermit_crab",
       "unlockFlag": "seen_hermit_crab",
@@ -45,12 +51,15 @@
       "id": "scops_owl",
       "name": {
         "zh": "蘭嶼角鴞",
+        "en": "Lanyu scops owl",
         "tao": ""
       },
       "category": "observe",
       "collectible": false,
       "description": "夜裡在路邊樹林叫的蘭嶼角鴞。",
+      "descriptionEn": "The Lanyu scops owl calling in the roadside woods at night.",
       "codex": "蘭嶼特有的小型貓頭鷹。觀察時不打閃光、不放錄音引牠。族人對貓頭鷹有自己的看法，請尊重。",
+      "codexEn": "A small owl found only on Lanyu. When watching, no flash and no recorded calls to lure it. The Tao people have their own views on owls — please respect them.",
       "icon": "icon_scops_owl",
       "illustration": "illus_scops_owl",
       "unlockFlag": "saw_scops_owl",
@@ -66,12 +75,15 @@
       "id": "goat",
       "name": {
         "zh": "山羊",
+        "en": "Goat",
         "tao": "kagling"
       },
       "category": "observe",
       "collectible": false,
       "description": "紅頭山坡上的羊。",
+      "descriptionEn": "Goats on the slopes of Imorod.",
       "codex": "島上的羊是各家養的，耳朵上的記號代表是哪一家。不是自己家的不要碰。",
+      "codexEn": "The island's goats belong to families. The mark on the ear shows which family. Don't touch goats that aren't yours.",
       "icon": "icon_goat",
       "illustration": "illus_goat",
       "unlockFlag": "saw_goats",

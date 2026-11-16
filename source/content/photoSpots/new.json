@@ -4,33 +4,56 @@
       "id": "ps_p28",
       "quest": "P28",
       "name": {
-        "zh": "開元港的夜燈"
+        "zh": "開元港的夜燈",
+        "en": "Night lights at Kaiyuan Harbour"
       },
       "place": "harbor",
       "r": 9,
       "time": "night",
       "seasons": [],
       "status": "placed",
-      "distanceOnly": false
+      "distanceOnly": false,
+      "snap": [
+        {
+          "zh": "📸 開元港的夜燈，倒影在水裡晃。",
+          "en": "📸 The night lights at Kaiyuan Harbour, wobbling in the water."
+        },
+        {
+          "zh": "📸 晚上的港口好安靜，拍到了。",
+          "en": "📸 The harbour's so quiet at night. Got it."
+        }
+      ]
     },
     {
       "id": "ps_p29",
       "quest": "P29",
       "name": {
-        "zh": "東清灣的月出"
+        "zh": "東清灣的月出",
+        "en": "Moonrise at Dongqing Bay"
       },
       "place": "iranmeylek_beach",
       "r": 8,
       "time": "night",
       "seasons": [],
       "status": "proposed-place",
-      "distanceOnly": false
+      "distanceOnly": false,
+      "snap": [
+        {
+          "zh": "📸 東清灣的月亮出來了，海上一條亮亮的路。",
+          "en": "📸 The moon's up over Dongqing Bay. A bright path across the sea."
+        },
+        {
+          "zh": "📸 拍到了。早上看日出，晚上看月出，好賺。",
+          "en": "📸 Got it. Sunrise this morning, moonrise tonight. What a deal."
+        }
+      ]
     },
     {
       "id": "ps_p30",
       "quest": "P30",
       "name": {
-        "zh": "東北季風的浪"
+        "zh": "東北季風的浪",
+        "en": "Northeast monsoon waves"
       },
       "place": "iraraley",
       "r": 10,
@@ -39,13 +62,24 @@
         "winter"
       ],
       "status": "placed",
-      "distanceOnly": true
+      "distanceOnly": true,
+      "snap": [
+        {
+          "zh": "📸 東北季風的浪好大，我們站遠一點拍。",
+          "en": "📸 The monsoon waves are huge. Let's shoot from further back."
+        },
+        {
+          "zh": "📸 浪打上來好震撼，拍到了，退後退後。",
+          "en": "📸 The waves crashing in are wild. Got it, back up, back up."
+        }
+      ]
     },
     {
       "id": "ps_nt3",
       "quest": "NT3",
       "name": {
-        "zh": "路邊的蘭嶼角鴞"
+        "zh": "路邊的蘭嶼角鴞",
+        "en": "Lanyu scops owl by the road"
       },
       "place": "owl_road",
       "r": 6,
@@ -53,7 +87,17 @@
       "seasons": [],
       "status": "proposed-place",
       "distanceOnly": true,
-      "noFlash": true
+      "noFlash": true,
+      "snap": [
+        {
+          "zh": "📸 角鴞在那邊……不開閃光，小聲一點。",
+          "en": "📸 There's the scops owl… no flash, keep it down."
+        },
+        {
+          "zh": "📸 拍到了，牠好像看了我一眼。我們先走，別吵牠。",
+          "en": "📸 Got it. I think it looked at me. Let's go and leave it be."
+        }
+      ]
     }
   ]
 }

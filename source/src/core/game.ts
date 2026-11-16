@@ -4,8 +4,9 @@ import { setPaintLook, worldStyle } from '../render/stylize';
 import { PAINT } from '../render/styleConfig';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Assets } from './assets';
+import { CAM_DEFAULT } from './camera';
 import { Input, type InputAction } from './input';
-import { GameState, type ArrivalWay, type Gender, type LangMode } from './state';
+import { GameState, isLangMode, readStoredLang, writeStoredLang, type ArrivalWay, type Gender, type LangMode } from './state';
 import { arrivalSpawn, buildArrivalProps } from '../world/arrival';
 import { IntroScene } from '../intro/introScene';
 import { mountMenuSound, installMenuSounds, menuSfx } from '../ui/menuSound';
@@ -16,11 +17,13 @@ import { Ocean, bakeLandFieldAsync } from '../world/water';
 import { reflectHooks } from '../render/reflectHooks';
 import { setSpriteSunYaw } from '../entities/billboard';
 import { WorldDecor, type PlaceRec } from '../world/populate';
+import { GoatHerds } from '../world/goats';
 import { addQuestPlaces, hostPlaces } from '../world/places';
+import { elderF, elderM, isVillage, questHome, resolveQuests, tokenNpc, VILLAGES, type Homes, type VillageId } from '../systems/homes';
 import { TaroTerraces } from '../world/paddies';
-import { sample, sampleHM, gridAsync, TERRAIN_BOX, distToRing } from '../world/height';
+import { sample, sampleHM, gridAsync, TERRAIN_BOX, distToRing, roadPolylines } from '../world/height';
 import { Player, type PlayerMode } from '../entities/player';
-import { NpcSystem, NPC_LOAD_AHEAD, type NpcActor } from '../entities/npcs';
+import { NpcSystem, NPC_LOAD_AHEAD, type NpcActor, type NpcPace, npcWalkRate, npcWalkSpeed } from '../entities/npcs';
 import { UI, type Overlay } from '../ui/dom';
 import { isIOS, preferredPixelRatio } from './device';
 import { quality } from './quality';
@@ -36,23 +39,33 @@ import { Outfits } from '../systems/outfits';
 import { fitClock, seasonTag } from '../systems/timeWindow';
 import { yieldToUi } from './frame';
 import { lastPaintMs, Island, WORLD_BOX } from '../world/island';
-import { initCollision, canStand, PLAYER_RADIUS } from '../world/collision';
+import { initCollision, canStand, findSafeStand, PLAYER_RADIUS, NPC_RADIUS } from '../world/collision';
 import { buildShade, shadeAt, shadeStats } from '../world/shade';
 import type { SpriteBillboard } from '../entities/billboard';
-import { LANDMARKS, facilityBoxes, remapSavePos } from '../world/layout';
+import { LANDMARKS, facilityBoxes, remapSavePos, remapSavePos014, useWorldLang, VILLAGE_DEFS, FACILITIES } from '../world/layout';
+import { LANYU_OUTLINE, MAP_SCALE } from '../world/outline';
 import { WORLD_REV } from '../world/legacy';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { Party, ROLES } from '../entities/party';
 import { QuestEngine, tideAt, type QuestEvent } from '../quests/engine';
 import type { QuestDef, QuestStep, Role, StepLine } from '../quests/types';
+import type { PhotoSpotDef } from '../content/types';
 import { readSave, writeSave, clearSave, validateSave, type SaveJSON } from './save';
-import { CHAR_WORLD_H } from '../entities/billboard';
+import { CHAR_WORLD_H, WALK_ANIM_RATE } from '../entities/billboard';
 import type { QuestCardVM } from '../ui/dom';
 import { startBgm, isCultureQuest, segueToTitle, titleIntroSeconds } from '../systems/audio/bgm';
 import { sfxSting } from '../systems/audio/sfx';
 import { closeImagePopup, showDive, showSongCard, renderAlbum, renderSaveTab, type AlbumVM, type SongVM } from '../ui/phase1b';
+import { tr, uiLang } from '../ui/i18n';
+import { CardQueue, CARD_ART, photoEl, postcardEl, recipeEl, type CardJob } from '../ui/cards';
+import { itemCard, itemIcon, needRows, outfitCard, photoCard, recipeCard, recipeRows, wordCard, type CardCtx } from '../ui/cardData';
+import { questPageJob } from '../ui/questPage';
+import { fxOn } from '../ui/fly';
+import { sfxShutter } from '../systems/audio/sfx';
 
 const ROLE_ZH: Record<Role, string> = { m: '族男', f: '族女', t: '旅人' };
+/** 0.1.5: small camera icon for a scenic spot already in the album (drawn, no emoji font needed) */
+const CAMERA_ICON = `data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="3" y="9" width="26" height="18" rx="4" fill="#fffaf0" stroke="#2c2118" stroke-width="2"/><path d="M11 9l2-4h6l2 4" fill="#fffaf0" stroke="#2c2118" stroke-width="2" stroke-linejoin="round"/><circle cx="16" cy="18" r="5.5" fill="#1f6f70" stroke="#2c2118" stroke-width="2"/><circle cx="24.5" cy="13" r="1.4" fill="#b33a32"/></svg>')}`;
 type DlgLine = { who: string; zh: string; tao: string; portrait?: string; unlocks?: DialogueUnlocks };
 
 /** What the player is doing; overlays (journal / travel / help) sit on top of it. */
@@ -63,8 +76,7 @@ export type Mode = Activity | Overlay;
 /** The test / debug API is only exposed in dev builds or with ?debug in the URL. */
 const DEBUG_API = import.meta.env.DEV || (typeof location !== 'undefined' && new URLSearchParams(location.search).has('debug'));
 
-/** default view ~1.3x the old 17; the old default is now the closest zoom; max frames a whole village */
-const CAM_DEFAULT = { yaw: 0.7, pitch: 0.58, dist: 22 };
+
 
 /**
  * 0.1.4 arrival opening: title screen → party → 搭飛機／搭船 → arrival cut-scene. `?intro=0` turns it off,
@@ -111,6 +123,8 @@ export class Game {
     phase: 'intro' | 'notebook';
     t0: number;
     id: PlayableOrigin;
+    /** 0.1.5: the 族女's village (id = the 族男's, which is also the 主人家) */
+    idF: PlayableOrigin;
     gender: Gender;
     way: ArrivalWay;
     last: number;
@@ -132,16 +146,18 @@ export class Game {
   /** intro memory report (tests): renderer + heap before and after the intro scene is disposed */
   private introMem: { before?: Record<string, number>; after?: Record<string, number> } = {};
   /** party picked on the origin screen, waiting for the 搭飛機／搭船 choice */
-  private pendingStart: { id: PlayableOrigin; gender: Gender } | null = null;
+  private pendingStart: { id: PlayableOrigin; idF: PlayableOrigin; gender: Gender } | null = null;
   /** cut-scene camera height override (the plane is in the air) */
   private camFy: number | null = null;
   private arrivalPeriod: Period | null = null;
   private activity: Activity = 'cover';
   private overlay: Overlay | null = null;
   private content!: UiContent;
-  private camCur = { yaw: 0.55, pitch: 0.62, dist: 22, x: 0, y: 0, z: 0 };
+  private camCur = { yaw: 0.55, pitch: 0.62, dist: CAM_DEFAULT.dist, x: 0, y: 0, z: 0 };
   private player!: Player;
   private npcs!: NpcSystem;
+  private goats!: GoatHerds;
+  private lootV = new THREE.Vector3();
   private places: Record<string, PlaceRec> = {};
   private groundFx = true;
   private diveOpen = false;
@@ -157,7 +173,7 @@ export class Game {
   private chatTurn = new Map<string, number>();
   private camYaw = 0.62;
   private camPitch = 0.6;
-  private camDist = 22;
+  private camDist = CAM_DEFAULT.dist;
   private camBtn = 0;
   private dlgQueue: DlgLine[] = [];
   /** 0.1.4 audio: the quest whose scene is open (cleared on return to exploration by the probe's mode check) */
@@ -201,10 +217,20 @@ export class Game {
   private markers = new Map<string, { obj: CSS2DObject; el: HTMLElement; npc?: NpcActor; key: string }>();
   ready = false;
   timings = { boot: 0, assets: 0, grid: 0, paint: 0, world: 0 };
+  /** 0.1.5 unlock cards / quest pages / photos (src/ui/cards.ts) */
+  private cards!: CardQueue;
+  /** cards, quest pages and arrival photos run on their own (off in automated runs unless ?cards=1; tests can switch) */
+  private cardsAuto = fxOn();
+  /** scenic spots the party stood in at the last check (first-visit photos / revisit camera icon) */
+  private scenicIn = new Set<string>();
+  private scenicLast: { x: number; z: number } | null = null;
+  private scenicT = 0;
+  private lastSnap = '';
 
   constructor() {
     const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
     this.ui = new UI(document.getElementById('ui-root')!);
+    this.cards = new CardQueue(document.getElementById('ui-root')!, () => document.getElementById('btn-journal'));
     mountMenuSound(); // 0.1.4: 音樂／音效 toggles on the start screens + menu sounds everywhere
     installMenuSounds();
     this.ui.setOverlayOpen(true);
@@ -267,21 +293,21 @@ export class Game {
     this.input.onAction = (a) => this.onAction(a);
     this.input.onAnyKey = () => this.ui.onAnyKey();
     this.ui.hooks = {
-      onOrigin: (id, gender) => {
+      onOrigin: (id, idF, gender) => {
         // S2: one save slot — ask before a new journey replaces it
         const meta = this.saveMeta(readSave());
-        if (meta && !window.confirm(`開始新旅程會覆蓋現有存檔：\n${meta}\n\n確定要重新開始嗎？（想保留可以先到手札「存檔」匯出）`)) return;
+        if (meta && !window.confirm(tr(`開始新旅程會覆蓋現有存檔：\n${meta}\n\n確定要重新開始嗎？（想保留可以先到手札「存檔」匯出）`))) return;
         // 0.1.4: next, how the party reaches the island (off: straight to 開元港, as before)
         if (introEnabled()) {
-          this.pendingStart = { id, gender };
+          this.pendingStart = { id, idF, gender };
           this.ui.showArrival();
-        } else this.begin(id, gender, 't');
+        } else this.begin(id, gender, 'm', 'boat', false, idF);
       },
       onArrival: (way) => {
         const p = this.pendingStart;
         if (!p) return;
         this.pendingStart = null;
-        this.playArrival(p.id, p.gender, way);
+        this.playArrival(p.id, p.gender, way, p.idF);
       },
       onArrivalBack: () => {
         this.pendingStart = null;
@@ -340,6 +366,10 @@ export class Game {
   /** Keyboard actions from Input, mapped per mode. */
   private onAction(a: InputAction): void {
     if (!this.ready || !this.worldReady) return;
+    if (a === 'escape' && this.cards.open) {
+      this.cards.tap();
+      return;
+    }
     if (a === 'escape') {
       if (this.overlay) menuSfx('menu_cancel');
       if (this.overlay) this.setOverlay(this.overlay, false);
@@ -387,10 +417,10 @@ export class Game {
       }
       await this.loadWorld((p, label) => this.ui.setLoad(p, label));
       // cover: slow orbit over the whole island behind the title card
-      this.focus = { x: 0, z: 2 }; // 0.1.4: centre of the real-outline island
+      this.focus = { x: 0, z: 2 * MAP_SCALE }; // 0.1.4: centre of the real-outline island (0.1.5: scaled with it)
       this.camYaw = 0.75;
       this.camPitch = 0.66;
-      this.camDist = 92;
+      this.camDist = 92 * MAP_SCALE;
       this.snapCam = true;
       this.ui.showOrigin();
       this.afterBoot(boot0);
@@ -405,10 +435,14 @@ export class Game {
 
   private afterBoot(boot0: number): void {
     try {
-      this.ui.showContinue(this.saveMeta(readSave()));
+      const sv = readSave();
+      this.ui.showContinue(this.saveMeta(sv));
+      const fromSave = sv?.state?.lang;
+      this.setLang(isLangMode(fromSave) ? fromSave : (readStoredLang() ?? this.state.lang));
     } catch (e) {
       console.warn('save unreadable', e);
       this.ui.showContinue(null);
+      this.setLang(readStoredLang() ?? this.state.lang);
     }
     this.ready = true;
     this.timings.boot = performance.now() - boot0;
@@ -433,6 +467,7 @@ export class Game {
   /** content tables (sync; the screens before the island need places / ui text) */
   private loadContent(): void {
     if (this.db) return;
+    useWorldLang(uiLang() === 'en' ? 'en' : 'zh'); // 0.1.5: landmark / quest-spot names in the interface language
     this.db = content();
     this.places = JSON.parse(JSON.stringify(this.db.places)) as Record<string, PlaceRec>;
     this.dlg = new Dialogue(this.db.dialogues);
@@ -457,6 +492,15 @@ export class Game {
       this.timings.grid = performance.now() - g0;
       initCollision();
       this.ui.bakeMinimap(drawMinimap);
+      // 0.1.5: the fast-travel map (the island crop of the same painting, with a pin per destination)
+      {
+        const box = travelMapBox();
+        const spots = this.content.travel.flatMap((t) => {
+          const p = t.landmark ? LANDMARKS.find((l) => l.id === t.id) : this.places[t.id];
+          return p ? [{ id: t.id, zh: t.zh, tao: t.tao, x: p.x, z: p.z, kind: (VILLAGE_DEFS.some((v) => v.id === t.id) ? 'tribe' : 'place') as 'tribe' | 'place' }] : [];
+        });
+        this.ui.setTravelMap(box, (ctx, w, h) => drawMinimap(ctx, w, h, box), spots);
+      }
       this.progress(0.77, '為島嶼上色……');
       await yieldToUi(true);
       const w0 = performance.now();
@@ -519,6 +563,9 @@ export class Game {
 
     this.decor = new WorldDecor(this.assets, this.places);
     this.scene.add(this.decor.group);
+    this.goats = new GoatHerds(this.places);
+    this.scene.add(this.goats.group);
+    this.goats.setPeriod(this.state.period);
     // 0.1.4: the parked plane and the moored yacht (own objects, static for now)
     this.scene.add(buildArrivalProps());
 
@@ -542,7 +589,16 @@ export class Game {
       outfits: ROLES.flatMap((r) => this.outfits.available(r, this.quests.outfits).map((def) => ({ def, role: r, worn: this.outfits.equipped[r] === def.id }))),
       roleZh: ROLE_ZH,
       onWear: (r, id) => void this.wearOutfit(r, id).then(() => this.refreshJournal()),
+      card: this.cardCtx(),
+      recipesKnown: this.state.recipes,
     });
+    // 0.1.5 cards: every first unlock (word, item, recipe) → a card
+    GameState.setFreshHook((kind, ids) => {
+      if (kind === 'glossary') this.discover(ids.map((i) => `w:${i}`));
+      else if (kind === 'recipes') this.discover(ids.map((i) => `r:${i}`));
+      else this.discover(ids.map((i) => `i:${i}`));
+    });
+    this.inv.onFirst = (id) => this.discover([`i:${id}`]);
     this.recipeSys = new Recipes(
       this.db.recipes,
       this.db.items,
@@ -558,15 +614,16 @@ export class Game {
       if (g.items?.length) sfxSting('item'); // 0.1.4 sound: item collection
       if (g.glossary?.length) {
         const fresh = this.state.unlock(this.state.glossary, g.glossary);
-        if (fresh.length) this.ui.toast('族語詞卡', `學會 ${fresh.length} 個新詞，已寫進手札。`);
+        if (fresh.length && !this.cardsAuto) this.ui.toast('族語詞卡', `學會 ${fresh.length} 詞`);
       }
       if (g.recipe) this.state.unlock(this.state.recipes, [g.recipe]);
       const ing = (g.items ?? []).filter((i) => this.db.items.get(i)?.category === 'ingredient');
       if (ing.length) this.state.unlock(this.state.ingredients, ing);
-      g.items?.forEach((i) => this.quests.collect.add(`item:${i}`));
+      g.items?.forEach((i) => this.inv.see(i));
       if (g.outfits?.length) {
         for (const o of g.outfits) void this.outfits.ensure(o, (rel) => this.assets.acquire(rel));
-        if (!g.toast) this.ui.toast('解鎖服裝', `${g.outfits.map((o) => this.outfits.byId.get(o)?.name.zh ?? o).join('、')}：在手札的「背包」頁可以換穿。`);
+        if (!g.toast && !this.cardsAuto) this.ui.toast('解鎖服裝', g.outfits.map((o) => this.outfits.byId.get(o)?.name.zh ?? o).join('、'));
+        this.discover(g.outfits.map((o) => `o:${o}`));
       }
       if (g.toast) this.ui.toast(g.toast[0], g.toast[1]);
     };
@@ -586,12 +643,12 @@ export class Game {
    * (loading bar, lower left). The logo fades first; then the plane banks toward the island or the yacht drives
    * out of frame, the shot fades, the notebook opens on 抵達蘭嶼 and stamps it complete, and the game starts.
    */
-  private playArrival(id: PlayableOrigin, gender: Gender, way: ArrivalWay): void {
+  private playArrival(id: PlayableOrigin, gender: Gender, way: ArrivalWay, idF: PlayableOrigin = id): void {
     if (this.arrival) return;
     // the menu loop hands over to the title's epic opening on its next bar line; the logo comes in with it
     const logoAt = segueToTitle();
     const minEnd = logoAt + Math.max(6, titleIntroSeconds());
-    this.arrival = { phase: 'intro', t0: performance.now(), id, gender, way, last: 0, logoAt, minEnd, logoOutAt: null, skip: false, tA: 0 };
+    this.arrival = { phase: 'intro', t0: performance.now(), id, idF, gender, way, last: 0, logoAt, minEnd, logoOutAt: null, skip: false, tA: 0 };
     if (!this.intro) {
       // (only when the opening is re-run without its backdrop, e.g. a test after a game start)
       this.intro = new IntroScene(window.innerWidth / window.innerHeight);
@@ -653,7 +710,7 @@ export class Game {
     this.ui.arrivalCut();
     this.disposeIntro();
     if (this.arrivalPeriod === null) this.arrivalPeriod = this.state.period;
-    this.begin(a.id, a.gender, 't', a.way, true);
+    this.begin(a.id, a.gender, 'm', a.way, true, a.idF);
     this.coverHold = true;
     a.phase = 'notebook';
     a.tA = performance.now();
@@ -675,8 +732,11 @@ export class Game {
       this.finishNotebook();
       return;
     }
-    if (t >= 2.5) this.finishNotebook();
+    if (t >= 2.5 && !this.nbHold) this.finishNotebook();
   }
+
+  /** 0.1.5 tests / recordings: keep the arrival notebook open (a slow headless GPU spends its 2.5 s on the first frames) */
+  private nbHold = false;
 
   /** close the notebook and play Q01's arrival lines (culture statement + scooter-rental guidance) */
   private finishNotebook(): void {
@@ -728,24 +788,29 @@ export class Game {
   }
 
   /**
-   * New game. The party is fixed (族男 + 族女 + traveller); `id` is the 族人 home village (主人家).
-   * `lead` = who is controlled first (the UI starts with the traveller). Debug / older scripts:
-   * selectOrigin('visitor', g) → traveller lead; selectOrigin(village, g) → 族男 / 族女 lead by g.
+   * New game. The party is fixed (族男 + 族女 + traveller); `id` is the 族男's village, which is also the 主人家
+   * (where the party stays); `idF` is the 族女's village (0.1.5: may differ; omitted = the same village).
+   * `lead` = who is controlled first (new games and the arrival opening start with the 族男).
+   * Debug / older scripts may still pass a different lead; omitted lead also defaults to the 族男.
    */
-  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, lead?: Role, way: ArrivalWay = 'boat', holdTalk = false): void {
+  private begin(id: PlayableOrigin, gender: Gender = this.state.gender, lead?: Role, way: ArrivalWay = 'boat', holdTalk = false, idF: PlayableOrigin = id): void {
     const T = this.content.text;
     try {
       const home = id === 'visitor' ? 'yayo' : id;
+      const homeF = idF === 'visitor' ? 'yayo' : idF;
       if (!this.places[home]) throw new Error(`no home village ${home}`);
-      const controlled: Role = lead ?? (id === 'visitor' ? 't' : gender === 'f' ? 'f' : 'm');
+      if (!this.places[homeF]) throw new Error(`no home village ${homeF}`);
+      const controlled: Role = lead ?? 'm';
       this.closeAll();
       // S3: a fresh journal (nothing left over from an earlier or half-loaded run); keep the language setting
       Object.assign(this.state, new GameState(), { lang: this.state.lang, period: this.state.period, season: this.state.season });
       this.state.gender = gender === 'f' ? 'f' : 'm';
       this.state.origin = home;
+      this.state.originM = home;
+      this.state.originF = homeF;
       this.state.arrival = way === 'plane' ? 'plane' : 'boat';
       this.state.started = true;
-      this.setHostPlaces(home);
+      this.setHostPlaces();
       if (this.state.unlockMilestone('arrive')) sfxSting('milestone');
       // 0.1.4: the whole party starts where it arrived: 開元港 (boat) or beside the 蘭嶼機場 runway (plane)
       const sp = arrivalSpawn(this.state.arrival, this.places.harbor);
@@ -795,13 +860,17 @@ export class Game {
       const st = GameState.fromJSON(sv.state);
       Object.assign(this.state, st);
       this.state.started = true;
+      this.setHostPlaces();
       this.quests.load(sv.quests);
-      this.setHostPlaces(this.state.origin && this.places[this.state.origin] ? this.state.origin : 'yayo');
+      this.seedCards();
       const c: Role = ROLES.includes(sv.party.controlled) ? sv.party.controlled : 't';
       const pos0 = sv.party.pos ?? ({} as SaveJSON['party']['pos']);
       // 0.1.4: a save from the old oval island keeps each member near the same village on the new map
-      const pos = (sv.world ?? 1) < WORLD_REV
-        ? (Object.fromEntries(Object.entries(pos0).map(([r, p]) => [r, p ? remapSavePos(p.x, p.z) : p])) as SaveJSON['party']['pos'])
+      // 0.1.5: a 0.1.4 save (world 2) keeps each member near the same village / facility on the bigger island
+      const rev = sv.world ?? 1;
+      const remap = rev < 2 ? remapSavePos : rev < WORLD_REV ? remapSavePos014 : null;
+      const pos = remap
+        ? (Object.fromEntries(Object.entries(pos0).map(([r, p]) => [r, p ? remap(p.x, p.z) : p])) as SaveJSON['party']['pos'])
         : pos0;
       const me = pos[c] ?? { x: this.places.harbor.x, z: this.places.harbor.z };
       this.player.group.visible = true;
@@ -833,10 +902,10 @@ export class Game {
       if (this.quests.memberBlock(c)) this.applyPartyState();
       this.refreshPartyUi();
       this.questDirty = true;
-      this.ui.toast('讀取存檔', '從上次離開的地方繼續。');
+      this.ui.toast('讀取存檔', '從上次的地方繼續');
     } catch (err) {
       console.error(err);
-      this.ui.toast('存檔讀取失敗', '請重新開始一段旅程。');
+      this.ui.toast('存檔讀取失敗', '這個存檔讀不到，重新開始一段旅程吧。');
       // S3: do not leave a half-loaded journal behind
       Object.assign(this.state, new GameState(), { lang: this.state.lang });
       this.quests.reset();
@@ -854,6 +923,7 @@ export class Game {
     if (this.state.seenTimes.size === 4) this.maybeMilestone('all-times', this.content.text.allTimesTitle, this.content.text.allTimesBody);
     this.applyAtmosphere();
     this.npcs.applySchedule(p, this.state.season);
+    this.goats?.setPeriod(p);
     this.ui.syncChips(p, this.state.season, this.state.lang);
     this.onClockChange();
   }
@@ -885,6 +955,7 @@ export class Game {
     setSpriteSunYaw(Math.atan2(pre.sunDir.x, pre.sunDir.z));
     this.island.setSeason(s);
     this.decor.applyTime(p, s);
+    this.goats?.setPeriod(p);
     this.terraces.apply({ zenith: pre.zenith, horizon: pre.horizon, sunDir: pre.sunDir, sunColor: pre.sunColor, night: p === 'night' ? 1 : p === 'dusk' ? 0.5 : 0 });
     this.renderer.toneMappingExposure = pre.exposure;
     if (this.post.bloom) {
@@ -904,11 +975,13 @@ export class Game {
 
   private setLang(m: LangMode): void {
     this.state.lang = m;
-    this.ui.syncChips(this.state.period, this.state.season, m);
+    writeStoredLang(m);
+    this.ui.syncLang(m);
     if (this.dlgQueue.length) {
       const cur = this.dlgQueue[0];
       this.ui.openDialogue(cur.who, cur.zh, cur.tao, m, this.dlgQueue.length === 1, cur.portrait);
     }
+    if (this.state.started) this.saveNow();
   }
 
   private maybeMilestone(id: string, title: string, body: string): void {
@@ -971,16 +1044,20 @@ export class Game {
 
   /** every layer that should swallow world interaction and movement */
   private isModalOpen(): boolean {
-    return this.mode !== 'explore' || this.diveOpen;
+    return this.mode !== 'explore' || this.diveOpen || !!this.cards?.open;
   }
 
   /** close every modal layer: mini-game, dialogue queue, journal, travel sheet, help */
   private closeAll(): void {
     if (this.mg) this.cancelMinigame();
-    if (this.diveOpen) closeImagePopup(); // the dive counts as seen; playDive finishes the step
+    if (this.diveOpen) {
+      closeImagePopup(); // the dive counts as seen; playDive finishes the step
+      this.diveOpen = false; // 0.1.5: closed now (playDive's await settles a tick later; switching must not wait for it)
+    }
     this.dlgQueue = [];
     this.afterDialogue = null;
     this.ui.closeDialogue();
+    this.cards?.clear();
     this.overlay = null;
     this.ui.renderOverlay(null);
     this.ui.dismissHelpToast();
@@ -1272,7 +1349,7 @@ export class Game {
   /** shop / school in 椰油 and the rental near 開元港: derived spots for the new quest NPCs */
   private addQuestPlaces(): void {
     addQuestPlaces(this.places);
-    this.setHostPlaces('yayo');
+    this.setHostPlaces();
   }
 
   private syncQuestCtx(): void {
@@ -1308,27 +1385,32 @@ export class Game {
   private memberStatus(r: Role): string {
     const m = this.quests.members[r];
     if (m.st === 'party') return '在隊上';
-    if (m.st === 'wait') return `在${this.placeZh(m.at)}等${m.task && !m.task.includes('等') ? `（${m.task}）` : ''}`;
+    if (m.st === 'wait') return `在${this.placeZh(m.at)}等${m.task && !/等|^wait/i.test(m.task) ? `（${m.task}）` : ''}`;
     return `離隊：${m.task ?? ''}${m.at ? `（${this.placeZh(m.at)}）` : ''}`;
   }
 
   /** the a akes (女性長輩) of a village: npcs.json elder 'f' (quests.json elders.f) */
-  private hostFemaleId(v: string = this.state.origin ?? 'yayo'): string {
-    return this.quests.file.elders?.f?.[v] ?? 'weaver_elder';
+  private hostFemaleId(v: string = this.homes().host): string {
+    return elderF(v, this.quests.file.elders);
+  }
+
+  /** 0.1.5: 族男's / 族女's village and the 主人家 (unknown or missing → 椰油) */
+  private homes(): Homes {
+    const s = this.state;
+    const v = (x: string | null | undefined, d: VillageId): VillageId => (isVillage(x) ? x : d);
+    const host = v(s.origin, 'yayo');
+    return { m: v(s.originM, host), f: v(s.originF, host), host };
   }
 
   /** who an NPC token in quest data means: @host = the host family's elder, @hostf = the host village's a akes, @giver = the quest's 女／男耆老 */
   private npcFor(token: string | undefined, q: QuestDef): string {
-    if (token === '@host') return this.hostId();
-    if (token === '@hostf') return this.hostFemaleId();
-    if (token === '@giver') return this.giverId(q);
+    // quests are resolved for the party's homes at start / load (resolveQuests); tokens left here use the same rule
+    if (token?.startsWith('@')) return tokenNpc(token, q, questHome(q, this.homes()), this.homes(), this.quests.file.elders) ?? token;
     return token ?? '';
   }
 
   private giverId(q: QuestDef): string {
-    const v = this.state.origin ?? 'yayo';
-    const g = q.giver ?? 'm';
-    return this.quests.file.elders?.[g]?.[v] ?? (g === 'm' ? `elder_${v}` : 'weaver_elder');
+    return tokenNpc('@giver', q, questHome(q, this.homes()), this.homes(), this.quests.file.elders)!;
   }
 
   /**
@@ -1344,7 +1426,7 @@ export class Game {
       if (next && next !== me) {
         const why = E.members[me].st !== 'party' ? `${ROLE_ZH[me]}${this.memberStatus(me)}` : '';
         this.takeControl(next);
-        this.ui.toast(`換成${ROLE_ZH[next]}`, why || `現在操控${ROLE_ZH[next]}。`);
+        this.ui.toast(`換成${ROLE_ZH[next]}`, why || '');
       }
     }
     this.syncStay(true);
@@ -1384,7 +1466,7 @@ export class Game {
     if (this.mg) this.cancelMinigame();
     if (this.player.mode === 'canoe') this.setCanoe(false);
     const q = this.quests.abortSolo();
-    this.ui.toast('放棄出海', `${q ? `「${q.name.zh}」回到上一步。` : ''}大家在岸邊會合了，之後可以再試。`);
+    this.ui.toast('放棄出海', q ? `「${q.name.zh}」已回到上一步` : '已在岸邊會合');
     this.party.snapAround(this.player);
     this.questDirty = true;
     this.saveNow();
@@ -1400,7 +1482,7 @@ export class Game {
       return;
     }
     if (this.player.mode === 'canoe') {
-      this.ui.toast('先上岸', '划船時不能換人。');
+      this.ui.toast('先上岸', '划船的時候不能換人');
       return;
     }
     this.takeControl(role);
@@ -1430,7 +1512,7 @@ export class Game {
     this.focus = null;
     if (!together) {
       this.snapCam = true;
-      this.ui.toast(`切換到${ROLE_ZH[role]}`, E.members[role].st === 'party' ? '回到隊伍這邊。' : this.memberStatus(role));
+      this.ui.toast(`切換到${ROLE_ZH[role]}`, E.members[role].st === 'party' ? '' : this.memberStatus(role));
     }
     this.refreshPartyUi();
     this.questDirty = true;
@@ -1510,23 +1592,24 @@ export class Game {
     if (silent) return;
     for (const e of ev) if (e.type === 'done' && !e.q.silent && e.q.playable) {
       sfxSting('quest');
-      this.ui.toast('任務完成', `${e.q.id}｜${e.q.name.zh}`);
+      this.ui.toast('任務完成', e.q.name.zh);
     }
     const fresh = ev.filter((e) => e.type === 'unlock' && !e.q.silent).map((e) => e.q);
+    this.queueQuestPage(fresh);
     const hidden = fresh.filter((q) => q.hidden);
-    for (const q of hidden) this.ui.toast('發現隱藏任務', `${q.id}｜${q.name.zh}`);
+    for (const q of hidden) this.ui.toast('隱藏任務', q.name.zh);
     const open = fresh.filter((q) => !q.hidden);
-    if (open.length === 1) this.ui.toast('新任務', `${open[0].id}｜${open[0].name.zh}`);
+    if (open.length === 1) this.ui.toast('新任務', open[0].name.zh);
     else if (open.length > 1) {
       const main = open.filter((q) => q.line === 'main');
       const lead = (main[0] ?? open[0]);
-      this.ui.toast('新任務', `${lead.id}｜${lead.name.zh} 等 ${open.length} 項（按 L 或點任務條查看）`);
+      this.ui.toast('新任務', `${lead.name.zh} 等 ${open.length} 項`);
     }
   }
 
   /** why the controlled member cannot do this step right now (null = go) */
-  private stepBlock(q: QuestDef, st: QuestStep): string | null {
-    const role = this.party.controlled;
+  private stepBlock(q: QuestDef, st: QuestStep, as?: Role): string | null {
+    const role = as ?? this.party.controlled;
     const E = this.quests;
     // party split: a solo trip blocks everything else; quests whose members are all away wait for them
     if (E.solo && E.members[E.solo].quest !== q.id) return `${ROLE_ZH[E.solo]}正在${E.members[E.solo].task ?? '外面'}，先完成或放棄出海再來。`;
@@ -1633,7 +1716,7 @@ export class Game {
   }
 
   private hostId(): string {
-    return `elder_${this.state.origin ?? 'yayo'}`;
+    return elderM(this.homes().host, this.quests.file.elders);
   }
 
   /** quest-aware talk: a runnable step wins; otherwise explain what is missing; otherwise the NPC's usual lines */
@@ -1673,7 +1756,7 @@ export class Game {
         this.markHeard(taoIds);
       }, run.sub);
       if (why && why.q.line === 'main' && why.msg.startsWith('這件事要請')) {
-        this.ui.toast(why.q.name.zh, `${why.msg}（點左上角頭像切換）`);
+        this.ui.toast(why.q.name.zh, `${why.msg}（點頭像切換）`);
       }
       return;
     }
@@ -1684,6 +1767,10 @@ export class Game {
         this.markTranslated();
         this.saveNow();
       });
+      return;
+    }
+    if (teacher && this.untaughtIngredients().length) {
+      this.teachIngredients(npc);
       return;
     }
     if (tao.length) {
@@ -1700,7 +1787,7 @@ export class Game {
       this.openQueue([{ ...this.speaker('@npc', npc), zh: `「${why.q.name.zh}」……${why.msg}`, tao: '' }]);
       if (why.msg.startsWith('這件事要請')) {
         const need = (this.quests.step(why.q)?.actor ?? why.q.roles).map((r) => ROLE_ZH[r]).join('或');
-        this.ui.toast('需要換人', `點左上角頭像切換到${need}（鍵盤 1／2／3）。`);
+        this.ui.toast('需要換人', `點頭像換成${need}`);
       }
       return;
     }
@@ -1738,8 +1825,8 @@ export class Game {
         if (d > (st.r ?? 6)) continue;
         // photo steps belong to the traveller; a step that would only show a "not now" toast loses to one that can run
         const me = this.party.controlled;
-        const can = this.quests.canAct(st, q, me) && (st.kind !== 'photo' || me === 't');
-        const score = d + (can ? 0 : 1000) + (can && this.stepBlock(q, st) ? 500 : 0);
+        const can = st.kind === 'photo' ? this.travellerHere() : this.quests.canAct(st, q, me);
+        const score = d + (can ? 0 : 1000) + (can && this.stepBlock(q, st, st.kind === 'photo' ? 't' : undefined) ? 500 : 0);
         if (score < bd) {
           bd = score;
           best = { q, st, sub, d, ready: score < 500 };
@@ -1751,19 +1838,13 @@ export class Game {
 
   private useQuestSpot(q: QuestDef, st: QuestStep, sub = -1): void {
     this.audioSceneQuest = q.id; // 0.1.4 audio: also cover a mini-game before its dialogue
-    if (st.kind === 'photo' && this.party.controlled !== 't') {
-      this.ui.toast('只有旅人能拍照', '點左上角的旅人頭像（或按 3）再來拍。');
+    if (st.kind === 'photo') {
+      this.takePhoto(q, st, sub);
       return;
     }
     const why = this.stepBlock(q, st);
     if (why) {
       this.ui.toast(q.name.zh, why);
-      return;
-    }
-    if (st.kind === 'photo') {
-      this.ui.flash();
-      this.ui.toast('相簿＋1', `${this.spotName(st)}（${q.id}）`);
-      this.completeStep(q);
       return;
     }
     if (st.dive) {
@@ -1778,7 +1859,7 @@ export class Game {
         // 0.1.4 (Larry): only Tao men paddle a tatala; 族女 / 旅人 take a modern canoe (canoeKind "modern")
         const modern = st.canoeKind === 'modern';
         if (!modern && !this.tatalaRoles().includes(this.party.controlled)) {
-          this.ui.toast(q.name.zh, `拼板舟（tatala）由族裡的男人划。${ROLE_ZH[this.party.controlled]}可以在港邊租一艘現代獨木舟，在岸邊附近划划看。`);
+          this.ui.toast(q.name.zh, '拼板舟由族裡的男人划。可到港邊租獨木舟，在岸邊划划看。');
           return;
         }
         // a tatala (or an already-loaded modern sheet) boards at once, so the step runs in the same tick as before
@@ -1793,6 +1874,244 @@ export class Game {
       return;
     }
     this.runStep(q, st, null, [], undefined, sub);
+  }
+
+  // ------------------------------------------------------------------ 0.1.5 cards, quest pages, scenic photos
+
+  private cardCtx(): CardCtx {
+    return {
+      items: this.db.items,
+      recipes: this.db.recipes,
+      glossary: this.db.glossary,
+      outfits: this.db.outfits,
+      spots: this.db.photoSpots,
+      count: (i) => this.inv.count(i),
+      known: (i) => this.inv.known(i),
+      taught: (i) => this.state.taught.has(i),
+    };
+  }
+
+  /** first unlocks → cards (each key once per save; several at once wait in the queue) */
+  private discover(keys: string[]): void {
+    const fresh = keys.filter((k) => !this.state.cards.has(k));
+    if (!fresh.length) return;
+    fresh.forEach((k) => this.state.cards.add(k));
+    if (!this.cardsAuto || !this.state.started) return;
+    const c = this.cardCtx();
+    const words = fresh.filter((k) => k.startsWith('w:')).map((k) => k.slice(2));
+    const push = (job: CardJob | null): void => {
+      if (job) this.cards.push(job);
+    };
+    if (words.length >= 3) {
+      const w = wordCard(c, words);
+      if (w) push({ el: postcardEl(w), kind: 'postcard', key: w.key });
+    } else {
+      for (const id of words) {
+        const w = wordCard(c, [id]);
+        if (w) push({ el: postcardEl(w), kind: 'postcard', key: w.key });
+      }
+    }
+    for (const k of fresh) {
+      const id = k.slice(2);
+      if (k.startsWith('i:')) {
+        const d = itemCard(c, id);
+        if (d) push({ el: postcardEl(d), kind: 'postcard', key: d.key });
+      } else if (k.startsWith('o:')) {
+        const d = outfitCard(c, id);
+        if (d) push({ el: postcardEl(d), kind: 'postcard', key: d.key });
+      } else if (k.startsWith('r:')) {
+        const d = recipeCard(c, id);
+        if (d) push({ el: recipeEl(d), kind: 'recipe', key: d.key });
+      }
+    }
+  }
+
+  /** a save from before the cards: everything it already knows counts as shown (no cards replayed) */
+  private seedCards(): void {
+    if (this.state.cardsSeeded) return;
+    const st = this.state;
+    for (const g of st.glossary) st.cards.add(`w:${g}`);
+    for (const r of st.recipes) st.cards.add(`r:${r}`);
+    for (const id of this.db.items.keys()) if (this.inv.known(id)) st.cards.add(`i:${id}`);
+    for (const o of this.quests.outfits) st.cards.add(`o:${o}`);
+    st.cardsSeeded = true;
+  }
+
+  /** the traveller is with the party and close by (or is the one being played) */
+  private travellerHere(): boolean {
+    if (this.party.controlled === 't') return true;
+    if (this.quests.members.t.st !== 'party') return false;
+    return this.missingMembers(['t']).length === 0;
+  }
+
+  private snapLine(spot: string): DlgLine | null {
+    const lines = this.db.photoSpots.find((p) => p.id === spot)?.snap ?? [];
+    if (!lines.length) return null;
+    const pool = lines.length > 1 ? lines.filter((l) => l.zh !== this.lastSnap) : lines;
+    const l = pool[Math.floor(Math.random() * pool.length)];
+    this.lastSnap = l.zh;
+    return { ...this.speaker('@t', null), zh: l.zh, tao: '' };
+  }
+
+  /** without the traveller nothing is saved; whoever leads says the traveller would want a photo */
+  private photoNoTraveller(): void {
+    const lines = ['這裡好漂亮……旅人一定會想拍一張。等旅人回隊再一起來吧。', '旅人不在，相機也不在。下次帶旅人一起來拍吧。'];
+    const zh = lines[Math.floor(Math.random() * lines.length)];
+    this.openQueue([{ ...this.speaker(`@${this.party.controlled}`, null), zh, tao: '' }]);
+  }
+
+  /** flash (no flash for the owl) + shutter, the printed photo flies into the album, then the traveller's 📸 line */
+  private snapEffects(spot: string | null, lines: DlgLine[]): void {
+    const def = spot ? this.db.photoSpots.find((p) => p.id === spot) : undefined;
+    if (def?.noFlash) sfxShutter();
+    else this.ui.flash();
+    if (!this.cardsAuto || !spot) {
+      this.ui.popLoot('相簿＋1', this.player.x, this.player.z);
+      return;
+    }
+    const d = photoCard(this.cardCtx(), spot);
+    const say = this.snapLine(spot);
+    const after = (): void => {
+      const all = [...(say ? [say] : []), ...lines];
+      if (all.length) this.openQueue(all);
+    };
+    if (!d) {
+      after();
+      return;
+    }
+    this.cards.push({ el: photoEl(d), kind: 'photo', key: d.key, front: true, auto: 2.4, after, hint: '收進相簿' });
+  }
+
+  /** a photo step (scenic spot): the traveller has to be in the party */
+  private takePhoto(q: QuestDef, st: QuestStep, sub = -1): void {
+    if (!this.travellerHere()) {
+      this.photoNoTraveller();
+      return;
+    }
+    const why = this.stepBlock(q, st, 't');
+    if (why) {
+      this.ui.toast(q.name.zh, why);
+      return;
+    }
+    const spot = this.photos.forQuest(q.id)?.id ?? null;
+    if (spot) this.state.album.add(spot);
+    const lines = this.cardsAuto ? this.toDlg(st.lines ?? [], null) : [];
+    this.completeStep(q, sub);
+    this.snapEffects(spot, lines);
+    for (const p of this.db.photoSpots) if (p.id === spot) this.scenicIn.add(p.id);
+  }
+
+  /** scenic spots within reach (photo spot defs with a world position) */
+  private scenicHere(x: number, z: number): { def: PhotoSpotDef; q: QuestDef | undefined }[] {
+    const out: { def: PhotoSpotDef; q: QuestDef | undefined }[] = [];
+    for (const def of this.db.photoSpots) {
+      if (def.id.startsWith('ps_u')) continue; // underwater shots come from the dives
+      const at = def.place ?? def.landmark;
+      const p = at ? this.photos.resolve({ places: this.places, landmarks: LANDMARKS }, at) : null;
+      if (!p) continue;
+      if (Math.hypot(p.x - x, p.z - z) > (def.r ?? 8)) continue;
+      out.push({ def, q: def.quest ? this.quests.get(def.quest) : undefined });
+    }
+    return out;
+  }
+
+  /**
+   * walking into a scenic spot: first visit with the traveller → photo; without → the leader's remark;
+   * already in the album → just a small camera icon. A teleport (fast travel) does not count as a visit.
+   */
+  private scenicTick(force: boolean): void {
+    if (!this.state.started || !this.cardsAuto || this.arrival) return;
+    const x = this.player.x;
+    const z = this.player.z;
+    const last = this.scenicLast;
+    this.scenicLast = { x, z };
+    const jumped = !force && (!last || Math.hypot(last.x - x, last.z - z) > 12);
+    const here = this.scenicHere(x, z);
+    const ids = new Set(here.map((h) => h.def.id));
+    const entered = here.filter((h) => !this.scenicIn.has(h.def.id));
+    if (this.isModalOpen() && !force) return; // check again once the dialogue / card is gone
+    this.scenicIn = ids;
+    if (jumped) return;
+    for (const { def, q } of entered) {
+      if (this.state.album.has(def.id)) {
+        this.ui.popLoot('', x, z, CAMERA_ICON);
+        continue;
+      }
+      if (!q) continue;
+      const step = this.quests.active.has(q.id) ? this.quests.openSteps(q).find((o) => o.st.kind === 'photo') : undefined;
+      if (step) {
+        if (!this.questWindow(q).ok) continue;
+        this.takePhoto(q, step.st, step.sub);
+        return;
+      }
+      // a photo quest finished before 0.1.5 (album empty): the first visit with the traveller prints it now
+      if (this.quests.done.has(q.id) && this.quests.windowOk(def).ok) {
+        if (!this.travellerHere()) {
+          this.photoNoTraveller();
+          return;
+        }
+        this.state.album.add(def.id);
+        this.snapEffects(def.id, []);
+        this.saveNow();
+        return;
+      }
+    }
+  }
+
+  /** recipe ingredients whose names the party does not know yet (found or taught) */
+  private untaughtIngredients(): string[] {
+    const anyRecipe = this.state.recipes.size > 0 || this.db.recipes.some((r) => r.quest && (this.quests.active.has(r.quest) || this.quests.done.has(r.quest)));
+    if (!anyRecipe) return [];
+    const ids = new Set(this.db.recipes.flatMap((r) => Object.keys(r.ingredients)));
+    return [...ids].filter((id) => !this.inv.known(id) && !this.state.taught.has(id));
+  }
+
+  /** the 族語老師 teaches every recipe ingredient's name at once */
+  private teachIngredients(npc: NpcActor): void {
+    const ids = this.untaughtIngredients();
+    const sp = this.speaker('@npc', npc);
+    this.openQueue([
+      { ...sp, zh: '在找料理的食材嗎？名字不知道，問人也問不到吧。', tao: '' },
+      { ...sp, zh: '我把這些食材的名字都教你們，寫進手札裡了，去看看吧。', tao: '' },
+    ], () => {
+      ids.forEach((id) => this.state.taught.add(id));
+      this.ui.toast('族語老師', '料理食材的名字都記進手札了');
+      this.questDirty = true;
+      this.saveNow();
+    });
+  }
+
+  /** a newly unlocked quest opens its own notebook page (one per batch: the main line first) */
+  private queueQuestPage(fresh: QuestDef[]): void {
+    if (!this.cardsAuto || !this.state.started) return;
+    const open = fresh.filter((q) => !q.hidden && q.playable && this.quests.active.has(q.id));
+    const lead = open.find((q) => q.line === 'main') ?? open.find((q) => q.line === 'side') ?? open[0];
+    if (!lead) return;
+    const vm = this.questCards().find((c) => c.id === lead.id);
+    if (!vm) return;
+    const c = this.cardCtx();
+    let rows = lead.recipe ? (() => {
+      const r = this.db.recipes.find((x) => x.id === lead.recipe!.id);
+      return r ? recipeRows(c, r) : [];
+    })() : [];
+    if (!rows.length) {
+      const need: Record<string, number> = {};
+      if (lead.needsItem) need[lead.needsItem.item] = 1;
+      for (const stp of lead.steps) for (const r of Recipes.itemReqs(stp.until)) need[r.item] = Math.max(need[r.item] ?? 0, r.min);
+      rows = needRows(c, need);
+    }
+    const lineZh: Record<string, string> = { main: '主線', side: '支線', photo: '相簿水下' };
+    this.cards.push(questPageJob({
+      id: vm.id,
+      line: lineZh[vm.line] ?? '',
+      name: vm.name,
+      roles: vm.roles,
+      giver: vm.giver,
+      objective: vm.objective,
+      hint: vm.hint?.text,
+      hintTao: vm.hint?.tao,
+      rows,
+    }));
   }
 
   /** 0.1.4: who may paddle a tatala (content/meta.json tatalaRoles, default 族男 only; open it later in data) */
@@ -1828,7 +2147,7 @@ export class Game {
     this.startMinigame(st.minigame!, (ok) => {
       if (st.canoe && this.player.mode === 'canoe') this.setCanoe(false);
       if (ok) this.runStep(q, st, null, [], undefined, sub);
-      else this.ui.toast(q.name.zh, this.quests.solo ? '沒抓到時機。再試一次，或按「放棄出海」回岸邊和大家會合。' : '沒抓到時機，再試一次。');
+      else this.ui.toast(q.name.zh, this.quests.solo ? '差一點！再試一次，或「放棄出海」。' : '差一點！再試一次。');
     });
   }
 
@@ -1866,7 +2185,8 @@ export class Game {
     if (n.kind === 'observe') {
       this.inv.observe(n.item);
       const d = this.db.items.get(n.item);
-      this.ui.toast('圖鑑＋1', `${d?.name.zh ?? n.item}：${d?.description ?? ''}（遠遠看就好，不要打擾）`);
+      if (d) this.ui.popLoot('+1', this.player.x, this.player.z, itemIcon(d));
+      else this.ui.popLoot(`圖鑑＋1 ${n.item}`, this.player.x, this.player.z);
       this.syncQuestCtx();
       this.handleQuestEvents(this.quests.refresh());
       this.questDirty = true;
@@ -1876,12 +2196,14 @@ export class Game {
     this.addIngredient(n.item, 1, '採集');
   }
 
-  private addIngredient(id: string, n = 1, how = ''): void {
+  private addIngredient(id: string, n = 1, _how = ''): void {
     this.inv.add(id, n);
     if (n > 0) sfxSting('item');
     if (this.db.items.get(id)?.category === 'ingredient') this.state.unlock(this.state.ingredients, [id]);
-    const cat = this.db.items.get(id)?.category === 'ingredient' ? '食材' : '物品';
-    this.ui.toast(`${cat}＋${n}`, `${this.inv.name(id)}${how ? `（${how}）` : ''}｜背包裡有 ${this.inv.count(id)} 份`);
+    const d = this.db.items.get(id);
+    // 0.1.5: just a small icon with +n (the big card only on the first time ever)
+    if (d) this.ui.popLoot(`+${n}`, this.player.x, this.player.z, itemIcon(d));
+    else this.ui.popLoot(`物品＋${n}`, this.player.x, this.player.z);
     this.syncQuestCtx();
     this.handleQuestEvents(this.quests.refresh());
     this.questDirty = true;
@@ -2099,17 +2421,26 @@ export class Game {
   // ------------------------------------------------------------------ batch 1b: underwater, songs, album, save export / import
 
   /** host-family spots for 族人分工 quests (J1–J3, R1–R3, A3): home village, its taro field, the weaver's porch */
-  private setHostPlaces(home: string): void {
+  private setHostPlaces(): void {
     const P = this.places;
-    const hp = hostPlaces(P, home);
+    const h = this.homes();
+    const hp = hostPlaces(P, h.host);
     if (!hp) return;
     Object.assign(P, hp);
-    // the host village's a akes (女性長輩, NPC cast rev) waits on the host family's porch for J1–J3 / Q07
+    // 0.1.5: every village's family spots as host_*@<village> (a member's own home when it is not the 主人家)
+    for (const v of VILLAGES) {
+      const o = hostPlaces(P, v, true);
+      if (o) for (const [id, p] of Object.entries(o)) P[`${id}@${v}`] = { ...p, id: `${id}@${v}` };
+    }
+    // quests point at the right village's elders and spots (Q03 becomes two check-ins when the homes differ)
+    resolveQuests(this.db.quests, h, this.quests.file.elders);
+    // the a akes (女性長輩) of the 主人家 and of the 族女's home wait on their family porch (J1–J3 / Q07, 芋田／織布)
     if (this.npcs) {
-      const id = this.hostFemaleId(home);
-      if (this.npcs.byId(id)) {
-        this.npcs.applySchedule(this.state.period, this.state.season);
-        this.npcs.place(id, P.host_weave.x, P.host_weave.z);
+      this.npcs.applySchedule(this.state.period, this.state.season);
+      for (const v of new Set([h.host, h.f])) {
+        const id = this.hostFemaleId(v);
+        const porch = v === h.host ? P.host_weave : P[`host_weave@${v}`];
+        if (porch && this.npcs.byId(id)) this.npcs.place(id, porch.x, porch.z);
       }
     }
   }
@@ -2159,10 +2490,10 @@ export class Game {
 
   private albumVM(): AlbumVM {
     const c = this.quests.collect;
-    const photoQs = this.quests.defs.filter((q) => q.group === 'photo' && q.id.startsWith('P'));
     return {
-      photos: photoQs.filter((q) => this.quests.done.has(q.id)).map((q) => ({ id: q.id, name: q.name.zh })),
-      photoTotal: photoQs.length,
+      // 0.1.5: printed photos (taken with the traveller in the party); a save from before keeps an empty album
+      photos: this.db.photoSpots.filter((p) => this.state.album.has(p.id)).map((p) => ({ id: p.quest ?? p.id, name: p.name.zh, spot: p.id, thumb: CARD_ART.thumb(p.id) })),
+      photoTotal: this.db.photoSpots.filter((p) => !p.id.startsWith('ps_u')).length,
       uw: (['A', 'B'] as const).map((kind) => ({
         have: c.has(`uw:${kind}`),
         kind,
@@ -2233,7 +2564,10 @@ export class Game {
 
   private saveMeta(sv: SaveJSON | null): string | null {
     if (!sv) return null;
-    const home = this.places[sv.state?.origin ?? '']?.zh ?? '';
+    const zh = (id: string | null | undefined): string => this.places[id ?? '']?.zh ?? '';
+    const hm = zh(sv.state?.originM ?? sv.state?.origin);
+    const hf = zh(sv.state?.originF ?? sv.state?.origin);
+    const home = hm === hf ? hm : `${hm}／${hf}`;
     const n = sv.quests?.done?.length ?? 0;
     const when = new Date(sv.savedAt);
     const hh = String(when.getHours()).padStart(2, '0');
@@ -2263,6 +2597,7 @@ export class Game {
       recipes: this.db.recipes,
       milestones: this.db.milestones,
     });
+    this.ui.syncLang(this.state.lang);
   }
 
   private nearestPrompt(): string | null {
@@ -2272,7 +2607,7 @@ export class Game {
     if ('npc' in near) return fmt(this.content.text.talkPrompt, { name: near.npc.def.name.zh });
     if ('spot' in near) {
       const { q, st } = near.spot;
-      if (st.kind === 'photo') return this.party.controlled === 't' ? `拍照：${this.spotName(st)}` : '拍照（只有旅人能拍）';
+      if (st.kind === 'photo') return this.travellerHere() ? `拍照：${this.spotName(st)}` : '拍照（旅人要在隊伍裡）';
       return q.name.zh;
     }
     if ('gather' in near) return near.gather.blocked ? `${near.gather.label}（${near.gather.blocked}）` : near.gather.label;
@@ -2308,11 +2643,18 @@ export class Game {
       } else if (mode === 'minigame') this.hitMinigame();
     }
 
+    if (this.state.started && !this.arrival && this.cards.pending && !this.isModalOpen()) this.cards.pump();
+    this.scenicT -= dt;
+    if (this.scenicT <= 0) {
+      this.scenicT = 0.25;
+      this.scenicTick(false);
+    }
     const blocked = !this.state.started || this.isModalOpen();
     this.player.update(dt, this.input, this.camera, blocked);
     if (this.state.started) this.party.update(dt, this.camera, this.player);
     if (this.streamTick <= 0 || performance.now() - this.streamAt > 400) this.streamNpcs();
-    this.npcs.update(dt, this.camera);
+    this.npcs.update(dt, this.camera, this.player);
+    this.goats?.update(dt, this.player.x, this.player.z);
     this.updateCharacterTint(dt);
     this.decor.update(dt, this.camera, t, this.state.season === 'rayon' || this.state.season === 'meyvanwa');
     this.ocean.update(t, this.scene.fog as THREE.Fog);
@@ -2370,6 +2712,16 @@ export class Game {
     this.ui.setPrompt(this.nearestPrompt());
     if (this.state.started) this.questFrame(dt);
     if (this.state.started) this.ui.updateMinimap(this.player.x, this.player.z, this.camYaw);
+    {
+      const cam = this.camera;
+      const v = this.lootV;
+      const w = this.renderer.domElement.clientWidth;
+      const h = this.renderer.domElement.clientHeight;
+      this.ui.updateLoots(dt, (x, y, z) => {
+        v.set(x, y, z).project(cam);
+        return { x: (v.x * 0.5 + 0.5) * w, y: (-v.y * 0.5 + 0.5) * h, vis: v.z < 1 };
+      }, (x, z) => this.island.heightAt(x, z));
+    }
 
     if (this.mg) {
       this.mg.t += this.mg.dir * dt * 0.85;
@@ -2445,7 +2797,7 @@ export class Game {
   private toggleScooter(): void {
     if (!this.state.started || this.player.mode === 'canoe') return;
     if (!this.player.scooter && !this.quests.flags.has('has_scooter')) {
-      this.ui.toast('還沒有機車', '先到開元港旁的租車行租機車（任務 Q02）。');
+      this.ui.toast('還沒有機車', '先到開元港旁的租車行租車');
       return;
     }
     this.player.setScooter(!this.player.scooter);
@@ -2489,7 +2841,7 @@ export class Game {
       ready: true,
       state: this.state,
       timings: this.timings,
-      selectOrigin: (id: PlayableOrigin, gender?: Gender, way?: ArrivalWay) => this.begin(id, gender, undefined, way),
+      selectOrigin: (id: PlayableOrigin, gender?: Gender, way?: ArrivalWay, idF?: PlayableOrigin) => this.begin(id, gender, undefined, way, false, idF ?? id),
       /** 0.1.4 arrival opening: state of the cut-scene, and skip / play hooks */
       arrival: () => ({
         playing: !!this.arrival,
@@ -2518,6 +2870,9 @@ export class Game {
       /** jump the painted ride to t seconds (screenshots) */
       seekIntro: (t: number) => this.intro?.seek(t),
       seekFinale: (t: number) => this.intro?.seekFinale(t),
+      /** 0.1.5: hold the painted intro at shot time t (and finale time f); null = live (keyframes / recordings) */
+      freezeIntro: (t: number | null, f: number | null = null) => this.intro?.freeze(t, f),
+      holdArrivalNotebook: (on: boolean) => { this.nbHold = on; },
       /** 0.1.4: where the parked plane and the moored yacht stand (their collision boxes) */
       arrivalProps: () => { const f = facilityBoxes(); return { plane: f[2], yacht: f[3] }; },
       outfit: () => this.playerOutfit(),
@@ -2573,6 +2928,8 @@ export class Game {
       /** current clock as content sees it */
       clock: () => ({ season: this.state.season, seasonTag: seasonTag(this.state.season), period: this.state.period, time: this.state.period === 'night' ? 'night' : 'day' }),
       setLang: (m: LangMode) => this.setLang(m),
+      /** show the rest of a dialogue line that is still typing (screenshots) */
+      finishTyping: () => this.ui.finishTyping(),
       openJournal: () => this.setOverlay('journal', true),
       closeJournal: () => this.setOverlay('journal', false),
       interactNearest: () => this.tryInteract(),
@@ -2602,6 +2959,8 @@ export class Game {
       toggleScooter: () => this.toggleScooter(),
       fastTravel: (id: string) => this.fastTravel(id),
       canStandAt: (x: number, z: number) => canStand(x, z, PLAYER_RADIUS),
+      /** 0.1.5 map phase: terrain box and road lines (screenshots / tests) */
+      mapInfo: () => ({ box: { ...TERRAIN_BOX }, roads: roadPolylines().map((pl) => pl.map(([x, z]) => ({ x, z }))) }),
       /** distance to the ring-road centre line (verify: is the scooter really on the road?) */
       roadDist: (x: number, z: number) => distToRing(x, z),
       /** closest standable point on the ring road within r of (x, z) (verify staging) */
@@ -2713,6 +3072,65 @@ export class Game {
         this.talkToNpc(a);
         return true;
       },
+      popLoot: (text: string) => this.ui.popLoot(text, this.player.x, this.player.z),
+      toast: (title: string, body = '') => this.ui.toast(title, body),
+      /** 0.1.5 cards: switch the automatic cards / quest pages / arrival photos on or off (headless runs start off) */
+      cardsAuto: (on: boolean) => { this.cardsAuto = on; document.documentElement.classList.toggle('fx', on); },
+      cards: () => ({ open: this.cards.open, kind: this.cards.current?.kind ?? null, key: this.cards.current?.key ?? null, pending: this.cards.pending, shown: [...this.cards.shown], seen: [...this.state.cards] }),
+      cardTap: () => this.cards.tap(),
+      /** run the scenic-spot check now as if the player had walked here */
+      scenicCheck: () => this.scenicTick(true),
+      album: () => [...this.state.album],
+      /** learn a dish now (journal recipe → its recipe card) */
+      unlockRecipe: (id: string) => this.state.unlock(this.state.recipes, [id]).length > 0,
+      /** show a quest's own page as if it had just been accepted */
+      questPage: (id: string) => {
+        const q = this.quests.get(id);
+        if (!q) return false;
+        if (!this.quests.active.has(id)) {
+          this.quests.done.delete(id);
+          this.quests.active.set(id, 0);
+        }
+        this.queueQuestPage([q]);
+        return true;
+      },
+      taught: () => [...this.state.taught],
+      herds: () => this.goats?.herdInfo() ?? [],
+      placeHerd: (id: string, x: number, z: number) => this.goats?.placeHerd(id, x, z) ?? false,
+      npcPace: (id: string) => {
+        const a = this.npcs.byId(id);
+        if (!a) return null;
+        return { id, pace: a.pace, speed: npcWalkSpeed(a.pace), walkRate: a.sprite?.walkRate ?? npcWalkRate(a.pace), walkSteps: a.sprite?.walkSteps ?? 0, x: a.x, z: a.z, walking: a.sprite?.walking ?? false };
+      },
+      setNpcPace: (id: string, pace: NpcPace) => { const a = this.npcs.byId(id); if (!a) return false; a.setPace(pace); return true; },
+      setNpcRoute: (id: string, pts: { x: number; z: number }[]) => { const a = this.npcs.byId(id); if (!a) return false; a.wait = 0; a.stuck = 0; a.setRoute(pts); return true; },
+      loadNpc: (id: string) => {
+        const a = this.npcs.byId(id);
+        if (!a || !this.assets) return false;
+        a.load(this.assets, this.npcs.group, 1);
+        return true;
+      },
+      npcHasSprite: (id: string) => !!this.npcs.byId(id)?.sprite,
+      placeNpc: (id: string, x: number, z: number) => {
+        const a = this.npcs.byId(id);
+        if (!a) return false;
+        const safe = findSafeStand(x, z, NPC_RADIUS);
+        a.x = safe.x; a.z = safe.z; a.wait = 0; a.stuck = 0;
+        a.setRoute([{ x: safe.x, z: safe.z }]);
+        a.sync(true);
+        return { x: safe.x, z: safe.z };
+      },
+      tickNpcs: (dt: number, steps = 1) => {
+        for (let i = 0; i < steps; i++) {
+          this.npcs.tickMoves(dt, this.player);
+          for (const a of this.npcs.actors) {
+            if (!a.sprite) continue;
+            a.sync();
+            a.sprite.updateBillboard(this.camera, dt, true);
+          }
+        }
+      },
+      npcSpeeds: () => ({ walk: npcWalkSpeed('escort'), ambient: npcWalkSpeed('ambient'), escort: npcWalkSpeed('escort'), animFull: WALK_ANIM_RATE, animAmbient: WALK_ANIM_RATE * npcWalkRate('ambient'), scale: 1 / 3 }),
       // ---- Phase 1: party + quests + autosave
       party: () => ({ controlled: this.party.controlled, pos: this.party.positions(this.player), outfits: this.partyOutfits() }),
       switchMember: (r: Role) => this.switchMember(r),
@@ -2932,7 +3350,7 @@ export class Game {
           const r = roles.find((x) => !E.memberBlock(x));
           if (!r) return { ok: false, why: roles.map((x) => E.memberBlock(x)).join(' ') };
           this.switchMember(r);
-          if (this.party.controlled !== r) return { ok: false, why: `cannot switch to ${r}` };
+          if (this.party.controlled !== r) return { ok: false, why: `cannot switch to ${r} (mode ${this.mode}, dive ${this.diveOpen}, ${this.player.mode}, started ${this.state.started})` };
         }
         // go there
         let target: { x: number; z: number } | null = null;
@@ -2992,8 +3410,20 @@ export class Game {
   }
 }
 
-function drawMinimap(ctx: CanvasRenderingContext2D, w: number, h: number): void {
-  const { xMin, zMin, xMax, zMax } = TERRAIN_BOX;
+/** 0.1.5: the main island (outline + 7 m of sea), for the fast-travel map */
+function travelMapBox(): { xMin: number; zMin: number; xMax: number; zMax: number } {
+  let xMin = Infinity, xMax = -Infinity, zMin = Infinity, zMax = -Infinity;
+  for (let i = 0; i < LANYU_OUTLINE.length; i += 2) {
+    xMin = Math.min(xMin, LANYU_OUTLINE[i]); xMax = Math.max(xMax, LANYU_OUTLINE[i]);
+    zMin = Math.min(zMin, LANYU_OUTLINE[i + 1]); zMax = Math.max(zMax, LANYU_OUTLINE[i + 1]);
+  }
+  const h = FACILITIES.harbor;
+  xMin = Math.min(xMin, h.x - 16);
+  return { xMin: Math.floor(xMin - 7), zMin: Math.floor(zMin - 7), xMax: Math.ceil(xMax + 7), zMax: Math.ceil(zMax + 7) };
+}
+
+function drawMinimap(ctx: CanvasRenderingContext2D, w: number, h: number, box: { xMin: number; zMin: number; xMax: number; zMax: number } = TERRAIN_BOX): void {
+  const { xMin, zMin, xMax, zMax } = box;
   const img = ctx.createImageData(w, h);
   const d = img.data;
   for (let py = 0; py < h; py++) {
@@ -3011,6 +3441,7 @@ function drawMinimap(ctx: CanvasRenderingContext2D, w: number, h: number): void 
         if (s.terrace > 0.2) { r = 72; gch = 96; b = 52; }
         if (s.bund > 0.25) { r = 214; gch = 204; b = 176; }
         if (s.road > 0.12 || distToRing(x, z) < 1.3) { r = 236; gch = 228; b = 206; }
+        else if (s.path > 0.35) { r = 214; gch = 200; b = 168; }
       } else if (s.height > -1.4) {
         r = 62; gch = 110; b = 122;
       }

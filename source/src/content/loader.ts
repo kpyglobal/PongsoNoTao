@@ -7,6 +7,8 @@ import type { QuestDef, QuestFile, Role, SongDef } from '../quests/types';
 import type { GlossaryEntry, MilestoneEntry, UiContent } from '../core/content';
 import type { ContentMeta, DialogueSet, GatherNodeDef, ItemDef, NpcDef, OutfitDef, PhotoSpotDef, PlaceRec, RecipeDef } from './types';
 import { validateContent } from './validate';
+import { contentEnDict, localizeContent } from './localize';
+import { setContentEn, uiLang } from '../ui/i18n';
 
 type Json = Record<string, unknown>;
 
@@ -118,7 +120,8 @@ export function buildContent(raw: RawContent = bundled()): ContentDB {
 }
 
 let cached: ContentDB | null = null;
-/** the bundled content, built + validated once */
+/** the bundled content, built + validated once (in the interface language: ./localize.ts) */
 export function content(): ContentDB {
-  return (cached ??= buildContent());
+  if (!cached && uiLang() === 'zhen') setContentEn(contentEnDict(bundled()));
+  return (cached ??= buildContent(localizeContent(bundled(), uiLang())));
 }

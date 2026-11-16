@@ -19,7 +19,7 @@
       "arc": "night",
       "name": {
         "zh": "涼亭下的夜晚故事",
-        "en": ""
+        "en": "Night stories under the pavilion"
       },
       "need": [
         "m",
@@ -31,11 +31,16 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人一起聽",
+        "coopEn": "All three listen together",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q07",
         "unlock": "故事頁「黑翅飛魚」",
-        "kind": "夜晚・故事"
+        "unlockEn": "Story page \"The black-winged flying fish\"",
+        "kind": "夜晚・故事",
+        "kindEn": "Night · Story"
       },
       "req": "Q07",
       "steps": [
@@ -49,30 +54,37 @@
             "t"
           ],
           "text": "晚上坐上主人家的涼亭，聽長輩說可以公開的故事",
+          "textEn": "At night, sit on the host family's pavilion and hear the elder tell a story that can be shared",
           "lines": [
             {
               "who": "旁白",
-              "zh": "晚上，大家坐上主人家的涼亭，海風吹過來。"
+              "zh": "晚上，大家坐上主人家的涼亭，海風吹過來。",
+              "en": "At night, everyone sits on the host family's pavilion as the sea breeze blows."
             },
             {
               "who": "@host",
-              "zh": "晚上涼快，來坐。今天說一個大家都可以聽的故事。"
+              "zh": "晚上涼快，來坐。今天說一個大家都可以聽的故事。",
+              "en": "It's cool at night. Come sit. Today I'll tell a story everyone can hear."
             },
             {
               "who": "@host",
-              "zh": "很久以前，我們的祖先不懂飛魚，什麼魚都一起煮，結果生病了。"
+              "zh": "很久以前，我們的祖先不懂飛魚，什麼魚都一起煮，結果生病了。",
+              "en": "Long ago, our ancestors didn't understand flying fish. They cooked every fish together, and they got sick."
             },
             {
               "who": "@host",
-              "zh": "後來黑翅膀的飛魚來到夢裡，教祖先什麼時候捕、怎麼煮、哪些不能混在一起。"
+              "zh": "後來黑翅膀的飛魚來到夢裡，教祖先什麼時候捕、怎麼煮、哪些不能混在一起。",
+              "en": "Then a black-winged flying fish came in a dream and taught them when to catch, how to cook, and what must never be mixed."
             },
             {
               "who": "@host",
-              "zh": "所以飛魚的規矩不是隨便定的，是飛魚教我們的。"
+              "zh": "所以飛魚的規矩不是隨便定的，是飛魚教我們的。",
+              "en": "So the flying fish rules weren't made up. The flying fish taught them to us."
             },
             {
               "who": "旁白",
-              "zh": "這是流傳較廣的版本，各部落說法不同，還要請族人確認。"
+              "zh": "這是流傳較廣的版本，各部落說法不同，還要請族人確認。",
+              "en": "This is the most widely told version. Each village tells it differently; it still needs checking with the community."
             }
           ],
           "gives": {
@@ -82,6 +94,10 @@
             "toast": [
               "故事頁",
               "「黑翅飛魚」已寫進手札。"
+            ],
+            "toastEn": [
+              "Story page",
+              "\"The black-winged flying fish\" was added to your notebook."
             ]
           }
         }
@@ -89,7 +105,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "晚上主人家的長輩常在涼亭上乘涼，說不定會說故事。"
+        "fromEn": "Host family",
+        "zh": "晚上主人家的長輩常在涼亭上乘涼，說不定會說故事。",
+        "en": "At night, the host family's elder often relaxes on the pavilion. Maybe there'll be a story."
       }
     },
     {
@@ -108,7 +126,7 @@
       "arc": "night",
       "name": {
         "zh": "頭燈下的潮間帶（只看不採）",
-        "en": ""
+        "en": "Tide flats by headlamp (look, don't pick)"
       },
       "tide": "low",
       "needsItem": {
@@ -117,11 +135,17 @@
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（黃昏退潮時）",
+        "seasonEn": "All year (at dusk low tide)",
         "pre": "S1（頭燈）、I2",
+        "preEn": "S1 (headlamp), I2",
         "unlock": "寄居蟹圖鑑",
-        "kind": "黃昏・觀察"
+        "unlockEn": "Hermit crab field guide",
+        "kind": "黃昏・觀察",
+        "kindEn": "Dusk · Watching"
       },
       "req": {
         "all": [
@@ -135,14 +159,17 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "黃昏退潮、天色變暗時，戴頭燈到東清灣潮間帶觀察",
+          "textEn": "At dusk low tide, as it gets dark, wear a headlamp and explore the tide flats at Dongqing Bay",
           "lines": [
             {
               "who": "@me",
-              "zh": "白天看不到的生物，天一暗就出來了。"
+              "zh": "白天看不到的生物，天一暗就出來了。",
+              "en": "Creatures you can't see by day come out once it gets dark."
             },
             {
               "who": "旁白",
-              "zh": "把燈光壓低，看完就把石頭放回原位。寄居蟹已記進圖鑑。"
+              "zh": "把燈光壓低，看完就把石頭放回原位。寄居蟹已記進圖鑑。",
+              "en": "Keep your light low and put stones back after looking. The hermit crab is now in your field guide."
             }
           ],
           "gives": {
@@ -158,7 +185,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "夜裡退潮的時候，帶著頭燈去潮間帶，會看到白天沒有的生物。"
+        "fromEn": "Iranmeylek",
+        "zh": "夜裡退潮的時候，帶著頭燈去潮間帶，會看到白天沒有的生物。",
+        "en": "At low tide at night, take a headlamp to the tide flats and you'll see creatures you don't see by day."
       },
       "periods": [
         "dusk"
@@ -180,7 +209,7 @@
       "arc": "night",
       "name": {
         "zh": "路邊的蘭嶼角鴞（不打閃光）",
-        "en": ""
+        "en": "Lanyu scops owl by the road (no flash)"
       },
       "review": [
         "族人對貓頭鷹的看法與禁忌",
@@ -188,11 +217,16 @@
       ],
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "蘭嶼角鴞圖鑑、照片",
-        "kind": "夜晚・拍照"
+        "unlockEn": "Lanyu scops owl field guide, photo",
+        "kind": "夜晚・拍照",
+        "kindEn": "Night · Photo"
       },
       "req": "Q04",
       "steps": [
@@ -201,18 +235,22 @@
           "spot": "owl_road",
           "r": 6,
           "text": "晚上在漁人到椰油的路邊，安靜聽角鴞的叫聲，遠遠拍一張",
+          "textEn": "At night on the road from Iratay to Yayo, quietly listen for the scops owl and take one photo from afar",
           "lines": [
             {
               "who": "@m",
-              "zh": "長輩不太喜歡在晚上談這種鳥，我們安靜看就好，不要學牠叫。"
+              "zh": "長輩不太喜歡在晚上談這種鳥，我們安靜看就好，不要學牠叫。",
+              "en": "The elders don't really like talking about this bird at night. Let's just watch quietly and not copy its call."
             },
             {
               "who": "@t",
-              "zh": "不打閃光、不放音樂引牠，遠遠拍一張就走。"
+              "zh": "不打閃光、不放音樂引牠，遠遠拍一張就走。",
+              "en": "No flash, no music to lure it. Take one photo from afar and move on."
             },
             {
               "who": "旁白",
-              "zh": "蘭嶼角鴞已記進圖鑑。"
+              "zh": "蘭嶼角鴞已記進圖鑑。",
+              "en": "The Lanyu scops owl is now in your field guide."
             }
           ],
           "gives": {
@@ -228,7 +266,9 @@
       "hint": {
         "tier": "vague",
         "from": "遊客",
-        "zh": "聽說晚上沿著西岸的路，有時候會聽到「咕——咕」的叫聲。"
+        "fromEn": "Tourist",
+        "zh": "聽說晚上沿著西岸的路，有時候會聽到「咕——咕」的叫聲。",
+        "en": "They say that at night along the west coast road, you sometimes hear a \"coo— coo\" call."
       }
     },
     {
@@ -247,7 +287,7 @@
       "arc": "night",
       "name": {
         "zh": "漁人部落的晚會",
-        "en": ""
+        "en": "Evening party in Iratay"
       },
       "need": [
         "m",
@@ -260,11 +300,16 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人一起",
+        "coopEn": "All three together",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "IT-V2",
         "unlock": "漁人族人的信任、晚會照片",
-        "kind": "夜晚・部落活動"
+        "unlockEn": "Trust of the Iratay villagers, party photo",
+        "kind": "夜晚・部落活動",
+        "kindEn": "Night · Village event"
       },
       "req": "IT-V2",
       "steps": [
@@ -278,26 +323,32 @@
             "t"
           ],
           "text": "晚上三人一起到漁人的學校操場參加晚會",
+          "textEn": "At night, all three go to the Iratay school field for the evening party",
           "lines": [
             {
               "who": "villager_iratay",
-              "zh": "你們來啦！先拿東西吃，孩子們等一下要唱歌。"
+              "zh": "你們來啦！先拿東西吃，孩子們等一下要唱歌。",
+              "en": "You came! Grab something to eat first. The kids will sing soon."
             },
             {
               "who": "@f",
-              "zh": "好熱鬧，好多長輩都來了。"
+              "zh": "好熱鬧，好多長輩都來了。",
+              "en": "So lively. So many elders came."
             },
             {
               "who": "@t",
-              "zh": "我帶著族女幫我編的小袋子來的。"
+              "zh": "我帶著族女幫我編的小袋子來的。",
+              "en": "I brought the little pouch the Tao woman wove for me."
             },
             {
               "who": "villager_iratay",
-              "zh": "很好看。這是我們部落的晚會，不是祭典，大家放輕鬆。"
+              "zh": "很好看。這是我們部落的晚會，不是祭典，大家放輕鬆。",
+              "en": "It looks lovely. This is our village's evening party, not a ceremony. Everyone relax."
             },
             {
               "who": "旁白",
-              "zh": "想拍人之前，先問一聲。"
+              "zh": "想拍人之前，先問一聲。",
+              "en": "Ask before taking photos of people."
             }
           ]
         },
@@ -310,10 +361,12 @@
             "t"
           ],
           "text": "向漁人的女性長輩道謝",
+          "textEn": "Thank the Iratay woman elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "吃飽了嗎？地瓜是我們田裡的。下次白天再來幫忙挖。"
+              "zh": "吃飽了嗎？地瓜是我們田裡的。下次白天再來幫忙挖。",
+              "en": "Had enough to eat? The sweet potatoes are from our field. Come help dig some in the daytime."
             }
           ],
           "gives": {
@@ -327,7 +380,9 @@
       "hint": {
         "tier": "direct",
         "from": "漁人",
-        "zh": "漁人的族人邀大家晚上到學校操場參加晚會。"
+        "fromEn": "Iratay",
+        "zh": "漁人的族人邀大家晚上到學校操場參加晚會。",
+        "en": "The Iratay villagers invite everyone to the evening party at the school field."
       }
     },
     {
@@ -348,7 +403,7 @@
       "arc": "night",
       "name": {
         "zh": "冬夜的東北季風",
-        "en": ""
+        "en": "Northeast monsoon on a winter night"
       },
       "need": [
         "m",
@@ -357,11 +412,16 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人一起聽",
+        "coopEn": "All three listen together",
         "season": "冬季",
+        "seasonEn": "Winter",
         "pre": "Q07",
         "unlock": "手札「冬天的島」",
-        "kind": "夜晚・故事"
+        "unlockEn": "Notebook page \"The island in winter\"",
+        "kind": "夜晚・故事",
+        "kindEn": "Night · Story"
       },
       "req": "Q07",
       "steps": [
@@ -374,18 +434,22 @@
             "t"
           ],
           "text": "冬天晚上，聽主人家長輩說東北季風的季節",
+          "textEn": "On a winter night, hear the host family elder talk about the northeast monsoon season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "冬天風大浪大，船都拉上岸了。男人補網、修船，女人照顧田、整理家裡。"
+              "zh": "冬天風大浪大，船都拉上岸了。男人補網、修船，女人照顧田、整理家裡。",
+              "en": "In winter the wind and waves are big, and the boats are all pulled ashore. The men mend nets and fix boats; the women look after the fields and the home."
             },
             {
               "who": "@npc",
-              "zh": "海不讓我們出去的時候，就好好休息，等飛魚回來。"
+              "zh": "海不讓我們出去的時候，就好好休息，等飛魚回來。",
+              "en": "When the sea won't let us out, we rest well and wait for the flying fish to return."
             },
             {
               "who": "@t",
-              "zh": "原來冬天也有冬天要做的事。"
+              "zh": "原來冬天也有冬天要做的事。",
+              "en": "So winter has its own work too."
             }
           ],
           "gives": {
@@ -395,6 +459,10 @@
             "toast": [
               "手札",
               "「冬天的島」已寫進手札。"
+            ],
+            "toastEn": [
+              "Notebook",
+              "\"The island in winter\" was added to your notebook."
             ]
           }
         }
@@ -402,7 +470,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "冬天晚上，主人家長輩會說說季風季節的生活。"
+        "fromEn": "Host family",
+        "zh": "冬天晚上，主人家長輩會說說季風季節的生活。",
+        "en": "On winter nights, the host family elder will talk about life in the monsoon season."
       }
     },
     {
@@ -421,15 +491,20 @@
       "arc": "photo",
       "name": {
         "zh": "開元港的夜燈",
-        "en": ""
+        "en": "Night lights at Kaiyuan Harbour"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "照片",
-        "kind": "夜晚・拍照"
+        "unlockEn": "Photo",
+        "kind": "夜晚・拍照",
+        "kindEn": "Night · Photo"
       },
       "req": "Q04",
       "steps": [
@@ -438,10 +513,12 @@
           "spot": "harbor",
           "r": 9,
           "text": "晚上在開元港拍港邊的燈火",
+          "textEn": "Photograph the harbour lights at Kaiyuan Harbour at night",
           "lines": [
             {
               "who": "@me",
-              "zh": "白天熱鬧的港口，晚上安安靜靜的。"
+              "zh": "白天熱鬧的港口，晚上安安靜靜的。",
+              "en": "The harbour, so busy by day, is calm and quiet at night."
             }
           ]
         }
@@ -449,7 +526,9 @@
       "hint": {
         "tier": "direct",
         "from": "港務人員",
-        "zh": "晚上的開元港燈火很漂亮。"
+        "fromEn": "Harbour staff",
+        "zh": "晚上的開元港燈火很漂亮。",
+        "en": "The lights of Kaiyuan Harbour are beautiful at night."
       }
     },
     {
@@ -468,15 +547,20 @@
       "arc": "photo",
       "name": {
         "zh": "東清灣的月出",
-        "en": ""
+        "en": "Moonrise at Dongqing Bay"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "照片",
-        "kind": "夜晚・拍照"
+        "unlockEn": "Photo",
+        "kind": "夜晚・拍照",
+        "kindEn": "Night · Photo"
       },
       "req": "Q04",
       "steps": [
@@ -485,14 +569,17 @@
           "spot": "iranmeylek_beach",
           "r": 8,
           "text": "晚上在東清灣沙灘拍月亮從海上升起",
+          "textEn": "At night on the Dongqing Bay beach, photograph the moon rising over the sea",
           "lines": [
             {
               "who": "@me",
-              "zh": "月光照在海面上，拼板舟的影子也看得到。"
+              "zh": "月光照在海面上，拼板舟的影子也看得到。",
+              "en": "The moonlight is on the sea. You can even see the shadows of the plank boats."
             },
             {
               "who": "旁白",
-              "zh": "不要走到船旁邊，也不要坐在船上。"
+              "zh": "不要走到船旁邊，也不要坐在船上。",
+              "en": "Don't walk up to the boats, and don't sit in them."
             }
           ]
         }
@@ -500,7 +587,9 @@
       "hint": {
         "tier": "direct",
         "from": "東清",
-        "zh": "東清灣不只日出漂亮，月亮升起來也很美。"
+        "fromEn": "Iranmeylek",
+        "zh": "東清灣不只日出漂亮，月亮升起來也很美。",
+        "en": "Dongqing Bay isn't only lovely at sunrise. The moonrise is beautiful too."
       }
     },
     {
@@ -521,15 +610,20 @@
       "arc": "photo",
       "name": {
         "zh": "東北季風的浪（從岸上遠拍）",
-        "en": ""
+        "en": "Northeast monsoon waves (photo from the shore)"
       },
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "冬季",
+        "seasonEn": "Winter",
         "pre": "Q04",
         "unlock": "照片",
-        "kind": "冬季・拍照"
+        "unlockEn": "Photo",
+        "kind": "冬季・拍照",
+        "kindEn": "Winter · Photo"
       },
       "req": "Q04",
       "steps": [
@@ -538,14 +632,17 @@
           "spot": "iraraley",
           "r": 10,
           "text": "冬天在朗島岸邊，遠遠拍季風打上來的浪",
+          "textEn": "In winter on the Iraraley shore, photograph the monsoon waves from afar",
           "lines": [
             {
               "who": "@me",
-              "zh": "浪好大，難怪冬天船都不出海。"
+              "zh": "浪好大，難怪冬天船都不出海。",
+              "en": "Huge waves. No wonder the boats don't go out in winter."
             },
             {
               "who": "旁白",
-              "zh": "風浪大時不要靠近岸邊的礁石。"
+              "zh": "風浪大時不要靠近岸邊的礁石。",
+              "en": "Stay away from the shore rocks when the waves are big."
             }
           ]
         }
@@ -553,7 +650,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "冬天東北季風一來，朗島的浪特別大。"
+        "fromEn": "Iraraley",
+        "zh": "冬天東北季風一來，朗島的浪特別大。",
+        "en": "When the northeast monsoon comes in winter, the waves at Iraraley are especially big."
       }
     }
   ]

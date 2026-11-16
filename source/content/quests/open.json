@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "抵達蘭嶼",
-        "en": ""
+        "en": "Arrive on Lanyu"
       },
       "time": "any",
       "seasons": [],
@@ -26,11 +26,17 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人：全隊一起入島",
+        "coopEn": "Trio: the whole party arrives together",
         "season": "遊戲開始",
+        "seasonEn": "Game start",
         "pre": "建立隊伍、選好怎麼前往蘭嶼",
+        "preEn": "Create the party and choose how to get to Lanyu",
         "unlock": "文化聲明、Q02、Q03、Q04",
-        "kind": "開場紀錄：抵達動畫之後自動完成，顯示在任務清單，不是可再接的任務"
+        "unlockEn": "Cultural note, Q02, Q03, Q04",
+        "kind": "開場紀錄：抵達動畫之後自動完成，顯示在任務清單，不是可再接的任務",
+        "kindEn": "Opening record: completes itself after the arrival scene; shown in the quest list, not a quest you can take again"
       },
       "req": {
         "flag": "party_created"
@@ -39,46 +45,56 @@
         {
           "kind": "auto",
           "text": "全隊一起抵達蘭嶼",
+          "textEn": "The whole party arrives on Lanyu together",
           "lines": [
             {
               "who": "文化聲明",
-              "zh": "遊戲中呈現的男女分工、禁忌與飲食規範，以達悟族傳統文化中的一般性做法為設計起點，不代表所有家庭、部落或時代都完全如此。"
+              "zh": "遊戲中呈現的男女分工、禁忌與飲食規範，以達悟族傳統文化中的一般性做法為設計起點，不代表所有家庭、部落或時代都完全如此。",
+              "en": "The roles of men and women, taboos and food customs in this game are based on general practice in traditional Tao culture. They don't mean every family, village or era is exactly the same."
             },
             {
               "who": "文化聲明",
-              "zh": "各部落在祭儀時程、禁忌細節與飲食習慣上各有差異，現代家庭的分工也已有許多變化。遊戲中不模擬祭儀本身，只呈現族人同意公開的飲食與生活面向。"
+              "zh": "各部落在祭儀時程、禁忌細節與飲食習慣上各有差異，現代家庭的分工也已有許多變化。遊戲中不模擬祭儀本身，只呈現族人同意公開的飲食與生活面向。",
+              "en": "Villages differ in ceremony timing, taboo details and food habits, and modern families share work in many new ways. The game doesn't simulate ceremonies; it only shows the food and daily life the Tao people agree to share."
             },
             {
               "who": "@m",
               "zh": "到了！船靠岸了。這裡就是開元港。",
+              "en": "We're here! The boat has docked. This is Kaiyuan Harbour.",
               "if": "arrived_boat"
             },
             {
               "who": "@m",
               "zh": "到了！飛機平安落地，這裡就是蘭嶼機場。",
+              "en": "We're here! The plane landed safely. This is Lanyu Airport.",
               "if": "arrived_plane"
             },
             {
               "who": "@f",
-              "zh": "好久沒回來了。小時候放暑假才回來，後來在台灣念書、工作，一年回不了一次。"
+              "zh": "好久沒回來了。小時候放暑假才回來，後來在台灣念書、工作，一年回不了一次。",
+              "en": "It's been so long. As kids we only came back for summer holidays. Then we studied and worked in Taiwan and couldn't even come back once a year."
             },
             {
               "who": "@m",
-              "zh": "這次要待久一點。長輩說，家裡的事、海上的事，要回來才學得到。"
+              "zh": "這次要待久一點。長輩說，家裡的事、海上的事，要回來才學得到。",
+              "en": "This time we're staying longer. The elders say you only learn about home and the sea by coming back."
             },
             {
               "who": "@f",
               "zh": "先去港口旁的租車行租機車，再回家跟家人報到吧。",
+              "en": "Let's rent a scooter at the rental shop by the harbour first, then go home and say hello to the family.",
               "if": "arrived_boat"
             },
             {
               "who": "@f",
               "zh": "開元港旁邊有租車行，我們沿著環島公路走過去，租好機車再回家跟家人報到吧。",
+              "en": "There's a scooter rental shop by Kaiyuan Harbour. Let's walk along the round-island road, rent a scooter, then go home to the family.",
               "if": "arrived_plane"
             },
             {
               "who": "@t",
-              "zh": "好期待！你們帶路，我跟著走。"
+              "zh": "好期待！你們帶路，我跟著走。",
+              "en": "I can't wait! You lead, I'll follow."
             }
           ]
         }
@@ -86,7 +102,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "全隊已經一起上島了。"
+        "fromEn": "Tao villagers",
+        "zh": "全隊已經一起上島了。",
+        "en": "The whole party has arrived on the island together."
       },
       "playable": false,
       "silent": false
@@ -98,7 +116,7 @@
       "village": null,
       "name": {
         "zh": "租機車",
-        "en": ""
+        "en": "Rent a scooter"
       },
       "time": "any",
       "seasons": [],
@@ -110,10 +128,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人（租到後全隊可騎）",
+        "coopEn": "Solo (once rented, the whole party can ride)",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q01",
         "unlock": "has_scooter、2D 地圖、I1、K1–K6、X01、S1–S3",
+        "unlockEn": "has_scooter, 2D map, I1, K1–K6, X01, S1–S3",
         "kind": ""
       },
       "req": "Q01",
@@ -122,14 +144,17 @@
           "kind": "talk",
           "npc": "rental_owner",
           "text": "到開元港旁的租車行租機車",
+          "textEn": "Rent a scooter at the rental shop by Kaiyuan Harbour",
           "lines": [
             {
               "who": "@npc",
-              "zh": "要租機車嗎？一台給你們，三個人輪流騎都可以。"
+              "zh": "要租機車嗎？一台給你們，三個人輪流騎都可以。",
+              "en": "Want to rent a scooter? One for you — all three of you can take turns."
             },
             {
               "who": "@npc",
-              "zh": "環島公路晚上要騎慢一點，路上常有陸蟹過馬路。"
+              "zh": "環島公路晚上要騎慢一點，路上常有陸蟹過馬路。",
+              "en": "Ride slowly on the round-island road at night. Land crabs often cross."
             }
           ],
           "gives": {
@@ -139,6 +164,10 @@
             "toast": [
               "機車租好了",
               "全隊都能騎。按「機車」或 M 鍵切換。"
+            ],
+            "toastEn": [
+              "Scooter rented",
+              "The whole party can ride. Tap \"Scooter\" or press M to switch."
             ]
           }
         }
@@ -146,7 +175,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "開元港旁邊就有租車行，老闆就站在店門口。"
+        "fromEn": "Tao villagers",
+        "zh": "開元港旁邊就有租車行，老闆就站在店門口。",
+        "en": "There's a scooter rental shop right by Kaiyuan Harbour. The owner is standing at the door."
       },
       "playable": true
     },
@@ -157,7 +188,7 @@
       "village": null,
       "name": {
         "zh": "回家報到",
-        "en": ""
+        "en": "Check in at home"
       },
       "time": "any",
       "seasons": [],
@@ -168,10 +199,14 @@
       "n": 1,
       "text": {
         "who": "族男、族女",
+        "whoEn": "Tao man, Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q01",
         "unlock": "主人家庭、糧倉、R1",
+        "unlockEn": "Host family, food store, R1",
         "kind": ""
       },
       "req": "Q01",
@@ -184,14 +219,17 @@
             "f"
           ],
           "text": "族男或族女回到家鄉部落，向主人家長輩報到",
+          "textEn": "The Tao man or Tao woman goes back to their home village and checks in with the host family elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "回來啦！路上累了吧？"
+              "zh": "回來啦！路上累了吧？",
+              "en": "You're back! Tired from the trip?"
             },
             {
               "who": "@npc",
-              "zh": "家裡都準備好了，你們的朋友也一起住下來。糧倉在屋子旁邊，以後一起照顧。"
+              "zh": "家裡都準備好了，你們的朋友也一起住下來。糧倉在屋子旁邊，以後一起照顧。",
+              "en": "Everything's ready at home, and your friend is staying with us too. The food store is beside the house — we'll look after it together."
             }
           ],
           "gives": {
@@ -202,6 +240,10 @@
             "toast": [
               "回家報到",
               "主人家庭與糧倉已加入手札。"
+            ],
+            "toastEn": [
+              "Check in at home",
+              "The host family and food store were added to your notebook."
             ]
           }
         },
@@ -210,22 +252,27 @@
           "spot": "host_tagakal",
           "r": 5,
           "text": "長輩帶大家到家旁的涼亭坐一坐",
+          "textEn": "The elder takes everyone to sit on the pavilion beside the house",
           "lines": [
             {
               "who": "@host",
-              "zh": "來，上涼亭坐，鞋子脫在下面。這裡涼，看得到海。"
+              "zh": "來，上涼亭坐，鞋子脫在下面。這裡涼，看得到海。",
+              "en": "Come, sit on the pavilion. Leave your shoes down there. It's cool here and you can see the sea."
             },
             {
               "who": "@host",
-              "zh": "你們小時候，就是在這裡聽我們說話長大的。"
+              "zh": "你們兩個小時候，常常在這個涼亭聽我們說話。",
+              "en": "When you two were little, you were always on this pavilion listening to us talk."
             },
             {
               "who": "@me",
-              "zh": "在台灣的時候，常常想起這個涼亭。這次回來，想把家裡的事好好學起來。"
+              "zh": "在台灣的時候，常常想起這個涼亭。這次回來，想把家裡的事好好學起來。",
+              "en": "In Taiwan I often thought of this pavilion. This time I want to really learn the ways of home."
             },
             {
               "who": "@host",
-              "zh": "好。回家不是只回來看看，是回來記得。慢慢來，有事就到涼亭找我。"
+              "zh": "好。回家不是只回來看看，是回來記得。慢慢來，有事就到涼亭找我。",
+              "en": "Good. Coming home isn't just coming back to look — it's coming back to remember. Take your time. If you need anything, find me at the pavilion."
             }
           ],
           "actor": [
@@ -239,6 +286,10 @@
             "toast": [
               "主人家的涼亭",
               "主人家的涼亭是大家的家。以後在這裡聊天、聽故事。"
+            ],
+            "toastEn": [
+              "The host family's pavilion",
+              "The host family's pavilion is everyone's home. Come here to chat and hear stories."
             ]
           }
         }
@@ -246,9 +297,146 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "由族男或族女回家鄉部落，找主人家的長輩。"
+        "fromEn": "Tao villagers",
+        "zh": "由族男或族女回家鄉部落，找主人家的長輩。",
+        "en": "The Tao man or Tao woman goes back to their home village to find the host family's elder."
       },
-      "playable": true
+      "playable": true,
+      "twoHomes": {
+        "text": {
+          "coop": "族男、族女各自回家，再到主人家集合",
+          "coopEn": "The Tao man and Tao woman each go home, then meet at the host family's"
+        },
+        "hint": {
+          "tier": "direct",
+          "from": "族人",
+          "fromEn": "Tao villagers",
+          "zh": "族男、族女各自回自己的部落向家裡的長輩報到（點頭像切換隊員），再到族男家（主人家）的涼亭集合。",
+          "en": "The Tao man and Tao woman each go back to their own village to check in with their family's elder (tap a portrait to switch members), then meet at the pavilion of the Tao man's home (the host family)."
+        },
+        "steps": [
+          {
+            "kind": "tasks",
+            "text": "族男、族女各自回家報到",
+            "textEn": "The Tao man and Tao woman each check in at home",
+            "tasks": [
+              {
+                "role": "m",
+                "kind": "talk",
+                "npc": "@host.m",
+                "text": "族男回自己的部落，向家裡的長輩報到",
+                "textEn": "The Tao man goes back to his village to check in with his family's elder",
+                "lines": [
+                  {
+                    "who": "@npc",
+                    "zh": "回來啦！路上累了吧？",
+                    "en": "You're back! Tired from the trip?"
+                  },
+                  {
+                    "who": "@npc",
+                    "zh": "家裡都準備好了，你的同學和朋友也一起住下來。糧倉在屋子旁邊，以後一起照顧。",
+                    "en": "Everything's ready at home, and your classmate and friend are staying with us too. The food store is beside the house — we'll look after it together."
+                  }
+                ],
+                "gives": {
+                  "flags": [
+                    "host_family",
+                    "granary"
+                  ],
+                  "toast": [
+                    "族男回家報到",
+                    "主人家庭與糧倉已加入手札。"
+                  ],
+                  "toastEn": [
+                    "The Tao man checked in at home",
+                    "The host family and food store were added to your notebook."
+                  ]
+                }
+              },
+              {
+                "role": "f",
+                "kind": "talk",
+                "npc": "@host.f",
+                "text": "族女回自己的部落，向家裡的長輩報到",
+                "textEn": "The Tao woman goes back to her village to check in with her family's elder",
+                "lines": [
+                  {
+                    "who": "@npc",
+                    "zh": "回來啦！長這麼大了，差點認不出來。",
+                    "en": "You're back! You've grown so much, I almost didn't recognise you."
+                  },
+                  {
+                    "who": "@npc",
+                    "zh": "聽說你們住在同學家？也好。要常回來吃飯，家裡的田也等妳來幫忙。",
+                    "en": "I hear you're staying at your classmate's? That's fine. Come home for meals often — the family field is waiting for your help too."
+                  },
+                  {
+                    "who": "@f",
+                    "zh": "好，我會常回來。",
+                    "en": "Okay, I'll come back often."
+                  }
+                ],
+                "gives": {
+                  "toast": [
+                    "族女回家報到",
+                    "族女的家也記在手札裡了。"
+                  ],
+                  "toastEn": [
+                    "The Tao woman checked in at home",
+                    "The Tao woman's home is in your notebook too."
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "kind": "spot",
+            "spot": "host_tagakal",
+            "r": 5,
+            "actor": [
+              "m",
+              "f"
+            ],
+            "text": "兩人到族男家（主人家）的涼亭集合",
+            "textEn": "Both meet at the pavilion of the Tao man's home (the host family)",
+            "lines": [
+              {
+                "who": "@host",
+                "zh": "來，上涼亭坐，鞋子脫在下面。這裡涼，看得到海。",
+                "en": "Come, sit on the pavilion. Leave your shoes down there. It's cool here and you can see the sea."
+              },
+              {
+                "who": "@host",
+                "zh": "族男小時候，就是在這裡聽我們說話長大的。族女，妳家的長輩跟我們是老朋友，這個涼亭妳也可以常來。",
+                "en": "The Tao man grew up right here, listening to us talk. And you — your family's elders are old friends of ours. You're welcome on this pavilion any time."
+              },
+              {
+                "who": "@me",
+                "zh": "在台灣的時候，常常想起家裡的涼亭。這次回來，想把家裡的事好好學起來。",
+                "en": "In Taiwan I often thought of the pavilion at home. This time I want to really learn the ways of home."
+              },
+              {
+                "who": "@host",
+                "zh": "好。回家不是只回來看看，是回來記得。慢慢來，有事就到涼亭找我。",
+                "en": "Good. Coming home isn't just coming back to look — it's coming back to remember. Take your time. If you need anything, find me at the pavilion."
+              }
+            ],
+            "gives": {
+              "glossary": [
+                "tagakal"
+              ],
+              "toast": [
+                "主人家的涼亭",
+                "大家住在主人家。以後在這個涼亭聊天、聽故事。"
+              ],
+              "toastEn": [
+                "The host family's pavilion",
+                "Everyone stays with the host family. Come to this pavilion to chat and hear stories."
+              ]
+            }
+          }
+        ]
+      }
     },
     {
       "id": "Q04",
@@ -257,7 +445,7 @@
       "village": null,
       "name": {
         "zh": "椰油初訪導覽",
-        "en": ""
+        "en": "First tour of Yayo"
       },
       "time": "any",
       "seasons": [],
@@ -271,10 +459,14 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋任一族人",
+        "coopEn": "Pair: Traveller + any Tao member",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q01",
         "unlock": "尊重值「初訪」、V1",
+        "unlockEn": "Respect points \"First visit\", V1",
         "kind": ""
       },
       "req": "Q01",
@@ -290,18 +482,22 @@
             "mf"
           ],
           "text": "旅人和一位族人一起，請椰油的長輩帶路認識部落",
+          "textEn": "The traveller and a Tao member ask the Yayo elder to show them around the village",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這裡是椰油，開元港就在旁邊，很多人從這裡上島。"
+              "zh": "這裡是椰油，開元港就在旁邊，很多人從這裡上島。",
+              "en": "This is Yayo. Kaiyuan Harbour is right next door — lots of people arrive on the island here."
             },
             {
               "who": "@npc",
-              "zh": "走在部落裡先打招呼。想拍人或家屋，記得先問一聲。"
+              "zh": "走在部落裡先打招呼。想拍人或家屋，記得先問一聲。",
+              "en": "Greet people as you walk through the village. If you want a photo of a person or a house, ask first."
             },
             {
               "who": "@t",
-              "zh": "好，我會先問。謝謝您！"
+              "zh": "好，我會先問。謝謝您！",
+              "en": "Okay, I'll ask first. Thank you!"
             }
           ],
           "gives": {
@@ -309,6 +505,10 @@
             "toast": [
               "尊重值：初訪",
               "旅人的文化尊重開始記錄。"
+            ],
+            "toastEn": [
+              "Respect: First visit",
+              "The traveller's cultural respect starts being recorded."
             ]
           }
         }
@@ -316,7 +516,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "請旅人和一位族人一起去椰油，找椰油的長輩。"
+        "fromEn": "Host family",
+        "zh": "請旅人和一位族人一起去椰油，找椰油的長輩。",
+        "en": "The traveller and a Tao member should go to Yayo and find the Yayo elder."
       },
       "playable": true
     },
@@ -327,7 +529,7 @@
       "village": null,
       "name": {
         "zh": "認識六部落關鍵人物",
-        "en": ""
+        "en": "Meet key people in the six villages"
       },
       "time": "any",
       "seasons": [],
@@ -339,17 +541,24 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "K1–K6 任四個",
+        "preEn": "Any four of K1–K6",
         "unlock": "各部落支線、人物頁、M1、F1、T1、E 系列",
-        "kind": "OR：任四個"
+        "unlockEn": "Village side quests, people pages, M1, F1, T1, E series",
+        "kind": "OR：任四個",
+        "kindEn": "OR: any four"
       },
       "req": "Q02",
       "steps": [
         {
           "kind": "auto",
           "text": "拜訪六部落關鍵人物中的任四位（K1–K6）",
+          "textEn": "Visit any four of the key people in the six villages (K1–K6)",
           "until": {
             "any": [
               "K1",
@@ -366,9 +575,11 @@
       "hint": {
         "tier": "tao",
         "from": "紅頭的長輩",
+        "fromEn": "Imorod elder",
         "npc": "elder_imorod",
         "phrase": "mangay",
-        "zh": "長輩說自己也要先去找一找——意思是：別等人來，自己去各部落找人。拜訪六部落的關鍵人物吧。"
+        "zh": "長輩說自己也要先去找一找——意思是：別等人來，自己去各部落找人。拜訪六部落的關鍵人物吧。",
+        "en": "The elder said he'd go and look first himself — meaning: don't wait for people to come to you, go to each village and find them. Visit the key people of the six villages."
       },
       "playable": true
     },
@@ -379,7 +590,7 @@
       "village": null,
       "name": {
         "zh": "受傷與衛生所",
-        "en": ""
+        "en": "Injury and the health station"
       },
       "time": "any",
       "seasons": [],
@@ -391,10 +602,15 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "受傷時觸發",
+        "seasonEn": "Triggered by an injury",
         "pre": "任一採集、下水或出海活動",
+        "preEn": "Any gathering, swimming or sea activity",
         "unlock": "營養與健康卡、醫師與營養師人物頁、Y1、Y2",
+        "unlockEn": "Nutrition and health card, doctor and dietitian people pages, Y1, Y2",
         "kind": ""
       },
       "req": {
@@ -410,14 +626,17 @@
           "kind": "talk",
           "npc": "clinic_nurse",
           "text": "族女在潮間帶被礁石劃了一下，到紅頭的衛生所處理",
+          "textEn": "The Tao woman scrapes herself on the reef at the tide flats and goes to the Imorod health station",
           "lines": [
             {
               "who": "@f",
-              "zh": "剛剛在礁岩上滑了一下，腳被劃到了。"
+              "zh": "剛剛在礁岩上滑了一下，腳被劃到了。",
+              "en": "I slipped on the reef just now and cut my foot."
             },
             {
               "who": "@npc",
-              "zh": "先沖乾淨，我幫妳消毒。傷口不深，別擔心。"
+              "zh": "先沖乾淨，我幫妳消毒。傷口不深，別擔心。",
+              "en": "Rinse it first and I'll clean it for you. It's not deep, don't worry."
             }
           ]
         },
@@ -425,14 +644,17 @@
           "kind": "talk",
           "npc": "clinic_doctor",
           "text": "衛生所醫師看看傷口",
+          "textEn": "The health station doctor checks the cut",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這幾天保持乾燥，不要再下水。下次去礁岩，穿防滑鞋。"
+              "zh": "這幾天保持乾燥，不要再下水。下次去礁岩，穿防滑鞋。",
+              "en": "Keep it dry for a few days and stay out of the water. Next time on the reef, wear non-slip shoes."
             },
             {
               "who": "@npc",
-              "zh": "有空來聽我們的安全課，營養師也在這裡。"
+              "zh": "有空來聽我們的安全課，營養師也在這裡。",
+              "en": "Come to our safety class when you have time. The dietitian is here too."
             }
           ],
           "gives": {
@@ -443,6 +665,10 @@
             "toast": [
               "營養與健康卡",
               "醫師與營養師的人物頁已加入手札。"
+            ],
+            "toastEn": [
+              "Nutrition and health card",
+              "Doctor and dietitian people pages added to your notebook."
             ]
           }
         }
@@ -450,7 +676,9 @@
       "hint": {
         "tier": "direct",
         "from": "紅頭",
-        "zh": "在礁岩上受了傷，就去紅頭的衛生所。"
+        "fromEn": "Imorod",
+        "zh": "在礁岩上受了傷，就去紅頭的衛生所。",
+        "en": "If you get hurt on the reef, go to the Imorod health station."
       },
       "playable": true
     },
@@ -461,7 +689,7 @@
       "village": null,
       "name": {
         "zh": "聽主人家長輩說明島上的規矩",
-        "en": ""
+        "en": "Hear the host family elder explain the island's rules"
       },
       "time": "any",
       "seasons": [],
@@ -478,10 +706,15 @@
       ],
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "三人：全隊在主人家屋",
+        "coopEn": "Trio: whole party at the host family's house",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q03 且 Q04",
+        "preEn": "Q03 and Q04",
         "unlock": "尊重事件開始計分、手札規矩頁",
+        "unlockEn": "Respect events start scoring, notebook rules page",
         "kind": "AND"
       },
       "req": {
@@ -500,38 +733,46 @@
             "t"
           ],
           "text": "全隊到主人家，長輩請三個人分頭去辦事",
+          "textEn": "The whole party goes to the host family, and the elder sends the three off on separate errands",
           "lines": [
             {
               "who": "@npc",
-              "zh": "大家都到了。晚上我來說說島上的規矩，先請你們分頭去辦幾件事。"
+              "zh": "大家都到了。晚上我來說說島上的規矩，先請你們分頭去辦幾件事。",
+              "en": "Everyone's here. Tonight I'll tell you about the island's rules. First, I need each of you to take care of a few things."
             },
             {
               "who": "@npc",
-              "zh": "族男去開元港，問問拼板舟漁人最近海上的情形；族女去簷廊，幫婦女長輩收東西；旅人去椰油的雜貨店，買晚上要用的東西。"
+              "zh": "族男去開元港，問問拼板舟漁人最近海上的情形；族女去簷廊，幫婦女長輩收東西；旅人去椰油的雜貨店，買晚上要用的東西。",
+              "en": "Tao man, go to Kaiyuan Harbour and ask the plank boat fisher about the sea lately. Tao woman, go to the porch and help the women elders bring things in. Traveller, go to the Yayo grocery store and buy what we need tonight."
             },
             {
               "who": "@npc",
-              "zh": "辦完就回家旁的涼亭集合，三個人到齊了我再說。"
+              "zh": "辦完就回家旁的涼亭集合，三個人到齊了我再說。",
+              "en": "When you're done, meet at the pavilion by the house. I'll talk once all three of you are here."
             },
             {
               "who": "旁白",
-              "zh": "隊伍分頭行動：點左上角頭像切換隊員，鏡頭會跳到那位隊員所在的地方。"
+              "zh": "隊伍分頭行動：點左上角頭像切換隊員，鏡頭會跳到那位隊員所在的地方。",
+              "en": "The party splits up: tap a portrait at the top left to switch members, and the camera jumps to where that member is."
             }
           ],
           "split": {
             "m": {
               "at": "harbor",
               "task": "到開元港找拼板舟漁人",
+              "taskEn": "finding the plank boat fisher at Kaiyuan Harbour",
               "ctrl": true
             },
             "f": {
               "at": "host_weave",
               "task": "到簷廊幫婦女長輩",
+              "taskEn": "helping the women elders on the porch",
               "ctrl": true
             },
             "t": {
               "at": "yayo_shop",
               "task": "到椰油的雜貨店買東西",
+              "taskEn": "shopping at the Yayo grocery store",
               "ctrl": true
             }
           },
@@ -540,20 +781,24 @@
         {
           "kind": "tasks",
           "text": "三人分頭辦事（族男：開元港／族女：簷廊／旅人：雜貨店）",
+          "textEn": "Three errands (Tao man: Kaiyuan Harbour / Tao woman: porch / Traveller: grocery store)",
           "tasks": [
             {
               "role": "m",
               "kind": "talk",
               "npc": "villager_harbor",
               "text": "族男到開元港，向拼板舟漁人問候",
+              "textEn": "The Tao man goes to Kaiyuan Harbour to greet the plank boat fisher",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "主人家的長輩叫你來的？最近風浪還可以。出海的事，等季節到了再說。"
+                  "zh": "主人家的長輩叫你來的？最近風浪還可以。出海的事，等季節到了再說。",
+                  "en": "The host family's elder sent you? The sea has been okay lately. Going out to sea can wait until the season comes."
                 },
                 {
                   "who": "@m",
-                  "zh": "好，我回去跟長輩說。"
+                  "zh": "好，我回去跟長輩說。",
+                  "en": "Okay, I'll tell the elder."
                 }
               ]
             },
@@ -562,14 +807,17 @@
               "kind": "talk",
               "npc": "@hostf",
               "text": "族女到簷廊，幫婦女長輩把東西收進來",
+              "textEn": "The Tao woman goes to the porch and helps the women elders bring things in",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "來得正好，幫我把曬在外面的東西收進來。"
+                  "zh": "來得正好，幫我把曬在外面的東西收進來。",
+                  "en": "Good timing. Help me bring in the things drying outside."
                 },
                 {
                   "who": "@f",
-                  "zh": "收好了，我先回主人家。"
+                  "zh": "收好了，我先回主人家。",
+                  "en": "All done. I'll head back to the host family."
                 }
               ]
             },
@@ -578,14 +826,17 @@
               "kind": "talk",
               "npc": "shop_yayo",
               "text": "旅人到椰油的雜貨店，買晚上要用的飲水",
+              "textEn": "The traveller goes to the Yayo grocery store to buy water for tonight",
               "lines": [
                 {
                   "who": "@npc",
-                  "zh": "要買飲水？好，這些拿去。路上小心。"
+                  "zh": "要買飲水？好，這些拿去。路上小心。",
+                  "en": "Water? Sure, take these. Careful on the way."
                 },
                 {
                   "who": "@t",
-                  "zh": "謝謝！我拿回主人家。"
+                  "zh": "謝謝！我拿回主人家。",
+                  "en": "Thanks! I'll take it back to the host family."
                 }
               ],
               "gives": {
@@ -607,10 +858,12 @@
           ],
           "regroup": true,
           "text": "三人回到主人家的涼亭集合",
+          "textEn": "All three meet at the host family's pavilion",
           "lines": [
             {
               "who": "@f",
-              "zh": "大家都回來了，上涼亭坐吧。"
+              "zh": "大家都回來了，上涼亭坐吧。",
+              "en": "Everyone's back. Come sit on the pavilion."
             }
           ]
         },
@@ -624,30 +877,37 @@
             "t"
           ],
           "text": "全隊坐在主人家的涼亭上，聽長輩說明島上的規矩",
+          "textEn": "The whole party sits on the host family's pavilion and hears the elder explain the island's rules",
           "lines": [
             {
               "who": "@host",
-              "zh": "大家都到了，我說說島上的規矩。"
+              "zh": "大家都到了，我說說島上的規矩。",
+              "en": "Everyone's here. Let me tell you the island's rules."
             },
             {
               "who": "@host",
-              "zh": "飛魚季的時候，灘頭和拼板舟有很多規矩。旅人不要進灘頭，也不要碰船。"
+              "zh": "飛魚季的時候，灘頭和拼板舟有很多規矩。旅人不要進灘頭，也不要碰船。",
+              "en": "In flying fish season, there are many rules about the beach and the plank boats. Travellers shouldn't go onto the boat beach or touch the boats."
             },
             {
               "who": "@host",
-              "zh": "女孩子在飛魚季不碰拼板舟、不上船。"
+              "zh": "女孩子在飛魚季不碰拼板舟、不上船。",
+              "en": "In flying fish season, girls don't touch the plank boats or get on them."
             },
             {
               "who": "@host",
-              "zh": "部落的祭儀不要靠近，也不要拍。想拍人或家屋，先問一聲。"
+              "zh": "部落的祭儀不要靠近，也不要拍。想拍人或家屋，先問一聲。",
+              "en": "Don't go near village ceremonies, and don't take photos of them. If you want a photo of a person or a house, ask first."
             },
             {
               "who": "@host",
-              "zh": "曬魚架上的魚，是一家人一整年的糧食，不要隨便碰。"
+              "zh": "曬魚架上的魚，是一家人一整年的糧食，不要隨便碰。",
+              "en": "The fish on the drying racks are a family's food for the whole year. Don't touch them."
             },
             {
               "who": "@host",
-              "zh": "每個家庭、每個部落做法不太一樣，不懂就問。"
+              "zh": "每個家庭、每個部落做法不太一樣，不懂就問。",
+              "en": "Every family and every village does things a bit differently. If you're not sure, ask."
             }
           ],
           "gives": {
@@ -658,6 +918,10 @@
             "toast": [
               "規矩頁",
               "手札加上「島上的規矩」，尊重事件開始計分。"
+            ],
+            "toastEn": [
+              "Rules page",
+              "\"Island rules\" added to your notebook. Respect events now count."
             ]
           }
         }
@@ -665,7 +929,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "回報到、導覽都完成後，三個人一起到主人家旁的涼亭找長輩。"
+        "fromEn": "Host family",
+        "zh": "回報到、導覽都完成後，三個人一起到主人家旁的涼亭找長輩。",
+        "en": "After checking in and the tour, all three go together to find the elder at the pavilion by the host family's house."
       },
       "playable": true,
       "song": "s08"
@@ -677,7 +943,7 @@
       "village": "imorod",
       "name": {
         "zh": "拜訪紅頭的關鍵人物",
-        "en": ""
+        "en": "Visit the key person in Imorod"
       },
       "time": "any",
       "seasons": [],
@@ -689,10 +955,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "紅頭支線、人物頁",
+        "unlockEn": "Imorod side quests, people page",
         "kind": ""
       },
       "req": "Q02",
@@ -701,18 +971,22 @@
           "kind": "talk",
           "npc": "elder_imorod",
           "text": "到紅頭，拜訪部落的關鍵人物",
+          "textEn": "Go to Imorod and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到紅頭。"
+              "zh": "你們來啦，歡迎到紅頭。",
+              "en": "You've come. Welcome to Imorod."
             },
             {
               "who": "@npc",
-              "zh": "衛生所也在紅頭這一帶，受傷了就去那裡。"
+              "zh": "衛生所也在紅頭這一帶，受傷了就去那裡。",
+              "en": "The health station is around Imorod too. Go there if you get hurt."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -729,7 +1003,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說紅頭有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說紅頭有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Imorod who looks after visitors well. Ask around the village."
       },
       "playable": true
     },
@@ -740,7 +1016,7 @@
       "village": "iratay",
       "name": {
         "zh": "拜訪漁人的關鍵人物",
-        "en": ""
+        "en": "Visit the key person in Iratay"
       },
       "time": "any",
       "seasons": [],
@@ -752,10 +1028,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "漁人支線、人物頁",
+        "unlockEn": "Iratay side quests, people page",
         "kind": ""
       },
       "req": "Q02",
@@ -764,18 +1044,22 @@
           "kind": "talk",
           "npc": "villager_iratay",
           "text": "到漁人，拜訪部落的關鍵人物",
+          "textEn": "Go to Iratay and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到漁人。"
+              "zh": "你們來啦，歡迎到漁人。",
+              "en": "You've come. Welcome to Iratay."
             },
             {
               "who": "@npc",
-              "zh": "機場就在我們部落旁邊，飛機起降都看得到。"
+              "zh": "機場就在我們部落旁邊，飛機起降都看得到。",
+              "en": "The airport is right next to our village. You can see every plane take off and land."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -792,7 +1076,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說漁人有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說漁人有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Iratay who looks after visitors well. Ask around the village."
       },
       "playable": true
     },
@@ -803,7 +1089,7 @@
       "village": "yayo",
       "name": {
         "zh": "拜訪椰油的關鍵人物",
-        "en": ""
+        "en": "Visit the key person in Yayo"
       },
       "time": "any",
       "seasons": [],
@@ -815,10 +1101,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "椰油支線、人物頁",
+        "unlockEn": "Yayo side quests, people page",
         "kind": ""
       },
       "req": "Q02",
@@ -827,18 +1117,22 @@
           "kind": "talk",
           "npc": "elder_yayo",
           "text": "到椰油，拜訪部落的關鍵人物",
+          "textEn": "Go to Yayo and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到椰油。"
+              "zh": "你們來啦，歡迎到椰油。",
+              "en": "You've come. Welcome to Yayo."
             },
             {
               "who": "@npc",
-              "zh": "開元港的船都在這裡靠岸。"
+              "zh": "開元港的船都在這裡靠岸。",
+              "en": "All the boats to Kaiyuan Harbour dock here."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -855,7 +1149,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說椰油有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說椰油有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Yayo who looks after visitors well. Ask around the village."
       },
       "playable": true
     },
@@ -866,7 +1162,7 @@
       "village": "iraraley",
       "name": {
         "zh": "拜訪朗島的關鍵人物",
-        "en": ""
+        "en": "Visit the key person in Iraraley"
       },
       "time": "any",
       "seasons": [],
@@ -878,10 +1174,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "朗島支線、人物頁",
+        "unlockEn": "Iraraley side quests, people page",
         "kind": ""
       },
       "req": "Q02",
@@ -890,18 +1190,22 @@
           "kind": "talk",
           "npc": "elder_iraraley",
           "text": "到朗島，拜訪部落的關鍵人物",
+          "textEn": "Go to Iraraley and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到朗島。"
+              "zh": "你們來啦，歡迎到朗島。",
+              "en": "You've come. Welcome to Iraraley."
             },
             {
               "who": "@npc",
-              "zh": "朗島在北岸，潮間帶很寬。"
+              "zh": "朗島在北岸，潮間帶很寬。",
+              "en": "Iraraley is on the north coast, and the tide flats are wide."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -918,7 +1222,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說朗島有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說朗島有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Iraraley who looks after visitors well. Ask around the village."
       },
       "playable": true
     },
@@ -929,7 +1235,7 @@
       "village": "iranmeylek",
       "name": {
         "zh": "拜訪東清的關鍵人物",
-        "en": ""
+        "en": "Visit the key person in Iranmeylek"
       },
       "time": "any",
       "seasons": [],
@@ -941,10 +1247,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "東清支線、人物頁、E3",
+        "unlockEn": "Iranmeylek side quests, people page, E3",
         "kind": ""
       },
       "req": "Q02",
@@ -953,18 +1263,22 @@
           "kind": "talk",
           "npc": "villager_iranmeylek",
           "text": "到東清，拜訪部落的關鍵人物",
+          "textEn": "Go to Iranmeylek and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到東清。"
+              "zh": "你們來啦，歡迎到東清。",
+              "en": "You've come. Welcome to Iranmeylek."
             },
             {
               "who": "@npc",
-              "zh": "東清灣是島上最早看到日出的地方之一。"
+              "zh": "東清灣是島上最早看到日出的地方之一。",
+              "en": "Dongqing Bay is one of the first places on the island to see the sunrise."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -981,7 +1295,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說東清有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說東清有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Iranmeylek who looks after visitors well. Ask around the village."
       },
       "playable": true
     },
@@ -992,7 +1308,7 @@
       "village": "ivalino",
       "name": {
         "zh": "拜訪野銀的關鍵人物",
-        "en": ""
+        "en": "Visit someone important in Ivalino"
       },
       "time": "any",
       "seasons": [],
@@ -1004,10 +1320,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "野銀支線、人物頁",
+        "unlockEn": "Ivalino side quests, people page",
         "kind": ""
       },
       "req": "Q02",
@@ -1016,18 +1336,22 @@
           "kind": "talk",
           "npc": "elder_ivalino",
           "text": "到野銀，拜訪部落的關鍵人物",
+          "textEn": "Go to Ivalino and visit the village's key person",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們來啦，歡迎到野銀。"
+              "zh": "你們來啦，歡迎到野銀。",
+              "en": "You've come. Welcome to Ivalino."
             },
             {
               "who": "@npc",
-              "zh": "野銀的地下屋保存得很完整，拍照之前要先問屋主。"
+              "zh": "野銀的地下屋保存得很完整，拍照之前要先問屋主。",
+              "en": "Ivalino's underground houses are very well kept. Ask the owner before taking photos."
             },
             {
               "who": "@npc",
-              "zh": "有空再來坐坐，部落的事慢慢認識就好。"
+              "zh": "有空再來坐坐，部落的事慢慢認識就好。",
+              "en": "Come and sit again sometime. Get to know the village slowly."
             }
           ],
           "gives": {
@@ -1044,7 +1368,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "聽說野銀有位長輩很照顧來訪的人，去部落裡問問看。"
+        "fromEn": "Villager",
+        "zh": "聽說野銀有位長輩很照顧來訪的人，去部落裡問問看。",
+        "en": "They say there's an elder in Ivalino who looks after visitors well. Ask around the village."
       },
       "playable": true
     }

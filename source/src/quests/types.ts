@@ -101,6 +101,11 @@ export interface QuestStep {
    * (rented by the harbour); validate-content checks it
    */
   canoeKind?: 'tatala' | 'modern';
+  /**
+   * 0.1.5: a hard-coded visit (npc id) that may be the quest's own host elder when the member comes from that
+   * village; then this NPC / text / lines are used instead, so nobody is visited twice as two people
+   */
+  alt?: { npc: string; text?: string; lines?: StepLine[] };
 }
 
 export interface QuestHint {
@@ -154,6 +159,11 @@ export interface QuestDef extends Windowed {
   recipe?: { id: string; village: string; keeper: string };
   /** a solo give-up sends the quest back to this step */
   abortTo?: number;
+  /**
+   * 0.1.5: used instead of steps / hint / text / n when 族男 and 族女 come from different villages
+   * (Q03 回家報到: each checks in at their own home, then both meet at the 主人家)
+   */
+  twoHomes?: { steps: QuestStep[]; hint?: QuestHint; text?: Partial<QuestDef['text']>; n?: number };
 }
 
 export interface SongDef {

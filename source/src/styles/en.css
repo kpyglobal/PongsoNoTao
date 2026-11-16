@@ -1,0 +1,47 @@
+/* 0.1.5 English interface: English words are longer than the Chinese, so a few boxes get room to grow.
+   Only applies when the interface is English (html[data-ui="en"], set by src/ui/i18n.ts). */
+html[data-ui="en"] .nb-set-row, html[data-ui="en"] .nb-settings .ap-row { grid-template-columns: 5.4em 1fr; }
+html[data-ui="en"] .nb-settings .ap-row { grid-template-columns: 5.4em 1fr 3.4em; }
+html[data-ui="en"] .nb-settings .lang-toggle { flex-wrap: wrap; }
+@media (max-width: 640px) {
+  html[data-ui="en"] .chip { padding: 3px 5px; letter-spacing: -0.01em; }
+  html[data-ui="en"] #season-chips { flex-wrap: wrap; }
+}
+/* long English titles must not widen the notebook page (the list clips them with …) */
+html[data-ui="en"] .nb-spread > .nb-page { min-width: 0; }
+html[data-ui="en"] .nb-items, html[data-ui="en"] .nb-list { min-width: 0; max-width: 100%; }
+/* desktop notebook ribbons: English runs sideways (Chinese stands upright, one character per line) */
+html[data-ui="en"] .nb-ribbons button { text-orientation: mixed; letter-spacing: 0.04em; white-space: nowrap; padding: 12px 14px 14px 12px; }
+
+/* 0.1.5 中文 + English (html[data-ui="zhen"]): the Chinese line a little smaller, the English line under it much
+   smaller, so two languages fit in the same box. 中文 only / English only keep the normal sizes. Fonts unchanged. */
+.dialogue .line-en { display: block; color: var(--ink-soft); font-size: calc(11.8px * var(--ts, 1)); line-height: 1.45; margin-top: 2px; letter-spacing: 0.01em; }
+.dialogue .line-en.hidden { display: none; }
+html[data-ui="zhen"] .dialogue .line-zh { font-size: calc(14px * var(--ts, 1)); line-height: 1.6; }
+html[data-ui="zhen"] .dialogue .line-tao { font-size: calc(12.5px * var(--ts, 1)); }
+.unlock-toast .toast-en { display: block; margin-top: 3px; color: var(--ink-soft); font-size: calc(11px * var(--ts, 1)); line-height: 1.35; }
+html[data-ui="zhen"] .unlock-toast { font-size: calc(12.5px * var(--ts, 1)); }
+@media (max-width: 640px) {
+  html[data-ui="zhen"] .dialogue .line-zh { font-size: calc(13px * var(--ts, 1)); line-height: 1.55; }
+  html[data-ui="zhen"] .dialogue .line-tao { font-size: calc(12px * var(--ts, 1)); }
+  .dialogue .line-en { font-size: calc(11px * var(--ts, 1)); line-height: 1.4; }
+  html[data-ui="zhen"] .unlock-toast { font-size: calc(12px * var(--ts, 1)); }
+  .unlock-toast .toast-en { font-size: calc(10px * var(--ts, 1)); }
+}
+/* the language picker: 中文 / English / 中文＋English */
+.ui-lang-toggle button.is-both { white-space: nowrap; }
+
+/* 0.1.5 font set 霞光書卷: Cormorant Garamond runs small and thin next to the Chinese, so English in dialogue,
+   notices and the notebook is a little larger (×1.08 of the chosen text size) and a little bolder. */
+html[data-ui="en"] .dialogue, html[data-ui="en"] .unlock-toast, html[data-ui="en"] .notebook { --ts: calc(var(--ts-root, 0.92) * 1.08); }
+html[data-ui="en"] .dialogue .line-zh, html[data-ui="en"] .unlock-toast { font-weight: 600; }
+html[data-ui="en"] .notebook p, html[data-ui="en"] .notebook li, html[data-ui="en"] .nb-item { font-weight: 600; }
+/* 中文 + English: the small English line stays much smaller than the Chinese, but semi-bold so it reads */
+.dialogue .line-en, .unlock-toast .toast-en { font-weight: 600; }
+/* Tao words: also semi-bold in Cormorant, in every language */
+.dialogue .line-tao { font-weight: 600; }
+
+/* Tao words are never italic, anywhere, in every language mode */
+[lang="tao"], .line-tao, .sb-tao, .nb-tao, .nd-tao, .tao, .world-label small, .ap-tao, .cs-tao { font-style: normal !important; }
+/* there are no italic faces; never fake one either (so nothing can lean, Tao included) */
+html { font-synthesis-style: none; }

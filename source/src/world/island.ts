@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { seasonLook } from '../render/look';
 import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { Flora } from './flora';
+import { tallFloraScatter } from './floraClear';
 import {
   grid,
   GRID_NX,
   GRID_NZ,
   TERRAIN_BOX,
-  getHeight,
   sample,
   noise,
   smoothstep,
@@ -225,6 +225,16 @@ async function paintTerrain(width: number, height: number, onProgress?: (p: numb
         if (pit > 0.02) col = mix(col, mul(C.pitFloor, 0.9 + 0.2 * n1), pit);
         // taro paddies (water surface drawn separately): dark mud
         if (terr > 0.02) col = mix(col, C.mud, terr);
+        // 0.1.5: footpaths (小徑): packed earth with flat stones, door to road
+        const path = at(g.path, fx, fz);
+        if (path > 0.03) {
+          // light flat stones in the middle, a darker trodden-earth edge so the path reads against the village ground
+          const stone = smoothstep(0.45, 0.75, n1);
+          const mid = mix(mix(C.paver, C.road, 0.55), mul(C.road, 1.03), stone * 0.5);
+          const edge = mul(C.earth, 0.8);
+          const pc = mix(edge, mid, smoothstep(0.35, 0.8, path));
+          col = mix(col, mul(pc, 0.96 + n2 * 0.07), smoothstep(0.03, 0.4, path) * 0.95);
+        }
         // ring road: concrete with darker kerb
         if (road > 0.03) {
           const kerb = smoothstep(0.12, 0.42, road) * (1 - smoothstep(0.72, 0.98, road));
@@ -288,7 +298,7 @@ async function paintTerrain(width: number, height: number, onProgress?: (p: numb
     const h = g.h[k];
     const rock = clamp01(smoothstep(1.35, 2.2, slope) * (1 - smoothstep(0.3, 0.8, g.forest[k])) + g.cliff[k] * smoothstep(0.55, 1.3, slope) * 0.7 * smoothstep(5.0, 1.0, h)) * (land > 0.5 ? 1 : 0);
     const sand = land > 0.5 ? smoothstep(1.35, 0.4, h) * (1 - g.village[k] * 0.6) : 1;
-    const built = clamp01(Math.max(g.road[k], g.village[k] * 0.9, g.pit[k], g.runway[k], g.terrace[k]));
+    const built = clamp01(Math.max(g.road[k], g.path[k], g.village[k] * 0.9, g.pit[k], g.runway[k], g.terrace[k]));
     const grassW = land > 0.5 ? clamp01(1 - rock - sand - built) : 0;
     maskData[k * 4] = rock * 255;
     maskData[k * 4 + 1] = sand * 255;
@@ -504,7 +514,6 @@ export class Island {
     this.buildForest();
     onProgress?.(0.95);
     await yieldToUi(true);
-    this.buildPalms();
     this.buildRocks();
     this.buildTufts();
     this.buildCoastFlowers();
@@ -517,56 +526,14 @@ export class Island {
     this.group.add(this.flora.group);
   }
 
+  /** forest + palms (one scatter shared with the building view check, src/world/floraClear.ts) */
   private buildForest(): void {
-    // HD-2D painted tree billboards (were faceted low-poly blobs)
-    const r = rng(1234);
-    const { xMin, zMin, xMax, zMax } = TERRAIN_BOX;
-    const step = 1.15;
-    for (let z = zMin; z < zMax; z += step) {
-      for (let x = xMin; x < xMax; x += step) {
-        const jx = x + (r() - 0.5) * step * 0.9;
-        const jz = z + (r() - 0.5) * step * 0.9;
-        const s = sample(jx, jz);
-        const dens = s.forest;
-        if (dens < 0.08 || r() > dens * 1.05) continue;
-        const h = getHeight(jx, jz);
-        if (h < 1.2) continue;
-        // 0.1.1: keep tree canopies off the road corridor
-        if (distToRing(jx, jz) < ROAD_PLANT_CLEAR) continue;
-        const pick = r();
-        const sc = 0.75 + dens * 0.55 + r() * 0.35;
-        if (pick < 0.16) this.flora.add('bush', jx, jz, 0.9 * sc, { tint: 0.8 + r() * 0.25 });
-        else if (pick < 0.42) this.flora.add('tree_b', jx, jz, 3.0 * sc, { tint: 0.78 + r() * 0.3 });
-        else this.flora.add('tree_a', jx, jz, 2.6 * sc, { tint: 0.8 + r() * 0.3 });
-        this.treeCount++;
-        // understory bush on forest margins
-        if (dens < 0.5 && r() < 0.25) this.flora.add('bush', jx + (r() - 0.5) * 1.2, jz + (r() - 0.5) * 1.2, 0.6 + r() * 0.4);
-      }
+    for (const p of tallFloraScatter()) {
+      this.flora.add(p.kind, p.x, p.z, p.h, p.tint !== undefined ? { tint: p.tint } : {});
+      if (p.tree) this.treeCount++;
     }
   }
 
-  private buildPalms(): void {
-    const r = rng(99);
-    let tries = 0;
-    while (tries++ < Math.round(9000 * AREA_K)) {
-      const x = IB.xMin + r() * (IB.xMax - IB.xMin);
-      const z = IB.zMin + r() * (IB.zMax - IB.zMin);
-      const s = sample(x, z);
-      if (s.mask < 0.8 || s.height < 0.35 || s.height > 2.6 || s.slope > 0.6 || s.road > 0.2 || s.cliff > 0.6) continue;
-      if (distToRing(x, z) < ROAD_PLANT_CLEAR) continue;
-      if (r() > 0.008 + s.village * 0.03) continue;
-      if (r() < 0.6) this.flora.add('palm', x, z, 3.4 + r() * 1.3);
-      else this.flora.add('pandanus', x, z, 1.7 + r() * 0.7);
-    }
-    // Jimagaod grove
-    for (let i = 0; i < 6; i++) {
-      const x = JIMAGAOD.x + (r() - 0.5) * 9;
-      const z = JIMAGAOD.z + (r() - 0.5) * 7;
-      const h = getHeight(x, z);
-      if (h < 0.4 || h > 5) continue;
-      this.flora.add(i % 2 ? 'palm' : 'pandanus', x, z, i % 2 ? 3.8 : 1.9);
-    }
-  }
 
   private buildCoastFlowers(): void {
     // 馬鞍藤 beach morning glory on the sand line, 文殊蘭 crinum lilies at the scrub edge
@@ -577,7 +544,7 @@ export class Island {
       const x = IB.xMin + r() * (IB.xMax - IB.xMin);
       const z = IB.zMin + r() * (JIMAGAOD.z + 8 - IB.zMin);
       const s = sample(x, z);
-      if (s.mask < 0.6 || s.height < 0.25 || s.height > 2.2 || s.road > 0.1 || s.village > 0.4 || s.cliff > 0.5) continue;
+      if (s.mask < 0.6 || s.height < 0.25 || s.height > 2.2 || s.road > 0.1 || s.path > 0.05 || s.village > 0.4 || s.cliff > 0.5) continue;
       if (Math.abs(x - HARBOUR_QUAY.x) < HARBOUR_QUAY.hx * 0.62 && Math.abs(z - HARBOUR_QUAY.z) < HARBOUR_QUAY.hz * 0.62) continue; // paved quay
       if (s.beach > 0.35 && r() < 0.5) { this.flora.add('morning_glory', x, z, 0.32 + r() * 0.18); n++; }
       else if (s.beach > 0.1 && s.beach < 0.6 && r() < 0.18) { this.flora.add('lily', x, z, 0.55 + r() * 0.25); n++; }
@@ -668,7 +635,7 @@ export class Island {
       const x = IB.xMin + r() * (IB.xMax - IB.xMin);
       const z = IB.zMin + r() * (IB.zMax - IB.zMin);
       const s = sample(x, z);
-      if (s.mask < 0.9 || s.height < 0.6 || s.slope > 1.0 || s.road > 0.1 || s.village > 0.3 || s.terrace > 0.05 || s.forest > 0.5) continue;
+      if (s.mask < 0.9 || s.height < 0.6 || s.slope > 1.0 || s.road > 0.1 || s.path > 0.05 || s.village > 0.3 || s.terrace > 0.05 || s.forest > 0.5) continue;
       if (s.beach > 0.5) continue;
       this.flora.add('grass', x, z, 0.32 + r() * 0.3, { tint: 0.85 + r() * 0.25 });
       n++;

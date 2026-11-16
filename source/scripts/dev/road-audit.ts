@@ -5,14 +5,20 @@
  */
 import fs from 'node:fs';
 import zlib from 'node:zlib';
-import { TERRAIN_BOX, roadPolylines, getHeight, WATER_LEVEL, inTaroBasin } from '../../src/world/height';
+import { TERRAIN_BOX, roadPolylines, getHeight, WATER_LEVEL, inTaroBasin, footpaths, pathTargets, distToPath, distToRing } from '../../src/world/height';
+import { boxDist } from '../../src/world/paths';
+import { fishRacks } from '../../src/world/racks';
 import { canStand, findSafeStand, staticColliders, PLAYER_RADIUS, NPC_RADIUS } from '../../src/world/collision';
-import { DROPPED, FACILITIES, LANDMARKS, TARO_FIELDS, VILLAGE_DEFS, vlocal, remapSavePos } from '../../src/world/layout';
+import { DROPPED, FACILITIES, LANDMARKS, TARO_FIELDS, VILLAGE_DEFS, vlocal, remapSavePos, remapSavePos014 } from '../../src/world/layout';
 import { arrivalSpawn } from '../../src/world/arrival';
 import { addQuestPlaces, hostPlaces, HOST_PLACE_IDS, type PlaceLike } from '../../src/world/places';
+import { auditBuildingFlora, type FloraHit } from '../../src/world/floraClear';
 
 export const ROAD_CLEAR = 1.5; // m each side of the centreline that must be free of colliders
 const STEP = 0.25;
+/** footpath checks (0.1.5): clearance from the centre line to any other collider, steepest step (rise / run) */
+export const PATH_CLEAR_MIN = 0.4;
+export const PATH_MAX_GRADE = 1.2; // under half the walk limit (2.6); steeper reads as a cliff step, not a path
 
 interface Target { id: string; kind: string; x: number; z: number; r: number }
 export interface Report {
@@ -29,6 +35,13 @@ export interface Report {
   roadGaps: { x: number; z: number; why: string }[];
   layout: string[];
   targets: number;
+  floraHits: (FloraHit & { cover?: number })[];
+  floraCleared: FloraHit[];
+  coverBefore: Record<string, number>;
+  coverAfter: Record<string, number>;
+  /** 0.1.5 footpaths: problems (no path, path blocked / cut off / too steep) and a summary */
+  pathIssues: string[];
+  pathInfo: { questBuildings: number; buildings: number; paths: number; metres: number; steepest: number; tightest: number };
 }
 
 function segDist(px: number, pz: number, ax: number, az: number, bx: number, bz: number): number {
@@ -272,9 +285,82 @@ export function runAudit(opts: { png?: string } = {}): Report {
       if (!canStand(to.x, to.z, r) || !reachableNear(to.x, to.z, 0.5)) { strandings.push({ x, z, to }); break; }
     }
   }
-  const relocSamples = oldSpots.length;
+  // 0.1.5: 0.1.4 saves (world 2): every 0.1.4 place (and 3 m around it) lands on connected ground
+  const spots014 = loadJSON('scripts/dev/fixtures/v014-places.json') as [number, number][];
+  let reloc014 = 0;
+  for (const [ox, oz] of spots014) for (const [ex, ez] of [[0, 0], [3, 0], [-3, 0], [0, 3], [0, -3]]) {
+    reloc014++;
+    const { x, z } = remapSavePos014(ox + ex, oz + ez);
+    const to = findSafeStand(x, z, PLAYER_RADIUS);
+    if (!canStand(to.x, to.z, PLAYER_RADIUS) || !reachableNear(to.x, to.z, 0.5)) strandings.push({ x, z, to });
+  }
+  const relocSamples = oldSpots.length + reloc014;
+  // 0.1.5: footpaths — every building / facility has one, it joins the road network, and every point on it is
+  // standable, connected to the spawn, clear of every collider and fish rack, and not steep
+  const pathIssues: string[] = [];
+  const fp = footpaths();
+  const byId = new Map(fp.paths.map((p) => [p.id, p] as const));
+  for (const id of fp.failed) pathIssues.push(`NO PATH to ${id} (no clear route to the road)`);
+  const pts = pathTargets();
+  for (const t of pts) if (!byId.has(t.id) && !fp.failed.includes(t.id)) pathIssues.push(`NO PATH to ${t.id}`);
+  let metres = 0, steepest = 0, tightest = Infinity;
+  const racks = fishRacks();
+  for (const p of fp.paths) {
+    const own = pts.find((t) => t.id === p.id)?.box;
+    let q = p, n = 0;
+    while (q.joins !== 'road' && n++ < 60) {
+      const nx = byId.get(q.joins);
+      if (!nx) { pathIssues.push(`PATH ${p.id} joins a missing path ${q.joins}`); break; }
+      q = nx;
+    }
+    if (q.joins !== 'road') pathIssues.push(`PATH ${p.id} never reaches a road`);
+    let bad = 0, steep = 0, blocked = 0;
+    for (let i = 0; i < p.pts.length; i++) {
+      const { x, z } = p.pts[i];
+      if (i) {
+        const a = p.pts[i - 1];
+        const ds = Math.hypot(x - a.x, z - a.z);
+        metres += ds;
+        const g = Math.abs(getHeight(x, z) - getHeight(a.x, a.z)) / Math.max(0.05, ds);
+        steepest = Math.max(steepest, g);
+        if (g > PATH_MAX_GRADE) steep++;
+      }
+      if (!canStand(x, z, PLAYER_RADIUS) || !reachableNear(x, z, 0.3)) bad++;
+      const onRoad = distToRing(x, z) < 1.2;
+      for (const sb of col.solids) {
+        if (Math.abs(sb.x - x) > 9 || Math.abs(sb.z - z) > 9) continue;
+        const isOwn = own && Math.abs(sb.x - own.x) < 0.01 && Math.abs(sb.z - own.z) < 0.01;
+        const d = boxDist(sb, x, z);
+        if (!isOwn && !onRoad) tightest = Math.min(tightest, d);
+        if (d < (isOwn ? 0.3 : PATH_CLEAR_MIN)) blocked++;
+      }
+      for (const dc of col.discs) if (Math.hypot(dc.x - x, dc.z - z) - dc.r < PATH_CLEAR_MIN) blocked++;
+      for (const r of racks) if (Math.hypot(r.x - x, r.z - z) < 1.2) blocked++;
+    }
+    if (bad) pathIssues.push(`PATH ${p.id}: ${bad} point(s) not walkable / cut off`);
+    if (blocked) pathIssues.push(`PATH ${p.id}: ${blocked} point(s) closer than ${PATH_CLEAR_MIN} m to a building or post`);
+    if (steep) pathIssues.push(`PATH ${p.id}: ${steep} step(s) steeper than ${PATH_MAX_GRADE}`);
+  }
+  // quest buildings: the quest spot in front of each (shop, school, clinic, terminal …) is on a path or the road
+  // (a quest place that is a building: within 2.5 m of a building box; its spot must be on that building's path,
+  // the road, or the building itself)
+  let questBuildings = 0;
+  for (const t of targets) {
+    const building = (t.kind === 'facility' && !/^place:(tide_|hen_rock|yayo_dive|harbor|rental|dive_shop|clinic_yard)/.test(t.id)) || (t.kind === 'host' && /host_(home|weave|tagakal)/.test(t.id));
+    if (!building || !Number.isFinite(t.x)) continue;
+    let bt: (typeof pts)[number] | null = null, bd = Infinity;
+    for (const pt of pts) { const d = boxDist(pt.box, t.x, t.z); if (d < bd) { bd = d; bt = pt; } }
+    if (!bt || bd > 2.5) continue;
+    questBuildings++;
+    if (!byId.has(bt.id)) { pathIssues.push(`QUEST BUILDING ${t.id}: ${bt.id} has no path`); continue; }
+    const d = Math.min(distToPath(t.x, t.z), distToRing(t.x, t.z));
+    if (d > 3.0 && bd > 0) pathIssues.push(`QUEST BUILDING ${t.id} at (${t.x.toFixed(1)}, ${t.z.toFixed(1)}) is ${d.toFixed(1)} m from any path or road`);
+  }
+  const pathInfo = { questBuildings, buildings: pts.length, paths: fp.paths.length, metres: Math.round(metres), steepest: Math.round(steepest * 100) / 100, tightest: Math.round(tightest * 100) / 100 };
+
+  const flora = auditBuildingFlora();
   if (opts.png) writeMap(opts.png, { NX, NZ, walk, reach, targets, unreachable, roadBlocks, spawn });
-  return { spawn, walkable, reached, unreachable, strandings, relocSamples, dropped: [...DROPPED], roadBlocks, roadGaps, layout, targets: targets.length };
+  return { spawn, walkable, reached, unreachable, strandings, relocSamples, dropped: [...DROPPED], roadBlocks, roadGaps, layout, targets: targets.length, floraHits: flora.hits, floraCleared: flora.cleared, coverBefore: flora.coverBefore, coverAfter: flora.coverAfter, pathIssues, pathInfo };
 }
 
 // ------------------------------------------------------------------ top-down overlay PNG

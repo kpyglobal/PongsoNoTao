@@ -10,6 +10,7 @@
       "ox": -1.5,
       "oz": 3,
       "label": "山邊採山藥",
+      "labelEn": "Dig yams by the hills",
       "time": "day",
       "seasons": [],
       "perDay": 2,
@@ -22,6 +23,7 @@
       "place": "tide_iranmeylek",
       "r": 3,
       "label": "潮間帶撿貝類",
+      "labelEn": "Pick shellfish on the tide flats",
       "time": "day",
       "seasons": [],
       "tide": "low",
@@ -36,6 +38,7 @@
       "r": 3,
       "oz": -1.6,
       "label": "潮間帶採海菜",
+      "labelEn": "Pick seaweed on the tide flats",
       "time": "day",
       "seasons": [],
       "tide": "low",
@@ -49,6 +52,7 @@
       "r": 3,
       "ox": 1.4,
       "label": "黃昏退潮撿貝類（要頭燈）",
+      "labelEn": "Pick shellfish at dusk low tide (needs a headlamp)",
       "time": "night",
       "seasons": [],
       "tide": "low",
@@ -62,7 +66,8 @@
         "dusk"
       ],
       "note": "退潮在黃昏（暫定潮汐：清晨、黃昏退潮），要帶頭燈",
-      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。"
+      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。",
+      "requiresHintEn": "It's getting dark. You need a headlamp to go down to the tide flats."
     },
     {
       "id": "gn_wakay_iratay",
@@ -71,13 +76,15 @@
       "place": "wakay_iratay",
       "r": 4,
       "label": "地瓜田挖地瓜（已徵得同意）",
+      "labelEn": "Dig sweet potatoes (with permission)",
       "time": "day",
       "seasons": [],
       "perDay": 2,
       "requires": {
         "flag": "wakay_field_ok"
       },
-      "requiresHint": "這是漁人人家的田。要先幫漁人的女性長輩採收、問過她，才能來挖。"
+      "requiresHint": "這是漁人人家的田。要先幫漁人的女性長輩採收、問過她，才能來挖。",
+      "requiresHintEn": "This field belongs to an Iratay family. Help the Iratay woman elder with her harvest and ask her first, then you can dig here."
     },
     {
       "id": "gn_landcrab_road",
@@ -86,6 +93,7 @@
       "place": "owl_road",
       "r": 6,
       "label": "路邊的陸蟹",
+      "labelEn": "Land crabs by the road",
       "time": "night",
       "seasons": [
         "summer"
@@ -99,6 +107,7 @@
       "place": "tide_iranmeylek",
       "r": 3,
       "label": "黃昏的寄居蟹",
+      "labelEn": "Hermit crabs at dusk",
       "time": "night",
       "seasons": [],
       "tide": "low",
@@ -111,7 +120,8 @@
         "dusk"
       ],
       "note": "退潮在黃昏（暫定潮汐：清晨、黃昏退潮），要帶頭燈",
-      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。"
+      "requiresHint": "天暗了，要帶頭燈才能下潮間帶。",
+      "requiresHintEn": "It's getting dark. You need a headlamp to go down to the tide flats."
     },
     {
       "id": "gn_owl_road",
@@ -120,6 +130,7 @@
       "place": "owl_road",
       "r": 6,
       "label": "聽角鴞的叫聲",
+      "labelEn": "Listen for the scops owl",
       "time": "night",
       "seasons": [],
       "sets": "saw_scops_owl"

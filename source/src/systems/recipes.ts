@@ -26,7 +26,7 @@ export class Recipes {
   }
 
   /** item reqs inside an `until` */
-  private static itemReqs(r: Req | undefined, out: { item: string; min: number }[] = []): { item: string; min: number }[] {
+  static itemReqs(r: Req | undefined, out: { item: string; min: number }[] = []): { item: string; min: number }[] {
     if (!r || typeof r === 'string') return out;
     if ('all' in r) r.all.forEach((x) => Recipes.itemReqs(x, out));
     else if ('item' in r) out.push({ item: r.item, min: r.min });

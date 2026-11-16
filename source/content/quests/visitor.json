@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "主動問能不能幫忙",
-        "en": ""
+        "en": "Ask if you can help"
       },
       "time": "day",
       "seasons": [],
@@ -19,10 +19,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "尊重值「學習中」",
+        "unlockEn": "Respect \"Learning\"",
         "kind": ""
       },
       "req": "Q04",
@@ -34,18 +38,22 @@
             "t"
           ],
           "text": "旅人主動問族人：有什麼可以幫忙的？",
+          "textEn": "The traveller asks a Tao villager: is there anything I can help with?",
           "lines": [
             {
               "who": "@t",
-              "zh": "請問有什麼我可以幫忙的嗎？"
+              "zh": "請問有什麼我可以幫忙的嗎？",
+              "en": "Excuse me, is there anything I can help with?"
             },
             {
               "who": "@npc",
-              "zh": "好啊，謝謝你主動問。先幫忙把田埂上的草拔一拔。"
+              "zh": "好啊，謝謝你主動問。先幫忙把田埂上的草拔一拔。",
+              "en": "Sure, thanks for asking. Start by pulling the weeds on the field bank."
             },
             {
               "who": "@npc",
-              "zh": "下次跟著家裡的人一起來田裡，再慢慢學。"
+              "zh": "下次跟著家裡的人一起來田裡，再慢慢學。",
+              "en": "Next time, come to the field with the family and learn slowly."
             }
           ],
           "gives": {
@@ -53,6 +61,10 @@
             "toast": [
               "尊重值：學習中",
               "旅人可以跟族人一起體驗潮間帶與水芋田了。"
+            ],
+            "toastEn": [
+              "Respect: Learning",
+              "The traveller can now join the Tao members at the tide flats and the taro fields."
             ]
           }
         }
@@ -60,7 +72,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "芋頭田那邊常有長輩在忙，問問看能不能幫忙吧。"
+        "fromEn": "Villager",
+        "zh": "芋頭田那邊常有長輩在忙，問問看能不能幫忙吧。",
+        "en": "There are often elders busy at the taro fields. Ask if you can help."
       },
       "playable": true
     },
@@ -71,7 +85,7 @@
       "village": null,
       "name": {
         "zh": "學習中：跟族人體驗",
-        "en": ""
+        "en": "Learning: join the Tao members"
       },
       "time": "day",
       "seasons": [],
@@ -85,10 +99,15 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋主要帶領的族人（男旅多為族男，女旅多為族女）",
+        "coopEn": "Pair: Traveller + the leading Tao member (usually the Tao man for a male traveller, the Tao woman for a female traveller)",
         "season": "依活動",
+        "seasonEn": "Depends on the activity",
         "pre": "尊重值「學習中」",
+        "preEn": "Respect \"Learning\"",
         "unlock": "I2、R5 的旅人版本",
+        "unlockEn": "Traveller versions of I2 and R5",
         "kind": ""
       },
       "req": {
@@ -99,14 +118,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "旅人請主人家的女性長輩讓他跟族人一起去田裡",
+          "textEn": "The traveller asks the host family's woman elder if they can go to the field with the Tao members",
           "lines": [
             {
               "who": "@t",
-              "zh": "今天可以讓我跟著一起去田裡嗎？我會照著做，不亂碰。"
+              "zh": "今天可以讓我跟著一起去田裡嗎？我會照著做，不亂碰。",
+              "en": "May I come to the field with you today? I'll do as I'm told and won't touch anything."
             },
             {
               "who": "@npc",
-              "zh": "好啊。跟著家裡的人，人家做什麼你就看，叫你幫忙再動手。"
+              "zh": "好啊。跟著家裡的人，人家做什麼你就看，叫你幫忙再動手。",
+              "en": "Sure. Stay with the family. Watch what they do, and only help when you're asked."
             }
           ],
           "actor": [
@@ -122,14 +144,17 @@
           "spot": "host_taro",
           "r": 6,
           "text": "旅人跟著族人，在田埂上遞東西、拔雜草",
+          "textEn": "The traveller follows the Tao members, passing things and pulling weeds on the field bank",
           "lines": [
             {
               "who": "@t",
-              "zh": "原來田埂要這樣踩，才不會把水路踩壞。"
+              "zh": "原來田埂要這樣踩，才不會把水路踩壞。",
+              "en": "So this is how you step on a field bank without breaking the channel."
             },
             {
               "who": "旁白",
-              "zh": "田裡的事由主人家安排，旅人只幫忙被交代的部分。"
+              "zh": "田裡的事由主人家安排，旅人只幫忙被交代的部分。",
+              "en": "The host family decides the field work. The traveller only helps with what they're asked to."
             }
           ],
           "actor": [
@@ -144,10 +169,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "回主人家，聽長輩怎麼說",
+          "textEn": "Go back to the host family and hear what the elder says",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你今天很認真，也懂得先問。家裡的人都看到了。"
+              "zh": "你今天很認真，也懂得先問。家裡的人都看到了。",
+              "en": "You worked hard today, and you knew to ask first. The whole family noticed."
             }
           ],
           "actor": [
@@ -158,6 +185,10 @@
             "toast": [
               "尊重值：受信任",
               "主人家開始放心讓旅人一起做事了。"
+            ],
+            "toastEn": [
+              "Respect: Trusted",
+              "The host family now feels at ease letting the traveller help."
             ]
           }
         }
@@ -165,7 +196,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "旅人可以問主人家的女性長輩，能不能跟族人一起去田裡。"
+        "fromEn": "Host family",
+        "zh": "旅人可以問主人家的女性長輩，能不能跟族人一起去田裡。",
+        "en": "The traveller can ask the host family's woman elder about going to the field with the Tao members."
       },
       "playable": true
     },
@@ -176,7 +209,7 @@
       "village": null,
       "name": {
         "zh": "聽長輩講食物故事",
-        "en": ""
+        "en": "Hear the elder's food stories"
       },
       "time": "any",
       "seasons": [],
@@ -186,10 +219,15 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人（NPC 長輩）",
+        "coopEn": "Solo (NPC elder)",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "尊重值「受信任」",
+        "preEn": "Respect \"Trusted\"",
         "unlock": "故事卡",
+        "unlockEn": "Story card",
         "kind": ""
       },
       "req": {
@@ -201,26 +239,32 @@
           "spot": "host_tagakal",
           "r": 5,
           "text": "旅人坐上主人家的涼亭，聽長輩說食物的故事",
+          "textEn": "The traveller sits on the host family's pavilion and hears the elder's food stories",
           "lines": [
             {
               "who": "@host",
-              "zh": "來，坐上來，鞋子脫在下面。今天說說吃飯的事。"
+              "zh": "來，坐上來，鞋子脫在下面。今天說說吃飯的事。",
+              "en": "Come, sit up here. Leave your shoes down there. Today let's talk about meals."
             },
             {
               "who": "@host",
-              "zh": "以前飛魚季的時候，煮飛魚的鍋子，跟煮別的魚的鍋子是分開的。"
+              "zh": "以前飛魚季的時候，煮飛魚的鍋子，跟煮別的魚的鍋子是分開的。",
+              "en": "In flying fish season, the pot for flying fish used to be kept apart from the pot for other fish."
             },
             {
               "who": "@host",
-              "zh": "芋頭是女人在田裡顧的，飛魚是男人從海上帶回來的。一頓飯，是全家一起做出來的。"
+              "zh": "芋頭是女人在田裡顧的，飛魚是男人從海上帶回來的。一頓飯，是全家一起做出來的。",
+              "en": "Women look after the taro in the fields; men bring flying fish back from the sea. A meal is made by the whole family together."
             },
             {
               "who": "@host",
-              "zh": "吃飯的時候，長輩先拿；客人等主人說「吃吧」，再動手。"
+              "zh": "吃飯的時候，長輩先拿；客人等主人說「吃吧」，再動手。",
+              "en": "At meals, the elders take first. Guests wait until the host says \"eat\", then start."
             },
             {
               "who": "@t",
-              "zh": "我會記住。謝謝您把我當成家裡的人。"
+              "zh": "我會記住。謝謝您把我當成家裡的人。",
+              "en": "I'll remember. Thank you for treating me like family."
             }
           ],
           "actor": [
@@ -234,6 +278,10 @@
             "toast": [
               "尊重值：朋友",
               "長輩把旅人當成家裡的朋友了。故事卡「吃飯的事」已寫進手札。"
+            ],
+            "toastEn": [
+              "Respect: Friend",
+              "The elder now sees the traveller as a friend of the family. Story card \"About meals\" was added to your notebook."
             ]
           }
         }
@@ -241,7 +289,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "主人家的長輩常在涼亭上休息，旅人可以去坐坐，聽聽以前吃飯的事。"
+        "fromEn": "Host family",
+        "zh": "主人家的長輩常在涼亭上休息，旅人可以去坐坐，聽聽以前吃飯的事。",
+        "en": "The host family's elder often rests on the pavilion. The traveller can go sit and hear about meals in the old days."
       },
       "playable": true,
       "review": [
@@ -255,7 +305,7 @@
       "village": null,
       "name": {
         "zh": "非飛魚季：划現代獨木舟，看族男划拼板舟",
-        "en": ""
+        "en": "Off-season: paddle a modern kayak and watch the Tao man paddle a plank boat"
       },
       "time": "day",
       "seasons": [
@@ -271,11 +321,17 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋族男",
+        "coopEn": "Pair: Traveller + Tao man",
         "season": "非飛魚季（當地）",
+        "seasonEn": "Outside flying fish season (local)",
         "pre": "尊重值「受信任」且 T2；可提早接，救生衣來自 S3",
+        "preEn": "Respect \"Trusted\" and T2; can be taken early, life jacket from S3",
         "unlock": "拼板舟體驗卡",
-        "kind": "提早接、道具卡關＋季節"
+        "unlockEn": "Plank boat experience card",
+        "kind": "提早接、道具卡關＋季節",
+        "kindEn": "Take early, needs an item + season"
       },
       "req": {
         "all": [
@@ -290,18 +346,22 @@
           "kind": "talk",
           "npc": "@host",
           "text": "旅人和族男一起，請主人家長輩同意下海",
+          "textEn": "The traveller and the Tao man ask the host family elder's permission to go out on the water",
           "lines": [
             {
               "who": "@npc",
-              "zh": "現在不是飛魚季，可以下海走走。拼板舟是族男划的，你不要上去。"
+              "zh": "現在不是飛魚季，可以下海走走。拼板舟是族男划的，你不要上去。",
+              "en": "It's not flying fish season, so you can go out on the sea. The Tao man paddles the plank boat — don't get on it."
             },
             {
               "who": "@npc",
-              "zh": "你去租車行旁邊租一艘現代的獨木舟，穿好救生衣，跟在族男旁邊就好。"
+              "zh": "你去租車行旁邊租一艘現代的獨木舟，穿好救生衣，跟在族男旁邊就好。",
+              "en": "Rent a modern kayak next to the scooter rental, put on a life jacket and just stay near the Tao man."
             },
             {
               "who": "@t",
-              "zh": "好，我划我的獨木舟，不碰拼板舟。"
+              "zh": "好，我划我的獨木舟，不碰拼板舟。",
+              "en": "Okay, I'll paddle my kayak and won't touch the plank boat."
             }
           ],
           "need": [
@@ -314,10 +374,12 @@
           "spot": "harbor",
           "r": 8,
           "text": "族男划自己家的拼板舟到港外，示範怎麼看浪",
+          "textEn": "The Tao man paddles his family's plank boat outside the harbour and shows how to read the waves",
           "lines": [
             {
               "who": "@m",
-              "zh": "槳要一起下水，船才不會晃。你看，浪從那邊來。"
+              "zh": "槳要一起下水，船才不會晃。你看，浪從那邊來。",
+              "en": "Put the paddles in together so the boat doesn't rock. Look, the waves come from over there."
             }
           ],
           "actor": [
@@ -334,14 +396,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "旅人划租來的現代獨木舟，跟在拼板舟旁邊",
+          "textEn": "The traveller paddles a rented modern kayak alongside the plank boat",
           "lines": [
             {
               "who": "@t",
-              "zh": "從海上看島，山好綠！我跟在旁邊，不靠太近。"
+              "zh": "從海上看島，山好綠！我跟在旁邊，不靠太近。",
+              "en": "The island from the sea — the mountains are so green! I'll stay alongside, not too close."
             },
             {
               "who": "旁白",
-              "zh": "拼板舟只由族男划。旅人和族女下海時，用的是現代的獨木舟，也不一定跟著族男出海。"
+              "zh": "拼板舟只由族男划。旅人和族女下海時，用的是現代的獨木舟，也不一定跟著族男出海。",
+              "en": "Only the Tao man paddles the plank boat. When the traveller and the Tao woman go out, they use modern kayaks, and don't always go with the Tao man."
             }
           ],
           "actor": [
@@ -358,10 +423,12 @@
           "kind": "talk",
           "npc": "@host",
           "text": "回岸上向長輩道謝",
+          "textEn": "Thank the elder back on shore",
           "lines": [
             {
               "who": "@npc",
-              "zh": "平安回來就好。你懂得在旁邊看，不去碰船，這樣很好。"
+              "zh": "平安回來就好。你懂得在旁邊看，不去碰船，這樣很好。",
+              "en": "As long as you're back safe. You knew to watch from the side and not touch the boat. That's good."
             }
           ],
           "gives": {
@@ -371,6 +438,10 @@
             "toast": [
               "海上體驗卡",
               "旅人從現代獨木舟上，看族男划拼板舟。"
+            ],
+            "toastEn": [
+              "Sea experience card",
+              "From a modern kayak, the traveller watched the Tao man paddle a plank boat."
             ]
           }
         }
@@ -378,7 +449,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "非飛魚季時，旅人可以借救生衣、租一艘現代獨木舟，跟在族男的拼板舟旁邊。"
+        "fromEn": "Host family",
+        "zh": "非飛魚季時，旅人可以借救生衣、租一艘現代獨木舟，跟在族男的拼板舟旁邊。",
+        "en": "Outside flying fish season, the traveller can borrow a life jacket, rent a modern kayak and paddle alongside the Tao man's plank boat."
       },
       "playable": true,
       "needsItem": {
@@ -396,7 +469,7 @@
       "village": null,
       "name": {
         "zh": "學會被邀請吃飯",
-        "en": ""
+        "en": "Learn to be invited to a meal"
       },
       "time": "any",
       "seasons": [],
@@ -411,10 +484,15 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "三人：全隊在主人家屋",
+        "coopEn": "Trio: whole party at the host family's house",
         "season": "非祭典時期",
+        "seasonEn": "Outside festival times",
         "pre": "尊重值「朋友」",
+        "preEn": "Respect \"Friend\"",
         "unlock": "「達悟餐桌」圖鑑頁",
+        "unlockEn": "Field guide page \"The Tao table\"",
         "kind": ""
       },
       "req": {
@@ -426,22 +504,27 @@
           "spot": "host_home",
           "r": 7,
           "text": "全隊在主人家，等主人邀請一起吃飯",
+          "textEn": "The whole party waits at the host family's home to be invited to eat",
           "lines": [
             {
               "who": "@hostf",
-              "zh": "飯煮好了，大家進來坐。"
+              "zh": "飯煮好了，大家進來坐。",
+              "en": "The food's ready. Everyone come in and sit."
             },
             {
               "who": "@f",
-              "zh": "（小聲）等長輩說「吃吧」，再開動。"
+              "zh": "（小聲）等長輩說「吃吧」，再開動。",
+              "en": "(quietly) Wait until the elder says \"eat\" before starting."
             },
             {
               "who": "@t",
-              "zh": "好，我等一下。"
+              "zh": "好，我等一下。",
+              "en": "Okay, I'll wait."
             },
             {
               "who": "@hostf",
-              "zh": "吃吧，不要客氣。"
+              "zh": "吃吧，不要客氣。",
+              "en": "Eat, eat — don't be shy."
             }
           ],
           "need": [
@@ -454,14 +537,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "飯後向主人家的女性長輩道謝",
+          "textEn": "Thank the host family's woman elder after the meal",
           "lines": [
             {
               "who": "@t",
-              "zh": "謝謝您，芋頭好香，魚也好好吃。"
+              "zh": "謝謝您，芋頭好香，魚也好好吃。",
+              "en": "Thank you. The taro was so fragrant, and the fish was delicious."
             },
             {
               "who": "@npc",
-              "zh": "你會等、會謝，以後常回來吃飯。"
+              "zh": "你會等、會謝，以後常回來吃飯。",
+              "en": "You know to wait and to say thanks. Come back and eat with us often."
             }
           ],
           "need": [
@@ -476,6 +562,10 @@
             "toast": [
               "「達悟餐桌」",
               "圖鑑加上「達悟餐桌」頁。"
+            ],
+            "toastEn": [
+              "\"The Tao table\"",
+              "Page \"The Tao table\" added to the field guide."
             ]
           }
         }
@@ -483,7 +573,9 @@
       "hint": {
         "tier": "vague",
         "from": "主人家",
-        "zh": "主人家已經把旅人當朋友了。吃飯的時候，大家一起在家裡。"
+        "fromEn": "Host family",
+        "zh": "主人家已經把旅人當朋友了。吃飯的時候，大家一起在家裡。",
+        "en": "The host family already sees the traveller as a friend. At mealtime, everyone is at home together."
       },
       "playable": true,
       "review": [
@@ -497,7 +589,7 @@
       "village": null,
       "name": {
         "zh": "跟族男學結網（男旅版內容較多）",
-        "en": ""
+        "en": "Learn net-knotting from the Tao man (more content for a male traveller)"
       },
       "time": "day",
       "seasons": [],
@@ -511,10 +603,15 @@
       ],
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "雙人：旅人＋族男",
+        "coopEn": "Pair: Traveller + Tao man",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "尊重值「學習中」",
+        "preEn": "Respect \"Learning\"",
         "unlock": "結網學習卡",
+        "unlockEn": "Net-knotting card",
         "kind": ""
       },
       "req": {
@@ -525,14 +622,17 @@
           "kind": "talk",
           "npc": "elder_yayo",
           "text": "旅人和族男一起，請椰油的長輩教結網",
+          "textEn": "The traveller and the Tao man ask the Yayo elder to teach net-knotting",
           "lines": [
             {
               "who": "@npc",
-              "zh": "想學結網？要耐心，一個結一個結打，不能急。"
+              "zh": "想學結網？要耐心，一個結一個結打，不能急。",
+              "en": "Want to learn net-knotting? You need patience. One knot at a time, no rushing."
             },
             {
               "who": "@npc",
-              "zh": "族男先打給你看，你照著做。"
+              "zh": "族男先打給你看，你照著做。",
+              "en": "The Tao man will tie one first for you to copy."
             }
           ],
           "need": [
@@ -545,14 +645,17 @@
           "spot": "host_home",
           "r": 7,
           "text": "回主人家，旅人照著族男的手勢練習打結",
+          "textEn": "Back at the host family, the traveller practises knots following the Tao man's hands",
           "lines": [
             {
               "who": "@m",
-              "zh": "線繞過去，拉緊，再穿回來。"
+              "zh": "線繞過去，拉緊，再穿回來。",
+              "en": "Loop the thread over, pull tight, then thread it back."
             },
             {
               "who": "@t",
-              "zh": "……好像歪了。再一次！"
+              "zh": "……好像歪了。再一次！",
+              "en": "…I think it's crooked. Again!"
             }
           ],
           "actor": [
@@ -567,10 +670,12 @@
           "kind": "talk",
           "npc": "elder_yayo",
           "text": "把練習的網片拿給長輩看",
+          "textEn": "Show the practice net to the elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "結還鬆，不過會了。以後補網的時候，可以來幫忙。"
+              "zh": "結還鬆，不過會了。以後補網的時候，可以來幫忙。",
+              "en": "The knots are still loose, but you've got it. Next time we mend nets, you can come and help."
             }
           ],
           "gives": {
@@ -580,6 +685,10 @@
             "toast": [
               "結網學習卡",
               "旅人學會了最基本的網結。"
+            ],
+            "toastEn": [
+              "Net-knotting card",
+              "The traveller learned the most basic net knot."
             ]
           }
         }
@@ -587,7 +696,9 @@
       "hint": {
         "tier": "direct",
         "from": "椰油",
-        "zh": "椰油的長輩常在家門口補漁網，旅人可以和族男一起去請教。"
+        "fromEn": "Yayo",
+        "zh": "椰油的長輩常在家門口補漁網，旅人可以和族男一起去請教。",
+        "en": "The Yayo elder often mends nets outside his door. The traveller and the Tao man can go learn from him."
       },
       "playable": true,
       "giver": "m",
@@ -602,7 +713,7 @@
       "village": null,
       "name": {
         "zh": "向租車行老闆借救生衣",
-        "en": ""
+        "en": "Borrow a life jacket from the scooter rental owner"
       },
       "time": "day",
       "seasons": [],
@@ -612,10 +723,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q02",
         "unlock": "救生衣（V4 需要）",
+        "unlockEn": "Life jacket (needed for V4)",
         "kind": ""
       },
       "req": "Q02",
@@ -627,14 +742,17 @@
             "t"
           ],
           "text": "旅人向租車行老闆借救生衣",
+          "textEn": "The traveller borrows a life jacket from the scooter rental owner",
           "lines": [
             {
               "who": "@t",
-              "zh": "請問可以借救生衣嗎？"
+              "zh": "請問可以借救生衣嗎？",
+              "en": "Excuse me, could I borrow a life jacket?"
             },
             {
               "who": "@npc",
-              "zh": "可以啊。下水一定要穿好，安全第一。"
+              "zh": "可以啊。下水一定要穿好，安全第一。",
+              "en": "Sure. Always wear it properly in the water. Safety first."
             }
           ],
           "gives": {
@@ -644,6 +762,10 @@
             "toast": [
               "取得：救生衣",
               "母雞岩浮潛（U1）與非飛魚季拼板舟體驗（V4）需要它。"
+            ],
+            "toastEn": [
+              "Got: Life jacket",
+              "Needed for snorkelling at Hen Rock (U1) and the off-season plank boat experience (V4)."
             ]
           }
         }
@@ -651,7 +773,9 @@
       "hint": {
         "tier": "direct",
         "from": "租車行老闆",
-        "zh": "救生衣可以跟租車行借。"
+        "fromEn": "Scooter rental owner",
+        "zh": "救生衣可以跟租車行借。",
+        "en": "You can borrow a life jacket from the scooter rental."
       },
       "playable": true
     },
@@ -662,7 +786,7 @@
       "village": null,
       "name": {
         "zh": "聽部落文化工作者說明聖地與距離規矩",
-        "en": ""
+        "en": "Hear the village culture worker explain sacred places and keeping your distance"
       },
       "time": "day",
       "seasons": [],
@@ -678,11 +802,16 @@
       ],
       "text": {
         "who": "旅人＋任一族人",
+        "whoEn": "Traveller + any Tao member",
         "coop": "雙人：旅人＋族人（NPC 文化工作者說明）",
+        "coopEn": "Pair: Traveller + Tao member (NPC culture worker explains)",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "P05、P07、P18 可以遠拍；相簿照片的文化筆記欄；B3",
-        "kind": "聖地說明"
+        "unlockEn": "P05, P07, P18 can be photographed from afar; culture notes in the album; B3",
+        "kind": "聖地說明",
+        "kindEn": "About sacred places"
       },
       "req": "Q04",
       "steps": [
@@ -690,26 +819,32 @@
           "kind": "talk",
           "npc": "culture_worker",
           "text": "旅人和族人一起，聽部落文化工作者說明聖地與距離規矩",
+          "textEn": "The traveller and a Tao member hear the village culture worker explain sacred places and keeping your distance",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們想去五孔洞、天池那些地方拍照？先聽我說。"
+              "zh": "你們想去五孔洞、天池那些地方拍照？先聽我說。",
+              "en": "You want to photograph places like Five Holes Cave and the Heaven Lakes? Listen to me first."
             },
             {
               "who": "@npc",
-              "zh": "島上有些地方，族人敬重，也忌諱。有的跟過世的人有關，有的是祖先留下的規矩。"
+              "zh": "島上有些地方，族人敬重，也忌諱。有的跟過世的人有關，有的是祖先留下的規矩。",
+              "en": "Some places on the island are respected by the Tao people and also taboo. Some are linked to those who have passed away; some follow rules left by the ancestors."
             },
             {
               "who": "@npc",
-              "zh": "那些地方，遠遠地看、在路邊拍就好。不進去、不觸碰、不撿石頭，也不要在那裡大聲笑鬧。"
+              "zh": "那些地方，遠遠地看、在路邊拍就好。不進去、不觸碰、不撿石頭，也不要在那裡大聲笑鬧。",
+              "en": "At those places, just look from afar and shoot from the road. Don't go in, don't touch, don't pick up stones, and don't laugh loudly there."
             },
             {
               "who": "@t",
-              "zh": "我知道了。遊客問我的時候，我也會這樣說明。"
+              "zh": "我知道了。遊客問我的時候，我也會這樣說明。",
+              "en": "I understand. When tourists ask me, I'll explain it the same way."
             },
             {
               "who": "@npc",
-              "zh": "照片可以留著，但寫下你在哪裡拍、為什麼只遠拍。這就是你的文化筆記。"
+              "zh": "照片可以留著，但寫下你在哪裡拍、為什麼只遠拍。這就是你的文化筆記。",
+              "en": "You can keep the photos, but write down where you took them and why only from afar. That's your culture note."
             }
           ],
           "need": [
@@ -724,6 +859,10 @@
             "toast": [
               "聖地與距離",
               "五孔洞、小天池、大天池可以在外面遠拍；相簿加上「文化筆記」欄。"
+            ],
+            "toastEn": [
+              "Sacred places and distance",
+              "Five Holes Cave and the Little and Big Heaven Lakes can be photographed from outside, from afar. The album now has a \"Culture notes\" space."
             ]
           }
         }
@@ -731,7 +870,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "想拍五孔洞或天池之前，先和族人一起去朗島，聽部落文化工作者說明。"
+        "fromEn": "Iraraley",
+        "zh": "想拍五孔洞或天池之前，先和族人一起去朗島，聽部落文化工作者說明。",
+        "en": "Before photographing Five Holes Cave or the Heaven Lakes, go to Iraraley with a Tao member and hear the village culture worker explain."
       },
       "playable": true,
       "review": [
@@ -745,7 +886,7 @@
       "village": null,
       "name": {
         "zh": "飛魚季前聽海岸限制說明",
-        "en": ""
+        "en": "Hear about coastal limits before flying fish season"
       },
       "time": "day",
       "seasons": [],
@@ -755,10 +896,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人（NPC 文化工作者）",
+        "coopEn": "Solo (NPC culture worker)",
         "season": "當地飛魚季開始前",
+        "seasonEn": "Before the local flying fish season begins",
         "pre": "B1",
         "unlock": "飛魚季遠拍規則提示（P13、P21）、尊重值",
+        "unlockEn": "Hints for photographing from afar in flying fish season (P13, P21), respect points",
         "kind": ""
       },
       "req": "B1",
@@ -767,22 +912,27 @@
           "kind": "talk",
           "npc": "culture_worker",
           "text": "旅人聽部落文化工作者說明飛魚季的海岸限制",
+          "textEn": "The traveller hears the village culture worker explain the coastal limits in flying fish season",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚季快到了。那段時間，部落的灘頭是出海的人的地方。"
+              "zh": "飛魚季快到了。那段時間，部落的灘頭是出海的人的地方。",
+              "en": "Flying fish season is almost here. During that time, the village beaches belong to the people going to sea."
             },
             {
               "who": "@npc",
-              "zh": "訪客不進灘頭、不在部落前面的海下水，也不要對著船和出海的人拍照。"
+              "zh": "訪客不進灘頭、不在部落前面的海下水，也不要對著船和出海的人拍照。",
+              "en": "Visitors don't go onto the beach, don't swim in the sea in front of the village, and don't photograph the boats or the people going out."
             },
             {
               "who": "@npc",
-              "zh": "想拍海，就到部落外面的路邊遠遠地拍。"
+              "zh": "想拍海，就到部落外面的路邊遠遠地拍。",
+              "en": "If you want photos of the sea, take them from the roadside outside the village."
             },
             {
               "who": "@t",
-              "zh": "好，東清的日出、八代灣，我都在路邊拍。"
+              "zh": "好，東清的日出、八代灣，我都在路邊拍。",
+              "en": "Okay. The Iranmeylek sunrise, Badai Bay — I'll shoot them all from the road."
             }
           ],
           "gives": {
@@ -793,6 +943,10 @@
             "toast": [
               "飛魚季遠拍規則",
               "拍東清灣日出、八代灣時，手札會提醒飛魚季的拍法。"
+            ],
+            "toastEn": [
+              "Flying fish season photo rules",
+              "When you photograph the Dongqing Bay sunrise or Badai Bay, the notebook will remind you of the flying fish season rules."
             ]
           }
         }
@@ -800,7 +954,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "飛魚季開始前，再去聽部落文化工作者說說海岸的規矩。"
+        "fromEn": "Iraraley",
+        "zh": "飛魚季開始前，再去聽部落文化工作者說說海岸的規矩。",
+        "en": "Before flying fish season begins, go hear the village culture worker talk about the coastal rules again."
       },
       "playable": true,
       "review": [

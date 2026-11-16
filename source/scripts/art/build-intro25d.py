@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """
+SUPERSEDED in 0.1.5 by scripts/art/build-intro25d-v2.py (v2 art, new manifest). Running this would put the
+0.1.4 pack back into public/assets/intro25d/, which the 0.1.5 intro scene cannot read.
+
 0.1.4 arrival intro (2.5D parallax): turn the painted layers into the game's WebP assets + manifest.
 
     /workspace/pld_venv/bin/python scripts/art/build-intro25d.py            # final layers where present, else placeholders

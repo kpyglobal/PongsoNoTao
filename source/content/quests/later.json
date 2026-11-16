@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "糧倉在飛魚終食前達到「剛好」",
-        "en": ""
+        "en": "Get the food store \"just right\" before the flying fish season ends"
       },
       "time": "any",
       "seasons": [],
@@ -21,10 +21,15 @@
       "n": 0,
       "text": {
         "who": "全隊",
+        "whoEn": "Whole party",
         "coop": "不需同時到場",
+        "coopEn": "No need to be there together",
         "season": "飛魚季尾聲",
+        "seasonEn": "End of flying fish season",
         "pre": "G1 且 G2",
+        "preEn": "G1 and G2",
         "unlock": "里程碑「剛好」",
+        "unlockEn": "Milestone \"Just right\"",
         "kind": "AND"
       },
       "req": {
@@ -38,18 +43,22 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "請主人家的女性長輩看看糧倉",
+          "textEn": "Ask the host family's woman elder to check the food store",
           "lines": [
             {
               "who": "@npc",
-              "zh": "飛魚乾、芋頭都收進來了，我們數一數。"
+              "zh": "飛魚乾、芋頭都收進來了，我們數一數。",
+              "en": "The dried flying fish and taro are all in. Let's count."
             },
             {
               "who": "@npc",
-              "zh": "夠吃到飛魚終食之前，不多也不少。剛好，就是最好的。"
+              "zh": "夠吃到飛魚終食之前，不多也不少。剛好，就是最好的。",
+              "en": "Enough to last until the flying fish season ends — not too much, not too little. Just right is best."
             },
             {
               "who": "旁白",
-              "zh": "「剛好」：不浪費，也不缺。多的分給親族，少的大家一起補。"
+              "zh": "「剛好」：不浪費，也不缺。多的分給親族，少的大家一起補。",
+              "en": "\"Just right\": no waste, nothing missing. Extra goes to relatives; if we're short, everyone helps."
             }
           ],
           "gives": {
@@ -59,6 +68,10 @@
             "toast": [
               "里程碑「剛好」",
               "糧倉在飛魚終食前達到「剛好」。"
+            ],
+            "toastEn": [
+              "Milestone \"Just right\"",
+              "The food store is \"just right\" before the flying fish season ends."
             ]
           }
         }
@@ -66,7 +79,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "飛魚乾和芋頭都收好了，請主人家的女性長輩看看糧倉。"
+        "fromEn": "Host family",
+        "zh": "飛魚乾和芋頭都收好了，請主人家的女性長輩看看糧倉。",
+        "en": "The dried flying fish and taro are stored. Ask the host family's woman elder to check the food store."
       },
       "playable": true
     },
@@ -77,7 +92,7 @@
       "village": null,
       "name": {
         "zh": "把芋頭分給三戶親族",
-        "en": ""
+        "en": "Share taro with three related families"
       },
       "time": "any",
       "seasons": [],
@@ -88,10 +103,15 @@
       "n": 1,
       "text": {
         "who": "族男、族女",
+        "whoEn": "Tao man, Tao woman",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "R4 或 G1",
+        "preEn": "R4 or G1",
         "unlock": "部落關係",
+        "unlockEn": "Village ties",
         "kind": "OR"
       },
       "req": {
@@ -105,14 +125,17 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "主人家的女性長輩交代：把芋頭分給三戶親族",
+          "textEn": "The host family's woman elder asks: share taro with three related families",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今年田裡收得好。採三顆水芋，送去椰油、朗島和野銀的親戚家。"
+              "zh": "今年田裡收得好。採三顆水芋，送去三戶親戚家。",
+              "en": "The field gave well this year. Pick three taro and take them to three relatives' homes."
             },
             {
               "who": "@npc",
-              "zh": "送的時候說是我們家給的，他們就知道了。"
+              "zh": "送的時候說是我們家給的，他們就知道了。",
+              "en": "When you give them, say it's from our family. They'll understand."
             }
           ],
           "actor": [
@@ -125,10 +148,12 @@
           "spot": "host_taro",
           "r": 6,
           "text": "到家裡的水芋田採三顆水芋",
+          "textEn": "Pick three taro in the family's taro field",
           "lines": [
             {
               "who": "@me",
-              "zh": "挑大顆的，一家一顆。"
+              "zh": "挑大顆的，一家一顆。",
+              "en": "Pick the big ones, one per family."
             }
           ],
           "actor": [
@@ -148,10 +173,12 @@
           "kind": "talk",
           "npc": "elder_f_yayo",
           "text": "送一顆水芋到椰油的親戚家",
+          "textEn": "Take a taro to the relatives in Yayo",
           "lines": [
             {
               "who": "@npc",
-              "zh": "主人家給的啊？替我謝謝她。"
+              "zh": "主人家給的啊？替我謝謝她。",
+              "en": "From the host family? Please thank her for me."
             }
           ],
           "actor": [
@@ -163,16 +190,30 @@
               "soli": 1
             },
             "relation": 1
+          },
+          "alt": {
+            "npc": "elder_f_iranmeylek",
+            "text": "送一顆水芋到東清的親戚家",
+            "textEn": "Take a taro to the relatives in Iranmeylek",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "主人家給的啊？替我謝謝她。",
+                "en": "From the host family? Please thank her for me."
+              }
+            ]
           }
         },
         {
           "kind": "talk",
           "npc": "elder_f_iraraley",
           "text": "送一顆水芋到朗島的親戚家",
+          "textEn": "Take a taro to the relatives in Iraraley",
           "lines": [
             {
               "who": "@npc",
-              "zh": "今年的芋頭真好。下次換我們送過去。"
+              "zh": "今年的芋頭真好。下次換我們送過去。",
+              "en": "This year's taro is great. Next time we'll bring some to you."
             }
           ],
           "actor": [
@@ -184,16 +225,30 @@
               "soli": 1
             },
             "relation": 1
+          },
+          "alt": {
+            "npc": "elder_f_iratay",
+            "text": "送一顆水芋到漁人的親戚家",
+            "textEn": "Take a taro to the relatives in Iratay",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "今年的芋頭真好。下次換我們送過去。",
+                "en": "This year's taro is great. Next time we'll bring some to you."
+              }
+            ]
           }
         },
         {
           "kind": "talk",
           "npc": "villager_taro",
           "text": "送一顆水芋到野銀的親戚家",
+          "textEn": "Take a taro to the relatives in Ivalino",
           "lines": [
             {
               "who": "@npc",
-              "zh": "收到了。田裡的東西，要大家一起吃才香。"
+              "zh": "收到了。田裡的東西，要大家一起吃才香。",
+              "en": "Got it. Food from the fields tastes best when everyone shares it."
             }
           ],
           "actor": [
@@ -205,16 +260,30 @@
               "soli": 1
             },
             "relation": 1
+          },
+          "alt": {
+            "npc": "weaver_elder",
+            "text": "送一顆水芋到紅頭的親戚家",
+            "textEn": "Take a taro to the relatives in Imorod",
+            "lines": [
+              {
+                "who": "@npc",
+                "zh": "收到了。田裡的東西，要大家一起吃才香。",
+                "en": "Got it. Food from the fields tastes best when everyone shares it."
+              }
+            ]
           }
         },
         {
           "kind": "talk",
           "npc": "@hostf",
           "text": "回主人家回報",
+          "textEn": "Report back to the host family",
           "lines": [
             {
               "who": "@npc",
-              "zh": "都送到了？好。親戚之間就是這樣，你來我往。"
+              "zh": "都送到了？好。親戚之間就是這樣，你來我往。",
+              "en": "All delivered? Good. That's how it is between relatives — give and take."
             }
           ],
           "actor": [
@@ -225,6 +294,10 @@
             "toast": [
               "部落關係",
               "三戶親族都收到了主人家的芋頭。"
+            ],
+            "toastEn": [
+              "Village ties",
+              "All three related families received taro from the host family."
             ]
           }
         }
@@ -232,7 +305,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "收成之後，主人家的女性長輩會請族人把芋頭分給親族。"
+        "fromEn": "Host family",
+        "zh": "收成之後，主人家的女性長輩會請族人把芋頭分給親族。",
+        "en": "After the harvest, the host family's woman elder will ask you to share taro with relatives."
       },
       "playable": true,
       "giver": "f",
@@ -247,7 +322,7 @@
       "village": null,
       "name": {
         "zh": "跟族男修補一張漁網",
-        "en": ""
+        "en": "Mend a fishing net with the Tao man"
       },
       "time": "any",
       "seasons": [],
@@ -261,10 +336,14 @@
       ],
       "text": {
         "who": "旅人（男旅版內容較多）",
+        "whoEn": "Traveller (more content for a male traveller)",
         "coop": "雙人：旅人＋族男",
+        "coopEn": "Pair: Traveller + Tao man",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "V6",
         "unlock": "結網進階卡",
+        "unlockEn": "Advanced net-knotting card",
         "kind": ""
       },
       "req": "V6",
@@ -273,14 +352,17 @@
           "kind": "talk",
           "npc": "villager_harbor",
           "text": "旅人和族男一起到開元港，問拼板舟漁人有沒有網要補",
+          "textEn": "The traveller and the Tao man go to Kaiyuan Harbour and ask the plank boat fisher if any nets need mending",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這張網破了好幾個洞，你們來得剛好。"
+              "zh": "這張網破了好幾個洞，你們來得剛好。",
+              "en": "This net has quite a few holes. Good timing."
             },
             {
               "who": "@npc",
-              "zh": "族男補大洞，旅人補小的。照你學過的結打。"
+              "zh": "族男補大洞，旅人補小的。照你學過的結打。",
+              "en": "The Tao man mends the big holes, the traveller the small ones. Tie the knots the way you learned."
             }
           ],
           "need": [
@@ -293,14 +375,17 @@
           "spot": "harbor",
           "r": 8,
           "text": "在港邊一起補網",
+          "textEn": "Mend the net together by the harbour",
           "lines": [
             {
               "who": "@m",
-              "zh": "先把破掉的線頭修齊，再一格一格補回去。"
+              "zh": "先把破掉的線頭修齊，再一格一格補回去。",
+              "en": "First trim the broken ends, then mend it back one square at a time."
             },
             {
               "who": "@t",
-              "zh": "這次的結比上次緊多了！"
+              "zh": "這次的結比上次緊多了！",
+              "en": "These knots are much tighter than last time!"
             }
           ],
           "actor": [
@@ -315,10 +400,12 @@
           "kind": "talk",
           "npc": "villager_harbor",
           "text": "把補好的網交還",
+          "textEn": "Hand back the mended net",
           "lines": [
             {
               "who": "@npc",
-              "zh": "補得不錯。網補好了，船組下次出海就用得上。"
+              "zh": "補得不錯。網補好了，船組下次出海就用得上。",
+              "en": "Nice work. With the net mended, the boat crew can use it next time they go out."
             }
           ],
           "gives": {
@@ -329,6 +416,10 @@
             "toast": [
               "結網進階卡",
               "旅人和族男一起補好一張漁網。"
+            ],
+            "toastEn": [
+              "Advanced net-knotting card",
+              "The traveller and the Tao man mended a fishing net together."
             ]
           }
         }
@@ -336,7 +427,9 @@
       "hint": {
         "tier": "direct",
         "from": "開元港",
-        "zh": "學過結網之後，可以和族男去開元港，幫拼板舟漁人補網。"
+        "fromEn": "Kaiyuan Harbour",
+        "zh": "學過結網之後，可以和族男去開元港，幫拼板舟漁人補網。",
+        "en": "After learning to knot nets, you can go with the Tao man to Kaiyuan Harbour and help the plank boat fisher mend nets."
       },
       "playable": true,
       "giver": "m"
@@ -348,7 +441,7 @@
       "village": null,
       "name": {
         "zh": "整理 10 張圖鑑卡給族語老師看",
-        "en": ""
+        "en": "Show 10 field guide cards to the Tao language teacher"
       },
       "time": "day",
       "seasons": [],
@@ -360,11 +453,16 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "X04",
         "unlock": "族語詞卡加上食物詞",
-        "kind": "數量 10"
+        "unlockEn": "Food words added to the Tao word cards",
+        "kind": "數量 10",
+        "kindEn": "Count 10"
       },
       "req": "X04",
       "steps": [
@@ -372,14 +470,17 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "把圖鑑卡帶給族語老師",
+          "textEn": "Bring the field guide cards to the Tao language teacher",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們的圖鑑卡帶來了？我們一起看，哪些東西有族語的名字。"
+              "zh": "你們的圖鑑卡帶來了？我們一起看，哪些東西有族語的名字。",
+              "en": "You brought your field guide cards? Let's see together which things have Tao names."
             },
             {
               "who": "@npc",
-              "zh": "族語名字不確定的，先空著，等族人告訴我們，不要自己猜。"
+              "zh": "族語名字不確定的，先空著，等族人告訴我們，不要自己猜。",
+              "en": "If we're not sure of a Tao name, leave it blank until the community tells us. Don't guess."
             }
           ]
         },
@@ -388,10 +489,12 @@
           "spot": "yayo_school",
           "r": 6,
           "text": "在學校把十張圖鑑卡排在桌上，一張一張對",
+          "textEn": "At the school, lay the ten cards on the table and match them one by one",
           "lines": [
             {
               "who": "@me",
               "zh": "水芋是 soli，飛魚是 alibangbang，螃蟹是 kalang。",
+              "en": "Taro is soli, flying fish is alibangbang, crab is kalang.",
               "tao": "soli · alibangbang · kalang"
             }
           ],
@@ -407,16 +510,22 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "聽老師說明食物詞",
+          "textEn": "Listen to the teacher explain the food words",
           "lines": [
             {
               "who": "@npc",
-              "zh": "會叫食物的名字，就會想知道它是怎麼來的。下次帶長輩說的話來。"
+              "zh": "會叫食物的名字，就會想知道它是怎麼來的。下次帶長輩說的話來。",
+              "en": "Once you can name a food, you'll want to know where it comes from. Next time, bring what the elders say."
             }
           ],
           "gives": {
             "toast": [
               "族語詞卡",
               "族語詞卡加上了食物詞。"
+            ],
+            "toastEn": [
+              "Tao word cards",
+              "Food words were added to the Tao word cards."
             ]
           }
         }
@@ -424,7 +533,9 @@
       "hint": {
         "tier": "direct",
         "from": "族語老師",
-        "zh": "族語老師想看看你們收集的圖鑑卡，帶去椰油的學校。"
+        "fromEn": "Tao language teacher",
+        "zh": "族語老師想看看你們收集的圖鑑卡，帶去椰油的學校。",
+        "en": "The Tao language teacher wants to see the field guide cards you've collected. Take them to the Yayo school."
       },
       "playable": true
     },
@@ -435,7 +546,7 @@
       "village": null,
       "name": {
         "zh": "數一數路邊的陸蟹並回報（不抓）",
-        "en": ""
+        "en": "Count the land crabs by the road and report back (no catching)"
       },
       "time": "night",
       "seasons": [],
@@ -450,10 +561,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "陸蟹季的夜間",
+        "seasonEn": "Land crab season, at night",
         "pre": "C2",
         "unlock": "生態值、陸蟹保育卡",
+        "unlockEn": "Nature points, land crab care card",
         "kind": ""
       },
       "req": "C2",
@@ -463,14 +578,17 @@
           "spot": "owl_road",
           "r": 8,
           "text": "晚上在路邊數陸蟹（只看、不抓、不用強光照）",
+          "textEn": "Count land crabs by the road at night (look only — no catching, no bright lights)",
           "lines": [
             {
               "who": "@me",
-              "zh": "一、二、三……這段路上有七隻。"
+              "zh": "一、二、三……這段路上有七隻。",
+              "en": "One, two, three… seven on this stretch of road."
             },
             {
               "who": "旁白",
-              "zh": "用紅光或微弱的光看就好，不要抓，也不要擋住牠們的路。"
+              "zh": "用紅光或微弱的光看就好，不要抓，也不要擋住牠們的路。",
+              "en": "Use a red or dim light. Don't catch them or block their way."
             }
           ],
           "gives": {
@@ -483,10 +601,12 @@
           "kind": "talk",
           "npc": "@host",
           "text": "回家告訴長輩數到的數量",
+          "textEn": "Go home and tell the elder how many you counted",
           "lines": [
             {
               "who": "@npc",
-              "zh": "七隻啊。牠們每年都走同一條路，我們讓一讓就好。"
+              "zh": "七隻啊。牠們每年都走同一條路，我們讓一讓就好。",
+              "en": "Seven, eh? They take the same path every year. We just make way for them."
             }
           ],
           "gives": {
@@ -496,6 +616,10 @@
             "toast": [
               "陸蟹保育卡",
               "生態值增加。"
+            ],
+            "toastEn": [
+              "Land crab care card",
+              "Nature points up."
             ]
           }
         }
@@ -503,7 +627,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "陸蟹季的晚上，西岸路邊常有陸蟹經過，數一數就好。"
+        "fromEn": "Villager",
+        "zh": "陸蟹季的晚上，西岸路邊常有陸蟹經過，數一數就好。",
+        "en": "On land crab season nights, crabs often cross the west coast road. Just count them."
       },
       "playable": true
     },
@@ -514,7 +640,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：替族語老師錄一段長輩的話（先問同意）",
-        "en": ""
+        "en": "Hidden: record an elder's words for the Tao language teacher (ask first)"
       },
       "time": "day",
       "seasons": [],
@@ -530,11 +656,16 @@
       ],
       "text": {
         "who": "旅人＋任一族人",
+        "whoEn": "Traveller + any Tao member",
         "coop": "雙人：旅人＋族人",
+        "coopEn": "Pair: Traveller + Tao member",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "X05",
         "unlock": "長輩故事卡",
-        "kind": "隱藏"
+        "unlockEn": "Elder's story card",
+        "kind": "隱藏",
+        "kindEn": "Hidden"
       },
       "req": "X05",
       "steps": [
@@ -543,22 +674,27 @@
           "spot": "host_tagakal",
           "r": 5,
           "text": "在涼亭上，旅人和族人一起先問長輩能不能錄音",
+          "textEn": "On the pavilion, the traveller and a Tao member first ask the elder if it's okay to record",
           "lines": [
             {
               "who": "@t",
-              "zh": "可以幫族語老師錄一段您說的話嗎？只給學校教族語用。"
+              "zh": "可以幫族語老師錄一段您說的話嗎？只給學校教族語用。",
+              "en": "Could we record a few of your words for the Tao language teacher? Only for teaching Tao at school."
             },
             {
               "who": "@host",
-              "zh": "要錄什麼？"
+              "zh": "要錄什麼？",
+              "en": "Record what?"
             },
             {
               "who": "@me",
-              "zh": "一句問候就好。您不想錄，我們就不錄。"
+              "zh": "一句問候就好。您不想錄，我們就不錄。",
+              "en": "Just a greeting. If you'd rather not, we won't record."
             },
             {
               "who": "@host",
-              "zh": "問候可以。故事等我想一想，有些不是每個人都能聽的。"
+              "zh": "問候可以。故事等我想一想，有些不是每個人都能聽的。",
+              "en": "A greeting is fine. The stories — let me think. Some aren't for everyone to hear."
             },
             {
               "who": "@host",
@@ -575,10 +711,12 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "把錄音交給族語老師",
+          "textEn": "Give the recording to the Tao language teacher",
           "lines": [
             {
               "who": "@npc",
-              "zh": "謝謝你們先問過長輩。錄音我會好好保存，只在課堂上用。"
+              "zh": "謝謝你們先問過長輩。錄音我會好好保存，只在課堂上用。",
+              "en": "Thank you for asking the elder first. I'll keep the recording safe and only use it in class."
             }
           ],
           "actor": [
@@ -591,6 +729,10 @@
             "toast": [
               "長輩故事卡",
               "長輩同意錄下一句問候。故事，等長輩願意說的時候。"
+            ],
+            "toastEn": [
+              "Elder's story card",
+              "The elder agreed to record a greeting. The stories can wait until the elder wants to tell them."
             ]
           }
         }
@@ -598,7 +740,9 @@
       "hint": {
         "tier": "vague",
         "from": "族語老師",
-        "zh": "族語老師說，要是能聽到長輩親口說的族語就好了……但一定要先問過。"
+        "fromEn": "Tao language teacher",
+        "zh": "族語老師說，要是能聽到長輩親口說的族語就好了……但一定要先問過。",
+        "en": "The Tao language teacher says it would be great to hear Tao from an elder's own voice… but always ask first."
       },
       "playable": true,
       "hidden": true,
@@ -613,7 +757,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：營養師的飲食小調查",
-        "en": ""
+        "en": "Hidden: the dietitian's little food survey"
       },
       "time": "day",
       "seasons": [],
@@ -625,11 +769,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "第一次見到營養師",
+        "preEn": "First meeting with the dietitian",
         "unlock": "營養與健康卡",
-        "kind": "隱藏：第一次見面"
+        "unlockEn": "Nutrition and health card",
+        "kind": "隱藏：第一次見面",
+        "kindEn": "Hidden: first meeting"
       },
       "req": {
         "flag": "met_dietitian"
@@ -639,10 +789,12 @@
           "kind": "talk",
           "npc": "@hostf",
           "text": "營養師請大家記一週吃了什麼，先問主人家",
+          "textEn": "The dietitian asks everyone to note what they eat for a week. Ask the host family first",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這一週吃什麼？芋頭、地瓜、魚，還有一些麵。忙的時候就吃快一點的。"
+              "zh": "這一週吃什麼？芋頭、地瓜、魚，還有一些麵。忙的時候就吃快一點的。",
+              "en": "What do we eat in a week? Taro, sweet potato, fish, and some noodles. When we're busy, we eat something quick."
             }
           ]
         },
@@ -650,14 +802,17 @@
           "kind": "talk",
           "npc": "nutritionist",
           "text": "把一週的飲食交給營養師",
+          "textEn": "Give the week's food notes to the dietitian",
           "lines": [
             {
               "who": "@npc",
-              "zh": "芋頭、地瓜、魚和海菜，加上一些麵和米，這就是現在島上很多家的餐桌。"
+              "zh": "芋頭、地瓜、魚和海菜，加上一些麵和米，這就是現在島上很多家的餐桌。",
+              "en": "Taro, sweet potato, fish and seaweed, plus some noodles and rice — that's the table in many island homes today."
             },
             {
               "who": "@npc",
-              "zh": "傳統的食物本來就很均衡。少一點泡麵，多一點田裡和海裡的東西就好。"
+              "zh": "傳統的食物本來就很均衡。少一點泡麵，多一點田裡和海裡的東西就好。",
+              "en": "Traditional food is already well balanced. A bit less instant noodles, a bit more from the fields and the sea, and you're good."
             }
           ],
           "gives": {
@@ -667,6 +822,10 @@
             "toast": [
               "營養與健康卡",
               "營養師的飲食小調查完成。"
+            ],
+            "toastEn": [
+              "Nutrition and health card",
+              "The dietitian's food survey is done."
             ]
           }
         }
@@ -674,7 +833,9 @@
       "hint": {
         "tier": "vague",
         "from": "衛生所",
-        "zh": "營養師好像在找人幫忙做飲食調查。"
+        "fromEn": "Health station",
+        "zh": "營養師好像在找人幫忙做飲食調查。",
+        "en": "The dietitian seems to be looking for help with a food survey."
       },
       "playable": true,
       "hidden": true
@@ -686,7 +847,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：潮池生物觀察（只看不採）",
-        "en": ""
+        "en": "Hidden: tide pool watching (look, don't pick)"
       },
       "time": "any",
       "seasons": [],
@@ -702,11 +863,17 @@
       ],
       "text": {
         "who": "族女＋旅人",
+        "whoEn": "Tao woman + Traveller",
         "coop": "雙人：族女＋旅人",
+        "coopEn": "Pair: Tao woman + Traveller",
         "season": "退潮時段",
+        "seasonEn": "At low tide",
         "pre": "成就「準時退潮」3 次",
+        "preEn": "Achievement \"On time for low tide\" ×3",
         "unlock": "生態值、潮池觀察卡",
-        "kind": "隱藏＋潮汐"
+        "unlockEn": "Nature points, tide pool card",
+        "kind": "隱藏＋潮汐",
+        "kindEn": "Hidden + tide"
       },
       "req": {
         "count": "lowTideOnTime",
@@ -718,14 +885,17 @@
           "spot": "tide_iranmeylek",
           "r": 4,
           "text": "退潮時，族女帶旅人觀察潮池（只看不採）",
+          "textEn": "At low tide, the Tao woman shows the traveller the tide pools (look, don't pick)",
           "lines": [
             {
               "who": "@f",
-              "zh": "蹲低一點看。石頭翻過來看完，要放回原來的地方。"
+              "zh": "蹲低一點看。石頭翻過來看完，要放回原來的地方。",
+              "en": "Crouch down to look. After turning a stone, put it back where it was."
             },
             {
               "who": "@t",
-              "zh": "有海星、小魚，還有寄居蟹。我只拍，不拿。"
+              "zh": "有海星、小魚，還有寄居蟹。我只拍，不拿。",
+              "en": "There are starfish, little fish and hermit crabs. I'll just take photos, not take anything."
             }
           ],
           "need": [
@@ -742,6 +912,10 @@
             "toast": [
               "潮池觀察卡",
               "只看不採，生態值增加。"
+            ],
+            "toastEn": [
+              "Tide pool card",
+              "Looked without picking. Nature points up."
             ]
           }
         }
@@ -749,7 +923,9 @@
       "hint": {
         "tier": "vague",
         "from": "東清",
-        "zh": "常常準時在退潮時到海邊的人，會發現潮池裡有好多東西。"
+        "fromEn": "Iranmeylek",
+        "zh": "常常準時在退潮時到海邊的人，會發現潮池裡有好多東西。",
+        "en": "People who often reach the shore right at low tide will find lots of life in the tide pools."
       },
       "playable": true,
       "hidden": true
@@ -761,7 +937,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：在學校辦島嶼照片小展",
-        "en": ""
+        "en": "Hidden: a small island photo show at the school"
       },
       "time": "day",
       "seasons": [],
@@ -771,11 +947,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "相簿任 6 張（收集門檻）",
+        "preEn": "Any 6 album photos (collection goal)",
         "unlock": "部落關係、族語詞卡加地名",
-        "kind": "隱藏：收集門檻"
+        "unlockEn": "Village ties, place names added to Tao word cards",
+        "kind": "隱藏：收集門檻",
+        "kindEn": "Hidden: collection goal"
       },
       "req": {
         "count": "photos",
@@ -786,14 +968,17 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "族語老師想在學校辦一個小照片展",
+          "textEn": "The Tao language teacher wants to hold a small photo show at the school",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你拍了好多島上的照片。可以借學校辦個小展覽嗎？"
+              "zh": "你拍了好多島上的照片。可以借學校辦個小展覽嗎？",
+              "en": "You've taken so many photos of the island. Could the school borrow them for a little show?"
             },
             {
               "who": "@npc",
-              "zh": "每張照片寫上地方的名字，還有你拍照時守的規矩。"
+              "zh": "每張照片寫上地方的名字，還有你拍照時守的規矩。",
+              "en": "Write the place name on each photo, and the rule you kept when you took it."
             }
           ],
           "actor": [
@@ -805,14 +990,17 @@
           "spot": "yayo_school",
           "r": 6,
           "text": "在學校把照片一張張貼好",
+          "textEn": "Put up the photos one by one at the school",
           "lines": [
             {
               "who": "@t",
-              "zh": "這張只在路邊遠拍；這張先問過屋主。"
+              "zh": "這張只在路邊遠拍；這張先問過屋主。",
+              "en": "This one I only took from the roadside; for this one I asked the owner first."
             },
             {
               "who": "旁白",
-              "zh": "孩子們圍過來，指著照片說出部落的名字。"
+              "zh": "孩子們圍過來，指著照片說出部落的名字。",
+              "en": "The kids gather round, pointing at the photos and naming the villages."
             }
           ],
           "actor": [
@@ -828,10 +1016,12 @@
           "kind": "talk",
           "npc": "teacher_yayo",
           "text": "展覽完成",
+          "textEn": "Show finished",
           "lines": [
             {
               "who": "@npc",
-              "zh": "孩子們說，原來外面的人也會這樣看我們的島。謝謝你。"
+              "zh": "孩子們說，原來外面的人也會這樣看我們的島。謝謝你。",
+              "en": "The kids say they didn't know outsiders saw our island like this. Thank you."
             }
           ],
           "actor": [
@@ -842,6 +1032,10 @@
             "toast": [
               "島嶼照片小展",
               "族語詞卡加上地名。部落關係提升。"
+            ],
+            "toastEn": [
+              "Island photo show",
+              "Place names added to the Tao word cards. Village ties up."
             ]
           }
         }
@@ -849,7 +1043,9 @@
       "hint": {
         "tier": "vague",
         "from": "族語老師",
-        "zh": "族語老師聽說旅人拍了很多照片。"
+        "fromEn": "Tao language teacher",
+        "zh": "族語老師聽說旅人拍了很多照片。",
+        "en": "The Tao language teacher heard the traveller took lots of photos."
       },
       "playable": true,
       "hidden": true
@@ -861,7 +1057,7 @@
       "village": null,
       "name": {
         "zh": "文化工作者講海岸地名的故事（內容待確認）",
-        "en": ""
+        "en": "The culture worker tells stories of coastal place names (content to be confirmed)"
       },
       "time": "day",
       "seasons": [],
@@ -871,11 +1067,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人（NPC 文化工作者）",
+        "coopEn": "Solo (NPC culture worker)",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "B1 且 相簿「北岸奇岩」一套",
+        "preEn": "B1 and the album set \"North coast rocks\"",
         "unlock": "故事卡（待族人提供）、族語詞卡加地名",
-        "kind": "AND＋收集門檻"
+        "unlockEn": "Story card (from the community), place names added to Tao word cards",
+        "kind": "AND＋收集門檻",
+        "kindEn": "AND + collection goal"
       },
       "req": {
         "all": [
@@ -895,26 +1097,32 @@
           "kind": "talk",
           "npc": "culture_worker",
           "text": "旅人帶著照片，聽部落文化工作者說海岸地名",
+          "textEn": "The traveller brings the photos and hears the culture worker talk about coastal place names",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你拍的這些，什麼岩、什麼洞，很多是外面的人看形狀取的名字。"
+              "zh": "你拍的這些，什麼岩、什麼洞，很多是外面的人看形狀取的名字。",
+              "en": "All these — this rock, that cave — many of the names were given by outsiders, based on shapes."
             },
             {
               "who": "@npc",
-              "zh": "族人對每個海角、每塊礁石都有自己的名字，有的記著誰在那裡上岸，誰在那裡曬過衣服。"
+              "zh": "族人對每個海角、每塊礁石都有自己的名字，有的記著誰在那裡上岸，誰在那裡曬過衣服。",
+              "en": "The Tao people have their own name for every cape and every reef — some remember who landed there, or who once dried clothes there."
             },
             {
               "who": "@npc",
-              "zh": "這幾年，部落的年輕人一塊石頭一塊石頭地，把名字和故事找回來。"
+              "zh": "這幾年，部落的年輕人一塊石頭一塊石頭地，把名字和故事找回來。",
+              "en": "In recent years, the village's young people have been bringing the names and stories back, one rock at a time."
             },
             {
               "who": "@npc",
-              "zh": "名字和故事，要由部落自己說。等族人同意，我再一個一個告訴你。"
+              "zh": "名字和故事，要由部落自己說。等族人同意，我再一個一個告訴你。",
+              "en": "Names and stories should be told by the village itself. When the community agrees, I'll tell you one by one."
             },
             {
               "who": "@t",
-              "zh": "我會在相簿裡先留一欄，等族人來寫。"
+              "zh": "我會在相簿裡先留一欄，等族人來寫。",
+              "en": "I'll leave a space in the album for the community to fill in."
             }
           ],
           "actor": [
@@ -927,6 +1135,10 @@
             "toast": [
               "故事卡（待族人提供）",
               "相簿照片加上「族語地名」欄，等族人提供。"
+            ],
+            "toastEn": [
+              "Story card (from the community)",
+              "Album photos now have a \"Tao place name\" space, waiting for the community."
             ]
           }
         }
@@ -934,7 +1146,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "拍過北岸的奇岩之後，部落文化工作者想跟旅人聊聊這些地方的名字。"
+        "fromEn": "Iraraley",
+        "zh": "拍過北岸的奇岩之後，部落文化工作者想跟旅人聊聊這些地方的名字。",
+        "en": "After you photograph the north coast rocks, the village culture worker wants to talk with the traveller about the names of these places."
       },
       "playable": true,
       "review": [
@@ -948,7 +1162,7 @@
       "village": null,
       "name": {
         "zh": "找到正在野外調查的地質學家（❗ 會移動）",
-        "en": ""
+        "en": "Find the geologist doing fieldwork (❗ moves around)"
       },
       "time": "day",
       "seasons": [],
@@ -964,11 +1178,16 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "白天",
+        "seasonEn": "Day",
         "pre": "Q02",
         "unlock": "相簿照片的地質筆記欄、岩石圖鑑、D2",
-        "kind": "會移動的 ❗"
+        "unlockEn": "Geology notes in the album, rock field guide, D2",
+        "kind": "會移動的 ❗",
+        "kindEn": "A moving ❗"
       },
       "req": "Q02",
       "steps": [
@@ -976,14 +1195,17 @@
           "kind": "talk",
           "npc": "geologist",
           "text": "找到正在野外調查的地質學家",
+          "textEn": "Find the geologist doing fieldwork",
           "lines": [
             {
               "who": "@npc",
-              "zh": "你們找到我了！我在調查海岸的岩石，每天都換地方。"
+              "zh": "你們找到我了！我在調查海岸的岩石，每天都換地方。",
+              "en": "You found me! I'm studying the coastal rocks, and I'm somewhere new every day."
             },
             {
               "who": "@npc",
-              "zh": "想一起看嗎？我可以教你們怎麼看石頭。"
+              "zh": "想一起看嗎？我可以教你們怎麼看石頭。",
+              "en": "Want to look together? I can show you how to read rocks."
             }
           ],
           "gives": {
@@ -993,6 +1215,10 @@
             "toast": [
               "地質筆記",
               "相簿照片加上地質筆記欄。"
+            ],
+            "toastEn": [
+              "Geology notes",
+              "Album photos now have a geology notes space."
             ]
           }
         }
@@ -1000,7 +1226,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "有個拿著放大鏡的地質學家在島上到處跑，今天不知道在哪。"
+        "fromEn": "Villager",
+        "zh": "有個拿著放大鏡的地質學家在島上到處跑，今天不知道在哪。",
+        "en": "A geologist with a magnifying glass runs all over the island. Who knows where today."
       },
       "playable": true
     },
@@ -1011,7 +1239,7 @@
       "village": null,
       "name": {
         "zh": "跟地質學家看火山岩海岸",
-        "en": ""
+        "en": "See the volcanic coast with the geologist"
       },
       "time": "day",
       "seasons": [],
@@ -1027,10 +1255,14 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人（NPC 地質學家）",
+        "coopEn": "Solo (NPC geologist)",
         "season": "白天",
+        "seasonEn": "Day",
         "pre": "D1",
         "unlock": "火山與岩石地質卡、D3",
+        "unlockEn": "Volcano and rock card, D3",
         "kind": ""
       },
       "req": "D1",
@@ -1039,10 +1271,12 @@
           "kind": "talk",
           "npc": "geologist",
           "text": "跟地質學家約好去看火山岩海岸",
+          "textEn": "Arrange with the geologist to see the volcanic coast",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我們去西北岸那塊大岩石，那裡最好看。"
+              "zh": "我們去西北岸那塊大岩石，那裡最好看。",
+              "en": "Let's go to that big rock on the northwest coast. It's the best one."
             }
           ]
         },
@@ -1051,14 +1285,17 @@
           "spot": "tank_rock",
           "r": 10,
           "text": "跟地質學家看火山岩海岸",
+          "textEn": "See the volcanic coast with the geologist",
           "lines": [
             {
               "who": "geologist",
-              "zh": "這些岩塊是火山噴發的碎屑堆起來的。硬的留下來，軟的被海浪帶走。"
+              "zh": "這些岩塊是火山噴發的碎屑堆起來的。硬的留下來，軟的被海浪帶走。",
+              "en": "These blocks are piled-up debris from eruptions. The hard parts stay; the soft parts are carried off by the waves."
             },
             {
               "who": "geologist",
-              "zh": "這是地質的看法。族人對這塊岩石有自己的名字和故事，兩種都值得聽。"
+              "zh": "這是地質的看法。族人對這塊岩石有自己的名字和故事，兩種都值得聽。",
+              "en": "That's the geology view. The Tao people have their own name and story for this rock. Both are worth hearing."
             }
           ],
           "gives": {
@@ -1068,6 +1305,10 @@
             "toast": [
               "火山與岩石卡",
               "蘭嶼是海底火山噴發形成的島。"
+            ],
+            "toastEn": [
+              "Volcano and rock card",
+              "Lanyu was formed by an undersea volcano."
             ]
           }
         }
@@ -1075,7 +1316,9 @@
       "hint": {
         "tier": "direct",
         "from": "地質學家",
-        "zh": "地質學家要帶大家去看火山岩海岸。"
+        "fromEn": "Geologist",
+        "zh": "地質學家要帶大家去看火山岩海岸。",
+        "en": "The geologist wants to take everyone to see the volcanic coast."
       },
       "playable": true
     },
@@ -1086,7 +1329,7 @@
       "village": null,
       "name": {
         "zh": "從步道與路邊觀察海蝕地形",
-        "en": ""
+        "en": "Watch sea-carved landforms from the trail and roadside"
       },
       "time": "day",
       "seasons": [],
@@ -1102,11 +1345,17 @@
       "n": 1,
       "text": {
         "who": "任一人",
+        "whoEn": "Anyone",
         "coop": "單人（NPC 地質學家）",
+        "coopEn": "Solo (NPC geologist)",
         "season": "白天、退潮時段較安全",
+        "seasonEn": "Day, safer at low tide",
         "pre": "D2 且 相簿「東岸」一套",
+        "preEn": "D2 and the album set \"East coast\"",
         "unlock": "海蝕地質卡、地質學家的隱藏調查紀錄",
-        "kind": "AND＋收集門檻"
+        "unlockEn": "Sea erosion card, the geologist's hidden field notes",
+        "kind": "AND＋收集門檻",
+        "kindEn": "AND + collection goal"
       },
       "req": {
         "all": [
@@ -1125,14 +1374,17 @@
           "spot": "lovers_cave",
           "r": 10,
           "text": "從路邊觀察海蝕拱門",
+          "textEn": "Look at a sea arch from the roadside",
           "lines": [
             {
               "who": "geologist",
-              "zh": "海浪一年一年打進岩縫，縫越來越大，最後就穿成一個拱門。"
+              "zh": "海浪一年一年打進岩縫，縫越來越大，最後就穿成一個拱門。",
+              "en": "Year after year the waves hit the cracks in the rock. The cracks grow until a hole goes right through — an arch."
             },
             {
               "who": "geologist",
-              "zh": "你們拍過的那些岩石，都是這樣被海慢慢雕出來的。站在路邊看就好，崖邊很危險。"
+              "zh": "你們拍過的那些岩石，都是這樣被海慢慢雕出來的。站在路邊看就好，崖邊很危險。",
+              "en": "All the rocks you've photographed were slowly carved by the sea like this. Just look from the road — the cliff edge is dangerous."
             }
           ]
         },
@@ -1140,10 +1392,12 @@
           "kind": "talk",
           "npc": "geologist",
           "text": "地質學家拿出他的調查筆記",
+          "textEn": "The geologist takes out his field notes",
           "lines": [
             {
               "who": "@npc",
-              "zh": "這本是我的調查紀錄，送你們抄一份。記得，名字還是要問族人。"
+              "zh": "這本是我的調查紀錄，送你們抄一份。記得，名字還是要問族人。",
+              "en": "This is my field record. You can copy it. Remember — always ask the Tao people for the names."
             }
           ],
           "gives": {
@@ -1153,6 +1407,10 @@
             "toast": [
               "海蝕地質卡",
               "得到地質學家的隱藏調查紀錄。"
+            ],
+            "toastEn": [
+              "Sea erosion card",
+              "You got the geologist's hidden field notes."
             ]
           }
         }
@@ -1160,7 +1418,9 @@
       "hint": {
         "tier": "direct",
         "from": "地質學家",
-        "zh": "拍過東岸的奇岩之後，地質學家想帶大家看海蝕地形。"
+        "fromEn": "Geologist",
+        "zh": "拍過東岸的奇岩之後，地質學家想帶大家看海蝕地形。",
+        "en": "After you photograph the east coast rocks, the geologist wants to show everyone the sea-carved landforms."
       },
       "playable": true
     },
@@ -1171,7 +1431,7 @@
       "village": null,
       "name": {
         "zh": "隱藏：旅人的水下視角",
-        "en": ""
+        "en": "Hidden: the traveller's underwater view"
       },
       "time": "day",
       "seasons": [
@@ -1186,11 +1446,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "同 U1",
+        "seasonEn": "Same as U1",
         "pre": "由旅人完成 U1",
+        "preEn": "The traveller finishes U1",
         "unlock": "旅人視角水下照片組（3 張，只是收藏）",
-        "kind": "隱藏：由旅人完成 U1"
+        "unlockEn": "Traveller's underwater photo set (3 photos, just to keep)",
+        "kind": "隱藏：由旅人完成 U1",
+        "kindEn": "Hidden: the traveller finishes U1"
       },
       "req": {
         "flag": "u1_by_t"
@@ -1205,16 +1471,22 @@
             "t"
           ],
           "text": "旅人帶著相機再去母雞岩浮潛，拍一組水下照片",
+          "textEn": "The traveller takes a camera snorkelling at Hen Rock again for a set of underwater photos",
           "lines": [
             {
               "who": "@t",
-              "zh": "這次換我用相機拍，珊瑚、魚群都想留下來。"
+              "zh": "這次換我用相機拍，珊瑚、魚群都想留下來。",
+              "en": "This time I'll take the photos. I want to keep the coral and the schools of fish."
             }
           ],
           "gives": {
             "toast": [
               "旅人水下照片",
               "3 張照片已收進「相簿與水下」。"
+            ],
+            "toastEn": [
+              "Traveller's underwater photos",
+              "3 photos added to \"Album & underwater\"."
             ]
           }
         }
@@ -1222,7 +1494,9 @@
       "hint": {
         "tier": "direct",
         "from": "旅人",
-        "zh": "浮潛的時候帶相機，應該可以拍到很不一樣的畫面。"
+        "fromEn": "Traveller",
+        "zh": "浮潛的時候帶相機，應該可以拍到很不一樣的畫面。",
+        "en": "Take a camera when you snorkel. You could get some very different shots."
       },
       "playable": true,
       "hidden": true,

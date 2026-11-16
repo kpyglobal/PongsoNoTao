@@ -47,8 +47,8 @@ try {
 
     // new journey (yayo, male) → Q01 lands the whole party at 開元港
     await ev(() => window.__TAO_RPG__.clearSave());
-    await page.waitForSelector('#btn-origin-yayo', { visible: true, timeout: 15000 });
-    await page.click('#btn-origin-yayo');
+    await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 15000 });
+    await page.select('#sel-origin-m', 'yayo'); await page.select('#sel-origin-f', 'yayo');
     await page.waitForSelector('#btn-gender-m', { visible: true, timeout: 15000 });
     await page.click('#btn-gender-m');
     await page.waitForSelector('#origin-go', { visible: true, timeout: 15000 });

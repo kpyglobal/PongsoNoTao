@@ -203,6 +203,16 @@ export class Notebook {
     else this.detail.replaceChildren();
   }
 
+  /** 0.1.5: a page that draws its own left / right pages (the 背包 item grid) */
+  showCustom(tab: string, fill: (p: { head: HTMLElement; list: HTMLElement; pager: HTMLElement; detail: HTMLElement; flip: (on: boolean) => void }) => void): void {
+    this.last = null;
+    if (tab !== this.tab) {
+      this.tab = tab;
+      this.flip(false);
+    }
+    fill({ head: this.head, list: this.list, pager: this.pager, detail: this.detail, flip: (on) => this.flip(on) });
+  }
+
   /** move the list to the page holding `key` next time (filters changed etc.) */
   resetPage(tab: string): void {
     this.pageNo.delete(tab);

@@ -85,12 +85,27 @@ export function findChrome() {
 }
 
 /** Headless Chrome with software WebGL (SwiftShader), the same flags every script used before. */
-export function launchBrowser(extraArgs = []) {
-  return puppeteer.launch({
+/**
+ * 0.1.5: with no saved interface language the game follows the browser language (Chinese → 中文, else 中文 + English).
+ * Headless Chrome reports en-US, so pages pretend to be a zh-TW browser unless BROWSER_LANG (or opts.lang) says
+ * otherwise; `pageLang(page, 'en-US')` changes it for one page (before its first load).
+ */
+export async function pageLang(page, lang) {
+  await page.evaluateOnNewDocument((l) => {
+    Object.defineProperty(navigator, 'language', { get: () => l, configurable: true });
+    Object.defineProperty(navigator, 'languages', { get: () => [l], configurable: true });
+  }, lang);
+}
+export async function launchBrowser(extraArgs = [], opts = {}) {
+  const b = await puppeteer.launch({
     executablePath: findChrome(),
     headless: 'new',
     args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--hide-scrollbars', ...extraArgs],
   });
+  const lang = opts.lang ?? process.env.BROWSER_LANG ?? 'zh-TW';
+  const newPage = b.newPage.bind(b);
+  b.newPage = async (...a) => { const p = await newPage(...a); await pageLang(p, lang); return p; };
+  return b;
 }
 
 /** Start server + browser, run `fn`, and always close both. Returns fn's result. */

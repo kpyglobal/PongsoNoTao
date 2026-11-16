@@ -116,6 +116,8 @@ export interface PhotoSpotDef extends Windowed {
   status: string;
   distanceOnly?: boolean;
   noFlash?: boolean;
+  /** 0.1.5: what the traveller says with 📸 when the photo is taken (one is picked) */
+  snap?: { zh: string }[];
 }
 
 export interface GatherNodeDef extends Windowed {

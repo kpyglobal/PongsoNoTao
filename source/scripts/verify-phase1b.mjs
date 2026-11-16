@@ -79,8 +79,8 @@ try {
 
     // 0) new game (home ivalino), Q02 scooter + S3 lifejacket
     await ev(() => window.__TAO_RPG__.clearSave());
-    await page.waitForSelector('#btn-origin-ivalino', { visible: true, timeout: 15000 });
-    await page.click('#btn-origin-ivalino');
+    await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 15000 });
+    await page.select('#sel-origin-m', 'ivalino'); await page.select('#sel-origin-f', 'ivalino');
     await page.waitForSelector('#btn-gender-f', { visible: true, timeout: 15000 });
     await page.click('#btn-gender-f');
     await page.waitForSelector('#origin-go', { visible: true, timeout: 15000 });
@@ -221,7 +221,7 @@ try {
     // 7) save export / import
     await ev(() => document.querySelector('#journal-tabs [data-tab="save"]').click());
     await sleep(400);
-    await ev(() => document.querySelector('.nb-item[data-key="save:0"]')?.click());
+    await ev(() => document.querySelector('.nb-item[data-save="export"]')?.click());
     await sleep(200);
     check(`${T}: save warning shown`, await ev(() => /清除瀏覽器資料/.test(document.querySelector('.save-warn')?.textContent ?? '')));
     await shot('10-save-export-import', 600);
@@ -232,8 +232,8 @@ try {
     // wipe the browser save, start over, then import
     await ev(() => window.__TAO_RPG__.clearSave());
     await boot();
-    await page.waitForSelector('#btn-origin-yayo', { visible: true, timeout: 15000 });
-    await page.click('#btn-origin-yayo');
+    await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 15000 });
+    await page.select('#sel-origin-m', 'yayo'); await page.select('#sel-origin-f', 'yayo');
     await page.waitForSelector('#btn-gender-m', { visible: true, timeout: 15000 });
     await page.click('#btn-gender-m');
     await page.click('#origin-go');
@@ -243,7 +243,7 @@ try {
     await sleep(300);
     await ev(() => document.querySelector('#journal-tabs [data-tab="save"]').click());
     await sleep(300);
-    await ev(() => document.querySelector('.nb-item[data-key="save:1"]')?.click());
+    await ev(() => document.querySelector('.nb-item[data-save="import"]')?.click());
     await sleep(300);
     if (T === 'desktop') {
       await page.type('#save-code-in', code.slice(0, 40));

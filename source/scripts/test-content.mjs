@@ -29,8 +29,8 @@ try {
   await boot();
   await ev(() => window.__TAO_RPG__.clearSave());
   await boot();
-  await page.waitForSelector('#btn-origin-iratay', { visible: true, timeout: 30000 });
-  await page.click('#btn-origin-iratay'); await page.click('#btn-gender-m'); await page.click('#origin-go');
+  await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 30000 });
+  await page.select('#sel-origin-m', 'iratay'); await page.select('#sel-origin-f', 'iratay'); await page.click('#btn-gender-m'); await page.click('#origin-go');
   await page.waitForFunction(() => window.__TAO_RPG__.state.started, { timeout: 60000, polling: 250 });
   const drain = async () => { for (let i = 0; i < 60 && (await ev(() => window.__TAO_RPG__.mode())) === 'dialogue'; i++) { await ev(() => window.__TAO_RPG__.advanceDialogue()); await sleep(40); } };
   await drain();

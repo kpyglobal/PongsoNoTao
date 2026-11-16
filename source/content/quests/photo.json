@@ -9,7 +9,7 @@
       "village": null,
       "name": {
         "zh": "拍紅頭岩",
-        "en": ""
+        "en": "Photograph Hongtou Rock"
       },
       "time": "day",
       "seasons": [],
@@ -23,10 +23,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -36,14 +40,17 @@
           "spot": "hongtou_rock",
           "r": 12,
           "text": "旅人用相機拍下：拍紅頭岩",
+          "textEn": "The traveller photographs: Hongtou Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "環島公路從岩洞中間穿過去，洞口外面就是海。"
+              "zh": "環島公路從岩洞中間穿過去，洞口外面就是海。",
+              "en": "The round-island road goes right through the rock tunnel. The sea is just outside."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -51,7 +58,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "開元港往北一點，路會穿過一個岩洞，黃昏時岩壁會變紅。"
+        "fromEn": "Villager",
+        "zh": "開元港往北一點，路會穿過一個岩洞，黃昏時岩壁會變紅。",
+        "en": "A little north of Kaiyuan Harbour, the road goes through a rock tunnel. At dusk the rock walls turn red."
       },
       "playable": true
     },
@@ -62,7 +71,7 @@
       "village": null,
       "name": {
         "zh": "拍鯉魚岩",
-        "en": ""
+        "en": "Photograph Carp Rock"
       },
       "time": "day",
       "seasons": [],
@@ -76,10 +85,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -89,14 +102,17 @@
           "spot": "carp_rock",
           "r": 14,
           "text": "旅人用相機拍下：拍鯉魚岩",
+          "textEn": "The traveller photographs: Carp Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "從這個角度看，真的有點像一條躍起來的魚。"
+              "zh": "從這個角度看，真的有點像一條躍起來的魚。",
+              "en": "From this angle, it really does look a bit like a leaping fish."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -104,7 +120,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "有一塊岩石的形狀像魚，騎車經過時往海邊看。"
+        "fromEn": "Villager",
+        "zh": "有一塊岩石的形狀像魚，騎車經過時往海邊看。",
+        "en": "There's a rock shaped like a fish. Look out to sea as you ride past."
       },
       "playable": true
     },
@@ -115,7 +133,7 @@
       "village": null,
       "name": {
         "zh": "拍坦克岩",
-        "en": ""
+        "en": "Photograph Tank Rock"
       },
       "time": "day",
       "seasons": [],
@@ -129,10 +147,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -142,14 +164,17 @@
           "spot": "tank_rock",
           "r": 14,
           "text": "旅人用相機拍下：拍坦克岩",
+          "textEn": "The traveller photographs: Tank Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "像一台剛開上岸的坦克……族人應該不是這樣叫它的吧？"
+              "zh": "像一台剛開上岸的坦克……族人應該不是這樣叫它的吧？",
+              "en": "Like a tank that just drove up onto the shore… I bet that's not what the Tao people call it?"
             },
             {
               "who": "旁白",
-              "zh": "這幾年，部落的年輕人正一塊石頭一塊石頭地把族語地名和故事找回來。"
+              "zh": "這幾年，部落的年輕人正一塊石頭一塊石頭地把族語地名和故事找回來。",
+              "en": "In recent years, the village's young people have been bringing back the Tao place names and stories, one rock at a time."
             }
           ]
         }
@@ -157,7 +182,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "西北岸有塊大岩石，遊客說它像坦克。"
+        "fromEn": "Villager",
+        "zh": "西北岸有塊大岩石，遊客說它像坦克。",
+        "en": "There's a big rock on the northwest coast that tourists say looks like a tank."
       },
       "playable": true
     },
@@ -168,7 +195,7 @@
       "village": null,
       "name": {
         "zh": "從蘭嶼燈塔遠眺",
-        "en": ""
+        "en": "View from Lanyu Lighthouse"
       },
       "time": "any",
       "seasons": [],
@@ -178,10 +205,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -191,14 +222,17 @@
           "spot": "lighthouse",
           "r": 10,
           "text": "旅人用相機拍下：從蘭嶼燈塔遠眺",
+          "textEn": "The traveller photographs: View from Lanyu Lighthouse",
           "lines": [
             {
               "who": "@t",
-              "zh": "從燈塔往下看，開元港和整片西岸都在眼前。"
+              "zh": "從燈塔往下看，開元港和整片西岸都在眼前。",
+              "en": "Looking down from the lighthouse, Kaiyuan Harbour and the whole west coast are right there."
             },
             {
               "who": "旁白",
-              "zh": "燈塔一帶是開放的觀景點，走步道上去就好，不要翻越圍欄。"
+              "zh": "燈塔一帶是開放的觀景點，走步道上去就好，不要翻越圍欄。",
+              "en": "The lighthouse area is an open viewpoint. Just walk up the trail — don't climb over the railings."
             }
           ]
         }
@@ -206,7 +240,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "開元港旁邊的山坡上有燈塔，從那裡可以看到整個港口。"
+        "fromEn": "Villager",
+        "zh": "開元港旁邊的山坡上有燈塔，從那裡可以看到整個港口。",
+        "en": "There's a lighthouse on the hill by Kaiyuan Harbour. You can see the whole harbour from there."
       },
       "playable": true
     },
@@ -217,7 +253,7 @@
       "village": null,
       "name": {
         "zh": "五孔洞（只在外遠拍）",
-        "en": ""
+        "en": "Five Holes Cave (photos from outside only)"
       },
       "time": "day",
       "seasons": [],
@@ -227,11 +263,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04 且 B1",
+        "preEn": "Q04 and B1",
         "unlock": "相簿＋1（北岸奇岩）",
-        "kind": "禁忌場所：先 B1、遠拍"
+        "unlockEn": "Album +1 (North coast rocks)",
+        "kind": "禁忌場所：先 B1、遠拍",
+        "kindEn": "Restricted place: B1 first, photo from afar"
       },
       "req": {
         "all": [
@@ -245,14 +287,17 @@
           "spot": "five_caves_view",
           "r": 6,
           "text": "到五孔洞的觀景點，停在外面",
+          "textEn": "Go to the Five Holes Cave viewpoint and stay outside",
           "lines": [
             {
               "who": "旁白",
-              "zh": "五孔洞可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+              "zh": "五孔洞可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。",
+              "en": "Five Holes Cave may be a place the Tao people hold in respect. Look only from the viewpoint, from afar: don't go near, don't touch, don't pick anything up, and don't laugh loudly there."
             },
             {
               "who": "@t",
-              "zh": "我在這裡看就好，不再往前走。"
+              "zh": "我在這裡看就好，不再往前走。",
+              "en": "I'll just look from here and not go any closer."
             }
           ],
           "actor": [
@@ -264,14 +309,17 @@
           "spot": "five_caves_view",
           "r": 6,
           "text": "旅人在觀景點遠拍五孔洞（不靠近）",
+          "textEn": "The traveller photographs Five Holes Cave from the viewpoint (without going near)",
           "lines": [
             {
               "who": "@t",
-              "zh": "洞口一個接一個，我只在路邊拍。"
+              "zh": "洞口一個接一個，我只在路邊拍。",
+              "en": "The cave mouths one after another — I'll only shoot from the road."
             },
             {
               "who": "旁白",
-              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。",
+              "en": "Album culture note: photographed only from outside, from afar, without going near."
             }
           ],
           "actor": [
@@ -287,7 +335,9 @@
       "hint": {
         "tier": "direct",
         "from": "部落文化工作者",
-        "zh": "聽過聖地的距離規矩之後，可以在五孔洞外的路邊遠拍。不要走進洞裡。"
+        "fromEn": "Village culture worker",
+        "zh": "聽過聖地的距離規矩之後，可以在五孔洞外的路邊遠拍。不要走進洞裡。",
+        "en": "After hearing the distance rules for sacred places, you can photograph Five Holes Cave from the roadside outside. Don't go into the caves."
       },
       "playable": true,
       "distanceOnly": true,
@@ -306,7 +356,7 @@
       "village": null,
       "name": {
         "zh": "拍玉女岩",
-        "en": ""
+        "en": "Photograph Jade Maiden Rock"
       },
       "time": "any",
       "seasons": [],
@@ -316,10 +366,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -329,14 +383,17 @@
           "spot": "jade_rock",
           "r": 12,
           "text": "旅人用相機拍下：拍玉女岩",
+          "textEn": "The traveller photographs: Jade Maiden Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "岩石中間是空的，還夾著一塊小石頭。"
+              "zh": "岩石中間是空的，還夾著一塊小石頭。",
+              "en": "The rock is hollow in the middle, with a small stone wedged inside."
             },
             {
               "who": "旁白",
-              "zh": "觀光地圖上叫玉女岩。部落裡也有人說，早年族人夜裡去潮間帶時，會把火把放在這塊岩石上；名字和故事還要請族人確認。"
+              "zh": "觀光地圖上叫玉女岩。部落裡也有人說，早年族人夜裡去潮間帶時，會把火把放在這塊岩石上；名字和故事還要請族人確認。",
+              "en": "Tourist maps call it Jade Maiden Rock. Some in the village say that long ago, people going to the tide flats at night would rest their torches on this rock. The name and story still need checking with the community."
             }
           ]
         }
@@ -344,7 +401,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "朗島往西的路邊，有一塊中間空空的大岩石。"
+        "fromEn": "Villager",
+        "zh": "朗島往西的路邊，有一塊中間空空的大岩石。",
+        "en": "On the road west of Iraraley, there's a big rock that's hollow in the middle."
       },
       "playable": true,
       "review": [
@@ -358,7 +417,7 @@
       "village": null,
       "name": {
         "zh": "小天池（只遠拍）",
-        "en": ""
+        "en": "Little Heaven Lake (from afar only)"
       },
       "time": "day",
       "seasons": [],
@@ -372,11 +431,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04 且 B1",
+        "preEn": "Q04 and B1",
         "unlock": "相簿＋1（湖泊與高地）",
-        "kind": "可能是神聖地：先 B1、遠拍"
+        "unlockEn": "Album +1 (Lakes and highlands)",
+        "kind": "可能是神聖地：先 B1、遠拍",
+        "kindEn": "May be sacred: B1 first, photo from afar"
       },
       "req": {
         "all": [
@@ -390,14 +455,17 @@
           "spot": "small_lake_view",
           "r": 8,
           "text": "到小天池的觀景點，停在外面",
+          "textEn": "Go to the Little Heaven Lake viewpoint and stay outside",
           "lines": [
             {
               "who": "旁白",
-              "zh": "小天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+              "zh": "小天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。",
+              "en": "Little Heaven Lake may be a place the Tao people hold in respect. Look only from the viewpoint, from afar: don't go near, don't touch, don't pick anything up, and don't laugh loudly there."
             },
             {
               "who": "@t",
-              "zh": "我在這裡看就好，不再往前走。"
+              "zh": "我在這裡看就好，不再往前走。",
+              "en": "I'll just look from here and not go any closer."
             }
           ],
           "actor": [
@@ -409,14 +477,17 @@
           "spot": "small_lake_view",
           "r": 8,
           "text": "旅人在觀景點遠拍小天池（不靠近）",
+          "textEn": "The traveller photographs Little Heaven Lake from the viewpoint (without going near)",
           "lines": [
             {
               "who": "@t",
-              "zh": "樹林中間一小片水，好安靜。"
+              "zh": "樹林中間一小片水，好安靜。",
+              "en": "A small patch of water in the middle of the forest. So quiet."
             },
             {
               "who": "旁白",
-              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。",
+              "en": "Album culture note: photographed only from outside, from afar, without going near."
             }
           ],
           "actor": [
@@ -432,7 +503,9 @@
       "hint": {
         "tier": "direct",
         "from": "部落文化工作者",
-        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍小天池。"
+        "fromEn": "Village culture worker",
+        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍小天池。",
+        "en": "After hearing the distance rules for sacred places, you can photograph Little Heaven Lake from the trail viewpoint."
       },
       "playable": true,
       "distanceOnly": true,
@@ -447,7 +520,7 @@
       "village": null,
       "name": {
         "zh": "拍母雞岩",
-        "en": ""
+        "en": "Photograph Hen Rock"
       },
       "time": "day",
       "seasons": [],
@@ -461,10 +534,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
+        "unlockEn": "Album +1 (North coast rocks)",
         "kind": ""
       },
       "req": "Q04",
@@ -474,14 +551,17 @@
           "spot": "hen_rock_bay",
           "r": 14,
           "text": "旅人用相機拍下：拍母雞岩",
+          "textEn": "The traveller photographs: Hen Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "母雞岩真的像一隻蹲在海邊的母雞。"
+              "zh": "母雞岩真的像一隻蹲在海邊的母雞。",
+              "en": "Hen Rock really looks like a hen sitting by the sea."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -489,7 +569,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "朗島附近的海邊，有一塊岩石像蹲著的母雞。"
+        "fromEn": "Villager",
+        "zh": "朗島附近的海邊，有一塊岩石像蹲著的母雞。",
+        "en": "On the shore near Iraraley, there's a rock that looks like a sitting hen."
       },
       "playable": true
     },
@@ -500,7 +582,7 @@
       "village": null,
       "name": {
         "zh": "雙獅岩的星空",
-        "en": ""
+        "en": "Stars over Twin Lions Rock"
       },
       "time": "night",
       "seasons": [],
@@ -513,11 +595,16 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "夜間、無月",
+        "seasonEn": "Night, no moon",
         "pre": "Q04",
         "unlock": "相簿＋1（北岸奇岩）",
-        "kind": "時段"
+        "unlockEn": "Album +1 (North coast rocks)",
+        "kind": "時段",
+        "kindEn": "Time of day"
       },
       "req": "Q04",
       "steps": [
@@ -528,13 +615,16 @@
           "actor": [
             "t"
           ],
-          "text": "旅人用相機拍下：雙獅岩的星空"
+          "text": "旅人用相機拍下：雙獅岩的星空",
+          "textEn": "The traveller photographs: Stars over Twin Lions Rock"
         }
       ],
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "沒有月亮的晚上，雙獅岩那邊的星星很多。"
+        "fromEn": "Villager",
+        "zh": "沒有月亮的晚上，雙獅岩那邊的星星很多。",
+        "en": "On moonless nights there are so many stars over Twin Lions Rock."
       },
       "playable": true
     },
@@ -545,7 +635,7 @@
       "village": null,
       "name": {
         "zh": "從岸上遠拍軍艦岩",
-        "en": ""
+        "en": "Battleship Rock from the shore"
       },
       "time": "day",
       "seasons": [],
@@ -559,10 +649,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
+        "unlockEn": "Album +1 (East coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -574,13 +668,16 @@
           "actor": [
             "t"
           ],
-          "text": "旅人用相機拍下：從岸上遠拍軍艦岩"
+          "text": "旅人用相機拍下：從岸上遠拍軍艦岩",
+          "textEn": "The traveller photographs: Battleship Rock from the shore"
         }
       ],
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "軍艦岩在西北外海，只能從岸上遠遠地拍。"
+        "fromEn": "Villager",
+        "zh": "軍艦岩在西北外海，只能從岸上遠遠地拍。",
+        "en": "Battleship Rock is off the northwest coast. You can only photograph it from the shore."
       },
       "playable": true,
       "distanceOnly": true
@@ -592,7 +689,7 @@
       "village": null,
       "name": {
         "zh": "拍情人洞",
-        "en": ""
+        "en": "Photograph Lovers' Cave"
       },
       "time": "any",
       "seasons": [],
@@ -602,10 +699,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
+        "unlockEn": "Album +1 (East coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -615,14 +716,17 @@
           "spot": "lovers_cave",
           "r": 12,
           "text": "旅人用相機拍下：拍情人洞",
+          "textEn": "The traveller photographs: Lovers' Cave",
           "lines": [
             {
               "who": "@t",
-              "zh": "海浪從石拱門底下衝進來，聲音好大。"
+              "zh": "海浪從石拱門底下衝進來，聲音好大。",
+              "en": "The waves rush in under the stone arch. So loud."
             },
             {
               "who": "旁白",
-              "zh": "岩邊濕滑、浪大，不要爬到崖邊拍照。"
+              "zh": "岩邊濕滑、浪大，不要爬到崖邊拍照。",
+              "en": "The rocks are slippery and the waves are big. Don't climb to the cliff edge for photos."
             }
           ]
         }
@@ -630,7 +734,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "東清灣北邊的岬角，有一個很大的海蝕拱門。"
+        "fromEn": "Villager",
+        "zh": "東清灣北邊的岬角，有一個很大的海蝕拱門。",
+        "en": "On the cape north of Dongqing Bay, there's a huge sea arch."
       },
       "playable": true
     },
@@ -641,7 +747,7 @@
       "village": null,
       "name": {
         "zh": "拍一線天",
-        "en": ""
+        "en": "Photograph Sky Crack"
       },
       "time": "day",
       "seasons": [],
@@ -655,10 +761,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
+        "unlockEn": "Album +1 (East coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -668,10 +778,12 @@
           "spot": "skyline_gap",
           "r": 10,
           "text": "旅人用相機拍下：拍一線天",
+          "textEn": "The traveller photographs: Sky Crack",
           "lines": [
             {
               "who": "@t",
-              "zh": "兩邊的岩壁好高，中間只剩一條天空。"
+              "zh": "兩邊的岩壁好高，中間只剩一條天空。",
+              "en": "The rock walls on both sides are so high — only a strip of sky is left in between."
             }
           ]
         }
@@ -679,7 +791,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "東岸有個地方，兩片岩壁中間只看得到一線天空。"
+        "fromEn": "Villager",
+        "zh": "東岸有個地方，兩片岩壁中間只看得到一線天空。",
+        "en": "There's a spot on the east coast where you only see a thin line of sky between two rock walls."
       },
       "playable": true
     },
@@ -690,7 +804,7 @@
       "village": null,
       "name": {
         "zh": "東清灣日出",
-        "en": ""
+        "en": "Sunrise at Dongqing Bay"
       },
       "time": "day",
       "seasons": [],
@@ -703,11 +817,16 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "清晨；飛魚季畫面不能有拼板舟",
+        "seasonEn": "Dawn; no plank boats in the shot during flying fish season",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
-        "kind": "時段"
+        "unlockEn": "Album +1 (East coast)",
+        "kind": "時段",
+        "kindEn": "Time of day"
       },
       "req": "Q04",
       "steps": [
@@ -716,14 +835,17 @@
           "spot": "iranmeylek_beach",
           "r": 12,
           "text": "旅人在東清灣拍日出",
+          "textEn": "The traveller photographs the sunrise at Dongqing Bay",
           "lines": [
             {
               "who": "@t",
-              "zh": "太陽從海面升起來了，整個海灣都是金色的。"
+              "zh": "太陽從海面升起來了，整個海灣都是金色的。",
+              "en": "The sun is rising from the sea. The whole bay is golden."
             },
             {
               "who": "旁白",
-              "zh": "飛魚季的清晨，灘頭的船和準備出海的人不入鏡；只拍海和天空。"
+              "zh": "飛魚季的清晨，灘頭的船和準備出海的人不入鏡；只拍海和天空。",
+              "en": "On flying fish season mornings, the boats on the beach and the people getting ready for sea stay out of the shot. Only the sea and sky."
             }
           ]
         }
@@ -731,7 +853,9 @@
       "hint": {
         "tier": "vague",
         "from": "東清",
-        "zh": "東清灣是島上最早看到日出的地方之一。天剛亮的時候去。"
+        "fromEn": "Iranmeylek",
+        "zh": "東清灣是島上最早看到日出的地方之一。天剛亮的時候去。",
+        "en": "Dongqing Bay is one of the first places on the island to see the sunrise. Go at first light."
       },
       "playable": true
     },
@@ -742,7 +866,7 @@
       "village": null,
       "name": {
         "zh": "拍鋼盔岩",
-        "en": ""
+        "en": "Photograph Helmet Rock"
       },
       "time": "day",
       "seasons": [],
@@ -756,10 +880,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
+        "unlockEn": "Album +1 (East coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -769,14 +897,17 @@
           "spot": "helmet_rock",
           "r": 12,
           "text": "旅人用相機拍下：拍鋼盔岩",
+          "textEn": "The traveller photographs: Helmet Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "圓圓的頂，真的像一頂鋼盔。"
+              "zh": "圓圓的頂，真的像一頂鋼盔。",
+              "en": "A round top — it really looks like a helmet."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -784,7 +915,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "野銀往南的路邊，有一塊圓頂的大岩石。"
+        "fromEn": "Villager",
+        "zh": "野銀往南的路邊，有一塊圓頂的大岩石。",
+        "en": "On the road south of Ivalino, there's a big round-topped rock."
       },
       "playable": true
     },
@@ -795,7 +928,7 @@
       "village": null,
       "name": {
         "zh": "拍象鼻岩",
-        "en": ""
+        "en": "Photograph Elephant Trunk Rock"
       },
       "time": "day",
       "seasons": [],
@@ -809,10 +942,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（東岸）",
+        "unlockEn": "Album +1 (East coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -822,14 +959,17 @@
           "spot": "elephant_rock",
           "r": 12,
           "text": "旅人用相機拍下：拍象鼻岩",
+          "textEn": "The traveller photographs: Elephant Trunk Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "一節一節的岩柱，像大象把鼻子伸進海裡喝水。"
+              "zh": "一節一節的岩柱，像大象把鼻子伸進海裡喝水。",
+              "en": "A column of rock, section by section, like an elephant dipping its trunk into the sea to drink."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -837,7 +977,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "東南岸有一塊岩石，像大象在海邊喝水。"
+        "fromEn": "Villager",
+        "zh": "東南岸有一塊岩石，像大象在海邊喝水。",
+        "en": "On the southeast coast, there's a rock that looks like an elephant drinking by the sea."
       },
       "playable": true
     },
@@ -848,7 +990,7 @@
       "village": null,
       "name": {
         "zh": "拍蘭嶼瀑布",
-        "en": ""
+        "en": "Photograph Lanyu Waterfall"
       },
       "time": "day",
       "seasons": [],
@@ -862,10 +1004,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（南岸）",
+        "unlockEn": "Album +1 (South coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -875,14 +1021,17 @@
           "spot": "lanyu_falls",
           "r": 8,
           "text": "旅人用相機拍下：拍蘭嶼瀑布",
+          "textEn": "The traveller photographs: Lanyu Waterfall",
           "lines": [
             {
               "who": "@t",
-              "zh": "水從岩壁上細細地流下來，好涼快。"
+              "zh": "水從岩壁上細細地流下來，好涼快。",
+              "en": "Water trickles down the rock wall. So cool and fresh."
             },
             {
               "who": "旁白",
-              "zh": "水邊的石頭很滑，站在路邊拍就好。"
+              "zh": "水邊的石頭很滑，站在路邊拍就好。",
+              "en": "The rocks by the water are slippery. Just shoot from the roadside."
             }
           ]
         }
@@ -890,7 +1039,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "南邊的路旁有一道小瀑布，雨後水比較多。"
+        "fromEn": "Villager",
+        "zh": "南邊的路旁有一道小瀑布，雨後水比較多。",
+        "en": "There's a small waterfall by the road in the south. More water after rain."
       },
       "playable": true
     },
@@ -901,7 +1052,7 @@
       "village": null,
       "name": {
         "zh": "拍龍頭岩",
-        "en": ""
+        "en": "Photograph Dragon Head Rock"
       },
       "time": "day",
       "seasons": [],
@@ -915,10 +1066,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（南岸）",
+        "unlockEn": "Album +1 (South coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -928,14 +1083,17 @@
           "spot": "dragonhead_rock",
           "r": 14,
           "text": "旅人拍下龍頭岩和外海的小蘭嶼",
+          "textEn": "The traveller photographs Dragon Head Rock and Little Orchid Island out at sea",
           "lines": [
             {
               "who": "@t",
-              "zh": "從這裡可以看到外海的小蘭嶼。"
+              "zh": "從這裡可以看到外海的小蘭嶼。",
+              "en": "From here you can see Little Orchid Island out at sea."
             },
             {
               "who": "旁白",
               "zh": "小蘭嶼（Jimagaod）是族人重要的漁場，男人去那裡捕魚是辛苦又慎重的事。遊戲裡只遠望。",
+              "en": "Little Orchid Island (Jimagaod) is an important fishing ground for the Tao people. For the men, fishing there is hard and serious work. In the game you only look from afar.",
               "tao": "Jimagaod"
             }
           ],
@@ -949,7 +1107,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "南岸的龍頭岩旁邊，天氣好時看得到小蘭嶼。"
+        "fromEn": "Villager",
+        "zh": "南岸的龍頭岩旁邊，天氣好時看得到小蘭嶼。",
+        "en": "Next to Dragon Head Rock on the south coast, you can see Little Orchid Island on clear days."
       },
       "playable": true
     },
@@ -960,7 +1120,7 @@
       "village": null,
       "name": {
         "zh": "大天池（只遠拍）",
-        "en": ""
+        "en": "Big Heaven Lake (from afar only)"
       },
       "time": "day",
       "seasons": [],
@@ -974,11 +1134,17 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04 且 B1",
+        "preEn": "Q04 and B1",
         "unlock": "相簿＋1（湖泊與高地）",
-        "kind": "可能是神聖地：先 B1、遠拍"
+        "unlockEn": "Album +1 (Lakes and highlands)",
+        "kind": "可能是神聖地：先 B1、遠拍",
+        "kindEn": "May be sacred: B1 first, photo from afar"
       },
       "req": {
         "all": [
@@ -992,14 +1158,17 @@
           "spot": "big_lake_view",
           "r": 8,
           "text": "到大天池的觀景點，停在外面",
+          "textEn": "Go to the Big Heaven Lake viewpoint and stay outside",
           "lines": [
             {
               "who": "旁白",
-              "zh": "大天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。"
+              "zh": "大天池可能是族人敬重的地方。只在觀景點遠遠地看：不走近、不觸碰、不撿東西，也不在那裡大聲笑鬧。",
+              "en": "Big Heaven Lake may be a place the Tao people hold in respect. Look only from the viewpoint, from afar: don't go near, don't touch, don't pick anything up, and don't laugh loudly there."
             },
             {
               "who": "@t",
-              "zh": "我在這裡看就好，不再往前走。"
+              "zh": "我在這裡看就好，不再往前走。",
+              "en": "I'll just look from here and not go any closer."
             }
           ],
           "actor": [
@@ -1011,14 +1180,17 @@
           "spot": "big_lake_view",
           "r": 8,
           "text": "旅人在觀景點遠拍大天池（不靠近）",
+          "textEn": "The traveller photographs Big Heaven Lake from the viewpoint (without going near)",
           "lines": [
             {
               "who": "@t",
-              "zh": "山裡的火山口湖，水面像一面鏡子。"
+              "zh": "山裡的火山口湖，水面像一面鏡子。",
+              "en": "A crater lake in the mountains. The water is like a mirror."
             },
             {
               "who": "旁白",
-              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。"
+              "zh": "相簿的文化筆記：只在外面遠拍，沒有走近。",
+              "en": "Album culture note: photographed only from outside, from afar, without going near."
             }
           ],
           "actor": [
@@ -1034,7 +1206,9 @@
       "hint": {
         "tier": "direct",
         "from": "部落文化工作者",
-        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍大天池。"
+        "fromEn": "Village culture worker",
+        "zh": "聽過聖地的距離規矩之後，可以從步道的觀景點遠拍大天池。",
+        "en": "After hearing the distance rules for sacred places, you can photograph Big Heaven Lake from the trail viewpoint."
       },
       "playable": true,
       "distanceOnly": true,
@@ -1049,7 +1223,7 @@
       "village": null,
       "name": {
         "zh": "拍老人岩",
-        "en": ""
+        "en": "Photograph Old Man Rock"
       },
       "time": "day",
       "seasons": [],
@@ -1063,10 +1237,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（南岸）",
+        "unlockEn": "Album +1 (South coast)",
         "kind": ""
       },
       "req": "Q04",
@@ -1076,14 +1254,17 @@
           "spot": "old_man_rock",
           "r": 12,
           "text": "旅人用相機拍下：拍老人岩",
+          "textEn": "The traveller photographs: Old Man Rock",
           "lines": [
             {
               "who": "@t",
-              "zh": "像一位坐在海邊、靜靜看海的老人。"
+              "zh": "像一位坐在海邊、靜靜看海的老人。",
+              "en": "Like an old man sitting by the shore, quietly watching the sea."
             },
             {
               "who": "旁白",
-              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。"
+              "zh": "這個名字是觀光地圖上看形狀取的；族人對這裡有自己的名字和故事，還要請族人告訴我們。",
+              "en": "This name comes from tourist maps, based on its shape. The Tao people have their own name and story for this place — we still need them to tell us."
             }
           ]
         }
@@ -1091,7 +1272,9 @@
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "南岸有塊岩石，遠看像一位老人坐著看海。"
+        "fromEn": "Villager",
+        "zh": "南岸有塊岩石，遠看像一位老人坐著看海。",
+        "en": "On the south coast there's a rock that, from afar, looks like an old man sitting and watching the sea."
       },
       "playable": true
     },
@@ -1102,7 +1285,7 @@
       "village": null,
       "name": {
         "zh": "青青草原的黃昏",
-        "en": ""
+        "en": "Dusk on Qingqing Prairie"
       },
       "time": "day",
       "seasons": [],
@@ -1115,11 +1298,16 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "黃昏",
+        "seasonEn": "Dusk",
         "pre": "Q04",
         "unlock": "相簿＋1（南岸）",
-        "kind": "時段"
+        "unlockEn": "Album +1 (South coast)",
+        "kind": "時段",
+        "kindEn": "Time of day"
       },
       "req": "Q04",
       "steps": [
@@ -1130,13 +1318,16 @@
           "actor": [
             "t"
           ],
-          "text": "旅人用相機拍下：青青草原的黃昏"
+          "text": "旅人用相機拍下：青青草原的黃昏",
+          "textEn": "The traveller photographs: Dusk on Qingqing Prairie"
         }
       ],
       "hint": {
         "tier": "vague",
         "from": "村民",
-        "zh": "黃昏的時候去青青草原看看。"
+        "fromEn": "Villager",
+        "zh": "黃昏的時候去青青草原看看。",
+        "en": "Go to Qingqing Prairie at dusk."
       },
       "playable": true
     },
@@ -1147,7 +1338,7 @@
       "village": null,
       "name": {
         "zh": "八代灣（飛魚季只能在部落外遠拍）",
-        "en": ""
+        "en": "Badai Bay (in flying fish season, only from outside the village)"
       },
       "time": "any",
       "seasons": [],
@@ -1157,11 +1348,16 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年；飛魚季只能遠拍",
+        "seasonEn": "All year; only from afar during flying fish season",
         "pre": "Q04",
         "unlock": "相簿＋1（南岸）",
-        "kind": "季節限制拍法"
+        "unlockEn": "Album +1 (South coast)",
+        "kind": "季節限制拍法",
+        "kindEn": "Season limits how you photograph"
       },
       "req": "Q04",
       "steps": [
@@ -1170,14 +1366,17 @@
           "spot": "badai_view",
           "r": 12,
           "text": "旅人在部落外的路邊遠拍八代灣",
+          "textEn": "The traveller photographs Badai Bay from the roadside outside the village",
           "lines": [
             {
               "who": "@t",
-              "zh": "海灣從漁人一路彎到紅頭，好長的一片海灘。"
+              "zh": "海灣從漁人一路彎到紅頭，好長的一片海灘。",
+              "en": "The bay curves all the way from Iratay to Imorod. Such a long beach."
             },
             {
               "who": "旁白",
-              "zh": "飛魚季時，灘頭屬於出海的人。只在部落外的路邊遠拍，不拍灘頭上的人和船。"
+              "zh": "飛魚季時，灘頭屬於出海的人。只在部落外的路邊遠拍，不拍灘頭上的人和船。",
+              "en": "In flying fish season, the beach belongs to those going to sea. Shoot only from the roadside outside the village — not the people or boats on the beach."
             }
           ]
         }
@@ -1185,7 +1384,9 @@
       "hint": {
         "tier": "vague",
         "from": "漁人",
-        "zh": "漁人到紅頭之間的路上，可以遠遠看到整個八代灣。"
+        "fromEn": "Iratay",
+        "zh": "漁人到紅頭之間的路上，可以遠遠看到整個八代灣。",
+        "en": "On the road between Iratay and Imorod, you can see all of Badai Bay from afar."
       },
       "playable": true,
       "distanceOnly": true
@@ -1197,7 +1398,7 @@
       "village": null,
       "name": {
         "zh": "拍饅頭岩",
-        "en": ""
+        "en": "Photograph Mantou Rock"
       },
       "time": "day",
       "seasons": [],
@@ -1211,10 +1412,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（西岸與港口）",
+        "unlockEn": "Album +1 (West coast and harbour)",
         "kind": ""
       },
       "req": "Q04",
@@ -1224,18 +1429,22 @@
           "spot": "hutou_slope",
           "r": 12,
           "text": "旅人在虎頭坡遠拍饅頭岩",
+          "textEn": "The traveller photographs Mantou Rock from Hutou Slope",
           "lines": [
             {
               "who": "@t",
-              "zh": "從虎頭坡往北看，圓圓的那座就是饅頭岩。"
+              "zh": "從虎頭坡往北看，圓圓的那座就是饅頭岩。",
+              "en": "Looking north from Hutou Slope, the round one is Mantou Rock."
             },
             {
               "who": "旁白",
-              "zh": "饅頭岩一帶是族人敬而遠之的地方。站在虎頭坡遠看就好，不要往那邊走。"
+              "zh": "饅頭岩一帶是族人敬而遠之的地方。站在虎頭坡遠看就好，不要往那邊走。",
+              "en": "The Mantou Rock area is a place the Tao people respect and keep away from. Just look from Hutou Slope — don't walk over there."
             },
             {
               "who": "@t",
-              "zh": "旁邊好多山羊，牠們一點都不怕人。"
+              "zh": "旁邊好多山羊，牠們一點都不怕人。",
+              "en": "So many goats around. They're not afraid of people at all."
             }
           ]
         }
@@ -1243,7 +1452,9 @@
       "hint": {
         "tier": "vague",
         "from": "椰油",
-        "zh": "開元港往南的虎頭坡上有個大涼亭，從那裡看得到饅頭岩。"
+        "fromEn": "Yayo",
+        "zh": "開元港往南的虎頭坡上有個大涼亭，從那裡看得到饅頭岩。",
+        "en": "There's a big pavilion on Hutou Slope south of Kaiyuan Harbour. You can see Mantou Rock from there."
       },
       "playable": true,
       "distanceOnly": true,
@@ -1258,7 +1469,7 @@
       "village": null,
       "name": {
         "zh": "拍開元港",
-        "en": ""
+        "en": "Photograph Kaiyuan Harbour"
       },
       "time": "day",
       "seasons": [],
@@ -1272,10 +1483,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（西岸與港口）",
+        "unlockEn": "Album +1 (West coast and harbour)",
         "kind": ""
       },
       "req": "Q04",
@@ -1287,13 +1502,16 @@
           "actor": [
             "t"
           ],
-          "text": "旅人用相機拍下：開元港"
+          "text": "旅人用相機拍下：開元港",
+          "textEn": "The traveller photographs: Kaiyuan Harbour"
         }
       ],
       "hint": {
         "tier": "direct",
         "from": "港務人員",
-        "zh": "白天在開元港就能拍。"
+        "fromEn": "Harbour staff",
+        "zh": "白天在開元港就能拍。",
+        "en": "You can shoot it at Kaiyuan Harbour in the daytime."
       },
       "playable": true
     },
@@ -1304,7 +1522,7 @@
       "village": null,
       "name": {
         "zh": "拍蘭嶼航空站（只拍景）",
-        "en": ""
+        "en": "Photograph Lanyu Airport (scenery only)"
       },
       "time": "day",
       "seasons": [],
@@ -1318,10 +1536,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（西岸與港口）",
+        "unlockEn": "Album +1 (West coast and harbour)",
         "kind": ""
       },
       "req": "Q04",
@@ -1333,13 +1555,16 @@
           "actor": [
             "t"
           ],
-          "text": "旅人用相機拍下：蘭嶼航空站（只拍景）"
+          "text": "旅人用相機拍下：蘭嶼航空站（只拍景）",
+          "textEn": "The traveller photographs: Lanyu Airport (scenery only)"
         }
       ],
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "機場在漁人部落旁，只拍景，不拍旅客。"
+        "fromEn": "Tao villagers",
+        "zh": "機場在漁人部落旁，只拍景，不拍旅客。",
+        "en": "The airport is next to Iratay village. Scenery only — no photos of passengers."
       },
       "playable": true
     },
@@ -1350,7 +1575,7 @@
       "village": null,
       "name": {
         "zh": "從蘭嶼氣象觀測站俯瞰",
-        "en": ""
+        "en": "View down from the Lanyu Weather Station"
       },
       "time": "day",
       "seasons": [],
@@ -1364,10 +1589,14 @@
       "n": 1,
       "text": {
         "who": "旅人",
+        "whoEn": "Traveller",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "全年（白天）",
+        "seasonEn": "All year (day)",
         "pre": "Q04",
         "unlock": "相簿＋1（湖泊與高地）",
+        "unlockEn": "Album +1 (Lakes and highlands)",
         "kind": ""
       },
       "req": "Q04",
@@ -1377,14 +1606,17 @@
           "spot": "weather_station",
           "r": 10,
           "text": "旅人用相機拍下：從蘭嶼氣象觀測站俯瞰",
+          "textEn": "The traveller photographs: View down from the Lanyu Weather Station",
           "lines": [
             {
               "who": "@t",
-              "zh": "整個島的山和海都在腳下，雲從山頭慢慢飄過去。"
+              "zh": "整個島的山和海都在腳下，雲從山頭慢慢飄過去。",
+              "en": "All the island's mountains and sea are below you, and clouds drift slowly over the peaks."
             },
             {
               "who": "旁白",
-              "zh": "山上天氣變得快，起霧或下雨就早點下山。"
+              "zh": "山上天氣變得快，起霧或下雨就早點下山。",
+              "en": "The weather changes fast up the mountain. If fog or rain comes in, head down early."
             }
           ]
         }
@@ -1392,7 +1624,9 @@
       "hint": {
         "tier": "vague",
         "from": "紅頭",
-        "zh": "從紅頭往山上的路一直騎，盡頭是氣象站。"
+        "fromEn": "Imorod",
+        "zh": "從紅頭往山上的路一直騎，盡頭是氣象站。",
+        "en": "Keep riding up the mountain road from Imorod. The weather station is at the end."
       },
       "playable": true,
       "song": "s03"
@@ -1404,7 +1638,7 @@
       "village": null,
       "name": {
         "zh": "野銀傳統家屋（先問屋主）",
-        "en": ""
+        "en": "Ivalino traditional houses (ask the owner first)"
       },
       "time": "any",
       "seasons": [],
@@ -1418,11 +1652,17 @@
       ],
       "text": {
         "who": "旅人；族人陪同詢問",
+        "whoEn": "Traveller; a Tao member comes along to ask",
         "coop": "雙人：旅人＋任一族人",
+        "coopEn": "Pair: Traveller + any Tao member",
         "season": "全年",
+        "seasonEn": "All year",
         "pre": "Q04 且 屋主同意",
+        "preEn": "Q04 and the owner agrees",
         "unlock": "相簿＋1、「請先詢問」學習卡",
-        "kind": "同意"
+        "unlockEn": "Album +1, \"Ask first\" learning card",
+        "kind": "同意",
+        "kindEn": "Permission"
       },
       "req": "Q04",
       "steps": [
@@ -1430,14 +1670,17 @@
           "kind": "talk",
           "npc": "elder_ivalino",
           "text": "旅人和族人一起，先問野銀的長輩可不可以拍家屋",
+          "textEn": "The traveller and a Tao member first ask the Ivalino elder if it's okay to photograph the houses",
           "lines": [
             {
               "who": "@t",
-              "zh": "請問可以拍您家的房子嗎？只拍屋頂和石牆，不拍人。"
+              "zh": "請問可以拍您家的房子嗎？只拍屋頂和石牆，不拍人。",
+              "en": "May I take a photo of your house? Just the roof and stone walls, no people."
             },
             {
               "who": "@npc",
-              "zh": "你們有先問，很好。從路上拍就好，不要走進屋子，也不要拍在休息的人。"
+              "zh": "你們有先問，很好。從路上拍就好，不要走進屋子，也不要拍在休息的人。",
+              "en": "Good, you asked first. Shoot from the road. Don't go into the house, and don't photograph people resting."
             }
           ],
           "actor": [
@@ -1453,10 +1696,12 @@
           "spot": "ivalino",
           "r": 12,
           "text": "旅人從路上遠拍野銀的傳統家屋",
+          "textEn": "The traveller photographs Ivalino's traditional houses from the road",
           "lines": [
             {
               "who": "@t",
-              "zh": "屋頂低低的，貼著地面，好像在躲海風。"
+              "zh": "屋頂低低的，貼著地面，好像在躲海風。",
+              "en": "The roofs are low and close to the ground, as if hiding from the sea wind."
             }
           ],
           "actor": [
@@ -1471,10 +1716,12 @@
           "kind": "talk",
           "npc": "elder_ivalino",
           "text": "向野銀的長輩道謝",
+          "textEn": "Thank the Ivalino elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "謝謝你們先問。房子是一家人住的地方，不是給人參觀的。"
+              "zh": "謝謝你們先問。房子是一家人住的地方，不是給人參觀的。",
+              "en": "Thank you for asking first. A house is where a family lives, not something to tour."
             }
           ],
           "actor": [
@@ -1487,6 +1734,10 @@
             "toast": [
               "學習卡「請先詢問」",
               "拍人、拍家屋之前，先問一聲。"
+            ],
+            "toastEn": [
+              "Learning card \"Ask first\"",
+              "Ask before photographing people or houses."
             ]
           }
         }
@@ -1494,7 +1745,9 @@
       "hint": {
         "tier": "direct",
         "from": "主人家",
-        "zh": "想拍野銀的傳統家屋，先請族人陪你去問屋主。"
+        "fromEn": "Host family",
+        "zh": "想拍野銀的傳統家屋，先請族人陪你去問屋主。",
+        "en": "To photograph Ivalino's traditional houses, first ask a Tao member to come with you to ask the owner."
       },
       "playable": true,
       "distanceOnly": true
@@ -1506,7 +1759,7 @@
       "village": null,
       "name": {
         "zh": "朗島灣的拼板舟（先問船主）",
-        "en": ""
+        "en": "Plank boats at Iraraley Bay (ask the owner first)"
       },
       "time": "any",
       "seasons": [
@@ -1522,11 +1775,17 @@
       ],
       "text": {
         "who": "旅人；族男陪同詢問",
+        "whoEn": "Traveller; the Tao man comes along to ask",
         "coop": "雙人：旅人＋族男",
+        "coopEn": "Pair: Traveller + Tao man",
         "season": "非飛魚季（當地）",
+        "seasonEn": "Outside flying fish season (local)",
         "pre": "Q04 且 船主同意",
+        "preEn": "Q04 and the boat owner agrees",
         "unlock": "相簿＋1",
-        "kind": "季節＋同意"
+        "unlockEn": "Album +1",
+        "kind": "季節＋同意",
+        "kindEn": "Season + permission"
       },
       "req": "Q04",
       "steps": [
@@ -1534,14 +1793,17 @@
           "kind": "talk",
           "npc": "elder_iraraley",
           "text": "族男陪旅人，先問朗島的長輩可不可以拍船",
+          "textEn": "The Tao man goes with the traveller to ask the Iraraley elder if it's okay to photograph the boat",
           "lines": [
             {
               "who": "@m",
-              "zh": "長輩，我的朋友想拍您的船，可以嗎？"
+              "zh": "長輩，我的朋友想拍您的船，可以嗎？",
+              "en": "Elder, my friend would like to photograph your boat. Is that okay?"
             },
             {
               "who": "@npc",
-              "zh": "現在不是飛魚季，可以拍。不要碰船、不要坐上去，站遠一點拍。"
+              "zh": "現在不是飛魚季，可以拍。不要碰船、不要坐上去，站遠一點拍。",
+              "en": "It's not flying fish season now, so you can. Don't touch the boat or sit in it. Stand back a bit."
             }
           ],
           "actor": [
@@ -1557,10 +1819,12 @@
           "spot": "iraraley",
           "r": 12,
           "text": "旅人在朗島灣遠拍拼板舟",
+          "textEn": "The traveller photographs the plank boats at Iraraley Bay from afar",
           "lines": [
             {
               "who": "@t",
-              "zh": "紅、白、黑三種顏色，船頭翹得好高。"
+              "zh": "紅、白、黑三種顏色，船頭翹得好高。",
+              "en": "Red, white and black, with the prow curving up so high."
             }
           ],
           "actor": [
@@ -1575,10 +1839,12 @@
           "kind": "talk",
           "npc": "elder_iraraley",
           "text": "向朗島的長輩道謝",
+          "textEn": "Thank the Iraraley elder",
           "lines": [
             {
               "who": "@npc",
-              "zh": "船是一家人的，也是船組的。你們懂得先問，很好。"
+              "zh": "船是一家人的，也是船組的。你們懂得先問，很好。",
+              "en": "A boat belongs to a family and to its crew. Good of you to ask first."
             }
           ],
           "actor": [
@@ -1592,7 +1858,9 @@
       "hint": {
         "tier": "direct",
         "from": "朗島",
-        "zh": "非飛魚季時，請族男陪你去問船主，才能拍朗島灣的拼板舟。"
+        "fromEn": "Iraraley",
+        "zh": "非飛魚季時，請族男陪你去問船主，才能拍朗島灣的拼板舟。",
+        "en": "Outside flying fish season, ask the Tao man to come with you to ask the boat owner before photographing the plank boats at Iraraley Bay."
       },
       "playable": true,
       "distanceOnly": true
@@ -1604,7 +1872,7 @@
       "village": null,
       "name": {
         "zh": "母雞岩浮潛",
-        "en": ""
+        "en": "Snorkelling at Hen Rock"
       },
       "time": "day",
       "seasons": [
@@ -1621,11 +1889,17 @@
       "n": 1,
       "text": {
         "who": "任一人（目前操控的隊員）",
+        "whoEn": "Anyone (the member you're controlling)",
         "coop": "單人",
+        "coopEn": "Solo",
         "season": "當地非飛魚季；夏季海況穩定的白天",
+        "seasonEn": "Local off-season; summer days with calm seas",
         "pre": "Q02 且 S3（救生衣）",
+        "preEn": "Q02 and S3 (life jacket)",
         "unlock": "水下美景插畫 A（畫面裡是當下操控的隊員）、U2",
-        "kind": "潛點（觀光，誰都能去）＋季節＋道具"
+        "unlockEn": "Underwater scene A (shows the member you're controlling), U2",
+        "kind": "潛點（觀光，誰都能去）＋季節＋道具",
+        "kindEn": "Dive spot (tourist, anyone can go) + season + item"
       },
       "req": {
         "all": [
@@ -1640,20 +1914,27 @@
           "r": 10,
           "dive": "A",
           "text": "到母雞岩下方的海灣浮潛（誰都可以，穿好救生衣）",
+          "textEn": "Snorkel in the cove below Hen Rock (anyone can, wear a life jacket)",
           "lines": [
             {
               "who": "@me",
-              "zh": "水好清，往下看就是珊瑚，小丑魚在裡面鑽來鑽去。"
+              "zh": "水好清，往下看就是珊瑚，小丑魚在裡面鑽來鑽去。",
+              "en": "The water's so clear. Looking down, there's coral, and clownfish darting in and out."
             },
             {
               "who": "旁白",
-              "zh": "這裡是現代的觀光浮潛點，誰都能來。飛魚季時部落灘頭不能浮潛，所以只在非飛魚季開放。"
+              "zh": "這裡是現代的觀光浮潛點，誰都能來。飛魚季時部落灘頭不能浮潛，所以只在非飛魚季開放。",
+              "en": "This is a modern tourist snorkelling spot — anyone can come. No snorkelling at the village beaches in flying fish season, so it's only open outside the season."
             }
           ],
           "gives": {
             "toast": [
               "水下美景",
               "已收進「相簿與水下」。"
+            ],
+            "toastEn": [
+              "Underwater scene",
+              "Added to \"Album & underwater\"."
             ]
           }
         }
@@ -1661,7 +1942,9 @@
       "hint": {
         "tier": "direct",
         "from": "租車行老闆",
-        "zh": "母雞岩下方的海灣很適合浮潛。記得先借救生衣，飛魚季時不能下水。"
+        "fromEn": "Scooter rental owner",
+        "zh": "母雞岩下方的海灣很適合浮潛。記得先借救生衣，飛魚季時不能下水。",
+        "en": "The cove below Hen Rock is great for snorkelling. Borrow a life jacket first. No swimming in flying fish season."
       },
       "playable": true,
       "ground": "dive"
@@ -1673,7 +1956,7 @@
       "village": null,
       "name": {
         "zh": "椰油港斷崖：跟潛水教練做淺水氣瓶潛水",
-        "en": ""
+        "en": "Yayo Harbour drop-off: a shallow scuba dive with the dive coach"
       },
       "time": "day",
       "seasons": [
@@ -1690,11 +1973,17 @@
       "n": 1,
       "text": {
         "who": "任一人（目前操控的隊員）",
+        "whoEn": "Anyone (the member you're controlling)",
         "coop": "單人（NPC 潛水教練陪同）",
+        "coopEn": "Solo (with the NPC dive coach)",
         "season": "當地非飛魚季；白天",
+        "seasonEn": "Local off-season; daytime",
         "pre": "U1 且 第一次見到潛水教練",
+        "preEn": "U1 and first meeting with the dive coach",
         "unlock": "水下美景插畫 B（畫面裡是當下操控的隊員）",
-        "kind": "潛點（觀光，誰都能去）＋AND＋季節"
+        "unlockEn": "Underwater scene B (shows the member you're controlling)",
+        "kind": "潛點（觀光，誰都能去）＋AND＋季節",
+        "kindEn": "Dive spot (tourist, anyone can go) + AND + season"
       },
       "req": {
         "all": [
@@ -1709,14 +1998,17 @@
           "kind": "talk",
           "npc": "dive_coach",
           "text": "在開元港旁的潛水店，聽潛水教練說明",
+          "textEn": "At the dive shop by Kaiyuan Harbour, listen to the dive coach explain",
           "lines": [
             {
               "who": "@npc",
-              "zh": "我是這裡的潛水教練，也是在島上長大的。今天帶你在椰油港外面的平台看看。"
+              "zh": "我是這裡的潛水教練，也是在島上長大的。今天帶你在椰油港外面的平台看看。",
+              "en": "I'm the dive coach here, and I grew up on the island. Today I'll take you to the ledge outside Yayo Harbour."
             },
             {
               "who": "@npc",
-              "zh": "我們只停在平台邊緣，不往斷崖下潛。飛魚季的時候椰油斷層也不能潛，要等季節過了。"
+              "zh": "我們只停在平台邊緣，不往斷崖下潛。飛魚季的時候椰油斷層也不能潛，要等季節過了。",
+              "en": "We'll stay at the edge of the ledge and won't go down the drop-off. No diving at the Yayo drop-off in flying fish season either — wait until it's over."
             }
           ]
         },
@@ -1726,16 +2018,22 @@
           "r": 10,
           "dive": "B",
           "text": "跟著教練到椰油港外的平台邊緣做淺水氣瓶潛水",
+          "textEn": "Follow the coach to the ledge outside Yayo Harbour for a shallow scuba dive",
           "lines": [
             {
               "who": "@me",
-              "zh": "平台外面一下子就變成深藍色，一大群魚從外海游過去。"
+              "zh": "平台外面一下子就變成深藍色，一大群魚從外海游過去。",
+              "en": "Past the ledge, the water suddenly turns deep blue, and a big school of fish swims by from the open sea."
             }
           ],
           "gives": {
             "toast": [
               "水下美景",
               "已收進「相簿與水下」。"
+            ],
+            "toastEn": [
+              "Underwater scene",
+              "Added to \"Album & underwater\"."
             ]
           }
         }
@@ -1743,7 +2041,9 @@
       "hint": {
         "tier": "direct",
         "from": "族人",
-        "zh": "開元港旁邊的潛水店有位族人教練，先去找他聊聊。"
+        "fromEn": "Tao villagers",
+        "zh": "開元港旁邊的潛水店有位族人教練，先去找他聊聊。",
+        "en": "There's a Tao dive coach at the dive shop by Kaiyuan Harbour. Go have a chat with him first."
       },
       "playable": true,
       "ground": "dive"

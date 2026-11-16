@@ -82,8 +82,8 @@ try {
     });
   };
   out.scenes.boot = await mem();
-  await page.waitForSelector('#btn-origin-ivalino', { visible: true, timeout: 60000 });
-  await page.click('#btn-origin-ivalino'); await page.click('#btn-gender-m'); await page.click('#origin-go');
+  await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 60000 });
+  await page.select('#sel-origin-m', 'ivalino'); await page.select('#sel-origin-f', 'ivalino'); await page.click('#btn-gender-m'); await page.click('#origin-go');
   await page.waitForFunction(() => window.__TAO_RPG__.state.started, { timeout: 60000, polling: 250 });
   for (let i = 0; i < 40 && (await ev(() => window.__TAO_RPG__.mode())) === 'dialogue'; i++) { await ev(() => window.__TAO_RPG__.advanceDialogue()); await sleep(100); }
   await ev(() => { const g = window.__TAO_RPG__; g.closeAll(); g.setTime('day'); });

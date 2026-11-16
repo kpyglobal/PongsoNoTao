@@ -20,6 +20,53 @@ const CSS = `
 type Ch = 'music' | 'sfx';
 const ON_KEY: Record<Ch, 'musicOn' | 'sfxOn'> = { music: 'musicOn', sfx: 'sfxOn' };
 
+/** Two rows (音樂 / 音效 slider + 開／關), bound to the shared audio settings. Unique `idPrefix` avoids colliding with the HUD panel. */
+export function soundControls(idPrefix: string): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'sound-rows';
+  wrap.innerHTML = `
+    <div class="ap-row"><label for="${idPrefix}-music">音樂</label><input id="${idPrefix}-music" type="range" min="0" max="100" step="5"><button type="button" class="ap-tg" data-ch="music"></button></div>
+    <div class="ap-row"><label for="${idPrefix}-sfx">音效</label><input id="${idPrefix}-sfx" type="range" min="0" max="100" step="5"><button type="button" class="ap-tg" data-ch="sfx"></button></div>`;
+  const slider = (ch: Ch): HTMLInputElement => wrap.querySelector(`#${idPrefix}-${ch}`) as HTMLInputElement;
+  const toggle = (ch: Ch): HTMLButtonElement => wrap.querySelector(`.ap-tg[data-ch=${ch}]`) as HTMLButtonElement;
+  const render = (): void => {
+    // the notebook rebuilds this page each time; a page that is gone stops listening
+    if (wrap.dataset.live === '1' && !wrap.isConnected) { audio.offChange(render); return; }
+    const s = audio.settings;
+    for (const ch of ['music', 'sfx'] as Ch[]) {
+      const on = s[ON_KEY[ch]];
+      slider(ch).value = String(Math.round(s[ch] * 100));
+      slider(ch).setAttribute('aria-valuetext', `${Math.round(s[ch] * 100)}%`);
+      toggle(ch).textContent = on ? '開' : '關';
+      toggle(ch).setAttribute('aria-pressed', String(on));
+      toggle(ch).setAttribute('aria-label', `${ch === 'music' ? '音樂' : '音效'}：${on ? '開' : '關'}`);
+    }
+  };
+  for (const ch of ['music', 'sfx'] as Ch[]) {
+    slider(ch).addEventListener('input', () => {
+      const v = Number(slider(ch).value) / 100;
+      const patch: Partial<AudioSettings> = { [ch]: v, [ON_KEY[ch]]: v > 0 };
+      audio.set(patch);
+    });
+    slider(ch).addEventListener('change', () => {
+      if (ch === 'sfx') {
+        sfxBlipReset();
+        sfxBlip('嘟');
+      }
+    });
+    toggle(ch).addEventListener('click', () => {
+      const on = !audio.settings[ON_KEY[ch]];
+      const patch: Partial<AudioSettings> = { [ON_KEY[ch]]: on };
+      if (on && audio.settings[ch] === 0) patch[ch] = ch === 'music' ? 0.35 : 0.5;
+      audio.set(patch);
+    });
+  }
+  audio.onChange(render);
+  render();
+  wrap.dataset.live = '1';
+  return wrap;
+}
+
 export function mountAudioPanel(): void {
   const host = document.querySelector('.hud-right');
   if (!host || document.getElementById('btn-bgm')) return;

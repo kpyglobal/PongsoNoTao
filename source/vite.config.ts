@@ -1,7 +1,12 @@
 import { defineConfig } from 'vite';
+import { readFileSync } from 'node:fs';
+
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')) as { version: string };
 
 export default defineConfig({
   base: './',
+  // shown on the title screen and in the notebook settings
+  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   server: {
     host: true,
     port: 5173,

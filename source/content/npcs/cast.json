@@ -5,6 +5,7 @@
       "id": "elder_imorod",
       "name": {
         "zh": "紅頭的長輩",
+        "en": "Imorod elder",
         "tao": "Imorod a akey"
       },
       "role": "elder_m",
@@ -13,6 +14,7 @@
         "hunt"
       ],
       "dutyText": "上山（照顧羊群）與山林",
+      "dutyTextEn": "The mountain (goat herding) and forest",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_imorod",
@@ -64,6 +66,7 @@
       "id": "elder_ivalino",
       "name": {
         "zh": "野銀的長輩",
+        "en": "Ivalino elder",
         "tao": "Ivalino a akey"
       },
       "role": "elder_m",
@@ -72,6 +75,7 @@
         "flyingfish"
       ],
       "dutyText": "飛魚季的規矩與漁獲分配",
+      "dutyTextEn": "Flying fish season rules and sharing the catch",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_ivalino",
@@ -109,6 +113,7 @@
       "id": "elder_yayo",
       "name": {
         "zh": "椰油的長輩",
+        "en": "Yayo elder",
         "tao": "Yayo a akey"
       },
       "role": "elder_m",
@@ -118,6 +123,7 @@
         "net"
       ],
       "dutyText": "飛魚季出海、漁網與漁團",
+      "dutyTextEn": "Going to sea in flying fish season, nets and fishing crews",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_yayo",
@@ -156,6 +162,7 @@
       "id": "clinic_nurse",
       "name": {
         "zh": "衛生所護理師",
+        "en": "Health station nurse",
         "tao": ""
       },
       "role": "service",
@@ -195,6 +202,7 @@
       "id": "villager_taro",
       "name": {
         "zh": "水芋田長輩",
+        "en": "Taro field elder",
         "tao": ""
       },
       "role": "elder_f",
@@ -203,6 +211,7 @@
         "taro"
       ],
       "dutyText": "水芋田",
+      "dutyTextEn": "Taro field",
       "recipeKeeper": "rc-boiled-taro",
       "outsider": false,
       "talkable": true,
@@ -243,6 +252,7 @@
       "id": "villager_harbor",
       "name": {
         "zh": "拼板舟漁人",
+        "en": "Plank boat fisher",
         "tao": ""
       },
       "role": "service",
@@ -287,6 +297,7 @@
       "id": "villager_iranmeylek",
       "name": {
         "zh": "東清的族人",
+        "en": "Iranmeylek villager",
         "tao": ""
       },
       "role": "questVillager",
@@ -338,6 +349,7 @@
       "id": "villager_iratay",
       "name": {
         "zh": "漁人的族人",
+        "en": "Iratay villager",
         "tao": ""
       },
       "role": "questVillager",
@@ -379,6 +391,7 @@
       "id": "tourist_a",
       "name": {
         "zh": "剛下飛機的訪客",
+        "en": "Visitor just off the plane",
         "tao": ""
       },
       "role": "ambient",
@@ -423,6 +436,7 @@
       "id": "tourist_b",
       "name": {
         "zh": "東清灣的旅人",
+        "en": "Traveller at Dongqing Bay",
         "tao": ""
       },
       "role": "ambient",
@@ -464,6 +478,7 @@
       "id": "harbor_staff",
       "name": {
         "zh": "開元港港務人員",
+        "en": "Kaiyuan Harbour staff",
         "tao": ""
       },
       "role": "service",
@@ -503,6 +518,7 @@
       "id": "elder_iraraley",
       "name": {
         "zh": "朗島的長輩",
+        "en": "Iraraley elder",
         "tao": "Iraraley a akey"
       },
       "role": "elder_m",
@@ -511,6 +527,7 @@
         "boat"
       ],
       "dutyText": "造拼板舟、上山選木",
+      "dutyTextEn": "Building plank boats and choosing trees on the mountain",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_iraraley",
@@ -548,6 +565,7 @@
       "id": "elder_iranmeylek",
       "name": {
         "zh": "東清的長輩",
+        "en": "Iranmeylek elder",
         "tao": "Iranmeylek a akey"
       },
       "role": "elder_m",
@@ -557,6 +575,7 @@
         "flyingfish"
       ],
       "dutyText": "拼板舟出海、繩索與划槳",
+      "dutyTextEn": "Plank boats at sea, ropes and paddling",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_iranmeylek",
@@ -594,6 +613,7 @@
       "id": "elder_iratay",
       "name": {
         "zh": "漁人的長輩",
+        "en": "Iratay elder",
         "tao": "Iratay a akey"
       },
       "role": "elder_m",
@@ -602,6 +622,7 @@
         "flyingfish"
       ],
       "dutyText": "飛魚季出海與分魚",
+      "dutyTextEn": "Going to sea and sharing fish in flying fish season",
       "outsider": false,
       "talkable": true,
       "dialogue": "dlg_elder_iratay",
@@ -639,6 +660,7 @@
       "id": "teacher_yayo",
       "name": {
         "zh": "族語老師",
+        "en": "Tao language teacher",
         "tao": ""
       },
       "role": "service",
@@ -667,6 +689,7 @@
       "id": "rental_owner",
       "name": {
         "zh": "租車行老闆",
+        "en": "Scooter rental owner",
         "tao": ""
       },
       "role": "service",
@@ -695,6 +718,7 @@
       "id": "shop_yayo",
       "name": {
         "zh": "雜貨店老闆",
+        "en": "Grocery store owner",
         "tao": ""
       },
       "role": "service",
@@ -723,6 +747,7 @@
       "id": "dive_coach",
       "name": {
         "zh": "潛水教練",
+        "en": "Dive coach",
         "tao": ""
       },
       "role": "service",
@@ -751,6 +776,7 @@
       "id": "weaver_elder",
       "name": {
         "zh": "織布的婦女長輩",
+        "en": "Weaving elder",
         "tao": ""
       },
       "role": "elder_f",
@@ -759,6 +785,7 @@
         "weaving"
       ],
       "dutyText": "織布",
+      "dutyTextEn": "Weaving",
       "recipeKeeper": "rc-boiled-flyingfish",
       "outsider": false,
       "talkable": true,
@@ -785,6 +812,7 @@
       "id": "clinic_doctor",
       "name": {
         "zh": "衛生所醫師",
+        "en": "Health station doctor",
         "tao": ""
       },
       "role": "outsider",
@@ -813,6 +841,7 @@
       "id": "nutritionist",
       "name": {
         "zh": "營養師",
+        "en": "Dietitian",
         "tao": ""
       },
       "role": "outsider",
@@ -854,6 +883,7 @@
       "id": "culture_worker",
       "name": {
         "zh": "部落文化工作者",
+        "en": "Village culture worker",
         "tao": ""
       },
       "role": "service",
@@ -894,6 +924,7 @@
       "id": "geologist",
       "name": {
         "zh": "地質學家",
+        "en": "Geologist",
         "tao": ""
       },
       "role": "outsider",
@@ -957,6 +988,7 @@
       "id": "villager_yayo_a",
       "name": {
         "zh": "椰油的族人",
+        "en": "Yayo villager",
         "tao": ""
       },
       "role": "ambient",
@@ -998,6 +1030,7 @@
       "id": "villager_yayo_b",
       "name": {
         "zh": "椰油的青年",
+        "en": "Yayo youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1039,6 +1072,7 @@
       "id": "villager_yayo_c",
       "name": {
         "zh": "椰油的孩子",
+        "en": "Yayo child",
         "tao": ""
       },
       "role": "ambient",
@@ -1079,6 +1113,7 @@
       "id": "villager_iraraley_a",
       "name": {
         "zh": "朗島的族人",
+        "en": "Iraraley villager",
         "tao": ""
       },
       "role": "ambient",
@@ -1120,6 +1155,7 @@
       "id": "villager_iraraley_b",
       "name": {
         "zh": "朗島的青年",
+        "en": "Iraraley youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1161,6 +1197,7 @@
       "id": "villager_iraraley_c",
       "name": {
         "zh": "朗島的孩子",
+        "en": "Iraraley child",
         "tao": ""
       },
       "role": "ambient",
@@ -1201,6 +1238,7 @@
       "id": "villager_iranmeylek_b",
       "name": {
         "zh": "東清的青年",
+        "en": "Iranmeylek youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1242,6 +1280,7 @@
       "id": "villager_iranmeylek_c",
       "name": {
         "zh": "東清的孩子",
+        "en": "Iranmeylek child",
         "tao": ""
       },
       "role": "ambient",
@@ -1282,6 +1321,7 @@
       "id": "villager_ivalino_a",
       "name": {
         "zh": "野銀的族人",
+        "en": "Ivalino villager",
         "tao": ""
       },
       "role": "ambient",
@@ -1323,6 +1363,7 @@
       "id": "villager_ivalino_b",
       "name": {
         "zh": "野銀的青年",
+        "en": "Ivalino youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1364,6 +1405,7 @@
       "id": "villager_ivalino_c",
       "name": {
         "zh": "野銀的孩子",
+        "en": "Ivalino child",
         "tao": ""
       },
       "role": "ambient",
@@ -1404,6 +1446,7 @@
       "id": "villager_imorod_a",
       "name": {
         "zh": "紅頭的族人",
+        "en": "Imorod villager",
         "tao": ""
       },
       "role": "ambient",
@@ -1445,6 +1488,7 @@
       "id": "villager_imorod_b",
       "name": {
         "zh": "紅頭的青年",
+        "en": "Imorod youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1486,6 +1530,7 @@
       "id": "villager_imorod_c",
       "name": {
         "zh": "紅頭的孩子",
+        "en": "Imorod child",
         "tao": ""
       },
       "role": "ambient",
@@ -1526,6 +1571,7 @@
       "id": "villager_iratay_b",
       "name": {
         "zh": "漁人的青年",
+        "en": "Iratay youth",
         "tao": ""
       },
       "role": "ambient",
@@ -1567,6 +1613,7 @@
       "id": "villager_iratay_c",
       "name": {
         "zh": "漁人的孩子",
+        "en": "Iratay child",
         "tao": ""
       },
       "role": "ambient",
@@ -1607,6 +1654,7 @@
       "id": "elder_f_yayo",
       "name": {
         "zh": "椰油的女性長輩",
+        "en": "Yayo woman elder",
         "tao": "Yayo a akes"
       },
       "role": "elder_f",
@@ -1615,6 +1663,7 @@
         "food"
       ],
       "dutyText": "食物：煮食與保存",
+      "dutyTextEn": "Food: cooking and storing",
       "recipeKeeper": "rc-dried-flyingfish",
       "outsider": false,
       "talkable": true,
@@ -1653,6 +1702,7 @@
       "id": "elder_f_iraraley",
       "name": {
         "zh": "朗島的女性長輩",
+        "en": "Iraraley woman elder",
         "tao": "Iraraley a akes"
       },
       "role": "elder_f",
@@ -1661,6 +1711,7 @@
         "field"
       ],
       "dutyText": "田地：山藥與小米",
+      "dutyTextEn": "Fields: yams and millet",
       "recipeKeeper": "rc-boiled-yam",
       "outsider": false,
       "talkable": true,
@@ -1699,6 +1750,7 @@
       "id": "elder_f_iranmeylek",
       "name": {
         "zh": "東清的女性長輩",
+        "en": "Iranmeylek woman elder",
         "tao": "Iranmeylek a akes"
       },
       "role": "elder_f",
@@ -1708,6 +1760,7 @@
         "tide"
       ],
       "dutyText": "潮間帶採集與料理",
+      "dutyTextEn": "Tide flat gathering and cooking",
       "recipeKeeper": "rc-shellfish-seaweed",
       "outsider": false,
       "talkable": true,
@@ -1746,6 +1799,7 @@
       "id": "elder_f_iratay",
       "name": {
         "zh": "漁人的女性長輩",
+        "en": "Iratay woman elder",
         "tao": "Iratay a akes"
       },
       "role": "elder_f",
@@ -1755,6 +1809,7 @@
         "taro"
       ],
       "dutyText": "田地：地瓜與水芋",
+      "dutyTextEn": "Fields: sweet potato and taro",
       "recipeKeeper": "rc-taro-sweetpotato",
       "outsider": false,
       "talkable": true,

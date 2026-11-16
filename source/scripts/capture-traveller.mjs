@@ -32,8 +32,8 @@ try {
       await ev(() => window.__TAO_RPG__.clearSave());
       await boot();
       const shot = async (name, wait = 900) => { await sleep(wait); await page.screenshot({ path: path.join(OUT, `${T}-${name}.png`) }); console.log('captured', `${T}-${name}`); };
-      await page.waitForSelector('#btn-origin-ivalino', { visible: true, timeout: 30000 });
-      await page.click('#btn-origin-ivalino');
+      await page.waitForSelector('#sel-origin-m', { visible: true, timeout: 30000 });
+      await page.select('#sel-origin-m', 'ivalino'); await page.select('#sel-origin-f', 'ivalino');
       await page.waitForSelector(`#btn-gender-${g}`, { visible: true, timeout: 15000 });
       await page.click(`#btn-gender-${g}`);
       await ev(() => document.getElementById('gender-pick').scrollIntoView({ block: 'center' }));

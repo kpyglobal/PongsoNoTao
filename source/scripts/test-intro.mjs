@@ -1,5 +1,6 @@
-// 0.1.4 arrival opening: title screen → party → 搭飛機／搭船 (shared Lanyu vista) → painted ride (pull back to
-// the window / bow, then bank or drive-off) → notebook stamps 抵達蘭嶼 complete → the party starts at the matching
+// 0.1.5 arrival opening: title screen → party → 搭飛機／搭船 (shared Lanyu vista) → 2.5D ride (pull back to the
+// window / bow and hold while loading; then the plane flies out from behind the camera rear → bank → descend, or the
+// yacht seen from behind drives off toward the island) → notebook stamps 抵達蘭嶼 complete → the party starts at the matching
 // spot (plane: the ring road by 蘭嶼機場; boat: 開元港). Checks the culture statement still opens the game, Q01 is
 // in the quest log as done, Q02–Q04 unlock, the choice is saved, skipping works and an older save skips the opening.
 // Desktop + iPhone-size touch. Screenshots → screenshots-014/.
@@ -23,6 +24,8 @@ try {
   for (const vp of [
     { tag: 'desktop', v: { width: 1280, height: 800, deviceScaleFactor: 1 } },
     { tag: 'iphone', v: { width: 393, height: 852, deviceScaleFactor: 2, isMobile: true, hasTouch: true } },
+    // 0.1.5: narrow landscape phone (window frame / bow must not be cropped there either)
+    { tag: 'iphone-land', v: { width: 852, height: 393, deviceScaleFactor: 2, isMobile: true, hasTouch: true } },
   ]) {
     const T = vp.tag;
     const touch = !!vp.v.hasTouch;
@@ -70,9 +73,13 @@ try {
       check(`${W}: title screen first`, a.screen === 'title' && a.introEnabled, a);
       if (T === 'desktop' && way === 'plane') { await sleep(1500); await shot('07-title-screen.png'); }
       if (way === 'plane') {
-        // 音樂 / 音效 toggles on the start screens: same saved settings as the in-game ♪ panel
-        const ms = await ev(() => [...document.querySelectorAll('#title-screen .menu-sound button')].map((b) => b.textContent));
-        check(`${W}: start menu has 音樂 / 音效 toggles`, ms.length === 2 && ms[0].includes('音樂') && ms[1].includes('音效'), ms);
+        // 音樂 / 音效 toggles on the start screens (語言 sits in the same bar, but is not a sound toggle)
+        const ms = await ev(() => ({
+          sound: [...document.querySelectorAll('#title-screen .menu-sound button[data-ch]')].map((b) => b.textContent),
+          lang: [...document.querySelectorAll('#title-screen .menu-sound .lang-toggle [data-lang]')].map((b) => b.dataset.lang),
+        }));
+        check(`${W}: start menu has 音樂 / 音效 toggles`, ms.sound.length === 2 && ms.sound[0].includes('音樂') && ms.sound[1].includes('音效'), ms.sound);
+        check(`${W}: start menu has 語言 next to the sound toggles`, ms.lang.join() === 'both,zh,tao', ms.lang);
         await press('#title-screen .ms-music');
         await sleep(150);
         const st1 = await ev(() => ({ saved: JSON.parse(localStorage.getItem('tao-rpg.audio') || '{}').musicOn, label: document.querySelector('#title-screen .ms-music').textContent, still: !!document.querySelector('#title-screen') && getComputedStyle(document.getElementById('title-screen')).display !== 'none', panel: document.querySelector('#audio-panel .ap-tg[data-ch=music]')?.textContent }));
@@ -85,8 +92,18 @@ try {
       await press('#btn-title-start');
       await sleep(400);
       check(`${W}: title → party screen`, (await arr()).screen === 'origin');
-      await press('#btn-origin-yayo');
+      await page.select('#sel-origin-m', 'yayo'); await page.select('#sel-origin-f', 'yayo'); // 0.1.5 tribe dropdowns
       await press('#btn-gender-f');
+      if (way === 'plane') {
+        // 0.1.5: the 踏上 button never sits over the 男生／女生 buttons (phones: the language row made the card taller)
+        const ov = await ev(() => {
+          const r = (s) => document.querySelector(s).getBoundingClientRect();
+          const go = r('#origin-go');
+          const hit = ['#btn-gender-m', '#btn-gender-f', '#cs-traveller', '#sel-origin-m', '#sel-origin-f'].some((s) => { const b = r(s); return go.left < b.right && go.right > b.left && go.top < b.bottom - 1 && go.bottom > b.top + 1; });
+          return { hit, go: Math.round(go.top), m: Math.round(r('#btn-gender-m').bottom) };
+        });
+        check(`${W}: start button clear of the 男生／女生 buttons`, !ov.hit, ov);
+      }
       await press('#origin-go');
       await sleep(500);
       a = await arr();
@@ -107,16 +124,16 @@ try {
         if (T === 'desktop') {
           await shot('08-arrival-choice.png');
           await shot('20-pre-island.png'); // shared Lanyu vista behind the choice (same angle for both routes)
-        } else await shot('14-arrival-choice-iphone.png');
+        } else await shot(`14-arrival-choice-${T}.png`);
       }
       await press(`#btn-arrive-${way}`);
       await sleep(250);
       a = await arr();
       check(`${W}: painted ride playing (separate intro scene)`, a.playing && a.way === way && a.phase === 'intro' && a.introScene && a.introMode === way && a.screen === 'intro', a);
       check(`${W}: title music keeps playing (no game start yet)`, !(await ev(() => window.__TAO_RPG__.state.started)));
-      // the island loads in the background: loading bar lower left until it is done
-      const lb = await ev(() => { const e = document.getElementById('ai-load'); const r = e.getBoundingClientRect(); return { shown: getComputedStyle(e).display !== 'none' && r.width > 0, left: r.left, bottom: r.bottom, h: innerHeight, w: innerWidth, label: document.getElementById('ai-load-label').textContent }; });
-      check(`${W}: loading bar at the lower left`, lb.shown && lb.left < lb.w * 0.2 && lb.bottom > lb.h * 0.6, lb);
+      // the island loads in the background: loading bar centred and see-through until it is done
+      const lb = await ev(() => { const e = document.getElementById('ai-load'); const r = e.getBoundingClientRect(); return { shown: getComputedStyle(e).display !== 'none' && r.width > 0, mid: Math.round(r.left + r.width / 2), top: r.top, bottom: r.bottom, h: innerHeight, w: innerWidth, op: +getComputedStyle(e).opacity, label: document.getElementById('ai-load-label').textContent }; });
+      check(`${W}: loading bar centred and semi-transparent`, lb.shown && Math.abs(lb.mid - lb.w / 2) < 4 && lb.op > 0.3 && lb.op < 0.95 && lb.top > 0 && lb.bottom < lb.h, lb);
       if (way === 'plane' && T === 'desktop') await shot('16-arrival-loading-bar.png');
       if (way === 'plane') {
         // pull back from the shared Lanyu vista to reveal the cabin window and the wing, then hold (bob) while loading
@@ -128,15 +145,59 @@ try {
         await sleep(400);
         a = await arr();
         check(`${W}: window and wing revealed, island in view, holding`, a.introPose && a.introPose.overlay > 0.7 && a.introPose.phase === 'hold' && a.introPose.finale === 0, a.introPose);
+        const fr = a.introPose.overlayRect;
+        const ar = a.introPose.area;
+        check(`${W}: whole window frame on screen (not cropped)`, fr.w > 0 && fr.x >= ar.x - 1 && fr.y >= ar.y - 1 && fr.x + fr.w <= ar.x + ar.w + 1 && fr.y + fr.h <= ar.y + ar.h + 1, { fr, ar });
+        // loading loop: the clouds drift and the window bobs a little (no big moves)
+        await ev(() => window.__TAO_RPG__.freezeIntro(5, null));
+        await sleep(300);
+        const l1 = (await arr()).introPose;
+        await ev(() => window.__TAO_RPG__.freezeIntro(7, null));
+        await sleep(300);
+        const l2 = (await arr()).introPose;
+        await ev(() => { const g = window.__TAO_RPG__; g.freezeIntro(4, null); g.freezeIntro(null); });
+        check(`${W}: loading loop: clouds drift, gentle bob`, l1.cloudDrift !== l2.cloudDrift && Math.abs(l1.cloudDrift - l2.cloudDrift) < 60 && Math.abs(l1.pitch) <= 1 && Math.abs(l2.pitch) <= 1 && l1.overlay > 0.9, { d1: l1.cloudDrift, d2: l2.cloudDrift, p1: l1.pitch, p2: l2.pitch });
+        // the finale's beats, held frame by frame (the live run below still plays it end to end)
+        const at = async (f) => { await ev((f) => window.__TAO_RPG__.freezeIntro(5, f), f); await sleep(300); return (await arr()).introPose; };
+        const o1 = await at(1.6);
+        const p1 = await at(5.0);
+        const p2 = await at(7.0);
+        const p3 = await at(9.6);
+        const frames = new Set();
+        for (const f of [6.0, 6.03, 6.07, 6.1]) frames.add((await at(f)).prop);
+        await ev(() => { const g = window.__TAO_RPG__; g.freezeIntro(4, null); g.freezeIntro(null); });
+        check(`${W}: out through the window (frame and wing go, island stays)`, o1.overlay < 0.5 && o1.vehicle.a === 0, { overlay: o1.overlay });
+        check(`${W}: island turns to the closer angle`, p1.island > 0.9 && o1.island < p1.island, { o1: o1.island, p1: p1.island });
+        check(`${W}: plane flies out from behind the camera: rear → bank → descend, shrinking`, p1.vehicle.pose === 'rear' && p2.vehicle.pose === 'bank' && p3.vehicle.pose === 'descend' && p1.vehicle.w > p2.vehicle.w && p2.vehicle.w > p3.vehicle.w, [p1.vehicle, p2.vehicle, p3.vehicle]);
+        check(`${W}: propellers spin (frames cycle), wingtip trails on`, frames.size >= 2 && p2.trails > 0.5, { frames: [...frames], trails: p2.trails });
+        check(`${W}: plane stays on screen`, [p1, p2, p3].every((p) => p.vehicle.x > p.area.x && p.vehicle.x < p.area.x + p.area.w && p.vehicle.y > p.area.y && p.vehicle.y < p.area.y + p.area.h), [p1, p2, p3].map((p) => [Math.round(p.vehicle.x), Math.round(p.vehicle.y)]));
         if (T === 'desktop') await shot('09-arrival-plane-clouds.png');
-        else await shot('17-arrival-plane-iphone.png');
+        else await shot(`17-arrival-plane-${T}.png`);
       } else {
         await ev(() => window.__TAO_RPG__.seekIntro(2.6));
         await sleep(500);
         a = await arr();
         check(`${W}: yacht bow revealed over the painted sea (pitch / roll)`, a.introPose && a.introPose.mode === 'boat' && a.introPose.layers >= 3 && a.introPose.overlay > 0.7 && Math.abs(a.introPose.pitch) <= 1 && Math.abs(a.introPose.roll) < 0.05, a.introPose);
+        const br = a.introPose.overlayRect;
+        const ar = a.introPose.area;
+        check(`${W}: whole bow on screen (not cropped)`, br.w > 0 && br.x >= ar.x - 1 && br.x + br.w <= ar.x + ar.w + 1 && br.y >= ar.y - 1 && br.y + br.h <= ar.y + ar.h + 1, { br, ar });
+        // loading loop: the wave phases cross-fade (no long scroll), the bow pitches gently
+        const at = async (t, f) => { await ev(([t, f]) => window.__TAO_RPG__.freezeIntro(t, f), [t, f]); await sleep(300); return (await arr()).introPose; };
+        const w1 = await at(5, null);
+        const w2 = await at(6.2, null);
+        check(`${W}: loading loop: wave phases cross-fade, gentle pitch`, w1.waves.join() !== w2.waves.join() && Math.abs(w1.pitch) <= 1 && Math.abs(w2.pitch) <= 1, { w1: w1.waves, w2: w2.waves });
+        const y1 = await at(5, 1.0);
+        const y2 = await at(5, 3.0);
+        const y3 = await at(5, 8.6);
+        const r1 = (await at(5.9, 3.0)).hullRock;
+        await ev(() => { const g = window.__TAO_RPG__; g.freezeIntro(4, null); g.freezeIntro(null); });
+        check(`${W}: cut to the yacht from behind (bow gone, wake and spray on)`, y1.overlay < 0.2 && y1.vehicle.a > 0.8 && y1.wake > 0.2, { overlay: y1.overlay, veh: y1.vehicle, wake: y1.wake });
+        check(`${W}: yacht drives off and shrinks into the centre left`, y3.vehicle.w < y1.vehicle.w * 0.3 && y3.vehicle.x < y3.area.x + y3.area.w * 0.5 && y3.vehicle.x > y3.area.x, { y1: y1.vehicle, y3: y3.vehicle });
+        check(`${W}: wake / spray fade in with speed and out with distance`, y2.wake > y1.wake && y3.spray < y2.spray, { w: [y1.wake, y2.wake, y3.wake], s: [y1.spray, y2.spray, y3.spray] });
+        check(`${W}: hull rocks on its own pivot`, Math.abs(r1 - y2.hullRock) > 0.005, { r1, r2: y2.hullRock });
+        check(`${W}: island cross-fades to the closer angle`, y1.island < 0.2 && y3.island > 0.9, { y1: y1.island, y3: y3.island });
         if (T === 'desktop') await shot('10-arrival-yacht.png');
-        else await shot('15-arrival-yacht-iphone.png');
+        else await shot(`15-arrival-yacht-${T}.png`);
       }
       const logo = await ev(() => document.getElementById('arrival-intro').classList.contains('logo-on'));
       a = await arr();
@@ -194,9 +255,10 @@ try {
         report.mem[T] = mem;
       } else if (T === 'desktop') {
         // drive-off frame, then skip the rest of the painted shot (notebook still runs, or a second skip starts the game)
-        await ev(() => window.__TAO_RPG__.seekFinale?.(1.4));
-        await sleep(400);
+        await ev(() => window.__TAO_RPG__.freezeIntro(4, 3.0));
+        await sleep(500);
         await shot('27-yacht-driveoff.png');
+        await ev(() => { const g = window.__TAO_RPG__; g.freezeIntro(4, null); g.freezeIntro(null); });
       }
       // plane: let it play to the end; boat: skip (key on desktop, tap on the phone); a skip while loading waits
       const tSkip = Date.now();
@@ -217,8 +279,9 @@ try {
       const seen = await drain();
       check(`${W}: whole arrival talk shown`, seen.length === q0.length, { seen: seen.length, q: q0.length });
       await sleep(300);
-      const st = await ev(() => { const g = window.__TAO_RPG__; return { q1: g.quest('Q01').status, q2: g.quest('Q02').status, q3: g.quest('Q03').status, q4: g.quest('Q04').status, log: g.questLogIds(), tracked: g.trackedQuest(), save: g.readSave()?.state?.arrival, pos: g.playerPos(), places: { harbor: g.places.harbor, airport: g.places.airport } }; });
+      const st = await ev(() => { const g = window.__TAO_RPG__; return { q1: g.quest('Q01').status, q2: g.quest('Q02').status, q3: g.quest('Q03').status, q4: g.quest('Q04').status, log: g.questLogIds(), tracked: g.trackedQuest(), save: g.readSave()?.state?.arrival, pos: g.playerPos(), lead: g.party().controlled, outfits: g.party().outfits, places: { harbor: g.places.harbor, airport: g.places.airport } }; });
       check(`${W}: Q01 done, Q02/Q03/Q04 active`, st.q1 === 'done' && st.q2 === 'active' && st.q3 === 'active' && st.q4 === 'active', st);
+      check(`${W}: 族男 leads at the start`, st.lead === 'm' && st.outfits.t !== 'player' && st.outfits.t !== 'player_f', { lead: st.lead, outfits: st.outfits });
       check(`${W}: Q01 抵達蘭嶼 is in the quest log as done, not tracked`, st.log.includes('Q01') && st.tracked !== 'Q01' && st.log.includes('Q02') && st.q1 === 'done', { tracked: st.tracked, first: st.log.slice(0, 6) });
       check(`${W}: choice saved`, st.save === way, st.save);
       const P = way === 'plane' ? st.places.airport : st.places.harbor;

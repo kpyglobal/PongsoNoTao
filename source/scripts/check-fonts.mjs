@@ -121,7 +121,7 @@ function parseCmap(c) {
 }
 
 const used = usedCjk();
-const fonts = fs.readdirSync(FONT_DIR).filter((f) => f.endsWith('.woff2') && !f.startsWith('literata')).sort(); // Literata: Latin / Tao only
+const fonts = fs.readdirSync(FONT_DIR).filter((f) => f.endsWith('.woff2') && !f.startsWith('cormorant')).sort(); // Cormorant: Latin / Tao only
 if (!fonts.length) {
   console.error('check-fonts: no public/fonts/*.woff2 found');
   process.exit(1);

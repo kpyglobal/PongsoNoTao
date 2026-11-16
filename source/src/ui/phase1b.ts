@@ -2,14 +2,24 @@
  * Phase 1 batch 1b UI pieces kept out of dom.ts: the underwater moment overlay, the activity-song card,
  * and the 手札 pages「相簿與水下」and「存檔」(export / import).
  */
+import { photoEl } from './cards';
 import { diveImageIds, diveUrl, loadImage, type DiveKind } from './dive';
 import { songBlock } from './dom';
+import { soundControls } from '../systems/audio/panel';
+import { langToggleHtml } from './lang';
+import { uiLangToggleHtml } from './i18n';
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = '', text = ''): HTMLElementTagNameMap[K] => {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
   if (text) e.textContent = text;
   return e;
+};
+
+const htmlToNodes = (html: string): HTMLElement[] => {
+  const t = document.createElement('template');
+  t.innerHTML = html;
+  return [...t.content.children] as HTMLElement[];
 };
 
 export interface DiveOpts {
@@ -104,7 +114,7 @@ export function showSongCard(sg: SongVM): void {
 }
 
 export interface AlbumVM {
-  photos: { id: string; name: string }[];
+  photos: { id: string; name: string; spot?: string; thumb?: string }[];
   photoTotal: number;
   uw: { kind: 'A' | 'B'; title: string; have: boolean }[];
   pov: boolean;
@@ -152,10 +162,30 @@ export function renderAlbum(pages: HTMLElement, vm: AlbumVM): void {
   // land photos
   const ph = el('section', 'album-sec');
   ph.append(el('h3', '', `旅人相簿（${vm.photos.length}/${vm.photoTotal}）`));
-  const list = el('ul', 'album-list');
-  for (const p of vm.photos) list.append(el('li', '', `${p.id}｜${p.name}`));
-  if (!vm.photos.length) list.append(el('li', 'muted', '還沒有拍過照片。旅人走到景點附近就能拍。'));
-  ph.append(list);
+  // 0.1.5: printed photos; tap one to see it large (tap again to put it back)
+  const prints = el('div', 'album-prints');
+  const big = el('div', 'album-big');
+  big.hidden = true;
+  big.addEventListener('click', () => { big.hidden = true; big.replaceChildren(); });
+  for (const p of vm.photos) {
+    const b = el('button', 'album-print');
+    b.type = 'button';
+    b.dataset.spot = p.spot ?? p.id;
+    const img = el('img', 'album-photo');
+    img.src = p.thumb ?? '';
+    img.alt = p.name;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    b.append(img, el('span', 'album-cap', p.name.replace(/（[^）]*）$/, '').replace(/\s*\([^)]*\)$/, '')));
+    b.addEventListener('click', () => {
+      if (!p.spot) return;
+      big.replaceChildren(photoEl({ key: `p:${p.spot}`, spot: p.spot, caption: p.name.replace(/（[^）]*）$/, '').replace(/\s*\([^)]*\)$/, '') }));
+      big.hidden = false;
+    });
+    prints.append(b);
+  }
+  if (!vm.photos.length) prints.append(el('p', 'muted album-empty', '還沒有拍過照片。帶著旅人走到景點，就會拍下來。'));
+  ph.append(big, prints);
   root.append(ph);
   // songs
   const so = el('section', 'album-sec');
@@ -184,7 +214,20 @@ export function renderSaveTab(pages: HTMLElement, h: SaveTabHooks): void {
   );
   root.append(warn);
 
+  const st = el('section', 'save-sec');
+  st.dataset.save = 'settings';
+  st.append(el('h3', '', '設定'));
+  const box = el('div', 'nb-settings');
+  const langRow = el('div', 'nb-set-row');
+  langRow.append(el('span', 'nb-set-label', '對話'), ...htmlToNodes(langToggleHtml()));
+  const uiRow = el('div', 'nb-set-row nb-set-ui');
+  uiRow.append(el('span', 'nb-set-label', '語言'), ...htmlToNodes(uiLangToggleHtml()));
+  box.append(uiRow, langRow, soundControls('nb-ap'), el('p', 'muted nb-ver', `版本 ${__APP_VERSION__}`));
+  st.append(box);
+  root.append(st);
+
   const ex = el('section', 'save-sec');
+  ex.dataset.save = 'export';
   ex.append(el('h3', '', '匯出存檔'));
   const dl = el('button', 'btn-primary', '下載存檔檔案（.json）');
   dl.type = 'button';
@@ -215,6 +258,7 @@ export function renderSaveTab(pages: HTMLElement, h: SaveTabHooks): void {
   root.append(ex);
 
   const im = el('section', 'save-sec');
+  im.dataset.save = 'import';
   im.append(el('h3', '', '匯入存檔'));
   im.append(el('p', 'muted', '匯入會取代目前的進度。'));
   const file = el('input');

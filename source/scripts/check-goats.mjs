@@ -1,0 +1,13 @@
+import { build } from 'esbuild';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+const out = path.join(os.tmpdir(), `goat-audit-${process.pid}.mjs`);
+await build({ entryPoints: ['scripts/dev/goat-audit.ts'], bundle: true, platform: 'node', format: 'esm', outfile: out, logLevel: 'error', loader: { '.json': 'json' } });
+const { runGoatAudit } = await import(pathToFileURL(out));
+const r = runGoatAudit();
+fs.rmSync(out);
+console.log(JSON.stringify(r, null, 2));
+console.log(r.faults.length ? 'FAIL' : 'OK: small, mostly black goat herds graze and move on dry walkable ground');
+process.exit(r.faults.length ? 1 : 0);

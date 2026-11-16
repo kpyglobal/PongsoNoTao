@@ -4,7 +4,8 @@
     "dlg_pb_couple": {
       "greet": [
         {
-          "zh": "嗨！你們也是來玩的嗎？"
+          "zh": "嗨！你們也是來玩的嗎？",
+          "en": "Hi! Are you here on holiday too?"
         }
       ],
       "idle": [
@@ -14,10 +15,12 @@
           },
           "lines": [
             {
-              "zh": "民宿老闆說，灘頭上的船不能碰，我們就遠遠拍。"
+              "zh": "民宿老闆說，灘頭上的船不能碰，我們就遠遠拍。",
+              "en": "The guesthouse owner said not to touch the boats on the beach, so we take photos from far away."
             },
             {
-              "zh": "東清灣的海好藍，看多久都不膩。"
+              "zh": "東清灣的海好藍，看多久都不膩。",
+              "en": "The sea at Dongqing Bay is so blue. I could look at it all day."
             }
           ]
         },
@@ -27,7 +30,8 @@
           },
           "lines": [
             {
-              "zh": "晚上的星星好多，城市裡根本看不到。"
+              "zh": "晚上的星星好多，城市裡根本看不到。",
+              "en": "So many stars at night. You never see this in the city."
             }
           ]
         }
@@ -36,7 +40,8 @@
     "dlg_pb_tour": {
       "greet": [
         {
-          "zh": "哎呀，你好你好！"
+          "zh": "哎呀，你好你好！",
+          "en": "Oh, hello, hello!"
         }
       ],
       "idle": [
@@ -46,10 +51,12 @@
           },
           "lines": [
             {
-              "zh": "導遊說進部落要放低音量，拍人之前要先問。"
+              "zh": "導遊說進部落要放低音量，拍人之前要先問。",
+              "en": "Our guide said to keep our voices down in the villages, and to ask before taking photos of people."
             },
             {
-              "zh": "等一下要去買紀念品，你知道哪裡有雜貨店嗎？"
+              "zh": "等一下要去買紀念品，你知道哪裡有雜貨店嗎？",
+              "en": "We're going to buy souvenirs later. Do you know where a grocery store is?"
             }
           ]
         },
@@ -59,7 +66,8 @@
           },
           "lines": [
             {
-              "zh": "跟團跑了一整天，腳好痠。"
+              "zh": "跟團跑了一整天，腳好痠。",
+              "en": "A whole day on the tour. My feet are so sore."
             }
           ]
         }
@@ -68,7 +76,8 @@
     "dlg_pb_retiree": {
       "greet": [
         {
-          "zh": "年輕人好啊。"
+          "zh": "年輕人好啊。",
+          "en": "Hello, young folks."
         }
       ],
       "idle": [
@@ -78,10 +87,12 @@
           },
           "lines": [
             {
-              "zh": "退休了，終於有時間慢慢走。這裡的路沿著海，走起來很舒服。"
+              "zh": "退休了，終於有時間慢慢走。這裡的路沿著海，走起來很舒服。",
+              "en": "I'm retired, so I finally have time to walk slowly. The road follows the sea. It's lovely to walk."
             },
             {
-              "zh": "我們不趕行程，看到什麼就停下來看。"
+              "zh": "我們不趕行程，看到什麼就停下來看。",
+              "en": "We're not in a hurry. We stop whenever we see something."
             }
           ]
         },
@@ -91,7 +102,8 @@
           },
           "lines": [
             {
-              "zh": "早點休息，明天想去看日出。"
+              "zh": "早點休息，明天想去看日出。",
+              "en": "Early night for me. I want to see the sunrise tomorrow."
             }
           ]
         }
@@ -100,7 +112,8 @@
     "dlg_pb_backpacker": {
       "greet": [
         {
-          "zh": "Hi！你好！"
+          "zh": "Hi！你好！",
+          "en": "Hi! Hello!"
         }
       ],
       "idle": [
@@ -110,10 +123,12 @@
           },
           "lines": [
             {
-              "zh": "我在學中文，也在學一點點族語的問候。"
+              "zh": "我在學中文，也在學一點點族語的問候。",
+              "en": "I'm learning Chinese, and a few Tao greetings too."
             },
             {
-              "zh": "我把垃圾都帶走，島上的垃圾很難處理。"
+              "zh": "我把垃圾都帶走，島上的垃圾很難處理。",
+              "en": "I take all my rubbish with me. Rubbish is hard to deal with on an island."
             }
           ]
         },
@@ -123,7 +138,8 @@
           },
           "lines": [
             {
-              "zh": "今天走了好遠，明天再去另一邊。"
+              "zh": "今天走了好遠，明天再去另一邊。",
+              "en": "I walked so far today. I'll try the other side tomorrow."
             }
           ]
         }
@@ -132,7 +148,8 @@
     "dlg_pb_family": {
       "greet": [
         {
-          "zh": "你好！"
+          "zh": "你好！",
+          "en": "Hello!"
         }
       ],
       "idle": [
@@ -142,10 +159,12 @@
           },
           "lines": [
             {
-              "zh": "孩子第一次來蘭嶼，一直問東問西。"
+              "zh": "孩子第一次來蘭嶼，一直問東問西。",
+              "en": "It's the kids' first time on Lanyu. They ask about everything."
             },
             {
-              "zh": "防曬、帽子、水都帶了，海邊太陽很大。"
+              "zh": "防曬、帽子、水都帶了，海邊太陽很大。",
+              "en": "Sunscreen, hats, water — we brought it all. The sun is strong by the sea."
             }
           ]
         },
@@ -155,7 +174,8 @@
           },
           "lines": [
             {
-              "zh": "孩子玩累了，今天會很好睡。"
+              "zh": "孩子玩累了，今天會很好睡。",
+              "en": "The kids are worn out. They'll sleep well tonight."
             }
           ]
         }
@@ -164,14 +184,16 @@
     "dlg_kid_tourist_girl": {
       "greet": [
         {
-          "zh": "你看！我的小水桶！"
+          "zh": "你看！我的小水桶！",
+          "en": "Look! My little bucket!"
         }
       ],
       "idle": [
         {
           "lines": [
             {
-              "zh": "媽媽說海邊的東西只能看，不能帶回家。"
+              "zh": "媽媽說海邊的東西只能看，不能帶回家。",
+              "en": "Mum says the things on the beach are only for looking. We can't take them home."
             }
           ]
         }
@@ -181,7 +203,8 @@
     "dlg_kid_local_ball": {
       "greet": [
         {
-          "zh": "要一起踢球嗎？"
+          "zh": "要一起踢球嗎？",
+          "en": "Want to play football?"
         }
       ],
       "idle": [
@@ -191,10 +214,12 @@
           },
           "lines": [
             {
-              "zh": "放學以後我都在這裡踢球。"
+              "zh": "放學以後我都在這裡踢球。",
+              "en": "I play football here every day after school."
             },
             {
-              "zh": "球不要踢到人家的田裡，阿嬤會生氣。"
+              "zh": "球不要踢到人家的田裡，阿嬤會生氣。",
+              "en": "Don't kick the ball into anyone's field. Grandma will get angry."
             }
           ]
         },
@@ -204,7 +229,8 @@
           },
           "lines": [
             {
-              "zh": "天黑了，我要回家吃飯了。"
+              "zh": "天黑了，我要回家吃飯了。",
+              "en": "It's dark. I'm going home for dinner."
             }
           ]
         }
@@ -214,14 +240,16 @@
     "dlg_kid_quest_tourist": {
       "greet": [
         {
-          "zh": "哥哥姊姊好！"
+          "zh": "哥哥姊姊好！",
+          "en": "Hello, big brother and sister!"
         }
       ],
       "idle": [
         {
           "lines": [
             {
-              "zh": "我的望遠鏡可以看好遠喔！"
+              "zh": "我的望遠鏡可以看好遠喔！",
+              "en": "My binoculars can see really far!"
             }
           ]
         }
@@ -229,7 +257,8 @@
       "after": {
         "KD1": [
           {
-            "zh": "我回去跟爸爸媽媽說了：拼板舟要遠遠看，不能摸。"
+            "zh": "我回去跟爸爸媽媽說了：拼板舟要遠遠看，不能摸。",
+            "en": "I told Mum and Dad: look at the plank boats from far away, don't touch."
           }
         ]
       },
@@ -238,14 +267,16 @@
     "dlg_kid_quest_local": {
       "greet": [
         {
-          "zh": "你們好。"
+          "zh": "你們好。",
+          "en": "Hello."
         }
       ],
       "idle": [
         {
           "lines": [
             {
-              "zh": "我喜歡畫海邊的東西，貝殼、螃蟹、石頭都畫。"
+              "zh": "我喜歡畫海邊的東西，貝殼、螃蟹、石頭都畫。",
+              "en": "I like drawing things from the beach — shells, crabs, stones."
             }
           ]
         }
@@ -253,7 +284,8 @@
       "after": {
         "KD2": [
           {
-            "zh": "寄居蟹的畫我會帶去學校給老師看。"
+            "zh": "寄居蟹的畫我會帶去學校給老師看。",
+            "en": "I'll take my hermit crab drawing to school to show my teacher."
           }
         ]
       },

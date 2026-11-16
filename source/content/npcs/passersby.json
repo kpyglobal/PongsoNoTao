@@ -5,6 +5,7 @@
       "id": "pb_couple_m",
       "name": {
         "zh": "情侶旅客",
+        "en": "Couple on holiday",
         "tao": ""
       },
       "role": "passerby",
@@ -46,6 +47,7 @@
       "id": "pb_couple_f",
       "name": {
         "zh": "情侶旅客",
+        "en": "Couple on holiday",
         "tao": ""
       },
       "role": "passerby",
@@ -87,6 +89,7 @@
       "id": "pb_middle_m",
       "name": {
         "zh": "跟團的中年旅客",
+        "en": "Tour group traveller",
         "tao": ""
       },
       "role": "passerby",
@@ -129,6 +132,7 @@
       "id": "pb_middle_f",
       "name": {
         "zh": "中年女旅客",
+        "en": "Woman traveller",
         "tao": ""
       },
       "role": "passerby",
@@ -170,6 +174,7 @@
       "id": "pb_retiree_m",
       "name": {
         "zh": "退休旅客",
+        "en": "Retired traveller",
         "tao": ""
       },
       "role": "passerby",
@@ -212,6 +217,7 @@
       "id": "pb_retiree_f",
       "name": {
         "zh": "退休旅客",
+        "en": "Retired traveller",
         "tao": ""
       },
       "role": "passerby",
@@ -254,6 +260,7 @@
       "id": "pb_backpacker",
       "name": {
         "zh": "背包客",
+        "en": "Backpacker",
         "tao": ""
       },
       "role": "passerby",
@@ -296,6 +303,7 @@
       "id": "pb_family_dad",
       "name": {
         "zh": "全家出遊的爸爸",
+        "en": "Dad on a family trip",
         "tao": ""
       },
       "role": "passerby",
@@ -337,6 +345,7 @@
       "id": "pb_family_mom",
       "name": {
         "zh": "全家出遊的媽媽",
+        "en": "Mum on a family trip",
         "tao": ""
       },
       "role": "passerby",
@@ -378,6 +387,7 @@
       "id": "kid_tourist_girl",
       "name": {
         "zh": "小旅客・女孩",
+        "en": "Young visitor · Girl",
         "tao": ""
       },
       "role": "passerby",
@@ -419,6 +429,7 @@
       "id": "kid_quest_tourist",
       "name": {
         "zh": "好奇的小旅客",
+        "en": "Curious young visitor",
         "tao": ""
       },
       "role": "questVillager",
@@ -461,6 +472,7 @@
       "id": "kid_quest_local",
       "name": {
         "zh": "愛畫畫的部落女孩",
+        "en": "Village girl who loves drawing",
         "tao": ""
       },
       "role": "questVillager",
@@ -502,6 +514,7 @@
       "id": "kid_local_ball",
       "name": {
         "zh": "踢球的部落男孩",
+        "en": "Village boy playing football",
         "tao": ""
       },
       "role": "ambient",

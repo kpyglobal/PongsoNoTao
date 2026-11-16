@@ -1,9 +1,10 @@
 // Validate the modular content/ tree (Phase A). Usage: node scripts/validate-content.mjs [--review] [--quiet]
 // Checks: ids unique, enums valid, every reference resolves, party-split steps are well formed,
 // every village has its a akey / a akes / recipe keeper, outsiders never get Tao clothing,
-// player-facing text has no simplified characters, and every playable quest is completable from its prerequisites.
+// player-facing text has no simplified characters, every player-facing text has its English (0.1.5), and every playable quest is completable from its prerequisites.
 import fs from 'node:fs';
 import path from 'node:path';
+import { walkText, enKey, SKIP_FILES, skipPath } from './content/i18n-rules.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const C = path.join(ROOT, 'content');
@@ -161,10 +162,12 @@ for (const q of quests.values()) {
   if (q.needsItem) { if (!items.has(q.needsItem.item)) err(`${L}: needsItem unknown item`); if (!quests.has(q.needsItem.from)) err(`${L}: needsItem.from quest not found`); }
   if (q.recipe) { if (!recipes.has(q.recipe.id)) err(`${L}: recipe ${q.recipe.id} not found`); if (!npcs.has(q.recipe.keeper)) err(`${L}: keeper ${q.recipe.keeper} not found`); }
   if (!Array.isArray(q.steps) || !q.steps.length) { err(`${L}: no steps`); continue; }
+  // 0.1.5: twoHomes (族男／族女 from different villages) is a second step list, checked the same way
+  const runSteps = (steps, tag) => {
   let splitOpen = null; // roles currently away
   let soloOpen = false;
-  q.steps.forEach((s, i) => {
-    const S = where(q, i);
+  steps.forEach((s, i) => {
+    const S = where(q, i) + tag;
     if (!['talk', 'spot', 'photo', 'auto', 'placeholder', 'tasks'].includes(s.kind)) err(`${S}: bad kind "${s.kind}"`);
     if (!s.text) err(`${S}: missing text`);
     if (s.kind === 'talk' && !s.npc) err(`${S}: talk step without npc`);
@@ -211,9 +214,22 @@ for (const q of quests.values()) {
       splitOpen = null; soloOpen = false;
     }
     if (s.minigame && !['fish', 'taro'].includes(s.minigame)) err(`${S}: bad minigame`);
+    if (s.alt) {
+      if (!s.npc || TOKENS.has(s.npc)) err(`${S}: alt is only for a step that names an NPC (not a token)`);
+      if (!npcs.has(s.alt.npc)) err(`${S}: alt npc "${s.alt.npc}" not found`);
+      if (s.alt.lines) checkLines(s.alt.lines, `${S} alt`);
+    }
   });
-  if (splitOpen) err(`${L}: split never regroups`);
-  if (soloOpen) err(`${L}: solo never regroups`);
+  if (splitOpen) err(`${L}${tag}: split never regroups`);
+  if (soloOpen) err(`${L}${tag}: solo never regroups`);
+  };
+  runSteps(q.steps, '');
+  if (q.twoHomes) {
+    if (!(q.roles ?? []).includes('m') || !(q.roles ?? []).includes('f')) err(`${L}: twoHomes needs both 族男 and 族女 in roles`);
+    if (!q.twoHomes.steps?.length) err(`${L}: twoHomes without steps`);
+    else runSteps(q.twoHomes.steps, ' (twoHomes)');
+    if (q.twoHomes.hint?.zh === undefined && q.twoHomes.hint) err(`${L}: twoHomes hint without zh`);
+  }
   if (q.time === 'night' && q.steps.some((s) => s.npc && !TOKENS.has(s.npc) && npcs.get(s.npc)?.talkable === false)) warn(`${L}: night quest talks to an NPC that is not talkable`);
 }
 
@@ -331,6 +347,38 @@ for (const q of quests.values()) {
   }
 }
 
+// ------------------------------------------------------------- 0.1.5 split hometowns (src/systems/homes.ts)
+// A quest's host tokens (@host / @hostf / @giver) follow one village (its giver's member, else its only Tao member,
+// else the 主人家). For every village that could be, a step that names an NPC must not be that same host elder
+// unless it has an `alt` (then the alt must not be one either): nobody is visited twice as two different people.
+{
+  const HOST_TOK = /^@(host|hostf|giver)(?:\.(m|f))?$/;
+  const elderOf = (kind, v, giver) => {
+    const g = kind === 'host' ? 'm' : kind === 'hostf' ? 'f' : (giver ?? 'm');
+    return meta.elders?.[g]?.[v];
+  };
+  for (const q of quests.values()) {
+    for (const [tag, steps] of [['', q.steps ?? []], [' (twoHomes)', q.twoHomes?.steps ?? []]]) {
+      const toks = new Set();
+      for (const s of steps) {
+        for (const x of [s.npc, ...(s.lines ?? []).map((l) => l.who), ...(s.tasks ?? []).map((t) => t.npc)]) {
+          const m = x && HOST_TOK.exec(x);
+          if (m && !m[2]) toks.add(m[1]);
+        }
+      }
+      if (!toks.size) continue;
+      for (const v of VILLAGES) {
+        const own = new Set([...toks].map((k) => elderOf(k, v, q.giver)).filter(Boolean));
+        steps.forEach((s, i) => {
+          if (!s.npc || TOKENS.has(s.npc) || !own.has(s.npc)) return;
+          if (!s.alt) err(`${where(q, i)}${tag}: names ${s.npc}, who is also this quest's host elder when its home is ${v} (add an alt)`);
+          else if (own.has(s.alt.npc)) err(`${where(q, i)}${tag}: alt ${s.alt.npc} is also this quest's host elder when its home is ${v}`);
+        });
+      }
+    }
+  }
+}
+
 // ------------------------------------------------------------- text checks
 const SIMPLIFIED = /[这们说鱼岛长门时个来对还没过见话边头岁产业东车马鸟龙网飞贝师学书写气见间问题请让给经织线丝织饭饮龟虾苹专]/;
 const BAD_STRAIGHT_APOS = /[A-Za-z]'[A-Za-z]/;
@@ -444,6 +492,34 @@ for (const q of quests.values()) {
     if (q.playable && min > reach.size) err(`${where(q)}: needs ${min} 族語 words, play can reach only ${reach.size} (${[...reach].join(', ')})`);
   }
   if (!args.has('--quiet')) console.log(`族語 words reachable in play: ${reach.size} of ${gloss.size}`);
+}
+
+// ------------------------------------------------------------- English (0.1.5): every player-facing text has an `en` / `kEn` sibling
+{
+  const files = [];
+  const walkF = (d) => { for (const f of fs.readdirSync(d).sort()) { const p = path.join(d, f); if (fs.statSync(p).isDirectory()) walkF(p); else if (f.endsWith('.json')) files.push(p); } };
+  walkF(C);
+  let n = 0;
+  const holes = (t) => [...String(t).matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort().join();
+  for (const p of files) {
+    const rel = path.relative(ROOT, p).split(path.sep).join('/');
+    if (SKIP_FILES.has(rel)) continue;
+    walkText(readJson(p), (obj, k, v, at) => {
+      if (skipPath(rel, at)) return;
+      const en = obj[enKey(k)];
+      const list = Array.isArray(v) ? v : [v];
+      const enList = Array.isArray(v) ? (Array.isArray(en) ? en : []) : [en];
+      list.forEach((zh, i) => {
+        n++;
+        const e = enList[i];
+        const where = `${rel}:${at}${Array.isArray(v) ? `[${i}]` : ''}`;
+        if (typeof e !== 'string' || !e.trim()) return err(`${where}: no English (${enKey(k)}) for "${String(zh).slice(0, 30)}"`);
+        if (/[\u3400-\u9fff]/.test(e)) err(`${where}: English still has Chinese: "${e.slice(0, 40)}"`);
+        if (holes(zh) !== holes(e)) err(`${where}: English must keep the same {…} slots as the Chinese ("${e.slice(0, 40)}")`);
+      });
+    });
+  }
+  if (!args.has('--quiet')) console.log(`English: ${n} player-facing texts checked`);
 }
 
 // ------------------------------------------------------------- report

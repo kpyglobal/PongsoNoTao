@@ -4,15 +4,21 @@
   "roles": {
     "m": {
       "zh": "族男",
-      "icon": "男"
+      "en": "Tao man",
+      "icon": "男",
+      "iconEn": "M"
     },
     "f": {
       "zh": "族女",
-      "icon": "女"
+      "en": "Tao woman",
+      "icon": "女",
+      "iconEn": "W"
     },
     "t": {
       "zh": "旅人",
-      "icon": "旅"
+      "en": "Traveller",
+      "icon": "旅",
+      "iconEn": "T"
     }
   },
   "tatalaRolesNote": "0.1.4 (Larry 2026-11-14): only Tao men (族男) paddle a tatala. 族女 / 旅人 take a modern canoe (quest step canoeKind \"modern\"). Add a role here to open the tatala to it later.",
@@ -22,19 +28,23 @@
   "respect": [
     {
       "id": "first",
-      "zh": "初訪"
+      "zh": "初訪",
+      "en": "First visit"
     },
     {
       "id": "learning",
-      "zh": "學習中"
+      "zh": "學習中",
+      "en": "Learning"
     },
     {
       "id": "trusted",
-      "zh": "受信任"
+      "zh": "受信任",
+      "en": "Trusted"
     },
     {
       "id": "friend",
-      "zh": "朋友"
+      "zh": "朋友",
+      "en": "Friend"
     }
   ],
   "elders": {
@@ -77,6 +87,7 @@
   "seasons": {
     "summer": {
       "zh": "夏季・飛魚季",
+      "en": "Summer · Flying fish season",
       "gameSeasons": [
         "meyvanwa",
         "rayon",
@@ -86,6 +97,7 @@
     },
     "winter": {
       "zh": "冬季・東北季風",
+      "en": "Winter · Northeast monsoon",
       "gameSeasons": [
         "off"
       ],
@@ -93,7 +105,7 @@
     }
   },
   "tokens": {
-    "@host": "主人家的長輩",
+    "@host": "主人家的長輩（依任務對到族男或族女的部落，見 src/systems/homes.ts）",
     "@giver": "依任務 giver（f / m）找主人家部落的 a akes / a akey",
     "@hostf": "主人家部落的 a akes（在簷廊）",
     "@m": "族男",
@@ -102,7 +114,11 @@
     "@npc": "目前對話的 NPC",
     "@me": "目前操控的隊員",
     "旁白": "旁白",
-    "文化聲明": "文化聲明"
+    "文化聲明": "文化聲明",
+    "@host.m": "族男自己家的長輩（Q03 兩人不同部落時）",
+    "@host.f": "族女自己家的長輩（Q03 兩人不同部落時）",
+    "@hostf.m": "族男部落的 a akes",
+    "@hostf.f": "族女部落的 a akes"
   },
   "externalFlags": {
     "party_created": "建立隊伍（角色選擇後）",
@@ -118,10 +134,14 @@
   },
   "externalProgress": {
     "respect": "尊重分數由遊戲事件累積（Q04 = first、V1 = learning；trusted / friend 由尊重事件達成）",
-    "count": "計數器（photos、lowTideOnTime…）由遊戲事件累積"
+    "respectEn": "Respect points build up from game events (Q04 = first, V1 = learning; trusted / friend come from respect events)",
+    "count": "計數器（photos、lowTideOnTime…）由遊戲事件累積",
+    "countEn": "Counters (photos, lowTideOnTime…) build up from game events"
   },
   "giverLabels": {
     "f": "女性長輩交辦、驗收",
-    "m": "男性長輩交辦、驗收"
+    "fEn": "Given and checked by a woman elder",
+    "m": "男性長輩交辦、驗收",
+    "mEn": "Given and checked by a man elder"
   }
 }

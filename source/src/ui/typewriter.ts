@@ -13,6 +13,9 @@ export class Typewriter {
   private i = 0;
   private n = 0;
 
+  /** ms per character (dialogue 32; the quest page types faster) and whether each character blips */
+  constructor(private ms = MS_PER_CHAR, private blip = true) {}
+
   get typing(): boolean {
     return this.timer !== 0;
   }
@@ -39,7 +42,7 @@ export class Typewriter {
       this.finish();
       return;
     }
-    this.timer = window.setInterval(() => this.step(), MS_PER_CHAR);
+    this.timer = window.setInterval(() => this.step(), this.ms);
   }
 
   private step(): void {
@@ -50,7 +53,7 @@ export class Typewriter {
       if (k <= chars.length) {
         j.shown.data = chars.slice(0, k).join('');
         j.rest.textContent = chars.slice(k).join('');
-        sfxBlip(chars[k - 1]);
+        if (this.blip) sfxBlip(chars[k - 1]);
         break;
       }
       k -= chars.length;

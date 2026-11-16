@@ -30,7 +30,7 @@ try {
     await sleep(500);
     await page.screenshot({ path: path.join(OUT, `${T}-cover.png`) });
     rep.checks[`${T}-imorod`] = await ev(() => document.body.innerText.includes('Imorod') && !document.body.innerText.includes('Imowrod'));
-    await page.click('#btn-origin-imorod');
+    await page.select('#sel-origin-m', 'imorod'); await page.select('#sel-origin-f', 'imorod');
     await page.click('#btn-gender-m');
     await page.click('#origin-go');
     await sleep(1200);

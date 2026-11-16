@@ -3,7 +3,9 @@
     "ikongo": {
       "tao": "ikongo yamyan do wawa?",
       "zh": "海裡有什麼呢？",
+      "en": "What's in the sea?",
       "source": "族語 E 樂園第 5 階第 9 課（暫定）",
+      "sourceEn": "ePark Indigenous language site, level 5, lesson 9 (provisional)",
       "words": [
         "wawa"
       ]
@@ -11,7 +13,9 @@
     "mangay": {
       "tao": "mangay ko pa kalahen.",
       "zh": "我先去找一找。",
+      "en": "I'll go and look first.",
       "source": "族語 E 樂園第 7 階第 7 課（暫定）",
+      "sourceEn": "ePark Indigenous language site, level 7, lesson 7 (provisional)",
       "words": []
     }
   }

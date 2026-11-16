@@ -2,97 +2,139 @@
   "songs": {
     "s01": {
       "title": "01 aibangbang 漁獲歌",
+      "titleEn": "01 aibangbang Fishing song",
       "tao": "Teyaro aibangbang na nitawaz ni ama",
       "zh": "爸爸網到了很多飛魚",
+      "en": "Dad netted lots of flying fish",
       "quests": [
         "M4",
         "A2"
       ],
       "activity": "飛魚返航、分配漁獲",
+      "activityEn": "Flying fish boats returning, sharing the catch",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s10": {
       "title": "10 asa vasit 釣魚歌",
+      "titleEn": "10 asa vasit Fishing song",
       "tao": "asa vasit adwa kawi",
       "zh": "帶著一支 vasit 竹和二支 kawi 竹做的釣魚竿",
+      "en": "Carrying a fishing rod made of one vasit bamboo and two kawi bamboos",
       "quests": [
         "F1",
         "G4"
       ],
       "activity": "近岸釣魚、魚類分類",
+      "activityEn": "Shore fishing, sorting fish",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s05": {
       "title": "05 o sikalopi 釣魚記",
+      "titleEn": "05 o sikalopi A fishing tale",
       "tao": "O Sikalopi mi vavahay do rarahan",
       "zh": "喔！住在路邊的 sikalopi",
+      "en": "Oh! The sikalopi living by the road",
       "quests": [
         "F2"
       ],
       "activity": "漁獲裝滿網袋回家",
+      "activityEn": "Coming home with a full net bag",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s09": {
       "title": "09 mita mangayo 砍材歌",
+      "titleEn": "09 mita mangayo Woodcutting song",
       "tao": "mita mangayo dojim Nazagi",
       "zh": "我們去 Nazag 砍木材",
+      "en": "We're going to Nazag to cut wood",
       "quests": [
         "T3",
         "A1"
       ],
       "activity": "上山認樹、搬造舟木材",
+      "activityEn": "Learning trees on the mountain, carrying boat timber",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s02": {
       "title": "02 zing zing zing 小胖豬",
+      "titleEn": "02 zing zing zing Little chubby pig",
       "tao": "Zing zing zing kwak kwak kwak",
       "zh": "小豬在沙灘上抖動及甩掉身上的沙子",
+      "en": "The piglet wiggles on the beach and shakes off the sand",
       "quests": [
         "J3"
       ],
       "activity": "餵豬餵雞",
+      "activityEn": "Feeding the pigs and chickens",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s03": {
       "title": "03 jika cimoy 雨停吧",
+      "titleEn": "03 jika cimoy Stop raining",
       "tao": "Jika cimoy mo peyreherehep",
       "zh": "天上一片烏雲，不要下雨",
+      "en": "A dark cloud in the sky — please don't rain",
       "quests": [
         "P25"
       ],
       "activity": "下雨天、氣象站",
+      "activityEn": "Rainy days, the weather station",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     },
     "s08": {
       "title": "08 tana lilikey 頑皮兄妹",
+      "titleEn": "08 tana lilikey Cheeky siblings",
       "tao": "tana lilikei namen sira wari",
       "zh": "雖然我們兄弟姐妹還小",
+      "en": "Even though we brothers and sisters are still small",
       "quests": [
         "Q07"
       ],
       "activity": "主人家爐灶邊的日常",
+      "activityEn": "Everyday life by the host family's stove",
       "source": "族語 E 樂園 歌謠篇（雅美語，財團法人原住民族語言研究發展基金會製作）",
+      "sourceEn": "ePark Indigenous language site, Songs (Yami; made by the Indigenous Languages Research and Development Foundation)",
       "license": "CC BY-NC-SA 4.0（非商業、標示來源；商業用途需另向基金會申請）",
+      "licenseEn": "CC BY-NC-SA 4.0 (non-commercial, credit the source; commercial use needs separate permission from the foundation)",
       "url": "https://web.klokah.tw/text/main.php?user=sing42",
-      "status": "暫定"
+      "status": "暫定",
+      "statusEn": "Provisional"
     }
   }
 }
