@@ -198,3 +198,17 @@ html[data-ui="en"] .qp-p { font-weight: 600; }
 
 /* keep the notebook button on one line on phones (cards fly into it) */
 .journal-btn { white-space: nowrap; }
+
+/* 0.1.6: 全部收下 — one tap puts every waiting card into the notebook */
+.tc-all {
+  position: relative; z-index: 2; margin-top: 4px; padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(255, 244, 220, 0.75);
+  background: rgba(32, 52, 60, 0.82); color: #fff6e4; font: inherit; font-size: calc(14px * var(--ts, 1)); letter-spacing: 0.06em;
+  cursor: pointer; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.tc-all:hover, .tc-all:focus-visible { background: rgba(160, 52, 40, 0.9); outline: none; }
+.tc-all[hidden] { display: none; }
+.tc-layer.leaving .tc-all { opacity: 0; }
+.tc-stage .tc-ghost {
+  position: absolute; left: 50%; top: 50%; pointer-events: none;
+  transform: translate(calc(-50% + var(--gi) * 10px), calc(-50% - var(--gi) * 8px)) rotate(calc(var(--gi) * 2.2deg)); opacity: 0.92;
+}

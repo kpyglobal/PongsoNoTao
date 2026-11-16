@@ -27,11 +27,33 @@ text = ''.join(sorted(chars))
 open('/tmp/tao-font-chars.txt', 'w', encoding='utf-8').write(text)
 os.makedirs('public/fonts', exist_ok=True)
 # Chinese (titles + body + notebook): 霞鶩文楷 TC
-for src, out in [('LXGWWenKaiTC-Regular.ttf', 'wenkai-400.woff2'), ('LXGWWenKaiTC-Medium.ttf', 'wenkai-500.woff2')]:
-    subprocess.check_call([sys.executable, '-m', 'fontTools.subset', f'fonts-src/{src}',
-        '--text-file=/tmp/tao-font-chars.txt', '--flavor=woff2', '--layout-features=kern,liga,palt,locl',
-        '--no-hinting', '--desubroutinize', f'--output-file=public/fonts/{out}'])
-    print(out, os.path.getsize(f'public/fonts/{out}') // 1024, 'KB')
+# 0.1.6 loading: each weight is split in two. wenkai-*-core.woff2 = the start screens' characters (scripts/font-core.txt,
+# plus ASCII and punctuation), preloaded and limited by unicode-range in fonts.css; wenkai-*.woff2 = every other
+# glyph, only fetched once a screen needs it (the game also asks for it right after the title).
+core = set(c for c in open('scripts/font-core.txt', encoding='utf-8').read() if ord(c) > 0x2e7f) & chars
+basic = set(c for c in chars if ord(c) <= 0x2e7f)
+core_text = ''.join(sorted(core | basic | set('，。、；：？！「」『』（）｜…　')))
+rest_text = ''.join(sorted((chars - core) | basic))
+open('/tmp/tao-font-core.txt', 'w', encoding='utf-8').write(core_text)
+open('/tmp/tao-font-rest.txt', 'w', encoding='utf-8').write(rest_text)
+ranges = []
+for cp in sorted(ord(c) for c in core_text if ord(c) >= 0x20):
+    if ranges and ranges[-1][1] == cp - 1: ranges[-1][1] = cp
+    else: ranges.append([cp, cp])
+urange = ', '.join(f'U+{a:X}' if a == b else f'U+{a:X}-{b:X}' for a, b in ranges)
+open('/tmp/tao-font-core-range.txt', 'w').write(urange)
+for src, stem in [('LXGWWenKaiTC-Regular.ttf', 'wenkai-400'), ('LXGWWenKaiTC-Medium.ttf', 'wenkai-500')]:
+    for part, tf in [('-core', '/tmp/tao-font-core.txt'), ('', '/tmp/tao-font-rest.txt')]:
+        out = f'{stem}{part}.woff2'
+        subprocess.check_call([sys.executable, '-m', 'fontTools.subset', f'fonts-src/{src}',
+            f'--text-file={tf}', '--flavor=woff2', '--layout-features=kern,liga,palt,locl',
+            '--no-hinting', '--desubroutinize', f'--output-file=public/fonts/{out}'])
+        print(out, os.path.getsize(f'public/fonts/{out}') // 1024, 'KB')
+# fonts.css: the core faces come after the full ones, so they are checked first for the characters in their range
+css = open('public/fonts/fonts.css', encoding='utf-8').read()
+import re
+css = re.sub(r'unicode-range: [^;]*;', f'unicode-range: {urange};', css)
+open('public/fonts/fonts.css', 'w', encoding='utf-8').write(css)
 # English / Tao: Cormorant Garamond, static instances, Latin + Tao accents only. It runs small and thin, so the
 # lightest face the game uses is 500 (fonts.css maps 400 to it); no italic face (Tao is never italic).
 latin = ''.join(chr(c) for c in range(0x20, 0x7f)) + '’ʼ‘“”–—…·×ÁÉÍÓÚáéíóúÀÈÌÒàèìòâêîôŋə\u0301'

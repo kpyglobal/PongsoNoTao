@@ -195,20 +195,20 @@
       {
         "title": "移動與機車",
         "titleEn": "Moving and the scooter",
-        "body": "左下方滑動即可移動。點「步行｜機車」可騎上電動機車；環島公路較快，田埂與碼頭會自動放慢。",
-        "bodyEn": "Swipe bottom-left to move. Tap \"Walk | Scooter\" to ride the e-scooter. The round-island road is faster; field banks and docks slow you down automatically."
+        "body": "左下方滑動即可移動。點右下「選單」裡的「步行｜機車」可騎上電動機車，騎在公路上會自動沿著路走，往旁邊推就能離開；環島公路較快，田埂與碼頭會自動放慢。",
+        "bodyEn": "Swipe bottom-left to move. Open \"Menu\" at the bottom right and tap \"Walk | Scooter\" to ride the e-scooter. On a road it follows the road by itself; push sideways to turn off it. The round-island road is faster; field banks and docks slow you down automatically."
       },
       {
         "title": "視角縮放",
         "titleEn": "View and zoom",
-        "body": "單指拖曳轉視角，雙指開合縮放。點「視角」可重置或微調遠近。",
-        "bodyEn": "Drag one finger to turn the view, pinch with two to zoom. Tap \"View\" to reset or adjust the distance."
+        "body": "單指拖曳轉視角，雙指開合縮放。進出部落時鏡頭會自動拉近、拉遠。右下「選單」可重置視角、微調遠近，或關掉導引箭頭。",
+        "bodyEn": "Drag one finger to turn the view, pinch with two to zoom. The camera moves in when you enter a village and back out when you leave. \"Menu\" at the bottom right resets or adjusts the view, or turns the guide arrow off."
       },
       {
         "title": "互動與手札",
         "titleEn": "Interact and notebook",
-        "body": "靠近人物或地點後，點畫面提示或右下「互動」。右上角打開圖鑑手札；點小地圖可環島傳送。",
-        "bodyEn": "Get close to a person or place, then tap the prompt or \"Interact\" at the bottom right. Open the notebook at the top right; tap the minimap to travel around the island."
+        "body": "靠近人物或地點後，點畫面提示或右下「互動」。附近的人或可以採的東西，直接點一下，大家就會走過去交談或採集。右上角打開圖鑑手札；點小地圖可環島傳送。",
+        "bodyEn": "Get close to a person or place, then tap the prompt or \"Interact\" at the bottom right. Tap someone or something to gather nearby and the party walks over to talk or gather. Open the notebook at the top right; tap the minimap to travel around the island."
       },
       {
         "title": "隊伍與任務",
@@ -221,20 +221,20 @@
       {
         "title": "移動與機車",
         "titleEn": "Moving and the scooter",
-        "body": "WASD 或方向鍵移動，方向跟著畫面。按 M 或點「步行｜機車」切換電動機車；環島公路較快，田埂與碼頭會自動放慢。",
-        "bodyEn": "WASD or arrow keys to move; directions follow the screen. Press M or tap \"Walk | Scooter\" to switch to the e-scooter. The round-island road is faster; field banks and docks slow you down automatically."
+        "body": "WASD 或方向鍵移動，方向跟著畫面。按 M 或在右下「選單」點「步行｜機車」切換電動機車；騎在公路上會自動沿著路走，往旁邊按就能離開。環島公路較快，田埂與碼頭會自動放慢。",
+        "bodyEn": "WASD or arrow keys to move; directions follow the screen. Press M or open \"Menu\" at the bottom right and tap \"Walk | Scooter\" to switch to the e-scooter. On a road it follows the road by itself; steer sideways to turn off it. The round-island road is faster; field banks and docks slow you down automatically."
       },
       {
         "title": "視角縮放",
         "titleEn": "View and zoom",
-        "body": "拖曳畫面或按 Q／R 旋轉視角，滾輪縮放。點「視角」可重置或微調遠近。",
-        "bodyEn": "Drag the screen or press Q / R to turn the view; scroll to zoom. Tap \"View\" to reset or adjust the distance."
+        "body": "拖曳畫面或按 Q／R 旋轉視角，滾輪縮放。進出部落時鏡頭會自動拉近、拉遠。右下「選單」可重置視角、微調遠近，或關掉導引箭頭。",
+        "bodyEn": "Drag the screen or press Q / R to turn the view; scroll to zoom. The camera moves in when you enter a village and back out when you leave. \"Menu\" at the bottom right resets or adjusts the view, or turns the guide arrow off."
       },
       {
         "title": "互動與手札",
         "titleEn": "Interact and notebook",
-        "body": "靠近後按 E（或 F、空白鍵），或點畫面提示。按 J 或右上角打開圖鑑手札；點小地圖可環島傳送。",
-        "bodyEn": "When close, press E (or F, Space), or tap the prompt. Press J or tap the top right to open the notebook; tap the minimap to travel around the island."
+        "body": "靠近後按 E（或 F、空白鍵），或點畫面提示。附近的人或可以採的東西，用滑鼠點一下就會走過去交談或採集。按 J 或右上角打開圖鑑手札；點小地圖可環島傳送。",
+        "bodyEn": "When close, press E (or F, Space), or tap the prompt. Click someone or something to gather nearby to walk over and talk or gather. Press J or tap the top right to open the notebook; tap the minimap to travel around the island."
       },
       {
         "title": "隊伍與任務",

@@ -222,6 +222,8 @@ export class CardQueue {
   readonly layer: HTMLElement;
   private stage: HTMLElement;
   private hintEl: HTMLElement;
+  /** 0.1.6: 「全部收下」 when more cards are waiting behind the open one */
+  private allBtn: HTMLButtonElement;
   private q: CardJob[] = [];
   private cur: CardJob | null = null;
   private closing = false;
@@ -239,7 +241,15 @@ export class CardQueue {
     this.layer.tabIndex = -1;
     this.stage = el('div', 'tc-stage');
     this.hintEl = el('div', 'tc-hint');
-    this.layer.append(el('div', 'tc-scrim'), this.stage, this.hintEl);
+    this.allBtn = el('button', 'tc-all') as HTMLButtonElement;
+    this.allBtn.type = 'button';
+    this.allBtn.id = 'btn-cards-all';
+    this.allBtn.hidden = true;
+    this.allBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      void this.collectAll();
+    });
+    this.layer.append(el('div', 'tc-scrim'), this.stage, this.hintEl, this.allBtn);
     this.layer.addEventListener('click', (e) => {
       e.stopPropagation();
       this.tap();
@@ -269,6 +279,7 @@ export class CardQueue {
   push(job: CardJob): void {
     if (job.front) this.q.unshift(job);
     else this.q.push(job);
+    if (this.cur) this.refreshAll();
   }
 
   /** show the next card if none is up; the game calls this only when no dialogue / menu is open */
@@ -285,6 +296,7 @@ export class CardQueue {
     this.layer.dataset.key = job.key;
     this.stage.replaceChildren(job.el);
     this.hintEl.textContent = job.hint ?? (job.kind === 'page' ? '點一下任何地方關閉' : '點一下收進手札');
+    this.refreshAll();
     this.layer.hidden = false;
     this.layer.classList.remove('leaving');
     void this.layer.offsetWidth;
@@ -298,6 +310,45 @@ export class CardQueue {
     try { this.layer.focus({ preventScroll: true }); } catch { /* old browsers */ }
     job.onShow?.(job.el);
     if (job.auto) this.timer = window.setTimeout(() => void this.close(), job.auto * 1000);
+  }
+
+  /** the 「全部收下」 button: shown while 2 or more cards are up / waiting */
+  private refreshAll(): void {
+    const n = (this.cur ? 1 : 0) + this.q.length;
+    this.allBtn.hidden = n < 2;
+    this.allBtn.textContent = `全部收下（${n}）`;
+  }
+
+  /** 0.1.6: put the open card and every waiting one into the notebook at once (they fly in together) */
+  async collectAll(): Promise<void> {
+    const c = this.cur;
+    if (!c || this.closing) return;
+    this.closing = true;
+    window.clearTimeout(this.timer);
+    const rest = this.q;
+    this.q = [];
+    this.allBtn.hidden = true;
+    this.layer.classList.add('leaving');
+    // the waiting cards fan out behind the open one for a moment, then everything flies to the notebook button
+    const ghosts = rest.slice(0, 6).map((j, i) => {
+      const g = j.el;
+      g.classList.add('tc-ghost');
+      g.style.setProperty('--gi', String(i + 1));
+      this.stage.prepend(g);
+      return g;
+    });
+    const btn = this.btn();
+    await Promise.all([
+      zoomButton(c.el, btn, 'close', 560),
+      ...ghosts.map((g, i) => new Promise<void>((r) => window.setTimeout(() => void zoomButton(g, btn, 'close', 520).then(r), 70 * (i + 1)))),
+    ]);
+    this.stage.replaceChildren();
+    this.layer.classList.remove('show', 'leaving');
+    this.layer.hidden = true;
+    this.cur = null;
+    this.closing = false;
+    for (const j of rest) this.shown.push(j.key);
+    for (const j of [c, ...rest]) j.after?.();
   }
 
   /** tap anywhere: skip the typing first (quest page), else close */

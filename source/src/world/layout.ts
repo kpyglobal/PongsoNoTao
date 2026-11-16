@@ -101,8 +101,9 @@ export const VILLAGE_DEFS: VillageDef[] = [
   mkCoast({ id: 'iranmeylek', lon: 121.56458, lat: 22.05782, shift: -29, rows: [3, 2], extras: ['shop', 'modern'] }),
   mkCoast({ id: 'ivalino', lon: 121.56639, lat: 22.03827, shift: -14, rows: [4, 3], extras: [] }),
   // 0.1.5: 紅頭 at the real 紅頭村 (OSM), where the 中橫公路 starts; 漁人 and 紅頭 nudged apart so both fit
-  mkCoast({ id: 'imorod', lon: 121.55367, lat: 22.02549, shift: -4, rows: [3, 2], extras: ['church', 'modern'], plazaH: 1.25 }),
-  mkCoast({ id: 'iratay', lon: 121.54292, lat: 22.02742, shift: 19, rows: [3, 2], extras: ['church', 'modern'] }),
+  // 0.1.6: a little further apart again (紅頭 −4 → −6, 漁人 19 → 21; old saves: legacy.ts WORLD_REV 4)
+  mkCoast({ id: 'imorod', lon: 121.55367, lat: 22.02549, shift: -6, rows: [3, 2], extras: ['church', 'modern'], plazaH: 1.25 }),
+  mkCoast({ id: 'iratay', lon: 121.54292, lat: 22.02742, shift: 21, rows: [3, 2], extras: ['church', 'modern'] }),
 ];
 
 /** local (u = along coast / right, v = toward sea) -> world */
@@ -921,6 +922,23 @@ export function remapSavePos014(x: number, z: number): Vec2 {
   const L = Math.hypot(dx, dz);
   if (L > 14) { dx *= 14 / L; dz *= 14 / L; }
   return nearestRingPoint(to.x + dx, to.z + dz);
+}
+/**
+ * 0.1.6: a 0.1.5 save position (world revision 3) → the same spot after 紅頭 and 漁人 moved a little apart:
+ * points near either village move with it (fading out over 30–45 m), everything else stays.
+ */
+const CENTRES_015: [string, number, number][] = [['imorod', 12.4, 29.9], ['iratay', -28.2, 17.8]];
+export function remapSavePos015(x: number, z: number): Vec2 {
+  let ox = 0, oz = 0;
+  for (const [id, cx, cz] of CENTRES_015) {
+    const v = VILLAGE_DEFS.find((d) => d.id === id);
+    if (!v) continue;
+    const d = Math.hypot(x - cx, z - cz);
+    const w = d <= 30 ? 1 : d >= 45 ? 0 : (45 - d) / 15;
+    ox += (v.cx - cx) * w;
+    oz += (v.cz - cz) * w;
+  }
+  return { x: x + ox, z: z + oz };
 }
 function nearestRingPoint(x: number, z: number): Vec2 {
   let best = { x, z }, bd = Infinity;

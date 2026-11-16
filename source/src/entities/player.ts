@@ -2,7 +2,7 @@ import { outfitBaseSheet } from '../systems/outfits';
 import * as THREE from 'three';
 import { PLAYER_OUTFITS, type Assets, type PlayerOutfit } from '../core/assets';
 import type { Input } from '../core/input';
-import { distToRing, WATER_LEVEL } from '../world/height';
+import { distToRing, roadNear, WATER_LEVEL } from '../world/height';
 import {
   canStand,
   ensureStanding,
@@ -45,6 +45,44 @@ export class Player {
   private bobT = 0;
   /** last dry-land spot (where the player steps back ashore after paddling) */
   private shore = { x: 0, z: 0 };
+  /** 0.1.6 tap-to-walk: waypoints to follow while the stick is idle (any stick / key input cancels) */
+  autoPath: { x: number; z: number }[] | null = null;
+  private autoI = 0;
+  private autoCheck = { t: 0, x: 0, z: 0 };
+  /** set for one read when the last waypoint is reached / when the walk was cut short */
+  autoResult: 'arrived' | 'cancelled' | 'stuck' | null = null;
+  /** 0.1.6: on the scooter, steer along the road while the stick points roughly along it */
+  roadFollow = true;
+
+  startAuto(path: { x: number; z: number }[]): void {
+    this.autoPath = path.length ? path : null;
+    this.autoI = 0;
+    this.autoResult = null;
+    this.autoCheck = { t: 0, x: this.x, z: this.z };
+  }
+
+  stopAuto(why: 'cancelled' | 'stuck' | null = 'cancelled'): void {
+    if (!this.autoPath) return;
+    this.autoPath = null;
+    this.autoResult = why;
+  }
+
+  /** stick direction (world) → the road's direction when it points within ~40° of it, pulled back toward the centre */
+  private followRoad(mx: number, mz: number): { mx: number; mz: number } {
+    const r = roadNear(this.x, this.z, 2.6);
+    if (!r) return { mx, mz };
+    let { tx, tz } = r;
+    let off = r.off;
+    const dot = mx * tx + mz * tz;
+    if (dot < 0) { tx = -tx; tz = -tz; off = -off; }
+    if (Math.abs(dot) < 0.76) return { mx, mz }; // pushing across the road: the rider turns off it
+    // left normal of the travel direction is (-tz, tx); steer against the sideways offset (gently)
+    const pull = Math.max(-0.35, Math.min(0.35, off * 0.22));
+    const nx = tx * 0.92 + mx * 0.08 + tz * pull;
+    const nz = tz * 0.92 + mz * 0.08 - tx * pull;
+    const L = Math.hypot(nx, nz) || 1;
+    return { mx: nx / L, mz: nz / L };
+  }
 
   constructor(assets: Assets) {
     this.sprite = makeCharacter(assets, 'player');
@@ -222,14 +260,47 @@ export class Player {
       mx = v.mx;
       mz = v.mz;
     }
+    const stick = Math.hypot(mx, mz) > 0.15;
+    if (stick && this.autoPath) this.stopAuto('cancelled');
+    if (stick && this.mode === 'scooter' && this.roadFollow) {
+      const L = Math.hypot(mx, mz);
+      const f = this.followRoad(mx / L, mz / L);
+      mx = f.mx * L;
+      mz = f.mz * L;
+    }
+    if (!stick && !blocked && this.autoPath && !canoe) {
+      // tap-to-walk: head for the next waypoint
+      let p = this.autoPath[this.autoI];
+      while (p && Math.hypot(p.x - this.x, p.z - this.z) < 0.3) p = this.autoPath[++this.autoI];
+      if (!p) {
+        this.autoPath = null;
+        this.autoResult = 'arrived';
+      } else {
+        const dx = p.x - this.x;
+        const dz = p.z - this.z;
+        const L = Math.hypot(dx, dz) || 1;
+        // slow down onto the last point instead of overshooting it
+        const last = this.autoI === this.autoPath.length - 1;
+        const k = last ? Math.min(1, Math.max(0.35, L / (this.currentSpeed() * dt * 2))) : 1;
+        mx = (dx / L) * k;
+        mz = (dz / L) * k;
+        // no progress for a second (someone in the way): give up
+        this.autoCheck.t += dt;
+        if (this.autoCheck.t > 1) {
+          if (Math.hypot(this.x - this.autoCheck.x, this.z - this.autoCheck.z) < 0.25) this.stopAuto('stuck');
+          this.autoCheck = { t: 0, x: this.x, z: this.z };
+        }
+      }
+    }
     const len = Math.hypot(mx, mz);
     const spr = this.active;
-    spr.walking = len > 0.15;
-    if (len > 0.15) {
+    spr.walking = len > 0.15 || (!!this.autoPath && len > 0.01);
+    if (len > 0.15 || (this.autoPath && len > 0.01)) {
+      const sp = Math.min(1, len);
       mx /= len;
       mz /= len;
       this.yaw = Math.atan2(mx, mz);
-      const step = this.currentSpeed() * dt;
+      const step = this.currentSpeed() * dt * (this.autoPath ? sp : 1);
       const next = canoe ? paddleMove(this.x, this.z, mx * step, mz * step) : slideMove(this.x, this.z, mx * step, mz * step, PLAYER_RADIUS);
       this.x = next.x;
       this.z = next.z;

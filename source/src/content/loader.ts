@@ -37,7 +37,38 @@ export interface ContentDB {
 export type RawContent = Record<string, unknown>;
 
 /** Vite bundles every content file at build time (Node scripts pass their own RawContent: scripts/dev/content-node.ts) */
-const bundled = (): RawContent => import.meta.glob('/content/**/*.json', { eager: true, import: 'default' }) as RawContent;
+const zhBundled = (): RawContent => import.meta.glob('/content/**/*.json', { eager: true, import: 'default' }) as RawContent;
+/** 0.1.6: English fields of the content (same file paths and shape; vite.config.ts contentSplit), when loaded */
+let enOverlay: RawContent | null = null;
+let merged: RawContent | null = null;
+function overlay(base: unknown, en: unknown): unknown {
+  if (en === undefined || en === null || en === 0) return base;
+  if (Array.isArray(base) && Array.isArray(en)) return base.map((x, i) => overlay(x, en[i]));
+  if (base && typeof base === 'object' && en && typeof en === 'object' && !Array.isArray(en)) {
+    const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
+    for (const [k, v] of Object.entries(en as Record<string, unknown>)) out[k] = k in out ? overlay(out[k], v) : v;
+    return out;
+  }
+  return base === undefined ? en : base;
+}
+const bundled = (): RawContent => {
+  const zh = zhBundled();
+  if (!enOverlay) return zh;
+  if (!merged) {
+    merged = {};
+    for (const [p, v] of Object.entries(zh)) merged[p] = overlay(v, enOverlay[p]);
+  }
+  return merged;
+};
+/** load the English half of the content before the first content() call (English and 中文＋English only) */
+export async function loadContentLang(): Promise<void> {
+  if (uiLang() === 'zh' || enOverlay) return;
+  try {
+    enOverlay = ((await import('virtual:tao-content-en')) as { default: RawContent }).default;
+  } catch (e) {
+    console.warn('English content did not load; showing Chinese', e);
+  }
+}
 
 /** entries of every file in a type folder: arrays are concatenated, objects merged by key (key → id) */
 function collect<T>(raw: RawContent, dir: string, key: string): (T & { __file: string })[] {

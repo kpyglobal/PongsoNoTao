@@ -222,7 +222,13 @@ export function renderSaveTab(pages: HTMLElement, h: SaveTabHooks): void {
   langRow.append(el('span', 'nb-set-label', '對話'), ...htmlToNodes(langToggleHtml()));
   const uiRow = el('div', 'nb-set-row nb-set-ui');
   uiRow.append(el('span', 'nb-set-label', '語言'), ...htmlToNodes(uiLangToggleHtml()));
-  box.append(uiRow, langRow, soundControls('nb-ap'), el('p', 'muted nb-ver', `版本 ${__APP_VERSION__}`));
+  // 0.1.6: the guide arrow switch (the same one as in the 選單 panel)
+  const guideRow = el('div', 'nb-set-row nb-set-guide');
+  const gb = el('button', 'nb-guide-btn', '導引箭頭');
+  gb.type = 'button';
+  gb.dataset.guideToggle = '';
+  guideRow.append(el('span', 'nb-set-label', '導引'), gb);
+  box.append(uiRow, langRow, guideRow, soundControls('nb-ap'), el('p', 'muted nb-ver', `版本 ${__APP_VERSION__}`));
   st.append(box);
   root.append(st);
 

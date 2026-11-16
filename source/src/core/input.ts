@@ -34,6 +34,9 @@ export class Input {
 
   private canvas: HTMLCanvasElement;
   private pointers = new Map<number, { x: number; y: number }>();
+  /** 0.1.6: a short tap on the island (no drag, no pinch): screen point → Game.tapAt */
+  onTap: ((x: number, y: number) => void) | null = null;
+  private tapStart: { id: number; x: number; y: number; t: number; moved: boolean } | null = null;
   private pinchBase = 0;
   private orbitId: number | null = null;
   private lastX = 0;
@@ -86,8 +89,10 @@ export class Input {
         this.dragging = false;
         this.orbitId = null;
         this.pinchBase = this.pinchDistance();
+        this.tapStart = null;
         return;
       }
+      this.tapStart = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now(), moved: false };
       this.orbitId = e.pointerId;
       this.dragging = true;
       this.lastX = e.clientX;
@@ -109,6 +114,7 @@ export class Input {
         } else this.pinchBase = dist;
         return;
       }
+      if (this.tapStart?.id === e.pointerId && Math.hypot(e.clientX - this.tapStart.x, e.clientY - this.tapStart.y) >= 10) this.tapStart.moved = true;
       if (!this.dragging || this.orbitId !== e.pointerId) return;
       this.dragDx += e.clientX - this.lastX;
       this.dragDy += e.clientY - this.lastY;
@@ -116,6 +122,11 @@ export class Input {
       this.lastY = e.clientY;
     };
     this.onPointerUp = (e: PointerEvent): void => {
+      const ts = this.tapStart;
+      if (ts && ts.id === e.pointerId) {
+        this.tapStart = null;
+        if (e.type === 'pointerup' && !ts.moved && performance.now() - ts.t < 450 && Math.hypot(e.clientX - ts.x, e.clientY - ts.y) < 10) this.onTap?.(e.clientX, e.clientY);
+      }
       this.pointers.delete(e.pointerId);
       if (this.orbitId === e.pointerId) {
         this.dragging = false;

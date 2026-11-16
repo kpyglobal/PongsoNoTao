@@ -45,3 +45,22 @@ html[data-ui="en"] .notebook p, html[data-ui="en"] .notebook li, html[data-ui="e
 [lang="tao"], .line-tao, .sb-tao, .nb-tao, .nd-tao, .tao, .world-label small, .ap-tao, .cs-tao { font-style: normal !important; }
 /* there are no italic faces; never fake one either (so nothing can lean, Tao included) */
 html { font-synthesis-style: none; }
+
+/* 0.1.6 中文＋English: buttons, notebook tabs and notebook text get a much smaller English line under the Chinese
+   (src/ui/i18n.ts writes it into data-en); the Chinese there is a little smaller too. Tao words are never touched. */
+html[data-ui="zhen"] [data-en] { font-size: 0.95em; }
+html[data-ui="zhen"] [data-en]::after {
+  content: attr(data-en); display: block; font-family: "Cormorant Garamond", Georgia, serif; font-style: normal;
+  font-size: 0.66em; font-weight: 600; line-height: 1.15; letter-spacing: 0.01em; color: inherit; opacity: 0.78;
+  white-space: normal; text-transform: none; margin-top: 1px;
+}
+html[data-ui="zhen"] button[data-en], html[data-ui="zhen"] [role="radio"][data-en] { line-height: 1.12; }
+/* pill buttons keep one line of English (cut with … when it does not fit) */
+html[data-ui="zhen"] .chip[data-en]::after, html[data-ui="zhen"] .mode-toggle [data-en]::after, html[data-ui="zhen"] .cam-btns button[data-en]::after,
+html[data-ui="zhen"] .minimap-badge[data-en]::after { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 9em; margin-inline: auto; }
+/* desktop notebook ribbons stand upright: the English reads sideways under the Chinese */
+html[data-ui="zhen"] .nb-ribbons button[data-en]::after { font-size: 0.6em; margin: 0 0 0 2px; }
+html[data-ui="zhen"] .cam-btns .act[data-en]::after { font-size: 0.62em; }
+html[data-ui="zhen"] .notebook p[data-en]::after, html[data-ui="zhen"] .notebook li[data-en]::after { font-size: 0.78em; margin-top: 2px; opacity: 0.72; }
+/* the tracked quest's wavy line stays under the Chinese only (an inline-block line does not inherit it) */
+html[data-ui="zhen"] .nb-item .nb-t[data-en]::after { display: inline-block; width: 100%; text-decoration: none; }

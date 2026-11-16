@@ -60,8 +60,8 @@
       "aka": [
         "Imowrod"
       ],
-      "x": 12.4,
-      "z": 29.9,
+      "x": 14.5,
+      "z": 31.2,
       "kind": "tribe",
       "flavor": "南岸／西南，飛魚傳說起源地；衛生所、郵局與八代灣在此一帶。",
       "flavorEn": "On the south / south-west coast, where the flying fish story began; the health station, the post office and Badai Bay are around here."
@@ -71,8 +71,8 @@
       "zh": "漁人",
       "en": "Iratay",
       "tao": "Iratay",
-      "x": -28.2,
-      "z": 17.8,
+      "x": -29.6,
+      "z": 15.9,
       "kind": "tribe",
       "flavor": "西南岸平坦寬敞之地，蘭嶼機場所在。腹地最小。",
       "flavorEn": "A flat, open place on the south-west coast, where Lanyu Airport is. It has the least land."
@@ -93,8 +93,8 @@
       "zh": "蘭嶼衛生所",
       "en": "Lanyu Health Station",
       "tao": "",
-      "x": -10.8,
-      "z": 20.4,
+      "x": -10.5,
+      "z": 20.3,
       "kind": "facility",
       "flavor": "全島唯一衛生所，位於紅頭部落。遊戲中作為傳統食材與現代營養學對話的據點。",
       "flavorEn": "The only health station on the island, in Imorod. In the game it is where traditional food and modern nutrition meet."
@@ -162,8 +162,8 @@
       "zh": "紅頭水芋田",
       "en": "Imorod taro field",
       "tao": "soli",
-      "x": -2,
-      "z": 18.5,
+      "x": 1,
+      "z": 18.9,
       "kind": "taro"
     },
     "taro_iratay": {
@@ -171,8 +171,8 @@
       "zh": "漁人水芋田",
       "en": "Iratay taro field",
       "tao": "soli",
-      "x": -22.8,
-      "z": 9.2,
+      "x": -23.8,
+      "z": 7.7,
       "kind": "taro"
     },
     "fishzone_west": {
@@ -216,8 +216,8 @@
       "zh": "漁人灘頭",
       "en": "Iratay boat beach",
       "tao": "",
-      "x": -33.4,
-      "z": 20.1,
+      "x": -35,
+      "z": 18,
       "kind": "shore"
     },
     "iratay_school": {
@@ -225,8 +225,8 @@
       "zh": "漁人的學校操場",
       "en": "Iratay school playground",
       "tao": "",
-      "x": -26.3,
-      "z": 20.8,
+      "x": -28,
+      "z": 19.1,
       "kind": "facility"
     },
     "wakay_iratay": {
@@ -234,8 +234,8 @@
       "zh": "漁人的地瓜田",
       "en": "Iratay sweet potato field",
       "tao": "",
-      "x": -30.4,
-      "z": 10,
+      "x": -31.4,
+      "z": 8.1,
       "kind": "field"
     },
     "owl_road": {
@@ -267,16 +267,16 @@
       "zh": "大天池（遠看）",
       "en": "Big Heaven Lake (seen from afar)",
       "tao": "",
-      "x": 31.7,
-      "z": 36.7,
+      "x": 32.1,
+      "z": 36.5,
       "kind": "viewpoint"
     },
     "badai_view": {
       "zh": "八代灣觀景點",
       "en": "Badai Bay lookout",
       "tao": "",
-      "x": 1.5,
-      "z": 20.6,
+      "x": 4.2,
+      "z": 21.1,
       "kind": "viewpoint"
     },
     "hutou_slope": {

@@ -7,7 +7,7 @@
 > - Cultural content is provisional and unverified, and is not authorized for reuse without the community's consent.
 > - Nothing in this project implies endorsement by any person, community, organization or institution.
 
-**Version 0.1.5**
+**Version 0.1.6**
 
 Pongso no Tao is a browser RPG set on Lanyu (Pongso no Tao). Players walk the island with a small party and learn about Tao language, culture, traditional food, ingredients and nutrition. The current build is an early prototype for review, not a finished or authorized cultural work.
 
@@ -16,7 +16,19 @@ Pongso no Tao is a browser RPG set on Lanyu (Pongso no Tao). Players walk the is
 
 Rights are held by Kristen Pin-Chun Yang, PhD and Larry Syu-Heng Lai, PhD. See [LICENSE](./LICENSE). Third-party material (the game engine, fonts, and provisional language or song sources) keeps its own terms; see [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md).
 
-### What's new in 0.1.5
+### What's new in 0.1.6
+
+- **Faster loading:** on a simulated phone network, the first visit downloads about 1.8 MB before the title screen instead of about 2.8 MB, and the wait drops from about 15 to about 11 seconds. The font comes in two parts (the start screens' characters first, the rest in the background). Chinese-only players no longer download the English text. Character art and music files are about 40% smaller and look and sound the same. Cards, portraits and album thumbnails download quietly in the background while you play, with a small chip at the bottom; nothing is downloaded ahead on Data Saver. When you head toward a village, its people, music and scenic photos are prepared first.
+- **Tap someone or something nearby to walk there:** within about 12 m, tap a villager and the party walks over along walkable ground and starts talking; tap something you can gather and it is gathered on arrival. Taps further away do nothing. Push the stick or a direction key to stop and walk yourself.
+- **One "Menu" at the bottom right:** view, zoom, walk / scooter and the guide arrow fold into "Menu". The "Interact" button is bigger and stands on its own. Works on phones held upright or sideways and on computers.
+- **The scooter follows the road:** push forward and the scooter turns with the road; push sideways to leave it.
+- **"Continue your last journey":** with a save, the title screen offers this button; it skips the party screen and the plane / boat opening and puts you back where you saved.
+- **Camera and guidance:** the camera moves in when you enter a village and out when you leave; your own zoom stays until the next village. A small guide arrow points to the next place of the tracked quest, with the distance; turn it off in "Menu" or in the notebook settings.
+- **Collect all:** when several cards unlock at once, a "Collect all" button sends them all into the notebook with one tap.
+- **More English in Chinese + English mode:** buttons, notebook tabs and notebook text get a small English line. Tao words get none and are never italic.
+- **Map:** Imorod and Iratay are a little further apart (village centres about 42 m → 47 m). Old saves move the party to the same spot in the village's new position.
+
+### What was new in 0.1.5
 
 - **Chinese, English, or both:** you can play in Chinese, English, or Chinese + English. Pick a language on the start screens or later in the notebook settings, next to music and sound. The choice is remembered. If you have never picked one, a Chinese-language browser starts in Chinese, and any other browser starts in Chinese + English. In the bilingual mode, a smaller English line sits under the Chinese; with one language the sizes stay as before. Tao words stay in Tao (akokey, soli, tatala …), with an explanation wherever the Chinese gives one. Villages use their Tao names: Yayo, Iraraley, Iranmeylek, Ivalino, Imorod, Iratay. "Grandma" is always used for 外婆.
 - **New fonts:** the type set is now「霞光書卷」: LXGW WenKai TC for Chinese titles, text and the notebook, and Cormorant Garamond for English and Tao. Tao words are never in italics. The bundled fonts are about 1 MB, smaller than before.
@@ -78,6 +90,18 @@ Then open the local address printed by Vite (usually `http://localhost:5173/`).
 - 遊玩：<https://kpyglobal.github.io/PongsoNoTao/>
 - 攻略：<https://kpyglobal.github.io/PongsoNoTao/guide.html>（獨立網頁，遊戲裡不會連過去）
 
+### 0.1.6 更新
+
+- **載入更快：** 模擬一般手機網路時，第一次打開、標題畫面出現前要下載的東西從約 2.8 MB 變成約 1.8 MB，等待從約 15 秒縮短到約 11 秒。字型分成兩份（開頭畫面用到的字先下載，其他的在背景下載）。只玩中文的玩家不再下載英文內容。人物圖和音樂檔案小了約四成，看起來、聽起來都一樣。卡片、頭像和相簿縮圖會在玩的時候在背景慢慢下載，畫面下方有一個小提示；省流量模式下不會預先下載。走近一個部落時，那裡的村民、音樂和景點照片會先準備好。
+- **點一下附近的人或東西就會走過去：** 大約 12 公尺內，點村民，大家會沿著可以走的路走過去，然後開始對話；點可以採集的東西，走到就會採。點太遠的地方不會有反應。途中推搖桿或按方向鍵就會停下來，改成自己走。
+- **右下角收成一個「選單」：** 視角、縮放、步行／機車和導引箭頭都收進「選單」。「互動」按鈕變大，單獨放在旁邊。手機直拿、橫拿和電腦都適用。
+- **機車會沿著公路騎：** 往前推，機車會順著路轉彎；往旁邊推就能離開公路。
+- **「繼續上次的旅程」：** 有存檔時，標題畫面會有這個按鈕，按下去會跳過選角色和搭飛機／搭船的開場，直接回到上次存檔的地方。
+- **鏡頭與指引：** 走進部落時鏡頭拉近，離開時拉遠；自己縮放的話，會保持到下一次進出部落。一個小小的導引箭頭會指向目前追蹤任務的下一個地點，並顯示距離；可以在「選單」或手札設定裡關掉。
+- **全部收下：** 一次解鎖好幾張卡片時，點「全部收下」就會全部一起飛進手札。
+- **中英雙語更完整：** 按鈕、手札分頁和手札內文也加上小字英文。族語不加英文，也不會變成斜體。
+- **地圖：** 紅頭和漁人稍微拉開了一點（兩村中心從約 42 公尺變成約 47 公尺）。舊存檔會把隊伍移到同一個部落新位置的同一個地方。
+
 ### 0.1.5 更新
 
 - **可以選中文、英文，或兩種一起：** 開頭畫面或手札設定裡就能選語言（中文／English／中文＋English），就在音樂、音效旁邊，選好會記住。如果還沒選過，用中文瀏覽器會開中文，其他瀏覽器會開「中文＋English」。兩種並列時，中文下面會再出一行比較小的英文；只選一種時，字的大小和以前一樣。族語詞仍用族語（akokey、soli、tatala……），華語有解釋的地方，英文也會有。部落用族語名：Yayo、Iraraley、Iranmeylek、Ivalino、Imorod、Iratay。「外婆」在英文裡一律寫 Grandma。
@@ -123,4 +147,4 @@ Then open the local address printed by Vite (usually `http://localhost:5173/`).
 - **小人物關節更自然：** 膝蓋和手肘看起來更順。
 - **水下景點：** 每個潛水點維持所有人看同一張圖；沒用到的草稿圖已從原始檔中移除。
 
-版本 0.1.5。權利由 Kristen Pin-Chun Yang, PhD 與 Larry Syu-Heng Lai, PhD 持有，詳見 LICENSE。
+版本 0.1.6。權利由 Kristen Pin-Chun Yang, PhD 與 Larry Syu-Heng Lai, PhD 持有，詳見 LICENSE。

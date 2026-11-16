@@ -304,3 +304,10 @@ export function startBgm(probe: () => BgmProbe | null): void {
   (window as unknown as { __bgm?: () => ReturnType<Bgm['state']> }).__bgm = () => inst!.state();
   (window as unknown as { __bgmPick?: typeof pickTrack }).__bgmPick = pickTrack; // tests: the pick rules
 }
+
+/** 0.1.6: the music file of a village's theme (site-relative path), for the background warm-up near it */
+export function villageTrackPath(villageId: string): string | null {
+  const id = M.villages[villageId];
+  const t = id ? M.tracks[id] : undefined;
+  return t ? `assets/audio/bgm/${t.file}` : null;
+}

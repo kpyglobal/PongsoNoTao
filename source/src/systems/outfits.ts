@@ -127,5 +127,5 @@ export class Outfits {
   }
 }
 
-const sheetUrl = (s: string): string => assetUrl(`assets/sprites/characters/${s}_sheet.png`);
+const sheetUrl = (s: string): string => assetUrl(`assets/sprites/characters/${s}_sheet.webp`);
 const portraitUrl = (p: string): string => assetUrl(`assets/portraits/${p}.webp`);
