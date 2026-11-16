@@ -20,8 +20,8 @@ export const OLD_VILLAGES: OldVillage[] = [
   old('iratay', -20, 22, -0.25),
 ];
 
-/** world layout revision written into saves (1 = the 0.1.0–0.1.3 oval island, 2 = the 0.1.4 island, 3 = the 0.1.5 bigger island) */
-export const WORLD_REV = 3;
+/** world layout revision written into saves (1 = the 0.1.0–0.1.3 oval island, 2 = the 0.1.4 island, 3 = the 0.1.5 bigger island, 4 = 0.1.6: 紅頭 / 漁人 a little further apart) */
+export const WORLD_REV = 4;
 
 /** old world point → { nearest old village, local u (clockwise along the coast), w (toward the sea) } */
 export function oldLocal(x: number, z: number): { id: string; u: number; w: number; dist: number } {

@@ -12,7 +12,7 @@ The following fonts are included as subsetted WOFF2 files and remain under the S
 
 **Game fonts (0.1.5 set「霞光書卷」):**
 
-- **LXGW WenKai TC（霞鶩文楷 TC）** — The LXGW WenKai Project Authors ([lxgw/LxgwWenkaiTC](https://github.com/lxgw/LxgwWenkaiTC)). Used for Chinese titles, body text and the notebook. The OFL text is at [`source/fonts-src/LXGWWenKaiTC-OFL.txt`](./source/fonts-src/LXGWWenKaiTC-OFL.txt).
+- **LXGW WenKai TC（霞鶩文楷 TC）** — The LXGW WenKai Project Authors ([lxgw/LxgwWenkaiTC](https://github.com/lxgw/LxgwWenkaiTC)). Used for Chinese titles, body text and the notebook. Since 0.1.6 each weight also ships as a small first-screen subset. The OFL text is at [`source/fonts-src/LXGWWenKaiTC-OFL.txt`](./source/fonts-src/LXGWWenKaiTC-OFL.txt).
 - **Cormorant Garamond** — The Cormorant Project Authors ([CatharsisFonts/Cormorant](https://github.com/CatharsisFonts/Cormorant)). Used for English and Tao text. No italic face is shipped; Tao words are never shown in italics. The OFL text is at [`source/fonts-src/Cormorant-OFL.txt`](./source/fonts-src/Cormorant-OFL.txt).
 
 **Guide page fonts** (the separate guide page still uses these):

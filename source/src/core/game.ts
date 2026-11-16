@@ -42,7 +42,7 @@ import { lastPaintMs, Island, WORLD_BOX } from '../world/island';
 import { initCollision, canStand, findSafeStand, PLAYER_RADIUS, NPC_RADIUS } from '../world/collision';
 import { buildShade, shadeAt, shadeStats } from '../world/shade';
 import type { SpriteBillboard } from '../entities/billboard';
-import { LANDMARKS, facilityBoxes, remapSavePos, remapSavePos014, useWorldLang, VILLAGE_DEFS, FACILITIES } from '../world/layout';
+import { LANDMARKS, facilityBoxes, remapSavePos, remapSavePos014, remapSavePos015, useWorldLang, VILLAGE_DEFS, FACILITIES } from '../world/layout';
 import { LANYU_OUTLINE, MAP_SCALE } from '../world/outline';
 import { WORLD_REV } from '../world/legacy';
 import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
@@ -62,6 +62,9 @@ import { itemCard, itemIcon, needRows, outfitCard, photoCard, recipeCard, recipe
 import { questPageJob } from '../ui/questPage';
 import { fxOn } from '../ui/fly';
 import { sfxShutter } from '../systems/audio/sfx';
+import { onWarmProgress, warmBackground, warmVillage, warmStats } from '../systems/prefetch';
+import { villageTrackPath } from '../systems/audio/bgm';
+import { findWalkPath } from '../systems/autoWalk';
 
 const ROLE_ZH: Record<Role, string> = { m: '族男', f: '族女', t: '旅人' };
 /** 0.1.5: small camera icon for a scenic spot already in the album (drawn, no emoji font needed) */
@@ -89,6 +92,11 @@ function introEnabled(): boolean {
   if (v === '1') return true;
   if (v === '0') return false;
   return !(typeof navigator !== 'undefined' && navigator.webdriver);
+}
+/** 0.1.6: guide arrow switch (on unless turned off) */
+const GUIDE_KEY = 'tao-rpg.guide';
+function readGuidePref(): boolean {
+  try { return localStorage.getItem(GUIDE_KEY) !== '0'; } catch { return true; }
 }
 const CAM_MIN_DIST = 16;
 const CAM_MAX_DIST = 46;
@@ -217,6 +225,18 @@ export class Game {
   private markers = new Map<string, { obj: CSS2DObject; el: HTMLElement; npc?: NpcActor; key: string }>();
   ready = false;
   timings = { boot: 0, assets: 0, grid: 0, paint: 0, world: 0 };
+  /** 0.1.6: the village the party is in (camera zoom in / out on the way in / out) */
+  private villageIn: string | null = null;
+  /** 0.1.6: villages whose people / music / photos were warmed in the background */
+  private villageWarm = new Set<string>();
+  private bgWarmAt = 0;
+  /** 0.1.6 guide arrow toward the tracked quest's next place (menu / settings switch, saved in localStorage) */
+  private guideOn = readGuidePref();
+  private guideTarget: { x: number; z: number } | null = null;
+  /** 0.1.6 tap-to-walk: what the walk is for (talk / gather on arrival) and the marker on the ground */
+  private autoGoal: { kind: 'npc'; npc: NpcActor } | { kind: 'gather'; node: LiveNode } | null = null;
+  private walkMark: HTMLElement | null = null;
+  private readonly gv = new THREE.Vector3();
   /** 0.1.5 unlock cards / quest pages / photos (src/ui/cards.ts) */
   private cards!: CardQueue;
   /** cards, quest pages and arrival photos run on their own (off in automated runs unless ?cards=1; tests can switch) */
@@ -337,7 +357,12 @@ export class Game {
       onSwitch: (r) => this.switchMember(r),
       onSoloAbort: () => this.abortSolo(),
       onContinue: () => void this.continueSaved(),
+      onTitleContinue: () => void this.continueSaved(),
+      onGuide: (on) => this.setGuide(on),
     };
+    this.ui.setGuideButton(this.guideOn);
+    onWarmProgress((done, total) => this.ui.setBgLoad(done, total));
+    this.input.onTap = (x, y) => this.tapAt(x, y);
     this.ui.onTrack = (id) => {
       this.quests.tracked = id;
       this.questDirty = true;
@@ -345,8 +370,10 @@ export class Game {
     };
     // batch 1b: 手札 pages drawn by src/ui/phase1b.ts
     this.ui.tabRenderers.album = (pages) => renderAlbum(pages, this.albumVM());
-    this.ui.tabRenderers.save = (pages) =>
-      renderSaveTab(pages, { code: () => this.saveCode(), download: () => this.downloadSave(), importText: (t) => this.importSave(t) });
+    this.ui.tabRenderers.save = (pages) => {
+        renderSaveTab(pages, { code: () => this.saveCode(), download: () => this.downloadSave(), importText: (t) => this.importSave(t) });
+        this.ui.setGuideButton(this.guideOn);
+      };
     const flush = (): void => {
       if (this.state.started) this.saveNow();
     };
@@ -446,6 +473,12 @@ export class Game {
     }
     this.ready = true;
     this.timings.boot = performance.now() - boot0;
+    // 0.1.6: the start screens only needed the small core fonts; fetch the full ones now, before the game needs them ('找' is not in the core set)
+    window.setTimeout(() => {
+      try {
+        for (const w of ['400', '500']) void document.fonts?.load(`${w} 16px "LXGW WenKai TC"`, '找').catch(() => undefined);
+      } catch { /* old browsers: the page fetches them when it needs them */ }
+    }, 1200);
     this.expose();
     // 0.1.4 background music: picks a loop by place / night / sea (src/systems/audio/bgm.ts)
     startBgm(() => {
@@ -868,7 +901,8 @@ export class Game {
       // 0.1.4: a save from the old oval island keeps each member near the same village on the new map
       // 0.1.5: a 0.1.4 save (world 2) keeps each member near the same village / facility on the bigger island
       const rev = sv.world ?? 1;
-      const remap = rev < 2 ? remapSavePos : rev < WORLD_REV ? remapSavePos014 : null;
+      // 0.1.6: a 0.1.5 save (world 3) follows 紅頭 / 漁人 to their new spots
+      const remap = rev < 2 ? remapSavePos : rev < 3 ? remapSavePos014 : rev < WORLD_REV ? remapSavePos015 : null;
       const pos = remap
         ? (Object.fromEntries(Object.entries(pos0).map(([r, p]) => [r, p ? remap(p.x, p.z) : p])) as SaveJSON['party']['pos'])
         : pos0;
@@ -2648,6 +2682,7 @@ export class Game {
     if (this.scenicT <= 0) {
       this.scenicT = 0.25;
       this.scenicTick(false);
+      if (this.state.started && !this.arrival) this.villageTick();
     }
     const blocked = !this.state.started || this.isModalOpen();
     this.player.update(dt, this.input, this.camera, blocked);
@@ -2711,6 +2746,8 @@ export class Game {
 
     this.ui.setPrompt(this.nearestPrompt());
     if (this.state.started) this.questFrame(dt);
+    if (this.state.started && !this.arrival) this.frame016(dt);
+    else this.ui.setGuideArrow(null);
     if (this.state.started) this.ui.updateMinimap(this.player.x, this.player.z, this.camYaw);
     {
       const cam = this.camera;
@@ -2783,6 +2820,222 @@ export class Game {
     const ground = this.island.heightAt(this.camera.position.x, this.camera.position.z);
     if (this.camera.position.y < ground + 1.2) this.camera.position.y = ground + 1.2;
     this.camera.lookAt(c.x, c.y, c.z);
+  }
+
+  // ------------------------------------------------------------------ 0.1.6: village zoom, warm-up, guide arrow, tap-to-walk
+  /** camera distance inside a village / out on the road (a manual zoom holds until the next way in / out) */
+  static readonly VILLAGE_CAM = 19;
+  static readonly OPEN_CAM = 26;
+
+  private villageTick(): void {
+    const x = this.player.x;
+    const z = this.player.z;
+    let near: { id: string; d: number } | null = null;
+    for (const v of VILLAGE_DEFS) {
+      const d = Math.hypot(v.cx - x, v.cz - z);
+      if (!near || d < near.d) near = { id: v.id, d };
+    }
+    if (!near) return;
+    // in at 20 m from the centre, out past 30 m (no flicker on the edge); not on the water
+    const inNow = this.player.mode === 'canoe' ? null : this.villageIn ? (near.id === this.villageIn && near.d < 30 ? this.villageIn : near.d < 20 ? near.id : null) : near.d < 20 ? near.id : null;
+    if (inNow !== this.villageIn) {
+      const was = this.villageIn;
+      this.villageIn = inNow;
+      // a fast-travel / load lands straight in a village: zoom too (the camera eases there)
+      if (!this.focus) this.camDist = inNow ? Game.VILLAGE_CAM : was ? Game.OPEN_CAM : this.camDist;
+    }
+    // heading toward a village: warm its people, music and photo-spot pictures in the background
+    if (near.d < 110 && !this.villageWarm.has(near.id)) {
+      this.villageWarm.add(near.id);
+      this.warmVillageAssets(near.id);
+    }
+    if (!this.bgWarmAt) this.bgWarmAt = performance.now() + 6000;
+    else if (this.bgWarmAt > 0 && performance.now() > this.bgWarmAt) {
+      this.bgWarmAt = -1;
+      warmBackground();
+    }
+  }
+
+  private warmVillageAssets(id: string): void {
+    const v = VILLAGE_DEFS.find((d) => d.id === id);
+    if (!v) return;
+    const files: string[] = [`assets/sprites/npc_atlas_${id}.webp`];
+    const track = villageTrackPath(id);
+    if (track) files.push(track);
+    for (const def of this.db.photoSpots) {
+      const at = def.place ?? def.landmark;
+      const p = at ? this.photos.resolve({ places: this.places, landmarks: LANDMARKS }, at) : null;
+      if (p && Math.hypot(p.x - v.cx, p.z - v.cz) < 45) files.push(`assets/cards/photos/${def.id}.webp`);
+    }
+    warmVillage(files);
+  }
+
+  private setGuide(on: boolean): void {
+    this.guideOn = on;
+    try { localStorage.setItem(GUIDE_KEY, on ? '1' : '0'); } catch { /* private mode */ }
+    this.ui.setGuideButton(on);
+    if (!on) this.ui.setGuideArrow(null);
+  }
+
+  /** where the tracked quest goes next: its first open step the controlled member can do (NPC / spot / regroup point) */
+  private guidePoint(): { x: number; z: number } | null {
+    const E = this.quests;
+    if (E.meet && this.places[E.meet]) return { x: this.places[E.meet].x, z: this.places[E.meet].z };
+    const q = E.current();
+    if (!q) return null;
+    const me = this.party.controlled;
+    const steps = E.openSteps(q);
+    const pick = steps.find(({ st }) => (st.actor ?? q.roles).includes(me)) ?? steps[0];
+    if (!pick) return null;
+    const st = pick.st;
+    if (st.kind === 'talk') {
+      const a = this.npcs.byId(this.npcFor(st.npc, q));
+      return a ? { x: a.x, z: a.z } : null;
+    }
+    if (st.kind === 'spot' || st.kind === 'photo') return this.spotPos(st);
+    return null;
+  }
+
+  /** per frame (playing): guide arrow, tap-to-walk marker and arrival */
+  private frame016(dt: number): void {
+    void dt;
+    const w = this.renderer.domElement.clientWidth;
+    const h = this.renderer.domElement.clientHeight;
+    // tap-to-walk
+    const pl = this.player;
+    if (pl.autoResult) {
+      const r = pl.autoResult;
+      pl.autoResult = null;
+      const goal = this.autoGoal;
+      this.autoGoal = null;
+      this.showWalkMark(null);
+      if (r === 'arrived' && goal && this.mode === 'explore' && !this.isModalOpen()) {
+        if (goal.kind === 'npc') {
+          pl.yaw = Math.atan2(goal.npc.x - pl.x, goal.npc.z - pl.z);
+          this.talkToNpc(goal.npc);
+        } else {
+          const live = this.gatherSpots().find((g) => g.id === goal.node.id);
+          if (live) this.useGatherNode(live);
+        }
+      }
+    }
+    if (pl.autoPath && this.isModalOpen()) pl.stopAuto(null);
+    if (this.walkMark && !this.walkMark.hidden && this.autoGoal) {
+      const g = this.autoGoal.kind === 'npc' ? { x: this.autoGoal.npc.x, z: this.autoGoal.npc.z } : { x: this.autoGoal.node.x, z: this.autoGoal.node.z };
+      const v = this.gv.set(g.x, Math.max(0, this.island.heightAt(g.x, g.z)) + 0.05, g.z).project(this.camera);
+      this.walkMark.style.transform = `translate(${((v.x * 0.5 + 0.5) * w).toFixed(1)}px, ${((-v.y * 0.5 + 0.5) * h).toFixed(1)}px)`;
+    }
+    // guide arrow
+    if (this.questTick === 0.5 || !this.guideTarget) this.guideTarget = this.guideOn ? this.guidePoint() : null;
+    const t = this.guideOn && !this.isModalOpen() && this.mode === 'explore' ? this.guideTarget : null;
+    if (!t) { this.ui.setGuideArrow(null); return; }
+    const dist = Math.hypot(t.x - pl.x, t.z - pl.z);
+    if (dist < 6) { this.ui.setGuideArrow(null); return; }
+    const ty = Math.max(0, this.island.heightAt(t.x, t.z)) + 2.2;
+    const view = this.gv.set(t.x, ty, t.z).applyMatrix4(this.camera.matrixWorldInverse);
+    const inFront = view.z < -0.5;
+    const v = this.gv.set(t.x, ty, t.z).project(this.camera);
+    const sx = (v.x * 0.5 + 0.5) * w;
+    const sy = (-v.y * 0.5 + 0.5) * h;
+    const mx = 46, myTop = 96, myBot = 120;
+    const label = `${Math.round(dist)} m`;
+    if (inFront && sx > mx && sx < w - mx && sy > myTop && sy < h - myBot) {
+      // on screen: a small arrow just above the place, pointing down at it
+      this.ui.setGuideArrow({ ...this.guideClear(sx, sy - 34), deg: 180, dist: label, near: dist < 14 });
+      return;
+    }
+    // off screen: on an ellipse around the middle of the screen, pointing the way
+    const cv = this.gv.set(t.x, ty, t.z).applyMatrix4(this.camera.matrixWorldInverse);
+    const a = Math.atan2(cv.x, -cv.z);
+    const cx = w / 2, cy = h / 2 + 10;
+    const rx = w / 2 - mx, ry = h / 2 - (myTop + myBot) / 2;
+    this.ui.setGuideArrow({ ...this.guideClear(cx + Math.sin(a) * rx, cy - Math.cos(a) * ry), deg: (a * 180) / Math.PI, dist: label, near: false });
+  }
+
+  private guideAvoid: DOMRect | null = null;
+  private guideAvoidAt = 0;
+  /** keep the guide arrow (and its distance line) off the quest tracker card at the top left */
+  private guideClear(x: number, y: number): { x: number; y: number } {
+    const now = performance.now();
+    if (now - this.guideAvoidAt > 500) {
+      this.guideAvoidAt = now;
+      const el = document.getElementById('quest-tracker');
+      this.guideAvoid = el && !el.hidden ? el.getBoundingClientRect() : null;
+    }
+    const r = this.guideAvoid;
+    const pad = 30;
+    if (r && r.width > 0 && x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad + 12) {
+      const h = this.renderer.domElement.clientHeight;
+      // below the card when there is room, otherwise just right of it
+      if (r.bottom + pad + 12 < h - 140) return { x, y: r.bottom + pad + 12 };
+      return { x: r.right + pad, y };
+    }
+    return { x, y };
+  }
+
+  private showWalkMark(on: boolean | null): void {
+    if (!this.walkMark) {
+      this.walkMark = document.createElement('div');
+      this.walkMark.className = 'walk-target';
+      this.walkMark.id = 'walk-target';
+      this.walkMark.hidden = true;
+      document.getElementById('ui-root')!.append(this.walkMark);
+    }
+    this.walkMark.hidden = !on;
+  }
+
+  /** 0.1.6: a tap on the island — a nearby NPC or material (≤ 12 m): walk there, then talk / gather; anything else: nothing */
+  private tapAt(sx: number, sy: number): void {
+    if (!this.state.started || this.arrival || this.mode !== 'explore' || this.isModalOpen() || this.player.mode === 'canoe') return;
+    const pl = this.player;
+    const RANGE = 12;
+    const PICK = 46; // px around the character / node on screen
+    const w = this.renderer.domElement.clientWidth;
+    const h = this.renderer.domElement.clientHeight;
+    const scr = (x: number, y: number, z: number): { x: number; y: number } | null => {
+      const v = this.gv.set(x, y, z).project(this.camera);
+      if (v.z > 1) return null;
+      return { x: (v.x * 0.5 + 0.5) * w, y: (-v.y * 0.5 + 0.5) * h };
+    };
+    let best: { d: number; goal: NonNullable<Game['autoGoal']>; x: number; z: number; reach: number } | null = null;
+    for (const a of this.npcs.actors) {
+      if (!a.visible || !a.sprite?.mesh.visible) continue;
+      if (Math.hypot(a.x - pl.x, a.z - pl.z) > RANGE) continue;
+      const gy = a.sprite.mesh.position.y;
+      // the whole figure counts: feet to head
+      for (const k of [0.25, 0.6, 0.95]) {
+        const p = scr(a.x, gy + CHAR_WORLD_H * k, a.z);
+        if (!p) continue;
+        const d = Math.hypot(p.x - sx, p.y - sy);
+        if (d < PICK && (!best || d < best.d)) best = { d, goal: { kind: 'npc', npc: a }, x: a.x, z: a.z, reach: 1.7 };
+      }
+    }
+    for (const g of this.gatherSpots()) {
+      if (g.blocked || Math.hypot(g.x - pl.x, g.z - pl.z) > RANGE) continue;
+      const gy = Math.max(0, this.island.heightAt(g.x, g.z));
+      for (const k of [0.2, 1.2, 2.4]) {
+        const p = scr(g.x, gy + k, g.z);
+        if (!p) continue;
+        const d = Math.hypot(p.x - sx, p.y - sy);
+        if (d < PICK && (!best || d < best.d)) best = { d, goal: { kind: 'gather', node: g }, x: g.x, z: g.z, reach: Math.max(0.6, Math.min(1.4, g.r * 0.6)) };
+      }
+    }
+    if (!best) return;
+    // already there: act at once
+    if (Math.hypot(best.x - pl.x, best.z - pl.z) <= best.reach + 0.2) {
+      this.autoGoal = best.goal;
+      pl.startAuto([]);
+      pl.autoResult = 'arrived';
+      return;
+    }
+    const path = findWalkPath(pl.x, pl.z, best.x, best.z, best.reach, (x, z) => canStand(x, z, PLAYER_RADIUS));
+    if (!path || !path.length) {
+      this.ui.toast('走不過去', '那邊沒有路可以走到');
+      return;
+    }
+    this.autoGoal = best.goal;
+    pl.startAuto(path);
+    this.showWalkMark(true);
   }
 
   private resetView(): void {
@@ -3020,6 +3273,47 @@ export class Game {
       dialogueQueue: () => this.dlgQueue.map((l) => ({ who: l.who, zh: l.zh })),
       questLogIds: () => this.questCards().map((c) => c.id),
       trackedQuest: () => this.quests.current()?.id ?? null,
+      /** 0.1.6 test hooks */
+      v016: {
+        villageIn: () => this.villageIn,
+        frame: () => this.frameNo,
+        /** headless frames are slow: run the per-tick bits by hand (camera, NPC streaming, village check) */
+        sync: () => { this.syncCamera(); this.camera.updateMatrixWorld(); this.streamNpcs(); this.villageTick(); return { v: this.villageIn, d: this.camDist }; },
+        /** walk the tap-to-walk path n steps without the render loop */
+        stepAuto: (dt = 0.1, n = 1) => {
+          for (let i = 0; i < n; i++) {
+            this.syncCamera(); this.camera.updateMatrixWorld();
+            this.player.update(dt, this.input, this.camera, !this.state.started || this.isModalOpen());
+            this.frame016(dt);
+            if (this.mode !== 'explore') break;
+          }
+          return { mode: this.mode, path: this.player.autoPath?.length ?? 0, x: this.player.x, z: this.player.z };
+        },
+        camDist: () => this.camDist,
+        warm: () => warmStats(),
+        guide: () => ({ on: this.guideOn, target: this.guidePoint() }),
+        setGuide: (on: boolean) => this.setGuide(on),
+        /** screen point of an NPC's chest (for a tap) */
+        npcScreen: (id: string) => {
+          const a = this.npcs.byId(id);
+          if (!a || !a.sprite) return null;
+          const v = this.gv.set(a.x, a.sprite.mesh.position.y + CHAR_WORLD_H * 0.6, a.z).project(this.camera);
+          return { x: (v.x * 0.5 + 0.5) * this.renderer.domElement.clientWidth, y: (-v.y * 0.5 + 0.5) * this.renderer.domElement.clientHeight, d: Math.hypot(a.x - this.player.x, a.z - this.player.z), visible: a.visible };
+        },
+        /** the NPCs with a sprite up near the player, nearest first */
+        npcsNear: (r = 12) => this.npcs.actors.filter((a) => a.visible && Math.hypot(a.x - this.player.x, a.z - this.player.z) <= r)
+          .map((a) => ({ id: a.def.id, x: a.x, z: a.z, d: Math.hypot(a.x - this.player.x, a.z - this.player.z) })).sort((a, b) => a.d - b.d),
+        save: () => this.saveNow(),
+        arrivalActive: () => !!this.arrival,
+        tap: (x: number, y: number) => this.tapAt(x, y),
+        auto: () => ({ path: this.player.autoPath?.length ?? 0, goal: this.autoGoal ? (this.autoGoal.kind === 'npc' ? `npc:${this.autoGoal.npc.def.id}` : `gather:${this.autoGoal.node.id}`) : null }),
+        roadFollow: (on: boolean) => { this.player.roadFollow = on; },
+        /** queue n word postcards at once (collect-all check) */
+        demoCards: (n: number) => {
+          for (const g of this.db.glossary.slice(0, n)) this.cards.push({ el: postcardEl({ key: `demo:${g.id}`, kicker: '新的族語詞', tao: g.tao, name: g.zh }), kind: 'postcard', key: `demo:${g.id}` });
+        },
+        collectAll: () => this.cards.collectAll(),
+      },
       resetInput: () => this.input.resetHeld(),
       lightsVisible: () => this.decor.lightsVisibleCount(),
       showHelp: (auto = false) => this.ui.showHelp(auto),

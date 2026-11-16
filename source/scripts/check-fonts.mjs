@@ -126,9 +126,17 @@ if (!fonts.length) {
   console.error('check-fonts: no public/fonts/*.woff2 found');
   process.exit(1);
 }
-let bad = 0;
+// 0.1.6: a weight may be split into <name>-core.woff2 (start screens) + <name>.woff2 (the rest): check the union
+const groups = new Map();
 for (const f of fonts) {
+  const g = f.replace(/-core\.woff2$/, '.woff2');
   const covered = cmapOfWoff2(fs.readFileSync(path.join(FONT_DIR, f)));
+  const set = groups.get(g) ?? new Set();
+  for (const cp of covered) set.add(cp);
+  groups.set(g, set);
+}
+let bad = 0;
+for (const [f, covered] of groups) {
   const missing = [...used.keys()].filter((cp) => !covered.has(cp));
   if (missing.length) {
     bad++;
@@ -140,4 +148,4 @@ if (bad) {
   console.error('check-fonts: FAILED. Rebuild the subsets with `npm run fonts` (needs fontTools, see scripts/build-fonts.py).');
   process.exit(1);
 }
-console.log(`check-fonts: OK. ${used.size} CJK characters from src/ and content/ are in all ${fonts.length} fonts.`);
+console.log(`check-fonts: OK. ${used.size} CJK characters from src/ and content/ are in all ${groups.size} fonts (${fonts.length} files).`);

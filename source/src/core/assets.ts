@@ -164,9 +164,9 @@ export class Assets {
 
   /** a sprite sheet: the 8dir version first for the playable characters, the base sheet otherwise / as fallback */
   private loadSheetTex(rel: string): Promise<THREE.Texture> {
-    const base = (): Promise<THREE.Texture> => this.loadTex(assetUrl(`assets/sprites/${rel}`), true);
+    const base = (): Promise<THREE.Texture> => this.loadTex(assetUrl(`assets/sprites/${rel.replace(/\.png$/, '.webp')}`), true);
     const e8 = USE_8DIR ? eightDirRel(rel) : null;
-    return e8 ? this.loadTex(assetUrl(`assets/sprites/${e8}`), true).catch(base) : base();
+    return e8 ? this.loadTex(assetUrl(`assets/sprites/${e8.replace(/\.png$/, '.webp')}`), true).catch(base) : base();
   }
 
   private loadTex(url: string, nearest: boolean): Promise<THREE.Texture> {

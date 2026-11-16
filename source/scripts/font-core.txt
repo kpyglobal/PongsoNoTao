@@ -1,0 +1,3 @@
+# 0.1.6: characters of the start screens (title, party, arrival, loading). build-fonts.py puts them in the small
+# wenkai-*-core.woff2 the page preloads; the rest of the glyphs are in wenkai-*.woff2, fetched after the title.
+　、。一三上下中主乘五人代以任位住來個假備僅元入內兩八出前務化原友可各同回圖在地坡型域場外大天女好始孔學完家容審寫對小山岸島嶼布帶往待從怎悟意成或戲所手把拼按採探搭播操放效教整文新旅族景書會有朋朗本札東林校椰樂樹機次正步民水池沙油洞浪海清港準漁灘灣為版瓜生田男略發的目看破程第系紅索統繁織繪繼續育臺與船艇艘色芋茅草落著蘭虎行衛裡西要觀言話語調起跟路踏載造進遊過達遠邊部鄉野量銀鍵鑑開閱降隨雙音項頭風飛駛魚麼點（）＋，／：；？｜

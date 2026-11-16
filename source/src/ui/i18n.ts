@@ -212,6 +212,7 @@ export function installUiLang(): void {
     e.stopPropagation();
     setUiLang(v, !!b.closest('.journal, .nb-settings, [data-resume-lang]'));
   }, true);
+  if (l === 'zhen') installBiLabels();
   if (l !== 'en') return;
   document.title = tr(document.title);
   const desc = document.querySelector('meta[name="description"]');
@@ -224,6 +225,63 @@ export function installUiLang(): void {
       else m.addedNodes.forEach(fixTree);
     }
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+}
+
+// ---------- 0.1.6 中文＋English: small English under buttons, tabs and notebook text
+/** where the small English line goes: buttons anywhere, the notebook, the quest tracker, the fast-travel sheet, help */
+const BI_SCOPE = 'button, [role="radio"], .journal, .quest-tracker, .travel-sheet, .help-sheet, .help-toast, .interact-prompt, .minimap-badge';
+/** already bilingual or not text to translate: dialogue (own English line), notices, cards, the title logo, Tao words, inputs */
+const BI_SKIP = '[data-keep-lang], .dialogue, .unlock-toast, .tc-card, .tc-layer, .game-title, .ai-logo, [lang="tao"], [lang="en"], textarea, select, option, script, style, .line-en, .toast-en, .tc-en';
+/** elements whose own text is the label (no child element carries Chinese of its own) */
+function biCandidate(e: Element): boolean {
+  if (!(e instanceof HTMLElement) || e.closest(BI_SKIP) || !e.closest(BI_SCOPE)) return false;
+  let own = '';
+  for (const n of e.childNodes) {
+    if (n.nodeType === Node.TEXT_NODE) own += (n as Text).data;
+    else if (n.nodeType === Node.ELEMENT_NODE) {
+      const c = n as HTMLElement;
+      if (c.tagName === 'BR' || c.tagName === 'B' || c.tagName === 'STRONG' || c.tagName === 'EM') { own += c.textContent ?? ''; continue; }
+      if (CJK.test(c.textContent ?? '')) return false;
+    }
+  }
+  return CJK.test(own);
+}
+function biLabel(e: HTMLElement): void {
+  const tab = e.closest('#journal-tabs [data-tab]') as HTMLElement | null;
+  const text = (e.textContent ?? '').replace(/\s+/g, ' ').trim();
+  const en = (tab && BY_TAB[tab.dataset.tab ?? '']) || (e.id && BY_ID[e.id]) || english(text);
+  if (en && en !== text) {
+    if (e.dataset.en !== en) e.dataset.en = en;
+  } else if (e.dataset.en) delete e.dataset.en;
+}
+function biScan(root: Node): void {
+  if (root.nodeType === Node.TEXT_NODE) { const p = root.parentElement; if (p && biCandidate(p)) biLabel(p); return; }
+  if (root.nodeType !== Node.ELEMENT_NODE && root.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) return;
+  if (root.nodeType === Node.ELEMENT_NODE && biCandidate(root as Element)) biLabel(root as HTMLElement);
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+  for (let n = w.nextNode(); n; n = w.nextNode()) if (biCandidate(n as Element)) biLabel(n as HTMLElement);
+}
+let biQueued: Set<Node> | null = null;
+function installBiLabels(): void {
+  const flush = (): void => {
+    const q = biQueued;
+    biQueued = null;
+    if (q) for (const n of q) if (n.isConnected) biScan(n);
+  };
+  const queue = (n: Node): void => {
+    if (!biQueued) { biQueued = new Set(); requestAnimationFrame(flush); }
+    biQueued.add(n);
+  };
+  biScan(document.body);
+  new MutationObserver((list) => {
+    for (const m of list) {
+      if (m.type === 'characterData') queue(m.target);
+      else {
+        m.addedNodes.forEach(queue);
+        if (m.target.nodeType === Node.ELEMENT_NODE) queue(m.target);
+      }
+    }
+  }).observe(document.body, { subtree: true, childList: true, characterData: true });
 }
 
 /** 中文 / English / 中文＋English buttons: the labels are always written in both languages (never translated) */

@@ -42,7 +42,7 @@ MAJOR = [0, 2, 4, 5, 7, 9, 11]
 PENTA = [0, 1, 2, 4, 5]
 TPB = 480
 TARGET_RMS = 0.12  # about -18.6 dBFS for every loop (stereo RMS)
-MP3_RATE = '80k'
+MP3_RATE = '48k'  # 0.1.6: was 80k; the loops are 4 kHz low-passed, 48 kbps sounds the same at 60 % of the size
 GUARD = 1536  # samples of wrapped loop audio before / after the loop region (see render_track)  # stereo, 44.1 kHz (joint stereo keeps it small)
 LP_HZ = 4000
 

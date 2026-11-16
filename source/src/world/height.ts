@@ -338,6 +338,25 @@ export function roadPolylines(): readonly (readonly [number, number])[][] {
   return ROADS;
 }
 
+/**
+ * 0.1.6 scooter road-follow: the nearest road centreline within `maxD` — its unit direction (tx, tz) and the
+ * signed sideways offset (positive = left of the direction); null when no road is that close
+ */
+export function roadNear(x: number, z: number, maxD: number): { tx: number; tz: number; off: number; d: number } | null {
+  let best: { tx: number; tz: number; off: number; d: number } | null = null;
+  for (const [ax, az, bx, bz] of ROAD_SEGS) {
+    if (Math.min(ax, bx) - maxD > x || Math.max(ax, bx) + maxD < x || Math.min(az, bz) - maxD > z || Math.max(az, bz) + maxD < z) continue;
+    const r = segDist(x, z, ax, az, bx, bz);
+    if (r.d > maxD || (best && r.d >= best.d)) continue;
+    const L = Math.hypot(bx - ax, bz - az) || 1;
+    const tx = (bx - ax) / L, tz = (bz - az) / L;
+    // cross product sign: which side of the centreline the point is on
+    const off = (tx * (z - az) - tz * (x - ax));
+    best = { tx, tz, off, d: r.d };
+  }
+  return best;
+}
+
 export function distToRing(x: number, z: number): number {
   let best = 1e9;
   for (const [ax, az, bx, bz] of ROAD_SEGS) best = Math.min(best, segDist(x, z, ax, az, bx, bz).d);

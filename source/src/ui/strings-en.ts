@@ -6,6 +6,19 @@
  * Words kept in Tao stay in Tao. See docs/en-glossary.md.
  */
 export const EN: Record<string, string> = {
+  // --- 0.1.6: quick menu, guide arrow, background loading, collect-all
+  '選單': 'Menu',
+  '選單：視角、步行或機車、導引箭頭': 'Menu: camera, walk or scooter, guide arrow',
+  '移動': 'Movement',
+  '導引箭頭': 'Guide arrow',
+  '導引': 'Guide',
+  '背景下載': 'Downloading in the background',
+  '背景下載 {0}%': 'Background download {0}%',
+  '全部收下（{0}）': 'Collect all ({0})',
+  '走不過去': "Can't get there",
+  '那邊沒有路可以走到': "There's no path to that spot",
+  '機車沿路走': 'Scooter follows the road',
+  '機車貼著公路騎，往旁邊推就能離開。': 'The scooter follows the road. Push sideways to turn off it.',
   // --- page / boot
   'Pongso no Tao｜蘭嶼文化島': 'Pongso no Tao | Orchid Island',
   'Pongso no Tao｜蘭嶼文化島：以 HD-2D 立體透視探索蘭嶼六大部落、水芋田與拼板舟 tatala 的達悟文化 RPG。': 'Pongso no Tao | Orchid Island: an HD-2D RPG about Tao culture — explore the six villages of Lanyu, the taro fields and the tatala plank boats.',

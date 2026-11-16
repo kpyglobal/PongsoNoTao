@@ -48,6 +48,10 @@ export interface UiHooks {
   onCamReset: () => void;
   onZoom: (dir: -1 | 1) => void;
   onScooter: () => void;
+  /** 0.1.6: the guide arrow on / off (menu + notebook settings) */
+  onGuide?: (on: boolean) => void;
+  /** 0.1.6: title screen 繼續上次的旅程 (straight to the island) */
+  onTitleContinue?: () => void;
   onFastTravel: (id: string) => void;
   /** party bar: control this member */
   onSwitch: (role: 'm' | 'f' | 't') => void;
@@ -161,6 +165,10 @@ export class UI {
             <h1 class="game-title"><span class="t-tao">Pongso no Tao</span><span class="t-bar">｜</span><span class="t-zh">蘭嶼文化島</span></h1>
           </div>
           <button type="button" class="btn-primary title-start" id="btn-title-start">點一下開始</button>
+          <div class="title-continue" id="title-continue" hidden>
+            <button type="button" class="btn-ghost title-cont-btn" id="btn-title-continue">繼續上次的旅程</button>
+            <span class="tc-meta" id="title-continue-meta"></span>
+          </div>
           <p class="title-note">會播放音樂，可以在遊戲裡按 ♪ 調整音量。</p>
         </div>
         <p class="cover-foot">族語拼寫採教育部原住民族語言書寫系統；文化內容為教學原型，待部落審閱。<span class="app-ver" id="app-ver">　版本 ${__APP_VERSION__}</span></p>
@@ -306,8 +314,8 @@ export class UI {
       <button type="button" class="interact-prompt" id="interact-prompt"><kbd>E</kbd><span id="interact-label">交談</span><span class="prompt-go" aria-hidden="true">›</span></button>
       <div class="vpad" id="vpad" style="display:none"><div class="vpad-knob" id="vpad-knob"></div></div>
       <div class="cam-btns" id="cam-btns" style="display:none">
-        <button type="button" class="cam-wide" id="btn-cam-toggle" aria-expanded="false" aria-controls="cam-drawer">視角</button>
-        <div class="cam-drawer" id="cam-drawer">
+        <div class="cam-drawer qm-panel is-collapsed" id="cam-drawer" role="group" aria-label="選單">
+          <div class="qm-title">視角</div>
           <div class="cam-row">
             <button type="button" id="cam-left" aria-label="左轉">↺</button>
             <button type="button" class="cam-wide" id="cam-reset">重置</button>
@@ -317,13 +325,20 @@ export class UI {
             <button type="button" id="cam-in" aria-label="拉近">＋</button>
             <button type="button" id="cam-out" aria-label="拉遠">－</button>
           </div>
+          <div class="qm-title">移動</div>
+          <button type="button" class="mode-toggle" id="btn-scooter" aria-pressed="false" aria-label="切換步行或機車">
+            <span class="seg on" data-mode="walk">步行</span>
+            <span class="seg" data-mode="scooter">機車</span>
+          </button>
+          <button type="button" class="cam-wide qm-guide on" id="btn-guide" aria-pressed="true">導引箭頭</button>
         </div>
-        <button type="button" class="mode-toggle" id="btn-scooter" aria-pressed="false" aria-label="切換步行或機車">
-          <span class="seg on" data-mode="walk">步行</span>
-          <span class="seg" data-mode="scooter">機車</span>
-        </button>
-        <button type="button" class="act idle" id="btn-act" disabled>互動</button>
+        <div class="qm-bar">
+          <button type="button" class="qm-btn" id="btn-cam-toggle" aria-expanded="false" aria-controls="cam-drawer" aria-label="選單：視角、步行或機車、導引箭頭"><span class="qm-ico" aria-hidden="true"><i></i><i></i><i></i></span><span class="qm-label">選單</span></button>
+          <button type="button" class="act idle" id="btn-act" disabled>互動</button>
+        </div>
       </div>
+      <div class="guide-arrow" id="guide-arrow" hidden aria-hidden="true"><i class="ga-head"></i><span class="ga-dist" id="guide-dist"></span></div>
+      <div class="bg-load" id="bg-load" hidden role="status" aria-live="off"><i class="bg-load-ring"></i><span id="bg-load-label">背景下載</span></div>
       <div class="dialogue" id="dialogue" role="dialog" aria-modal="false" aria-labelledby="dlg-who" aria-describedby="dlg-zh">
         <figure class="dlg-portrait" id="dlg-portrait" aria-hidden="true"><img alt="" decoding="async" /></figure>
         <div class="dlg-body">
@@ -408,6 +423,7 @@ export class UI {
     this.bindActivate(this.el('#btn-continue'), () => this.hooks.onContinue());
     // 0.1.4 opening: title → (party) → arrival choice → cut-scene
     this.bindActivate(this.el('#btn-title-start'), () => this.leaveTitle());
+    this.bindActivate(this.el('#btn-title-continue'), () => this.hooks.onTitleContinue?.());
     this.el('#title-screen').addEventListener('pointerup', (e) => {
       if ((e.target as HTMLElement).closest('button')) return;
       this.leaveTitle();
@@ -504,7 +520,17 @@ export class UI {
     this.el('#cam-in').addEventListener('click', () => this.hooks.onZoom(-1));
     this.el('#cam-out').addEventListener('click', () => this.hooks.onZoom(1));
     this.el('#cam-reset').addEventListener('click', () => this.hooks.onCamReset());
-    this.el('#btn-scooter').addEventListener('click', () => this.hooks.onScooter());
+    this.el('#btn-scooter').addEventListener('click', () => {
+      this.hooks.onScooter();
+      if (this.isCompactUi()) window.setTimeout(() => this.setCamDrawer(false), 250);
+    });
+    this.el('#btn-guide').addEventListener('click', () => this.hooks.onGuide?.(!this.guideOn));
+    this.root.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest?.('[data-guide-toggle]');
+      if (b) this.hooks.onGuide?.(!this.guideOn);
+    });
+    // a tap on the island folds the menu again
+    document.getElementById('game-canvas')?.addEventListener('pointerdown', () => { if (this.camDrawerOpen) this.setCamDrawer(false); });
     this.el('#btn-solo-abort').addEventListener('click', () => this.hooks.onSoloAbort?.());
     this.el('#btn-travel').addEventListener('click', (e) => {
       e.stopPropagation();
@@ -779,12 +805,41 @@ export class UI {
     document.documentElement.dataset.started = '1';
     this.el('#cam-btns').style.display = 'flex';
     this.el('#minimap').style.display = 'block';
-    this.setCamDrawer(!this.isCompactUi());
+    this.setCamDrawer(false); // 0.1.6: folded into the 選單 button on every screen size
     this.showHelp(true);
   }
 
   private isCompactUi(): boolean {
     return window.matchMedia('(max-width: 640px), (pointer: coarse)').matches || window.innerWidth <= 640;
+  }
+
+  /** 0.1.6 guide arrow switch state (menu + settings buttons) */
+  guideOn = true;
+  setGuideButton(on: boolean): void {
+    this.guideOn = on;
+    for (const b of this.root.querySelectorAll<HTMLElement>('#btn-guide, [data-guide-toggle]')) {
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
+  }
+
+  /** 0.1.6: background download chip (hidden when nothing is loading) */
+  setBgLoad(done: number, total: number): void {
+    const el = this.el('#bg-load');
+    el.hidden = total <= 0 || done >= total;
+    if (!el.hidden) this.el('#bg-load-label').textContent = `背景下載 ${Math.round((done / total) * 100)}%`;
+  }
+
+  /** 0.1.6 guide arrow: screen position (px), angle (deg, 0 = up), distance text; null hides it */
+  setGuideArrow(p: { x: number; y: number; deg: number; dist: string; near: boolean } | null): void {
+    const el = this.el('#guide-arrow');
+    if (!p) { el.hidden = true; return; }
+    el.hidden = false;
+    el.style.transform = `translate(${p.x.toFixed(1)}px, ${p.y.toFixed(1)}px)`;
+    el.style.setProperty('--ga', `${p.deg.toFixed(1)}deg`);
+    el.classList.toggle('near', p.near);
+    const d = this.el('#guide-dist');
+    if (d.textContent !== p.dist) d.textContent = p.dist;
   }
 
   setCamDrawer(open: boolean): void {
@@ -1472,6 +1527,9 @@ export class UI {
   showContinue(meta: string | null): void {
     this.el('#origin-continue').hidden = meta === null;
     this.el('#continue-meta').textContent = meta ?? '';
+    // 0.1.6: also on the title screen — straight to the island at the saved spot (no party screen, no ride in)
+    this.el('#title-continue').hidden = meta === null;
+    this.el('#title-continue-meta').textContent = meta ?? '';
   }
 
   openMinigame(title: string, desc: string): void {
