@@ -2,6 +2,11 @@
 
 Shared by every AI agent that touches this repo (Claude Code, Codex, Grok bot, others).
 
+## Reply style (all agents)
+- Caveman style, full intensity, always on: short words, short sentences, no filler, answer first.
+- Normal prose for code, commit messages, PR text, and security warnings.
+- The owner reads Traditional Chinese (Taiwan) faster. Mix Chinese and English; use English when clearer.
+
 ## Start of session
 1. Read `HANDOFF.md` at the repo root if it exists. It holds the goal, current state, failed attempts, and next steps.
 2. If `.codegraph/` exists, query it (`codegraph explore "<symbols or question>"`, or the MCP tool `codegraph_explore`) before grep or reading files. No `.codegraph/`? Run `ai-setup/setup-ai.sh` once per device.
