@@ -2,3 +2,6 @@
 *.log
 source/node_modules
 source/dist
+
+# CodeGraph local index (per-device, do not sync)
+.codegraph/
